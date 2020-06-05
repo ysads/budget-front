@@ -1,0 +1,49 @@
+module.exports = {
+  root: true,
+
+  env: {
+    node: true,
+  },
+
+  extends: [
+    'plugin:vue/essential',
+    'eslint:recommended',
+    '@vue/standard',
+  ],
+
+  parserOptions: {
+    parser: 'babel-eslint',
+  },
+
+  rules: {
+    'comma-dangle': [
+      'error',
+      'always-multiline',
+      { functions: 'never' },
+    ],
+    'max-len': [
+      'error',
+      { ignorePattern: '@/' },
+    ],
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    quotes: [
+      'error',
+      'single', { avoidEscape: true },
+    ],
+    semi: [
+      'error',
+      'never',
+    ],
+    'space-before-function-paren': 'error',
+    'vue/attributes-order': 'error',
+    'vue/component-tags-order': [
+      'error',
+      { order: ['template', 'script', 'style'] },
+    ],
+    'vue/max-attributes-per-line': [
+      'error',
+      { singleline: 5, multiline: 1 },
+    ],
+  },
+}

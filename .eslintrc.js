@@ -39,7 +39,7 @@ module.exports = {
     'vue/attributes-order': 'error',
     'vue/component-tags-order': [
       'error',
-      { order: ['template', 'script', 'style'] },
+      { order: ['template', 'script', 'style', 'i18n'] },
     ],
     'vue/max-attributes-per-line': [
       'error',

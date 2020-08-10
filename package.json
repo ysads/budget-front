@@ -9,8 +9,11 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/lang/**/*.json'"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
+    "jsonapi-serializer": "^3.6.6",
+    "snakecase-keys": "^3.2.0",
     "vue": "^2.6.11",
     "vue-i18n": "^8.17.3",
     "vue-router": "^3.2.0",

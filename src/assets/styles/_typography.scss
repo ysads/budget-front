@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;531;700;800&display=swap');
+
+$font-size: 13px;
+
+%inter {
+  font-family: 'Inter', Helvetica, Arial, sans-serif;
+}
+
+%regular {
+  font-weight: 400;
+}
+
+%medium {
+  font-weight: 500;
+}
+
+%bold {
+  font-weight: 700;
+}
+
+%base-typography {
+  @extend %inter;
+
+  font-size: $font-size;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+%h1 {
+  @extend %inter;
+  @extend %bold;
+
+  font-size: 1.75rem;
+  line-height: 2rem;
+}
+
+%h2 {
+  @extend %inter;
+  @extend %bold;
+
+  font-size: 1.5rem;
+  line-height: 1.85rem;
+}
+
+%menu {
+  @extend %inter;
+  @extend %medium;
+
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+}
+
+%caption {
+  @extend %inter;
+  @extend %regular;
+
+  font-size: 0.9rem; 
+}

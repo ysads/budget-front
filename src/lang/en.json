@@ -1,3 +1,7 @@
 {
-  "message": "hello i18n !!"
+  "allAccounts": "All accounts",
+  "budget": "Budget",
+  "cleared": "Cleared",
+  "reports": "Reports",
+  "uncleared": "Uncleared"
 }

@@ -1,3 +1,7 @@
 {
-  "message": "hello i18n !!"
+  "allAccounts": "Contas",
+  "budget": "Orçamento",
+  "cleared": "Aprovado",
+  "reports": "Relatórios",
+  "uncleared": "Não aprovado"
 }

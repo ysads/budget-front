@@ -5,16 +5,15 @@ export default {
       currency: 'BRL',
       useGrouping: true,
       minimumIntegerDigits: 1,
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }
+      minimumFractionDigits: 2,
+    },
   },
   en: {
     currency: {
       style: 'currency',
       currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }
-  }
+      minimumIntegerDigits: 1,
+      minimumFractionDigits: 2,
+    },
+  },
 }

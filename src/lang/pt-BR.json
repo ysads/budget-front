@@ -1,7 +1,13 @@
 {
-	"allAccounts": "Contas",
-	"budget": "Orçamento",
-	"cleared": "Aprovado",
-	"reports": "Relatórios",
-	"uncleared": "Não aprovado"
+  "allAccounts": "Contas",
+  "budget": "Orçamento",
+  "cleared": "Aprovado",
+  "currentBalance": "Saldo Atual",
+  "noAccounts": "Não há contas",
+  "noAccountsTip": "Não dá pra poupar sem ter contas aqui. Vamos lá, adicione suas contas e comece a poupar.",
+  "reports": "Relatórios",
+  "uncleared": "Não aprovado",
+  "trackingAccounts": "Acompanhamento",
+  "budgetAccounts": "Orçamento",
+  "addAccount": "Adicionar conta"
 }

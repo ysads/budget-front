@@ -15,6 +15,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/auth',
+    component: () => import('@/views/Auth'),
+    children: [
+      {
+        path: 'sign-in',
+        name: 'SignIn',
+        component: () => import('@/views/auth/SignIn'),
+      },
+    ],
+  },
 ]
 
 const router = new VueRouter({

@@ -7,7 +7,10 @@
         <p class="account-header__balance-title">
           {{ $t('cleared') }}
         </p>
-        <p class="account-header__balance-currency">
+        <p
+          class="account-header__balance-currency"
+          :class="balanceClasses(cleared)"
+        >
           {{ $n(cleared, 'currency') }}
         </p>
       </div>
@@ -16,7 +19,10 @@
         <p class="account-header__balance-title">
           {{ $t('uncleared') }}
         </p>
-        <p class="account-header__balance-currency">
+        <p
+          class="account-header__balance-currency"
+          :class="balanceClasses(uncleared)"
+        >
           {{ $n(uncleared, 'currency') }}
         </p>
       </div>
@@ -42,23 +48,32 @@ export default {
       required: true,
     },
   },
+
+  methods: {
+    balanceClasses (val) {
+      return val >= 0 ? 'positive' : 'negative'
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .account-header {
+  @include padding(top, 3);
+  @include padding(bottom, 3);
+  @include padding(left, 6);
+  @include padding(right, 6);
+
   display: flex;
   align-items: center;
   flex-flow: column;
   justify-content: space-between;
-  padding: $base * 3;
+  background: var(--acc-header-bg);
+  color: var(--acc-header-text);
 
   @include breakpoint(md) {
     flex-flow: row;
   }
-
-  background: darkslategrey;
-  color: white;
 
   &__title {
     @extend %h1;
@@ -87,7 +102,15 @@ export default {
   }
 
   &__balance + &__balance {
-    @include margin(left, 4);
+    @include margin(left, 6);
   }
+}
+
+.positive {
+  color: var(--balance-positive);
+}
+
+.negative {
+  color: var(--balance-negative);
 }
 </style>

@@ -3,7 +3,7 @@
     <account-header
       :name="$t('allAccounts')"
       :cleared="5432"
-      :uncleared="8723"
+      :uncleared="-8723"
     />
   </div>
 </template>

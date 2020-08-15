@@ -1,9 +1,16 @@
 :root {
   --app-bg: #fff;
 
-  --header-bg: #f2f2f7;
+  --acc-header-bg: #f2f2f7;
+  --acc-header-text: #383e41;
 
-  --sidebar-bg: #3d79b9;
+  --balance-positive: #6d9f39;
+  --balance-negative: #e85f54;
+
   --sidebar-active: #295f9c;
+  --sidebar-bg: #3d79b9;
+  --sidebar-button-bg: rgba(170, 210, 255, 0.2);
   --sidebar-focus: #325277;
+  --sidebar-text: #fff;
+  --sidebar-tip: #cfd5f2;
 }

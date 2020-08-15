@@ -54,5 +54,14 @@ $font-size: 13px;
   @extend %inter;
   @extend %regular;
 
-  font-size: 0.9rem; 
+  font-size: 0.9rem;
+  line-height: 1rem;
+}
+
+%caption2 {
+  @extend %inter;
+  @extend %regular;
+
+  font-size: 0.8rem;
+  line-height: 1.1rem;
 }

@@ -6,7 +6,10 @@ const apiUrl = process.env.VUE_APP_API_URL || 'http://localhost:9091'
 
 async function request (method, endpoint, params = {}, customOptions = {}) {
   const options = {
-    headers: { Accept: 'application/json' },
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
     withCredentials: true,
     ...customOptions,
   }

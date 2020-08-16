@@ -9,19 +9,19 @@ import budgetBoards from './budget-boards'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  modules: {
-    [namespaces.ACCOUNTS]: {
-      namespaced: true,
-      ...accounts,
-    },
-    [namespaces.AUTH]: {
-      namespaced: true,
-      ...auth,
-    },
-    [namespaces.BUDGET_BOARDS]: {
-      namespaced: true,
-      ...budgetBoards,
-    },
+export const modules = {
+  [namespaces.ACCOUNTS]: {
+    namespaced: true,
+    ...accounts,
   },
-})
+  [namespaces.AUTH]: {
+    namespaced: true,
+    ...auth,
+  },
+  [namespaces.BUDGET_BOARDS]: {
+    namespaced: true,
+    ...budgetBoards,
+  },
+}
+
+export default new Vuex.Store({ modules })

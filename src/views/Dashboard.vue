@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <drawer v-if="openBoard" class="dashboard__drawer" />
+    <drawer v-if="openBudget" class="dashboard__drawer" />
     <main class="dashboard__main">
       <router-view></router-view>
     </main>
@@ -10,10 +10,10 @@
 <script>
 import Drawer from '@/components/Drawer'
 import { createNamespacedHelpers } from 'vuex'
-import { AUTH, BUDGET_BOARDS } from '@/store/namespaces'
+import { AUTH, BUDGETS } from '@/store/namespaces'
 
 const authHelper = createNamespacedHelpers(AUTH)
-const budgetBoardsHelper = createNamespacedHelpers(BUDGET_BOARDS)
+const budgetsHelper = createNamespacedHelpers(BUDGETS)
 
 export default {
   name: 'Dashboard',
@@ -24,18 +24,16 @@ export default {
 
   async mounted () {
     await this.validateSession()
-    console.log('about to bud')
-    await this.getBudgetBoard(this.$route.params.id)
-    console.log('passed to bud')
+    await this.getBudget(this.$route.params.id)
   },
 
   computed: {
-    ...budgetBoardsHelper.mapState(['openBoard']),
+    ...budgetsHelper.mapState(['openBudget']),
   },
 
   methods: {
     ...authHelper.mapActions(['getMe']),
-    ...budgetBoardsHelper.mapActions(['getBudgetBoard']),
+    ...budgetsHelper.mapActions(['getBudget']),
 
     async validateSession () {
       try {

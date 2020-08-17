@@ -5,7 +5,7 @@ import * as namespaces from './namespaces'
 
 import accounts from './accounts'
 import auth from './auth'
-import budgetBoards from './budget-boards'
+import budgets from './budgets'
 
 Vue.use(Vuex)
 
@@ -18,9 +18,9 @@ export const modules = {
     namespaced: true,
     ...auth,
   },
-  [namespaces.BUDGET_BOARDS]: {
+  [namespaces.BUDGETS]: {
     namespaced: true,
-    ...budgetBoards,
+    ...budgets,
   },
 }
 

@@ -49,10 +49,10 @@
 <script>
 import AccountAccordion from '@/components/accounts/AccountAccordion'
 import { createNamespacedHelpers } from 'vuex'
-import { BUDGET_BOARDS, ACCOUNTS } from '@/store/namespaces'
+import { BUDGETS, ACCOUNTS } from '@/store/namespaces'
 
 const accountsHelper = createNamespacedHelpers(ACCOUNTS)
-const budgetBoardsHelper = createNamespacedHelpers(BUDGET_BOARDS)
+const budgetsHelper = createNamespacedHelpers(BUDGETS)
 
 export default {
   name: 'Drawer',
@@ -69,7 +69,7 @@ export default {
 
   computed: {
     ...accountsHelper.mapGetters(['budgetAccounts', 'trackingAccounts']),
-    ...budgetBoardsHelper.mapState(['openBoard']),
+    ...budgetsHelper.mapState(['openBudget']),
 
     anyAccounts () {
       return this.budgetAccounts?.length || this.trackingAccounts?.length
@@ -84,7 +84,7 @@ export default {
     ...accountsHelper.mapActions(['getAccounts']),
 
     async fetchAccounts () {
-      await this.getAccounts({ budgetBoardId: this.openBoard.id })
+      await this.getAccounts({ budgetId: this.openBudget.id })
     },
 
     activeClass (route) {

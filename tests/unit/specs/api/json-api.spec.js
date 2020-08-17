@@ -41,7 +41,7 @@ describe('json-api', () => {
           id: '98c2ed1a-6023-48ea-bc83-02d50e7ffd2d',
           title: 'Mango',
         },
-      }
+      },
     ])
   })
 
@@ -56,7 +56,7 @@ describe('json-api', () => {
     it('includes meta on parsed object', async () => {
       const mockResponseWithMeta = {
         ...mockResponse,
-        meta: { metaInfo: 'This is a meta info' }
+        meta: { metaInfo: 'This is a meta info' },
       }
       const parsed = await JsonApi.parse(mockResponseWithMeta)
 

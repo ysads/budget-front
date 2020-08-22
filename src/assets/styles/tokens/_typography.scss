@@ -42,6 +42,14 @@ $font-size: 13px;
   line-height: 1.85rem;
 }
 
+%h3 {
+  @extend %inter;
+  @extend %medium;
+
+  font-size: 1.35rem;
+  line-height: 1.65rem;
+}
+
 %menu {
   @extend %inter;
   @extend %medium;

@@ -4,6 +4,6 @@ export default {
   },
 
   UPSERT_ACCOUNT (state, account) {
-    state.accounts = { ...state.accounts, account }
+    state.accounts = [...state.accounts, account]
   },
 }

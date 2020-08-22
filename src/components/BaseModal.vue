@@ -6,13 +6,21 @@
       @click="$emit('close')"
     />
     <section class="base-modal__wrapper">
-      <nav class="base-modal__close">
+      <header class="base-modal__header">
         <i
           class="fas fa-times"
           data-test="close-btn"
           @click="$emit('close')"
         />
-      </nav>
+
+        <h3
+          v-if="title"
+          class="base-modal__header-title"
+          data-test="title"
+        >
+          {{ title }}
+        </h3>
+      </header>
       <slot></slot>
     </section>
   </div>
@@ -21,6 +29,13 @@
 <script>
 export default {
   name: 'BaseModal',
+
+  props: {
+    title: {
+      type: String,
+      default: '',
+    },
+  },
 }
 </script>
 
@@ -47,8 +62,9 @@ export default {
     @include margin(left, 4);
     @include margin(right, 4);
 
-    border-radius: $radius-8;
     background: var(--modal-bg);
+    border-radius: $radius-8;
+    box-sizing: border-box;
     display: flex;
     flex-flow: column;
     left: 0;
@@ -66,15 +82,23 @@ export default {
     }
   }
 
-  &__close {
-    @include margin(bottom, 2);
+  &__header {
+    @include margin(bottom, 6);
 
-    color: var(--modal-close-btn);
+    align-items: center;
     display: flex;
     flex-direction: row-reverse;
     font-size: 1.75rem;
+    justify-content: space-between;
+
+    &-title {
+      @extend %h3;
+
+      color: var(--modal-title);
+    }
 
     i {
+      color: var(--modal-close-btn);
       cursor: pointer;
 
       &:active {

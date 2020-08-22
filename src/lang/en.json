@@ -9,5 +9,15 @@
   "uncleared": "Uncleared",
   "trackingAccounts": "Tracking",
   "budgetAccounts": "Budget",
-  "addAccount": "Add Account"
+  "addAccount": "Add Account",
+  "account": {
+    "type": {
+      "cash": "Cash",
+      "credit": "Credit",
+      "savings": "Savings",
+      "tracking": "Tracking",
+      "checking": "Checkin"
+    }
+  },
+  "newAccount": "New account"
 }

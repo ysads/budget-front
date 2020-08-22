@@ -39,15 +39,22 @@
     <el-button
       class="drawer__accounts-btn"
       size="small"
+      @click="toggleModal"
     >
       <i class="icon fas fa-plus" />
       {{ $t('addAccount') }}
     </el-button>
+
+    <create-account-modal
+      v-if="modalVisible"
+      @close="toggleModal"
+    />
   </aside>
 </template>
 
 <script>
 import AccountAccordion from '@/components/accounts/AccountAccordion'
+import CreateAccountModal from '@/components/accounts/CreateAccountModal'
 import { createNamespacedHelpers } from 'vuex'
 import { BUDGETS, ACCOUNTS } from '@/store/namespaces'
 
@@ -60,11 +67,13 @@ export default {
   data () {
     return {
       activeNames: ['budget', 'tracking'],
+      modalVisible: false,
     }
   },
 
   components: {
     AccountAccordion,
+    CreateAccountModal,
   },
 
   computed: {
@@ -89,6 +98,10 @@ export default {
 
     activeClass (route) {
       return this.$route.name === route ? 'active' : ''
+    },
+
+    toggleModal () {
+      this.modalVisible = !this.modalVisible
     },
   },
 }

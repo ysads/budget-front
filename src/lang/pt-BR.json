@@ -9,5 +9,15 @@
   "uncleared": "Não aprovado",
   "trackingAccounts": "Acompanhamento",
   "budgetAccounts": "Orçamento",
-  "addAccount": "Adicionar conta"
+  "addAccount": "Adicionar conta",
+  "account": {
+    "type": {
+      "cash": "Dinheiro",
+      "credit": "Crédito\n",
+      "savings": "Poupança",
+      "tracking": "Acompanhamento",
+      "checking": "Corrente"
+    }
+  },
+  "newAccount": "Nova conta"
 }

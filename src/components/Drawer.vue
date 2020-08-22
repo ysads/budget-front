@@ -106,37 +106,37 @@ export default {
     flex-flow: column;
 
     &-item {
-      @extend %menu;
-
-      transition: all ease .1s;
       border-radius: $radius-8;
       cursor: pointer;
       padding: $base * 2 $base * 3;
+      transition: all ease 0.1s;
 
       &:hover {
         background: var(--sidebar-focus);
       }
+
       &.active {
         background: var(--sidebar-active);
       }
+
       .icon {
         @include margin(right, 4);
       }
+
+      @extend %menu;
     }
+
     &-item + &-item {
       @include margin(top, 1);
     }
   }
 
   &__accounts {
-    @include margin(top, 4);
-
     &-list + &-list {
       @include margin(top, 2);
     }
-    &-btn {
-      @include margin(top, 2);
 
+    &-btn {
       background: var(--sidebar-button-bg);
       border: 0;
       color: var(--sidebar-text);
@@ -144,23 +144,27 @@ export default {
       &:hover {
         background: var(--sidebar-focus);
       }
+
+      @include margin(top, 2);
     }
 
     &--empty {
-      @include margin(top, 6);
-
       background: var(--sidebar-active);
       border-radius: $radius-8;
       padding: $base * 4;
 
       .tip {
+        color: var(--sidebar-tip);
+
         @extend %caption;
 
         @include margin(top, 4);
-
-        color: var(--sidebar-tip);
       }
+
+      @include margin(top, 6);
     }
+
+    @include margin(top, 4);
   }
 }
 </style>

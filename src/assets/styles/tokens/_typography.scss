@@ -19,57 +19,57 @@ $font-size: 13px;
 }
 
 %base-typography {
-  @extend %inter;
-
   font-size: $font-size;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+
+  @extend %inter;
 }
 
 %h1 {
-  @extend %inter;
-  @extend %bold;
-
   font-size: 1.75rem;
   line-height: 2rem;
+
+  @extend %inter;
+  @extend %bold;
 }
 
 %h2 {
-  @extend %inter;
-  @extend %bold;
-
   font-size: 1.5rem;
   line-height: 1.85rem;
+
+  @extend %inter;
+  @extend %bold;
 }
 
 %h3 {
-  @extend %inter;
-  @extend %medium;
-
   font-size: 1.35rem;
   line-height: 1.65rem;
+
+  @extend %inter;
+  @extend %medium;
 }
 
 %menu {
-  @extend %inter;
-  @extend %medium;
-
   font-size: 1.25rem;
   line-height: 1.5rem;
+
+  @extend %inter;
+  @extend %medium;
 }
 
 %caption {
-  @extend %inter;
-  @extend %regular;
-
   font-size: 0.9rem;
   line-height: 1rem;
+
+  @extend %inter;
+  @extend %regular;
 }
 
 %caption2 {
-  @extend %inter;
-  @extend %regular;
-
   font-size: 0.8rem;
   line-height: 1.1rem;
+
+  @extend %inter;
+  @extend %regular;
 }

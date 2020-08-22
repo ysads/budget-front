@@ -67,20 +67,18 @@ export default {
 <style lang="scss" scoped>
 .account-accordion {
   &__header {
-    @extend %caption2;
-
-    @include margin(right, 2);
-
-    display: flex;
     color: var(--sidebar-text);
+    display: flex;
     justify-content: space-between;
     text-transform: uppercase;
     width: 100%;
+
+    @extend %caption2;
+
+    @include margin(right, 2);
   }
 
   &__item {
-    @extend %caption2;
-
     align-items: center;
     border-radius: $radius-8;
     color: var(--sidebar-text);
@@ -96,6 +94,8 @@ export default {
     &__name {
       @include padding(right, 1);
     }
+
+    @extend %caption2;
   }
 
   &__item + &__item {

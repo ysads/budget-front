@@ -42,16 +42,16 @@ export default {
 <style lang="scss" scoped>
 .base-modal {
   &__overlay {
-    cursor: pointer;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
     background: var(--modal-overlay);
+    bottom: 0;
+    cursor: pointer;
+    height: 100%;
+    left: 0;
     overflow: hidden;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
     z-index: 3;
   }
 
@@ -59,32 +59,30 @@ export default {
     $modal-top: 100px;
     $modal-width: calc(100% - #{$base * 4 * 2});
 
-    @include margin(left, 4);
-    @include margin(right, 4);
-
     background: var(--modal-bg);
     border-radius: $radius-8;
     box-sizing: border-box;
     display: flex;
     flex-flow: column;
     left: 0;
-    position: fixed;
     padding: $base * 6;
+    position: fixed;
     top: $modal-top;
     transition: all 0.5s ease;
     width: $modal-width;
     z-index: 4;
 
+    @include margin(left, 4);
+    @include margin(right, 4);
+
     @include breakpoint(md) {
-      width: 600px;
       left: calc(50% - 300px);
       padding: $base * 5;
+      width: 600px;
     }
   }
 
   &__header {
-    @include margin(bottom, 6);
-
     align-items: center;
     display: flex;
     flex-direction: row-reverse;
@@ -92,9 +90,9 @@ export default {
     justify-content: space-between;
 
     &-title {
-      @extend %h3;
-
       color: var(--modal-title);
+
+      @extend %h3;
     }
 
     i {
@@ -105,7 +103,10 @@ export default {
         @include scale-85;
       }
     }
+
+    @include margin(bottom, 6);
   }
+
   &__group {
     display: flex;
     justify-content: space-between;

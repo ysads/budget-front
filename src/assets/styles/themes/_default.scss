@@ -1,17 +1,14 @@
+/* stylelint-disable color-no-hex */
 :root {
   --app-bg: #fff;
-
   --acc-header-bg: #f2f2f2;
   --acc-header-text: #383e41;
-
   --balance-positive: #6d9f39;
   --balance-negative: #e85f54;
-
   --modal-bg: #fff;
   --modal-title: #6b6b6b;
   --modal-close-btn: #295f9c;
   --modal-overlay: rgba(0, 0, 0, 0.5);
-
   --sidebar-active: #295f9c;
   --sidebar-bg: #3d79b9;
   --sidebar-button-bg: rgba(170, 210, 255, 0.2);
@@ -19,3 +16,4 @@
   --sidebar-text: #fff;
   --sidebar-tip: #cfd5f2;
 }
+/* stylelint-enable color-no-hex */

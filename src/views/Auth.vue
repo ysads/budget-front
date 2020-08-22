@@ -18,8 +18,8 @@ export default {
 <style lang="scss" scoped>
 .auth {
   &__main {
-    width: 100%;
     margin: 0 auto;
+    width: 100%;
 
     @include breakpoint(md) {
       width: 400px;

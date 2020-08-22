@@ -77,11 +77,11 @@ mark,
 audio,
 video {
   border: 0;
+  box-sizing: border-box;
   font-size: 100%;
   margin: 0;
   padding: 0;
   vertical-align: baseline;
-  box-sizing: border-box;
 }
 
 article,
@@ -99,10 +99,10 @@ section {
 }
 
 html {
-  @extend %inter;
-
   font-size: 14px;
   line-height: 1;
+
+  @extend %inter;
 }
 
 a {

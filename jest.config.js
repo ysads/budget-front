@@ -7,7 +7,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     'tests/unit/factory-builder',
     'src/setup/*',
-  ] ,
+  ],
   preset: '@vue/cli-plugin-unit-jest',
   moduleNameMapper: {
     '^#/(.*)$': '<rootDir>/tests/unit/$1.js',

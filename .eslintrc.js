@@ -31,6 +31,7 @@ module.exports = {
       'always-multiline',
       { functions: 'never' },
     ],
+    'jest/no-identical-title': 'off',
     'max-len': [
       'error',
       { ignorePattern: '@/' },

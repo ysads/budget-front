@@ -1,15 +1,27 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import * as namespaces from './namespaces'
+
+import accounts from './accounts'
+import auth from './auth'
+import budgets from './budgets'
+
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
+export const modules = {
+  [namespaces.ACCOUNTS]: {
+    namespaced: true,
+    ...accounts,
   },
-  mutations: {
+  [namespaces.AUTH]: {
+    namespaced: true,
+    ...auth,
   },
-  actions: {
+  [namespaces.BUDGETS]: {
+    namespaced: true,
+    ...budgets,
   },
-  modules: {
-  },
-})
+}
+
+export default new Vuex.Store({ modules })

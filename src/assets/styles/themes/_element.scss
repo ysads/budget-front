@@ -1,0 +1,19 @@
+
+/* theme color */
+$--collapse-header-background-color: transparent;
+$--collapse-header-font-color: var(--sidebar-text);
+$--collapse-border-color: transparent;
+$--collapse-content-background-color: transparent;
+
+/* icon font path, required */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";
+
+.el-collapse-item__header {
+  flex-flow: row-reverse;
+}
+
+.el-collapse-item__content {
+  padding-bottom: 0;
+}

@@ -1,0 +1,20 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "order/properties-alphabetical-order": true,
+    "order/order": [
+      "custom-properties",
+      "dollar-variables",
+      "at-variables",
+      "declarations",
+      "rules",
+      "at-rules",
+    ],
+    "at-rule-no-unknown": [
+      true, { "ignoreAtRules": ["extend", "mixin", "if", "else", "content", "include", "for"] }
+    ],
+    "no-empty-source": null,
+    "color-no-hex": true
+  }
+ }

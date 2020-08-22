@@ -1,7 +1,11 @@
 module.exports = {
-  transpileDependencies: [
-    'vuetify',
-  ],
+  css: {
+    loaderOptions: {
+      scss: {
+        prependData: '@import "@/assets/styles/tokens/main.scss";',
+      },
+    },
+  },
 
   pluginOptions: {
     i18n: {

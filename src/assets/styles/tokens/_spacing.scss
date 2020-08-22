@@ -1,0 +1,10 @@
+$base: 4px;
+$radius-8: 8px;
+
+@mixin margin($side, $mult) {
+  margin-#{$side}: $mult * $base;
+}
+
+@mixin padding($side, $mult) {
+  padding-#{$side}: $mult * $base;
+}

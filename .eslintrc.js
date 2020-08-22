@@ -2,13 +2,23 @@ module.exports = {
   root: true,
 
   env: {
+    jest: true,
     node: true,
   },
 
   extends: [
+    'plugin:jest/recommended',
     'plugin:vue/essential',
     'eslint:recommended',
     '@vue/standard',
+  ],
+
+  globals: {
+    context: true,
+  },
+
+  plugins: [
+    'jest',
   ],
 
   parserOptions: {
@@ -21,6 +31,7 @@ module.exports = {
       'always-multiline',
       { functions: 'never' },
     ],
+    'jest/no-identical-title': 'off',
     'max-len': [
       'error',
       { ignorePattern: '@/' },

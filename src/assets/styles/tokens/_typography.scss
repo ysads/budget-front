@@ -1,9 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;531;700;800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap');
 $font-size: 13px;
 
 %inter {
   font-family: 'Inter', Helvetica, Arial, sans-serif;
+}
+
+%barlow {
+  font-family: 'Barlow', Helvetica, Arial, sans-serif;
 }
 
 %regular {
@@ -14,62 +18,83 @@ $font-size: 13px;
   font-weight: 500;
 }
 
+%semi-bold {
+  font-weight: 600;
+}
+
 %bold {
   font-weight: 700;
 }
 
 %base-typography {
-  @extend %inter;
-
   font-size: $font-size;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+
+  @extend %barlow;
 }
 
 %h1 {
-  @extend %inter;
-  @extend %bold;
-
   font-size: 1.75rem;
   line-height: 2rem;
+
+  @extend %inter;
+  @extend %bold;
 }
 
 %h2 {
-  @extend %inter;
-  @extend %bold;
-
   font-size: 1.5rem;
   line-height: 1.85rem;
+
+  @extend %barlow;
+  @extend %bold;
 }
 
 %h3 {
-  @extend %inter;
-  @extend %medium;
-
   font-size: 1.35rem;
   line-height: 1.65rem;
+
+  @extend %inter;
+  @extend %medium;
 }
 
 %menu {
-  @extend %inter;
-  @extend %medium;
-
   font-size: 1.25rem;
   line-height: 1.5rem;
+
+  @extend %barlow;
+  @extend %medium;
+}
+
+%input,
+%button {
+  font-size: 1rem;
+  line-height: 1.25rem;
+
+  @extend %barlow;
+  @extend %regular;
 }
 
 %caption {
-  @extend %inter;
-  @extend %regular;
-
   font-size: 0.9rem;
   line-height: 1rem;
+
+  @extend %inter;
+  @extend %regular;
 }
 
 %caption2 {
-  @extend %inter;
-  @extend %regular;
-
   font-size: 0.8rem;
   line-height: 1.1rem;
+
+  @extend %barlow;
+  @extend %regular;
+}
+
+%body-1 {
+  font-size: 1rem;
+  line-height: 1.2rem;
+
+  @extend %barlow;
+  @extend %regular;
 }

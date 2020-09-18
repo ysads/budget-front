@@ -1,5 +1,11 @@
 $base: 4px;
+
+$radius-4: 4px;
 $radius-8: 8px;
+
+@mixin scale($scale) {
+  transform: scale($scale);
+}
 
 @mixin margin($side, $mult) {
 	margin-#{$side}: $mult * $base;

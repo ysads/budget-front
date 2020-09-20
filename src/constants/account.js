@@ -3,5 +3,5 @@ export const ACCOUNT_TYPES = [
   'checking',
   'credit',
   'savings',
-  'tracking',
+  'asset',
 ]

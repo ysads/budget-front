@@ -1,6 +1,7 @@
 import * as api from '@/api'
 import actions from '@/store/accounts/actions'
 import uuid from 'uuid-random'
+import factories from '#/factories'
 
 const mockStore = {
   commit: jest.fn(),
@@ -19,7 +20,7 @@ describe('#getAccounts', () => {
   it('commits SET_ACCOUNTS', async () => {
     const mockBudgetId = uuid()
     const mockParams = { budgetId: mockBudgetId }
-    const mockAccounts = [{ name: 'acc-1' }, { name: 'acc-2' }]
+    const mockAccounts = factories.account.buildList(2)
 
     api.get.mockResolvedValueOnce(mockAccounts)
 
@@ -46,7 +47,7 @@ describe('#createAccount', () => {
   it('commits UPSERT_ACCOUNT with API response', async () => {
     const mockBudgetId = uuid()
     const mockParams = { budgetId: mockBudgetId, name: 'acc-1' }
-    const mockAccount = { name: 'acc-1', createdAt: '2020-01-01 00:00:00' }
+    const mockAccount = factories.account.build()
 
     api.post.mockResolvedValueOnce(mockAccount)
 

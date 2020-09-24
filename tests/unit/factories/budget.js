@@ -7,7 +7,7 @@ import { Factory } from 'fishery'
 export default Factory.define(({ sequence }) => {
   return {
     id: uuid(),
-    currency: sample(currencies),
+    currency: sample(Object.keys(currencies)),
     name: Faker.finance.accountName(),
   }
 })

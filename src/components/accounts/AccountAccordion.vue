@@ -71,8 +71,9 @@ export default {
 
     @include margin(right, 2);
 
-    display: flex;
     color: var(--sidebar-text);
+    display: flex;
+    flex-flow: row wrap;
     justify-content: space-between;
     text-transform: uppercase;
     width: 100%;
@@ -93,7 +94,7 @@ export default {
       cursor: pointer;
     }
 
-    &__name {
+    &-name {
       @include padding(right, 1);
     }
   }

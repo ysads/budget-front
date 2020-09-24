@@ -40,7 +40,7 @@ describe('#createAccount', () => {
     await actions.createAccount(mockStore, mockParams)
 
     expect(api.post).toHaveBeenCalledWith(
-      `budgets/${mockBudgetId}/accounts`, { account: mockParams },
+      `budgets/${mockBudgetId}/accounts`, mockParams,
     )
   })
 

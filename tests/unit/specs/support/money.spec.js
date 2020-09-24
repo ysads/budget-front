@@ -1,11 +1,21 @@
+import currencies from '@/support/currencies'
+import factories from '#/factories'
 import * as money from '@/support/money'
 
 describe('Money', () => {
-  describe('#fromCents', () => {
-    it('is the cents representation of a given amount', () => {
-      expect(money.fromCents(-200)).toEqual(-2.0)
-      expect(money.fromCents(0)).toEqual(0.0)
-      expect(money.fromCents(23400)).toEqual(234.00)
+  describe('#cleanMask', () => {
+    it('converts string with decimal and thousands markers to float', () => {
+      const budget = factories.budget.build()
+
+      expect(money.cleanMask('5.452,96', budget)).toStrictEqual(5452.96)
+    })
+  })
+
+  describe('#currencyToCents', () => {
+    it('cleans formatted value converting it to cents', () => {
+      const budget = factories.budget.build()
+
+      expect(money.currencyToCents('5.452,96', budget)).toStrictEqual(545296)
     })
   })
 
@@ -22,4 +32,21 @@ describe('Money', () => {
       })
     })
   })
+
+  describe('#fromCents', () => {
+    it('is unities representation of a given amount in cents', () => {
+      expect(money.fromCents(-200)).toStrictEqual(-2.0)
+      expect(money.fromCents(0)).toStrictEqual(0.0)
+      expect(money.fromCents(23405)).toStrictEqual(234.05)
+    })
+  })
+
+  describe('#toCents', () => {
+    it('is the cents representation of a given amount in unities', () => {
+      expect(money.toCents(-2.0)).toStrictEqual(-200)
+      expect(money.toCents(0)).toStrictEqual(0)
+      expect(money.toCents(234.05)).toStrictEqual(23405)
+    })
+  })
+
 })

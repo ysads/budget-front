@@ -12,12 +12,20 @@
   "addAccount": "Add Account",
   "account": {
     "type": {
+      "asset": "Asset",
       "cash": "Cash",
       "credit": "Credit",
       "savings": "Savings",
-      "tracking": "Tracking",
       "checking": "Checkin"
     }
   },
-  "newAccount": "New account"
+  "newAccount": "New account",
+  "CreateAccountModal": {
+    "accountType": "What's the account type?",
+    "currentBalance": "What's your balance in this account today?",
+    "accountName": "How is your account called?",
+    "accountTypePlaceholder": "Choose a type..."
+  },
+  "save": "Save",
+  "startingBalance": "Starting balance"
 }

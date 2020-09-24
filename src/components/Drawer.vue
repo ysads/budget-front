@@ -36,17 +36,17 @@
       <p class="tip">{{ $t('noAccountsTip') }}</p>
     </div>
 
-    <el-button
+    <sad-button
       class="drawer__accounts-btn"
-      size="small"
+      icon="plus"
       @click="toggleModal"
     >
-      <i class="icon fas fa-plus" />
       {{ $t('addAccount') }}
-    </el-button>
+    </sad-button>
 
     <create-account-modal
       v-if="modalVisible"
+      :budget="openBudget"
       @close="toggleModal"
     />
   </aside>
@@ -55,6 +55,7 @@
 <script>
 import AccountAccordion from '@/components/accounts/AccountAccordion'
 import CreateAccountModal from '@/components/accounts/CreateAccountModal'
+import SadButton from '@/components/sad/SadButton'
 import { createNamespacedHelpers } from 'vuex'
 import { BUDGETS, ACCOUNTS } from '@/store/namespaces'
 
@@ -74,6 +75,7 @@ export default {
   components: {
     AccountAccordion,
     CreateAccountModal,
+    SadButton,
   },
 
   computed: {
@@ -153,6 +155,9 @@ export default {
       background: var(--sidebar-button-bg);
       border: 0;
       color: var(--sidebar-text);
+      width: 100%;
+
+      @include margin(top, 5);
 
       &:hover {
         background: var(--sidebar-focus);

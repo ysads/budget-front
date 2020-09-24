@@ -12,12 +12,20 @@
   "addAccount": "Adicionar conta",
   "account": {
     "type": {
+      "asset": "Investimento",
       "cash": "Dinheiro",
-      "credit": "Crédito\n",
+      "credit": "Crédito",
       "savings": "Poupança",
-      "tracking": "Acompanhamento",
       "checking": "Corrente"
     }
   },
-  "newAccount": "Nova conta"
+  "newAccount": "Nova conta",
+  "CreateAccountModal": {
+    "accountType": "De que tipo é essa conta?",
+    "currentBalance": "Quanto você tem hoje nessa conta?",
+    "accountName": "Como você quer chamar essa conta?",
+    "accountTypePlaceholder": "Escolha um tipo..."
+  },
+  "save": "Salvar",
+  "startingBalance": "Saldo inicial"
 }

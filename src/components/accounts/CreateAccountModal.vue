@@ -1,97 +1,151 @@
 <template>
   <base-modal
     data-test="base-modal"
-    :title="$t('newAccount')"
+    :title="t('newAccount')"
     @close="$emit('close')"
   >
-    <el-form
-      label-position="top"
+    <form
       class="create-account"
-      :rules="rules"
+      data-test="form"
+      @submit.prevent="handleSubmit"
     >
-      <el-form-item :label="$t('accounts.CreateAccountModal.type')">
+      <sad-label
+        class="create-account__item"
+        to="accountType"
+        :text="st('accountType')"
+        data-test="account-type"
+      >
         <el-select
-          v-model="account.type"
-          placeholder="Select"
+          v-model="form.accountType"
+          class="create-account__select"
+          :placeholder="st('accountTypePlaceholder')"
+          data-test="select"
         >
           <el-option
             v-for="type in accountTypes"
             :key="type.value"
             :label="type.label"
-            :value="type.value">
-          </el-option>
+            :value="type.value"
+            data-test="select-option"
+          />
         </el-select>
-      </el-form-item>
+      </sad-label>
 
-      <el-form-item :label="$t('accounts.CreateAccountModal.accountName')">
-        <el-input
-          v-model="account.name"
+      <sad-label
+        class="create-account__item"
+        to="name"
+        :text="st('accountName')"
+        data-test="account-name"
+      >
+        <sad-input
+          v-model="form.accountName"
+          name="name"
+          class="create-account__item-input"
+          data-test="input"
         />
-      </el-form-item>
+      </sad-label>
 
-      <el-form-item :label="$t('accounts.CreateAccountModal.currentBalance')">
-        <el-input
-          v-model="account.startingBalance"
-          placeholder="Please input"
+      <sad-label
+        class="create-account__item"
+        to="currentBalance"
+        :text="st('currentBalance')"
+        data-test="current-balance"
+      >
+        <sad-input
+          v-model="form.currentBalance"
+          name="currentBalance"
+          class="create-account__item-input"
+          data-test="input"
+          :money="budgetCurrency"
         />
-      </el-form-item>
-    </el-form>
+      </sad-label>
+    </form>
+
+    <div slot="footer" class="create-account__footer">
+      <sad-button
+        size="normal"
+        type="primary"
+        @click="handleSubmit"
+      >
+        {{ t('save') }}
+      </sad-button>
+    </div>
   </base-modal>
 </template>
 
 <script>
 import BaseModal from '@/components/BaseModal'
+import SadInput from '@/components/sad/SadInput'
+import SadLabel from '@/components/sad/SadLabel'
+import SadButton from '@/components/sad/SadButton'
+import { ACCOUNTS } from '@/store/namespaces'
 import { ACCOUNT_TYPES } from '@/constants/account'
+import { createNamespacedHelpers } from 'vuex'
+import { useI18n } from '@/use/i18n'
+import * as Money from '@/support/money'
+
+const accountsHelper = createNamespacedHelpers(ACCOUNTS)
 
 export default {
   name: 'CreateAccountModal',
 
+  props: {
+    budget: {
+      type: Object,
+      required: true,
+    },
+  },
+
   components: {
     BaseModal,
+    SadButton,
+    SadInput,
+    SadLabel,
   },
 
   data () {
     return {
-      account: {
-        type: '',
-        name: '',
-        startingBalance: 0,
+      form: {
+        accountType: '',
+        accountName: '',
+        budgetId: this.budget.id,
+        currentBalance: '',
+        payeeName: this.t('startingBalance'),
       },
     }
+  },
+
+  setup () {
+    return { ...useI18n('CreateAccountModal') }
   },
 
   computed: {
     accountTypes () {
       return ACCOUNT_TYPES.map(type => ({
-        label: this.$t(`account.type.${type}`),
+        label: this.t(`account.type.${type}`),
         value: type,
       }))
     },
 
-    rules () {
-      return {
-        accountType: [{
-          required: true,
-          message: this.$localt('accoutType.required'),
-          trigger: 'blur',
-        }],
-        name: [{
-          required: true,
-          message: this.$localt('name.required'),
-          trigger: 'blur',
-        }],
-        startingBalance: [{
-          required: true,
-          message: this.$localt('startingBalance.required'),
-          trigger: 'blur',
-        }],
-      }
+    budgetCurrency () {
+      return Money.currencySettings(this.budget)
     },
   },
 
   methods: {
-    $localt (msg) {
-      return this.$t(`CreateAccountModal.${msg}`)
+    ...accountsHelper.mapActions(['createAccount']),
+
+    handleSubmit () {
+      try {
+        this.createAccount({
+          ...this.form,
+          currentBalance: Money.currencyToCents(
+            this.form.currentBalance, this.budget,
+          ),
+        })
+      } catch (exc) {
+        console.log(exc)
+      }
     },
   },
 }
@@ -99,5 +153,21 @@ export default {
 
 <style lang="scss" scoped>
 .create-account {
+  &__select {
+    width: 100%;
+  }
+
+  &__item-input {
+    width: 100%;
+  }
+
+  &__item + &__item {
+    @include margin(top, 4);
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 </style>

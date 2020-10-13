@@ -20,6 +20,10 @@
 <script>
 export default {
   props: {
+    icon: {
+      type: String,
+      default: '',
+    },
     size: {
       type: String,
       default: 'normal',
@@ -27,18 +31,12 @@ export default {
         return ['normal', 'small'].includes(val)
       },
     },
-
     type: {
       type: String,
       default: 'primary',
       validator (val) {
         return ['primary'].includes(val)
       },
-    },
-
-    icon: {
-      type: String,
-      default: '',
     },
   },
 

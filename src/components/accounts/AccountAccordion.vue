@@ -67,7 +67,7 @@ export default {
 <style lang="scss" scoped>
 .account-accordion {
   &__header {
-    @extend %caption2;
+    @extend %caption-2;
 
     @include margin(right, 2);
 
@@ -80,7 +80,7 @@ export default {
   }
 
   &__item {
-    @extend %caption2;
+    @extend %caption-2;
 
     align-items: center;
     border-radius: $radius-8;

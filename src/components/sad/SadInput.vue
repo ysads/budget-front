@@ -20,17 +20,14 @@ export default {
       type: [String, Number],
       required: true,
     },
-
     money: {
       type: Object,
       required: false,
     },
-
     name: {
       type: String,
       required: true,
     },
-
     placeholder: {
       type: String,
       default: '',
@@ -86,12 +83,12 @@ export default {
 
 <style lang="scss" scoped>
 .sad-input {
+  @extend %body-1;
+
   border: 1px solid var(--input-border);
   border-radius: $radius-4;
   color: var(--text-default);
   height: $base * 10;
   padding: $base * 2;
-
-  @extend %input;
 }
 </style>

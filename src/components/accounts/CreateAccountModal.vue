@@ -20,6 +20,7 @@
           class="create-account__select"
           :placeholder="st('accountTypePlaceholder')"
           data-test="select"
+          @input="validate($v)"
         >
           <el-option
             v-for="type in accountTypes"
@@ -31,6 +32,13 @@
         </el-select>
       </sad-label>
 
+      <sad-tip
+        v-if="hasError($v.form.accountType, 'required')"
+        class="create-account__assistive"
+        variant="error"
+        :text="t('validations.required')"
+      />
+
       <sad-label
         class="create-account__item"
         to="name"
@@ -38,12 +46,20 @@
         data-test="account-name"
       >
         <sad-input
-          v-model="form.accountName"
+          v-model.trim="form.accountName"
           name="name"
           class="create-account__item-input"
           data-test="input"
+          @input="validate($v.form.accountName)"
         />
       </sad-label>
+
+      <sad-tip
+        v-if="hasError($v.form.accountName, 'required')"
+        class="create-account__assistive"
+        variant="error"
+        :text="t('validations.required')"
+      />
 
       <sad-label
         class="create-account__item"
@@ -52,13 +68,20 @@
         data-test="current-balance"
       >
         <sad-input
-          v-model="form.currentBalance"
+          v-model.trim="form.currentBalance"
           name="currentBalance"
           class="create-account__item-input"
           data-test="input"
           :money="budgetCurrency"
         />
       </sad-label>
+
+      <sad-tip
+        class="create-account__assistive"
+        data-test="current-balance-tip"
+        :variant="currentBalanceVariant"
+        :text="currentBalanceTip"
+      />
     </form>
 
     <div slot="footer" class="create-account__footer">
@@ -75,13 +98,16 @@
 
 <script>
 import BaseModal from '@/components/BaseModal'
+import SadButton from '@/components/sad/SadButton'
 import SadInput from '@/components/sad/SadInput'
 import SadLabel from '@/components/sad/SadLabel'
-import SadButton from '@/components/sad/SadButton'
+import SadTip from '@/components/sad/SadTip'
 import { ACCOUNTS } from '@/store/namespaces'
 import { ACCOUNT_TYPES } from '@/constants/account'
 import { createNamespacedHelpers } from 'vuex'
+import { required } from 'vuelidate/lib/validators'
 import { useI18n } from '@/use/i18n'
+import { useValidation } from '@/use/validation'
 import * as Money from '@/support/money'
 
 const accountsHelper = createNamespacedHelpers(ACCOUNTS)
@@ -101,6 +127,7 @@ export default {
     SadButton,
     SadInput,
     SadLabel,
+    SadTip,
   },
 
   data () {
@@ -116,7 +143,18 @@ export default {
   },
 
   setup () {
-    return { ...useI18n('CreateAccountModal') }
+    return {
+      ...useI18n('CreateAccountModal'),
+      ...useValidation(),
+    }
+  },
+
+  validations: {
+    form: {
+      accountType: { required },
+      accountName: { required },
+      currentBalance: { required },
+    },
   },
 
   computed: {
@@ -130,22 +168,33 @@ export default {
     budgetCurrency () {
       return Money.currencySettings(this.budget)
     },
+
+    currentBalanceTip () {
+      return this.hasError(this.$v.form.currentBalance, 'required')
+        ? this.t('validations.required')
+        : this.st('currentBalanceTip')
+    },
+
+    currentBalanceVariant () {
+      return this.hasError(this.$v.form.currentBalance, 'required')
+        ? 'error'
+        : 'info'
+    },
   },
 
   methods: {
     ...accountsHelper.mapActions(['createAccount']),
 
     handleSubmit () {
-      try {
-        this.createAccount({
-          ...this.form,
-          currentBalance: Money.currencyToCents(
-            this.form.currentBalance, this.budget,
-          ),
-        })
-      } catch (exc) {
-        console.log(exc)
-      }
+      if (!this.isValid(this.$v)) return
+
+      this.createAccount({
+        ...this.form,
+        currentBalance: Money.currencyToCents(
+          this.form.currentBalance, this.budget,
+        ),
+      })
+      this.$emit('close')
     },
   },
 }
@@ -155,6 +204,11 @@ export default {
 .create-account {
   &__select {
     width: 100%;
+  }
+
+  &__assistive {
+    @include margin(top, 1);
+    @include margin(bottom, 4);
   }
 
   &__item-input {

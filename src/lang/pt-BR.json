@@ -24,8 +24,12 @@
     "accountType": "De que tipo é essa conta?",
     "currentBalance": "Quanto você tem hoje nessa conta?",
     "accountName": "Como você quer chamar essa conta?",
-    "accountTypePlaceholder": "Escolha um tipo..."
+    "accountTypePlaceholder": "Escolha um tipo...",
+    "currentBalanceTip": "Não tem certeza? Estime! Você pode editar depois."
   },
   "save": "Salvar",
-  "startingBalance": "Saldo inicial"
+  "startingBalance": "Saldo inicial",
+  "validations": {
+    "required": "Campo obrigatório."
+  }
 }

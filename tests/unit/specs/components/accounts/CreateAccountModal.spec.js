@@ -56,6 +56,14 @@ describe('CreateAccountModal', () => {
     expect(input.props().money).toStrictEqual(money.currencySettings(budget))
   })
 
+  it('renders current balance tip with info variant', () => {
+    const wrapper = factory()
+    const tip = wrapper.find("[data-test='current-balance-tip']")
+
+    expect(tip.props().text).toEqual('CreateAccountModal.currentBalanceTip')
+    expect(tip.props().variant).toEqual('info')
+  })
+
   describe('#accountTypes', () => {
     it('is an array with each account type and its label', () => {
       const wrapper = factory()
@@ -65,6 +73,23 @@ describe('CreateAccountModal', () => {
       }))
 
       expect(wrapper.vm.accountTypes).toEqual(typesOptions)
+    })
+  })
+
+  context('when current balance is invalid', () => {
+    it('renders current balance tip with error variant', async () => {
+      const wrapper = factory({
+        data: {
+          form: { ...form, currentBalance: '' },
+        },
+      })
+
+      await wrapper.find("[data-test='form']").trigger('submit.prevent')
+
+      const tip = wrapper.find("[data-test='current-balance-tip']")
+
+      expect(tip.props().text).toEqual('validations.required')
+      expect(tip.props().variant).toEqual('error')
     })
   })
 
@@ -79,6 +104,15 @@ describe('CreateAccountModal', () => {
   })
 
   context('when form is submitted', () => {
+    it('validates form', async () => {
+      const wrapper = factory({ data: { form } })
+      const isValid = jest.spyOn(wrapper.vm, 'isValid')
+
+      await wrapper.find("[data-test='form']").trigger('submit.prevent')
+
+      expect(isValid).toHaveBeenCalled()
+    })
+
     it('calls createAccount with form', async () => {
       const mockCreateAccount = jest.fn()
       const wrapper = factory({
@@ -93,6 +127,21 @@ describe('CreateAccountModal', () => {
         budgetId: budget.id,
         payeeName: expect.stringMatching(/startingBalance/),
         currentBalance: money.currencyToCents(form.currentBalance, budget),
+      })
+    })
+
+    context('and validation fails', () => {
+      it('does call createAccount', async () => {
+        const mockCreateAccount = jest.fn()
+        const wrapper = factory({
+          data: { form },
+          createAccount: mockCreateAccount,
+        })
+        jest.spyOn(wrapper.vm, 'isValid').mockReturnValue(false)
+
+        await wrapper.find("[data-test='form']").trigger('submit.prevent')
+
+        expect(mockCreateAccount).not.toHaveBeenCalled()
       })
     })
   })

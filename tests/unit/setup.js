@@ -3,6 +3,9 @@ import Vue from 'vue'
 import store from '@/store'
 import { config } from '@vue/test-utils'
 
+import '@/plugins/composition-api'
+import '@/plugins/validation'
+
 Vue.use(ElementUI)
 Vue.use(store)
 
@@ -15,12 +18,12 @@ jest.mock('@/api', () => ({
   del: jest.fn(() => Promise.resolve({})),
 }))
 
-// Mock i18n fns
-const mockI18nFn = (string, params) => {
-  return `${string}${params ? JSON.stringify(params) : ''}`
-}
-config.mocks.$t = mockI18nFn
-config.mocks.$n = mockI18nFn
+// Mock i18n functions
+jest.mock('vue-i18n-composable', () => ({
+  useI18n: () => ({
+    t: (string) => string,
+  }),
+}))
 
 // Mock routing fns
 config.mocks.$route = {

@@ -1,19 +1,28 @@
-/* stylelint-disable color-no-hex */
 :root {
-  --app-bg: #fff;
-  --acc-header-bg: #f2f2f2;
-  --acc-header-text: #383e41;
-  --balance-positive: #6d9f39;
-  --balance-negative: #e85f54;
-  --modal-bg: #fff;
-  --modal-title: #6b6b6b;
-  --modal-close-btn: #295f9c;
+  --app-bg: rgba(255, 255, 255, 1);
+  --acc-header-bg: rgba(242, 242, 242, 1);
+  --acc-header-text: rgba(56, 62, 65, 1);
+  --balance-positive: rgba(109, 159, 57, 1);
+  --balance-negative: rgba(232, 95, 84, 1);
+  --color-error: rgba(232, 95, 84, 1);
+  --color-info: rgba(130, 130, 130, 1);
+  --color-success: rgba(109, 159, 57, 1);
+  --color-warning: rgba(255, 194, 23, 1);
+  --color-primary: rgba(41, 95, 156, 1);
+  --color-primary-hover: rgba(50, 82, 119, 1);
+  --input-border: rgba(221, 223, 231, 1);
+  --modal-bg: rgba(255, 255, 255, 1);
+  --modal-title: rgba(107, 107, 107, 1);
+  --modal-close-btn: var(--color-primary);
   --modal-overlay: rgba(0, 0, 0, 0.5);
-  --sidebar-active: #295f9c;
-  --sidebar-bg: #3d79b9;
+  --notification-border: rgba(240, 240, 240, 1);
+  --notification-close: rgba(144, 144, 144, 1);
+  --sidebar-active: var(--color-primary);
+  --sidebar-bg: rgba(61, 121, 185, 1);
   --sidebar-button-bg: rgba(170, 210, 255, 0.2);
-  --sidebar-focus: #325277;
-  --sidebar-text: #fff;
-  --sidebar-tip: #cfd5f2;
+  --sidebar-focus: rgba(50, 82, 119, 1);
+  --sidebar-text: rgba(255, 255, 255, 1);
+  --sidebar-tip: rgba(207, 213, 242, 1);
+  --select-selected-text: var(--color-primary);
+  --text-default: rgba(55, 55, 55, 1);
 }
-/* stylelint-enable color-no-hex */

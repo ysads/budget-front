@@ -1,5 +1,6 @@
 import * as api from '@/api'
 import actions from '@/store/budgets/actions'
+import factories from '#/factories'
 import uuid from 'uuid-random'
 
 const mockStore = {
@@ -7,7 +8,7 @@ const mockStore = {
 }
 
 describe('actions', () => {
-  context('#getBudget', () => {
+  describe('#getBudget', () => {
     it('requests /budget/:id endpoint using id', async () => {
       const mockId = uuid()
 
@@ -18,7 +19,7 @@ describe('actions', () => {
 
     it('commits SET_OPEN_BUDGET', async () => {
       const mockId = uuid()
-      const mockBudget = [{ name: 'budget-1' }]
+      const mockBudget = factories.budget.build()
 
       api.get.mockResolvedValueOnce(mockBudget)
 
@@ -30,7 +31,7 @@ describe('actions', () => {
     })
   })
 
-  context('#getBudgets', () => {
+  describe('#getBudgets', () => {
     it('requests /budgets endpoint using given params', async () => {
       const mockParams = { mock: true }
 
@@ -41,7 +42,7 @@ describe('actions', () => {
 
     it('commits SET_BUDGETS', async () => {
       const mockParams = { param: 1 }
-      const mockBudgets = [{ name: 'budget-1' }, { name: 'budget-2' }]
+      const mockBudgets = factories.budget.buildList(2)
 
       api.get.mockResolvedValueOnce(mockBudgets)
 

@@ -1,6 +1,15 @@
 <template>
   <div class="dashboard">
-    <drawer v-if="openBudget" class="dashboard__drawer" />
+    <i
+      class="fas fa-bars dashboard__drawer-toggle"
+      @click="toggleDrawer"
+    />
+    <drawer
+      v-if="openBudget"
+      ref="drawer"
+      class="dashboard__drawer"
+      :class="{ 'fullscreen': showDrawer }"
+    />
     <main class="dashboard__main">
       <router-view></router-view>
     </main>
@@ -15,6 +24,8 @@ import { AUTH, BUDGETS } from '@/store/namespaces'
 const authHelper = createNamespacedHelpers(AUTH)
 const budgetsHelper = createNamespacedHelpers(BUDGETS)
 
+const MD_BREAKPOINT = 768
+
 export default {
   name: 'Dashboard',
 
@@ -22,13 +33,29 @@ export default {
     Drawer,
   },
 
+  data () {
+    return {
+      isDrawerVisible: false,
+      innerWidth: window.innerWidth,
+    }
+  },
+
   async mounted () {
+    window.addEventListener('resize', this.onResize)
     await this.validateSession()
     await this.getBudget(this.$route.params.id)
   },
 
+  beforeDestroy () {
+    window.removeEventListener('resize', this.onResize)
+  },
+
   computed: {
     ...budgetsHelper.mapState(['openBudget']),
+
+    showDrawer () {
+      return this.isDrawerVisible && this.innerWidth <= MD_BREAKPOINT
+    },
   },
 
   methods: {
@@ -41,6 +68,14 @@ export default {
       } catch {
         this.$router.push({ name: 'SignIn' })
       }
+    },
+
+    toggleDrawer () {
+      this.isDrawerVisible = !this.isDrawerVisible
+    },
+
+    onResize () {
+      this.innerWidth = window.innerWidth
     },
   },
 }
@@ -60,6 +95,21 @@ export default {
       height: 100%;
       width: 20%;
     }
+
+    &-toggle {
+      cursor: pointer;
+      display: block;
+      font-size: 20px;
+      left: 20px;
+      opacity: 0.5;
+      position: absolute;
+      top: 16px;
+      z-index: 2;
+
+      @include breakpoint(md) {
+        display: none;
+      }
+    }
   }
 
   &__main {
@@ -69,5 +119,14 @@ export default {
       width: 80%;
     }
   }
+}
+
+.fullscreen {
+  display: block;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+
+  @include padding(top, 13);
 }
 </style>

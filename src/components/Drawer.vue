@@ -36,18 +36,26 @@
       <p class="tip">{{ $t('noAccountsTip') }}</p>
     </div>
 
-    <el-button
+    <sad-button
       class="drawer__accounts-btn"
-      size="small"
+      icon="plus"
+      @click="toggleModal"
     >
-      <i class="icon fas fa-plus" />
       {{ $t('addAccount') }}
-    </el-button>
+    </sad-button>
+
+    <create-account-modal
+      v-if="modalVisible"
+      :budget="openBudget"
+      @close="toggleModal"
+    />
   </aside>
 </template>
 
 <script>
 import AccountAccordion from '@/components/accounts/AccountAccordion'
+import CreateAccountModal from '@/components/accounts/CreateAccountModal'
+import SadButton from '@/components/sad/SadButton'
 import { createNamespacedHelpers } from 'vuex'
 import { BUDGETS, ACCOUNTS } from '@/store/namespaces'
 
@@ -60,11 +68,14 @@ export default {
   data () {
     return {
       activeNames: ['budget', 'tracking'],
+      modalVisible: false,
     }
   },
 
   components: {
     AccountAccordion,
+    CreateAccountModal,
+    SadButton,
   },
 
   computed: {
@@ -90,6 +101,10 @@ export default {
     activeClass (route) {
       return this.$route.name === route ? 'active' : ''
     },
+
+    toggleModal () {
+      this.modalVisible = !this.modalVisible
+    },
   },
 }
 </script>
@@ -111,6 +126,9 @@ export default {
       padding: $base * 2 $base * 3;
       transition: all ease 0.1s;
 
+      @extend %menu;
+      @extend %menu;
+
       &:hover {
         background: var(--sidebar-focus);
       }
@@ -122,8 +140,6 @@ export default {
       .icon {
         @include margin(right, 4);
       }
-
-      @extend %menu;
     }
 
     &-item + &-item {
@@ -132,6 +148,8 @@ export default {
   }
 
   &__accounts {
+    @include margin(top, 4);
+
     &-list + &-list {
       @include margin(top, 2);
     }
@@ -140,18 +158,24 @@ export default {
       background: var(--sidebar-button-bg);
       border: 0;
       color: var(--sidebar-text);
+      width: 100%;
+
+      @include margin(top, 2);
+      @include margin(top, 5);
+      @include margin(top, 2);
 
       &:hover {
         background: var(--sidebar-focus);
       }
-
-      @include margin(top, 2);
     }
 
     &--empty {
       background: var(--sidebar-active);
       border-radius: $radius-8;
       padding: $base * 4;
+
+      @include margin(top, 6);
+      @include margin(top, 6);
 
       .tip {
         color: var(--sidebar-tip);
@@ -160,11 +184,7 @@ export default {
 
         @include margin(top, 4);
       }
-
-      @include margin(top, 6);
     }
-
-    @include margin(top, 4);
   }
 }
 </style>

@@ -4,12 +4,12 @@
   "rules": {
     "order/properties-alphabetical-order": true,
     "order/order": [
-      "custom-properties",
       "dollar-variables",
-      "at-variables",
       "declarations",
-      "rules",
       "at-rules",
+      "at-variables",
+      "rules",
+      "custom-properties",
     ],
     "at-rule-no-unknown": [
       true, { "ignoreAtRules": ["extend", "mixin", "if", "else", "content", "include", "for"] }

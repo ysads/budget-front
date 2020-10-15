@@ -9,5 +9,27 @@
   "uncleared": "Uncleared",
   "trackingAccounts": "Tracking",
   "budgetAccounts": "Budget",
-  "addAccount": "Add Account"
+  "addAccount": "Add Account",
+  "account": {
+    "type": {
+      "asset": "Asset",
+      "cash": "Cash",
+      "credit": "Credit",
+      "savings": "Savings",
+      "checking": "Checkin"
+    }
+  },
+  "newAccount": "New account",
+  "CreateAccountModal": {
+    "accountType": "What's the account type?",
+    "currentBalance": "What's your balance in this account today?",
+    "accountName": "How is your account called?",
+    "accountTypePlaceholder": "Choose a type...",
+    "currentBalanceTip": "Not sure? Estimate it! You can edit that later."
+  },
+  "save": "Save",
+  "startingBalance": "Starting balance",
+  "validations": {
+    "required": "This is required."
+  }
 }

@@ -12,7 +12,6 @@
           data-test="close-btn"
           @click="$emit('close')"
         />
-
         <h3
           v-if="title"
           class="base-modal__header-title"
@@ -22,6 +21,10 @@
         </h3>
       </header>
       <slot></slot>
+
+      <footer class="base-modal__footer">
+        <slot name="footer"></slot>
+      </footer>
     </section>
   </div>
 </template>
@@ -89,6 +92,9 @@ export default {
     font-size: 1.75rem;
     justify-content: space-between;
 
+    @include margin(bottom, 6);
+    @include margin(bottom, 6);
+
     &-title {
       color: var(--modal-title);
 
@@ -100,11 +106,13 @@ export default {
       cursor: pointer;
 
       &:active {
-        @include scale-85;
+        @include scale-90;
       }
     }
+  }
 
-    @include margin(bottom, 6);
+  &__footer {
+    @include margin(top, 4);
   }
 
   &__group {

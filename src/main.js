@@ -4,7 +4,9 @@ import i18n from './plugins/i18n'
 import store from './store'
 import router from './router'
 
+import './plugins/composition-api'
 import './plugins/element-ui'
+import './plugins/validation'
 import './assets/styles/themes/main.scss'
 
 Vue.config.productionTip = false

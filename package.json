@@ -13,7 +13,7 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/lang/**/*.json'"
   },
   "dependencies": {
-    "@vue/composition-api": "^1.0.0-beta.14",
+    "@vue/composition-api": "^1.0.0-beta.16",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",

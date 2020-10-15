@@ -9,5 +9,27 @@
   "uncleared": "Não aprovado",
   "trackingAccounts": "Acompanhamento",
   "budgetAccounts": "Orçamento",
-  "addAccount": "Adicionar conta"
+  "addAccount": "Adicionar conta",
+  "account": {
+    "type": {
+      "asset": "Investimento",
+      "cash": "Dinheiro",
+      "credit": "Crédito",
+      "savings": "Poupança",
+      "checking": "Corrente"
+    }
+  },
+  "newAccount": "Nova conta",
+  "CreateAccountModal": {
+    "accountType": "De que tipo é essa conta?",
+    "currentBalance": "Quanto você tem hoje nessa conta?",
+    "accountName": "Como você quer chamar essa conta?",
+    "accountTypePlaceholder": "Escolha um tipo...",
+    "currentBalanceTip": "Não tem certeza? Estime! Você pode editar depois."
+  },
+  "save": "Salvar",
+  "startingBalance": "Saldo inicial",
+  "validations": {
+    "required": "Campo obrigatório."
+  }
 }

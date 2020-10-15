@@ -8,9 +8,17 @@ module.exports = {
     'tests/unit/factory-builder',
     'src/setup/*',
   ],
+  coverageThreshold: {
+    global: {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: -10,
+    },
+  },
   preset: '@vue/cli-plugin-unit-jest',
   moduleNameMapper: {
-    '^#/(.*)$': '<rootDir>/tests/unit/$1.js',
+    '^#/(.*)$': '<rootDir>/tests/unit/$1',
   },
   setupFiles: [
     '<rootDir>/tests/unit/setup',

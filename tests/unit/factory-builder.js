@@ -13,6 +13,9 @@ export const factoryBuilder = (component, args = {}) => {
     computed: args.computed,
     mocks: args.mocks,
     slots: args.slots,
+    data () {
+      return args.data || {}
+    },
     store: new Vuex.Store({
       modules: merge(cloneDeep(modules), args.store || {}),
     }),

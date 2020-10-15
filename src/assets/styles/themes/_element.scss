@@ -1,19 +1,46 @@
-
 /* theme color */
 $--collapse-header-background-color: transparent;
 $--collapse-header-font-color: var(--sidebar-text);
 $--collapse-border-color: transparent;
 $--collapse-content-background-color: transparent;
 
+$--select-option-selected-font-color: var(--select-selected-text);
+
 /* icon font path, required */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import "~element-ui/packages/theme-chalk/src/index";
 
+/* Overrides el-collapse */
 .el-collapse-item__header {
   flex-flow: row-reverse;
 }
 
 .el-collapse-item__content {
   padding-bottom: 0;
+}
+
+/* Overrides el-form-item */
+.el-form-item {
+  margin-bottom: 0;
+}
+
+.el-form--label-top .el-form-item__label {
+  font-size: 0.9rem;
+  line-height: 1.25rem;
+  padding: 0;
+
+  @include margin(bottom, 2);
+
+  &::before {
+    content: '';
+  }
+}
+
+.el-form-item__error {
+  position: relative;
+}
+
+.el-input__inner {
+  @extend %body-1;
 }

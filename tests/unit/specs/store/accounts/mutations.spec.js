@@ -1,4 +1,3 @@
-
 import commit from '@/store/accounts/mutations'
 import factories from '#/factories'
 

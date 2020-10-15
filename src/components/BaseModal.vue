@@ -20,7 +20,6 @@
           {{ title }}
         </h3>
       </header>
-
       <slot></slot>
 
       <footer class="base-modal__footer">
@@ -93,6 +92,7 @@ export default {
     font-size: 1.75rem;
     justify-content: space-between;
 
+    @include margin(bottom, 6);
     @include margin(bottom, 6);
 
     &-title {

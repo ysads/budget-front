@@ -127,6 +127,7 @@ export default {
       transition: all ease 0.1s;
 
       @extend %menu;
+      @extend %menu;
 
       &:hover {
         background: var(--sidebar-focus);
@@ -161,6 +162,7 @@ export default {
 
       @include margin(top, 2);
       @include margin(top, 5);
+      @include margin(top, 2);
 
       &:hover {
         background: var(--sidebar-focus);
@@ -172,6 +174,7 @@ export default {
       border-radius: $radius-8;
       padding: $base * 4;
 
+      @include margin(top, 6);
       @include margin(top, 6);
 
       .tip {

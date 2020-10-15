@@ -65,6 +65,11 @@ export default {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
+  padding: $base*3 $base*6;
+
+  @include breakpoint(md) {
+    flex-flow: row;
+  }
 
   @include padding(top, 3);
   @include padding(bottom, 3);

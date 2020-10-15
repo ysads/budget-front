@@ -2,10 +2,7 @@ import { get, post } from '@/api'
 
 export default {
   async createAccount ({ commit }, params) {
-    const account = await post(
-      `budgets/${params.budgetId}/accounts`,
-      { account: params },
-    )
+    const account = await post(`budgets/${params.budgetId}/accounts`, params)
 
     commit('UPSERT_ACCOUNT', account)
   },

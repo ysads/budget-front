@@ -7,7 +7,17 @@ import { Factory } from 'fishery'
 
 const ACCOUNT_NATURES = ['budget', 'tracking']
 
-export default Factory.define(({ sequence }) => {
+class AccountFactory extends Factory {
+  budget () {
+    return this.params({ nature: 'budget' })
+  }
+
+  tracking () {
+    return this.params({ nature: 'tracking' })
+  }
+}
+
+export default AccountFactory.define(({ sequence }) => {
   const balance = random(-10000, 60000)
   const clearedBalance = random(-10000, 60000)
 

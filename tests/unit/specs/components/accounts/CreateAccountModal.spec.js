@@ -1,7 +1,6 @@
 import CreateAccountModal from '@/components/accounts/CreateAccountModal'
 import Faker from 'faker'
 import factories from '#/factories'
-import flushPromises from 'flush-promises'
 import sample from 'lodash/sample'
 import { factoryBuilder } from '#/factory-builder'
 import { ACCOUNTS } from '@/store/namespaces'

@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:css": "npx stylelint \"src/**/*.{vue,scss}\"",
+    "lint:js": "vue-cli-service lint --max-warnings 0",
     "test:unit": "vue-cli-service test:unit",
     "test:unit:watch": "npx vue-cli-service test:unit --watch --notify --notifyMode change",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/lang/**/*.json'"
@@ -49,6 +51,9 @@
     "jest-plugin-context": "^2.9.0",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
+    "stylelint": "^13.7.2",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.1.0",
     "vue-cli-plugin-i18n": "~1.0.1",
     "vue-jest": "^3.0.6",
     "vue-template-compiler": "^2.6.11"

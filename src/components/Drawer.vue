@@ -121,23 +121,26 @@ export default {
     flex-flow: column;
 
     &-item {
-      @extend %menu;
-
-      transition: all ease .1s;
       border-radius: $radius-8;
       cursor: pointer;
       padding: $base * 2 $base * 3;
+      transition: all ease 0.1s;
+
+      @extend %menu;
 
       &:hover {
         background: var(--sidebar-focus);
       }
+
       &.active {
         background: var(--sidebar-active);
       }
+
       .icon {
         @include margin(right, 4);
       }
     }
+
     &-item + &-item {
       @include margin(top, 1);
     }
@@ -149,14 +152,14 @@ export default {
     &-list + &-list {
       @include margin(top, 2);
     }
-    &-btn {
-      @include margin(top, 2);
 
+    &-btn {
       background: var(--sidebar-button-bg);
       border: 0;
       color: var(--sidebar-text);
       width: 100%;
 
+      @include margin(top, 2);
       @include margin(top, 5);
 
       &:hover {
@@ -165,18 +168,18 @@ export default {
     }
 
     &--empty {
-      @include margin(top, 6);
-
       background: var(--sidebar-active);
       border-radius: $radius-8;
       padding: $base * 4;
 
+      @include margin(top, 6);
+
       .tip {
+        color: var(--sidebar-tip);
+
         @extend %caption;
 
         @include margin(top, 4);
-
-        color: var(--sidebar-tip);
       }
     }
   }

@@ -59,17 +59,17 @@ export default {
 
 <style lang="scss" scoped>
 .account-header {
+  align-items: center;
+  background: var(--acc-header-bg);
+  color: var(--acc-header-text);
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+
   @include padding(top, 3);
   @include padding(bottom, 3);
   @include padding(left, 6);
   @include padding(right, 6);
-
-  display: flex;
-  align-items: center;
-  flex-flow: column;
-  justify-content: space-between;
-  background: var(--acc-header-bg);
-  color: var(--acc-header-text);
 
   @include breakpoint(md) {
     flex-flow: row;
@@ -83,9 +83,9 @@ export default {
     text-align: center;
 
     &-group {
-      @include margin(top, 4);
-
       display: flex;
+
+      @include margin(top, 4);
 
       @include breakpoint(md) {
         margin: 0;

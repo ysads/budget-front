@@ -1,4 +1,3 @@
-import currencies from '@/support/currencies'
 import factories from '#/factories'
 import * as money from '@/support/money'
 
@@ -20,7 +19,7 @@ describe('Money', () => {
   })
 
   describe('#currencySettings', () => {
-    it('maps a budget to an object with currency mapped to its proper symbol', () => {
+    it('maps a budget to an object with currency mapped to its symbol', () => {
       const mockBudget = { currency: 'JPY' }
 
       expect(money.currencySettings(mockBudget)).toEqual({
@@ -48,5 +47,4 @@ describe('Money', () => {
       expect(money.toCents(234.05)).toStrictEqual(23405)
     })
   })
-
 })

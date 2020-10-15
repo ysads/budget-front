@@ -67,27 +67,27 @@ export default {
 <style lang="scss" scoped>
 .account-accordion {
   &__header {
-    @extend %caption-2;
-
-    @include margin(right, 2);
-
     color: var(--sidebar-text);
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     text-transform: uppercase;
     width: 100%;
+
+    @extend %caption-2;
+
+    @include margin(right, 2);
   }
 
   &__item {
-    @extend %caption-2;
-
     align-items: center;
     border-radius: $radius-8;
     color: var(--sidebar-text);
     display: flex;
     justify-content: space-between;
     padding: $base * 2 $base * 3;
+
+    @extend %caption-2;
 
     &:hover {
       background: var(--sidebar-focus);

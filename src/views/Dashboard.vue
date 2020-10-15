@@ -122,11 +122,11 @@ export default {
 }
 
 .fullscreen {
-  @include padding(top, 13);
-
   display: block;
-  width: 100%;
   height: 100%;
   position: fixed;
+  width: 100%;
+
+  @include padding(top, 13);
 }
 </style>

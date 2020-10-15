@@ -8,7 +8,7 @@ const mockStore = {
 }
 
 describe('actions', () => {
-  context('#getBudget', () => {
+  describe('#getBudget', () => {
     it('requests /budget/:id endpoint using id', async () => {
       const mockId = uuid()
 
@@ -31,7 +31,7 @@ describe('actions', () => {
     })
   })
 
-  context('#getBudgets', () => {
+  describe('#getBudgets', () => {
     it('requests /budgets endpoint using given params', async () => {
       const mockParams = { mock: true }
 

@@ -58,12 +58,12 @@ export default {
 
 <style lang="scss" scoped>
 .button {
-  @extend %barlow;
-
   border: none;
   border-radius: $radius-4;
   cursor: pointer;
   font-size: 1rem;
+
+  @extend %barlow;
 
   @include transition;
 

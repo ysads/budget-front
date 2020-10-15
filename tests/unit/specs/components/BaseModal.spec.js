@@ -3,9 +3,28 @@ import { factoryBuilder } from '#/factory-builder'
 
 const factory = (args = {}) => factoryBuilder(BaseModal, {
   propsData: args.propsData,
+  slots: args.slots,
 })
 
 describe('BaseModal', () => {
+  it('renders content passed to foot slot', () => {
+    const button = '<button id="btn">hello</button>'
+    const wrapper = factory({ slots: { footer: button } })
+
+    const item = wrapper.find('#btn')
+
+    expect(item.exists()).toBeTruthy()
+  })
+
+  it('renders content passed to main slot', () => {
+    const content = '<div id="content">hello</div>'
+    const wrapper = factory({ slots: { default: content } })
+
+    const item = wrapper.find('#content')
+
+    expect(item.exists()).toBeTruthy()
+  })
+
   it('does not render a title by default', () => {
     const wrapper = factory()
 

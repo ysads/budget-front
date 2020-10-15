@@ -3,7 +3,7 @@ name: CI
 on: push
 
 jobs:
-  lint-css:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -12,17 +12,8 @@ jobs:
       with:
         node-version: 14.8.0
     - run: npm install --prefer-offline --no-audit
-    - run: npm run lint:css
-  lint-js:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup Node.JS
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.8.0
-    - run: npm install --prefer-offline --no-audit
-    - run: npm run lint:js
+    - run: npm run lint
+
   specs:
     runs-on: ubuntu-latest
     steps:

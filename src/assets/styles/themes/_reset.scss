@@ -65,6 +65,7 @@ embed,
 figure,
 figcaption,
 footer,
+input,
 header,
 hgroup,
 menu,
@@ -102,7 +103,7 @@ html {
   font-size: 14px;
   line-height: 1;
 
-  @extend %inter;
+  @extend %barlow;
 }
 
 a {

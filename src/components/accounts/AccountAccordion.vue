@@ -69,11 +69,12 @@ export default {
   &__header {
     color: var(--sidebar-text);
     display: flex;
+    flex-flow: row wrap;
     justify-content: space-between;
     text-transform: uppercase;
     width: 100%;
 
-    @extend %caption2;
+    @extend %caption-2;
 
     @include margin(right, 2);
   }
@@ -86,16 +87,16 @@ export default {
     justify-content: space-between;
     padding: $base * 2 $base * 3;
 
+    @extend %caption-2;
+
     &:hover {
       background: var(--sidebar-focus);
       cursor: pointer;
     }
 
-    &__name {
+    &-name {
       @include padding(right, 1);
     }
-
-    @extend %caption2;
   }
 
   &__item + &__item {

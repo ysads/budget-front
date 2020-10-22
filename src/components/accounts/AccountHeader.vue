@@ -1,29 +1,50 @@
 <template>
   <nav class="account-header">
-    <h1 class="account-header__title">{{ name }}</h1>
+    <h1 class="account-header__title" data-test="account-name">
+      {{ name }}
+    </h1>
 
     <div class="account-header__balance-group">
-      <div class="account-header__balance">
+      <div class="account-header__balance" data-test="cleared">
         <p class="account-header__balance-title">
-          {{ $t('cleared') }}
+          {{ t('cleared') }}
         </p>
         <p
           class="account-header__balance-currency"
           :class="balanceClasses(cleared)"
+          data-test="cleared-amount"
         >
-          {{ $n(cleared, 'currency') }}
+          {{ localize(cleared, budget) }}
         </p>
       </div>
 
-      <div class="account-header__balance">
+      <span class="account-header__sep">+</span>
+
+      <div class="account-header__balance" data-test="uncleared">
         <p class="account-header__balance-title">
-          {{ $t('uncleared') }}
+          {{ t('uncleared') }}
         </p>
         <p
           class="account-header__balance-currency"
           :class="balanceClasses(uncleared)"
+          data-test="uncleared-amount"
         >
-          {{ $n(uncleared, 'currency') }}
+          {{ localize(uncleared, budget) }}
+        </p>
+      </div>
+
+      <span class="account-header__sep">=</span>
+
+      <div class="account-header__balance" data-test="current">
+        <p class="account-header__balance-title">
+          {{ t('currentBalance') }}
+        </p>
+        <p
+          class="account-header__balance-currency"
+          :class="balanceClasses(current)"
+          data-test="current-amount"
+        >
+          {{ localize(current, budget) }}
         </p>
       </div>
     </div>
@@ -31,10 +52,17 @@
 </template>
 
 <script>
+import { useMoney } from '@/use/money'
+import { useI18n } from '@/use/i18n'
+
 export default {
   name: 'AccountHeader',
 
   props: {
+    budget: {
+      type: Object,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -46,6 +74,19 @@ export default {
     uncleared: {
       type: Number,
       required: true,
+    },
+  },
+
+  setup () {
+    const { localize } = useMoney()
+    const { t } = useI18n('AccountHeader')
+
+    return { localize, t }
+  },
+
+  computed: {
+    current () {
+      return this.cleared + this.uncleared
     },
   },
 
@@ -71,17 +112,20 @@ export default {
     flex-flow: row;
   }
 
-  @include padding(top, 3);
-  @include padding(bottom, 3);
-  @include padding(left, 6);
-  @include padding(right, 6);
-
   @include breakpoint(md) {
     flex-flow: row;
   }
 
   &__title {
     @extend %h1;
+    @extend %ellipsis;
+  }
+
+  &__sep {
+    @extend %h2;
+
+    color: var(--acc-header-sep);
+    margin: 0 $base*3;
   }
 
   &__balance {
@@ -89,6 +133,7 @@ export default {
 
     &-group {
       display: flex;
+      align-items: center;
 
       @include margin(top, 4);
 

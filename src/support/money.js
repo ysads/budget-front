@@ -1,3 +1,4 @@
+import accounting from 'accounting'
 import currencies from './currencies'
 
 export const currencySettings = (budget) => ({
@@ -22,4 +23,24 @@ export const cleanMask = (value, budget) => {
 
 export const currencyToCents = (value, budget) => {
   return toCents(cleanMask(value, budget))
+}
+
+export const totalBalance = (accounts, field) => {
+  if (!accounts.length) return 0
+
+  return accounts
+    .map(a => a[field])
+    .reduce((total, balance) => total + balance)
+}
+
+export const localize = (value, budget) => {
+  const settings = currencySettings(budget)
+
+  return accounting.formatMoney(
+    fromCents(value),
+    settings.prefix,
+    settings.precision,
+    settings.thousands,
+    settings.decimal,
+  )
 }

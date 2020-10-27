@@ -5,13 +5,18 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/:id',
+    path: '/:budgetId',
     component: () => import('@/views/Dashboard'),
     children: [
       {
         path: 'accounts',
         name: 'AllAccounts',
         component: () => import('@/views/dashboard/AllAccounts'),
+      },
+      {
+        path: 'accounts/:id',
+        name: 'AccountShow',
+        component: () => import('@/views/dashboard/AccountShow'),
       },
     ],
   },

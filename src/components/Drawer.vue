@@ -2,13 +2,29 @@
   <aside class="drawer">
     <ul class="drawer__nav">
       <li class="drawer__nav-item" :class="activeClass('Budget')">
-        <i class="icon fas fa-piggy-bank"></i>{{ $t('budget') }}
+        <router-link class="drawer__nav-link" to="#">
+          <i class="icon fas fa-piggy-bank" />{{ t('budget') }}
+        </router-link>
       </li>
+
       <li class="drawer__nav-item" :class="activeClass('Reports')">
-        <i class="icon fas fa-chart-area"></i>{{ $t('reports') }}
+        <router-link class="drawer__nav-link" to="#">
+          <i class="icon fas fa-chart-area" />{{ t('reports') }}
+        </router-link>
       </li>
-      <li class="drawer__nav-item" :class="activeClass('AllAccounts')">
-        <i class="icon fas fa-university"></i>{{ $t('allAccounts') }}
+
+      <li
+        class="drawer__nav-item"
+        :class="activeClass('AllAccounts')"
+        data-test="all-accounts-item"
+      >
+        <router-link
+          class="drawer__nav-link"
+          :to="{ name: 'AllAccounts' }"
+          data-test="all-accounts-link"
+        >
+          <i class="icon fas fa-university" />{{ t('allAccounts') }}
+        </router-link>
       </li>
     </ul>
 
@@ -16,37 +32,48 @@
       v-if="anyAccounts"
       v-model="activeNames"
       class="drawer__accounts"
+      data-test="accounts-accordion"
     >
       <account-accordion
         class="drawer__accounts-list"
         :accounts="budgetAccounts"
-        :label="$t(`budgetAccounts`)"
+        :budget="openBudget"
+        :label="t(`budgetAccounts`)"
         name='budget'
+        data-test="budget-accounts-accordion"
       />
       <account-accordion
         class="drawer__accounts-list"
         :accounts="trackingAccounts"
-        :label="$t(`trackingAccounts`)"
+        :budget="openBudget"
+        :label="t(`trackingAccounts`)"
         name='tracking'
+        data-test="tracking-accounts-accordion"
       />
     </el-collapse>
 
-    <div v-else class="drawer__accounts--empty">
-      <strong>{{ $t('noAccounts') }}</strong>
-      <p class="tip">{{ $t('noAccountsTip') }}</p>
+    <div
+      v-else
+      class="drawer__accounts--empty"
+      data-test="empty-accounts-text"
+    >
+      <strong>{{ t('noAccounts') }}</strong>
+      <p class="tip">{{ t('noAccountsTip') }}</p>
     </div>
 
     <sad-button
       class="drawer__accounts-btn"
       icon="plus"
+      data-test="add-account-btn"
       @click="toggleModal"
     >
-      {{ $t('addAccount') }}
+      {{ t('addAccount') }}
     </sad-button>
 
     <create-account-modal
       v-if="modalVisible"
       :budget="openBudget"
+      data-test="create-account-modal"
       @close="toggleModal"
     />
   </aside>
@@ -57,6 +84,7 @@ import AccountAccordion from '@/components/accounts/AccountAccordion'
 import CreateAccountModal from '@/components/accounts/CreateAccountModal'
 import SadButton from '@/components/sad/SadButton'
 import { createNamespacedHelpers } from 'vuex'
+import { useI18n } from '@/use/i18n'
 import { BUDGETS, ACCOUNTS } from '@/store/namespaces'
 
 const accountsHelper = createNamespacedHelpers(ACCOUNTS)
@@ -79,6 +107,7 @@ export default {
   },
 
   computed: {
+    ...accountsHelper.mapState(['accounts']),
     ...accountsHelper.mapGetters(['budgetAccounts', 'trackingAccounts']),
     ...budgetsHelper.mapState(['openBudget']),
 
@@ -89,6 +118,11 @@ export default {
 
   mounted () {
     this.fetchAccounts()
+  },
+
+  setup () {
+    const { t } = useI18n()
+    return { t }
   },
 
   methods: {
@@ -120,13 +154,16 @@ export default {
     display: flex;
     flex-flow: column;
 
+    &-link {
+      display: block;
+      padding: $base * 3 $base * 3;
+    }
+
     &-item {
       border-radius: $radius-8;
       cursor: pointer;
-      padding: $base * 2 $base * 3;
       transition: all ease 0.1s;
 
-      @extend %menu;
       @extend %menu;
 
       &:hover {

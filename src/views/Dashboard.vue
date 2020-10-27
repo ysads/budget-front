@@ -43,7 +43,7 @@ export default {
   async mounted () {
     window.addEventListener('resize', this.onResize)
     await this.validateSession()
-    await this.getBudget(this.$route.params.id)
+    await this.getBudget(this.$route.params.budgetId)
   },
 
   beforeDestroy () {

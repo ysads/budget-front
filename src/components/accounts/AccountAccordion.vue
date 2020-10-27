@@ -3,12 +3,15 @@
     v-if="accounts.length"
     class="account-accordion"
     :name="name"
+    data-test="accordion"
   >
     <template slot="title">
-      <div class="account-accordion__header">
-        <span class="account-accordion__title">{{ label }}</span>
+      <div class="account-accordion__header" data-test="title">
+        <span class="account-accordion__title">
+          {{ label }}
+        </span>
         <span class="account-accordion__total">
-          {{ $n(totalBalance, 'currency') }}
+          {{ localize(total, budget) }}
         </span>
       </div>
     </template>
@@ -17,16 +20,26 @@
         v-for="account in accounts"
         :key="account.id"
         class="account-accordion__item"
+        :class="activeClass(account)"
+        data-test="account-item"
       >
-        <span class="account-accordion__item-name">{{ account.name }}</span>
-        <span>{{ currencyBalance(account) }}</span>
+        <router-link
+          :to="{ name: 'AccountShow', params: { id: account.id } }"
+          class="account-accordion__item-link"
+          data-test="account-link"
+        >
+          <span class="account-accordion__item-name">
+            {{ account.name }}
+          </span>
+          <span>{{ localize(account.balance, budget) }}</span>
+        </router-link>
       </li>
     </ul>
   </el-collapse-item>
 </template>
 
 <script>
-import { fromCents } from '@/support/money'
+import { useMoney } from '@/use/money'
 
 export default {
   name: 'AccountAccordion',
@@ -34,6 +47,10 @@ export default {
   props: {
     accounts: {
       type: Array,
+      required: true,
+    },
+    budget: {
+      type: Object,
       required: true,
     },
     label: {
@@ -46,19 +63,25 @@ export default {
     },
   },
 
+  setup () {
+    const { totalBalance, fromCents, localize } = useMoney()
+
+    return { totalBalance, fromCents, localize }
+  },
+
   computed: {
-    totalBalance () {
-      return fromCents(
-        this.accounts
-          .map(a => a.balance)
-          .reduce((total, balance) => total + balance),
-      )
+    total () {
+      return this.totalBalance(this.accounts, 'balance')
+    },
+
+    openAccountId () {
+      return this.$route.params.id
     },
   },
 
   methods: {
-    currencyBalance (account) {
-      return this.$n(fromCents(account.balance), 'currency')
+    activeClass (account) {
+      return (this.openAccountId === account.id) ? 'active' : ''
     },
   },
 }
@@ -83,9 +106,6 @@ export default {
     align-items: center;
     border-radius: $radius-8;
     color: var(--sidebar-text);
-    display: flex;
-    justify-content: space-between;
-    padding: $base * 2 $base * 3;
 
     @extend %caption-2;
 
@@ -94,7 +114,21 @@ export default {
       cursor: pointer;
     }
 
+    &.active {
+      background: var(--sidebar-active);
+    }
+
+    &-link {
+      display: flex;
+      justify-content: space-between;
+      padding: $base * 2 $base * 3;
+    }
+
     &-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 60%;
+
       @include padding(right, 1);
     }
   }

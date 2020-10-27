@@ -105,3 +105,9 @@ $font-size: 13px;
   @extend %inter;
   @extend %regular;
 }
+
+%ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

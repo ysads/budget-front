@@ -1,3 +1,4 @@
+import accounting from 'accounting'
 import factories from '#/factories'
 import * as money from '@/support/money'
 
@@ -45,6 +46,46 @@ describe('Money', () => {
       expect(money.toCents(-2.0)).toStrictEqual(-200)
       expect(money.toCents(0)).toStrictEqual(0)
       expect(money.toCents(234.05)).toStrictEqual(23405)
+    })
+  })
+
+  describe('#totalBalance', () => {
+    it('sums the value of each account at a particular field', () => {
+      const accounts = factories.account.buildList(3)
+      const fields = ['balance', 'clearedBalance', 'unclearedBalance']
+
+      fields.map(field => {
+        const sum = accounts[0][field] + accounts[1][field] + accounts[2][field]
+
+        expect(money.totalBalance(accounts, field)).toEqual(sum)
+      })
+    })
+
+    context('when accounts array is empty', () => {
+      it('is zero', () => {
+        expect(money.totalBalance([], 'balance')).toEqual(0)
+        expect(money.totalBalance([], 'clearedBalance')).toEqual(0)
+        expect(money.totalBalance([], 'unclearedbalance')).toEqual(0)
+      })
+    })
+  })
+
+  describe('#localize', () => {
+    it('formats at value using budget settings using account', () => {
+      const value = 29800
+      const budget = factories.budget.build()
+      const settings = money.currencySettings(budget)
+
+      accounting.formatMoney = jest.fn()
+      money.localize(value, budget)
+
+      expect(accounting.formatMoney).toHaveBeenCalledWith(
+        money.fromCents(value),
+        settings.prefix,
+        settings.precision,
+        settings.thousands,
+        settings.decimal,
+      )
     })
   })
 })

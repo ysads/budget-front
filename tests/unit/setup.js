@@ -34,3 +34,8 @@ config.mocks.$router = {
   push: jest.fn(),
   currentRoute: { query: {} },
 }
+
+Vue.component('router-link', {
+  name: 'RouterLink',
+  props: { to: [Object, String] },
+})

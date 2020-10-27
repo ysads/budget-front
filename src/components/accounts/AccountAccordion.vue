@@ -125,10 +125,11 @@ export default {
     }
 
     &-name {
-      @include padding(right, 1);
-      text-overflow: ellipsis;
       overflow: hidden;
+      text-overflow: ellipsis;
       width: 60%;
+
+      @include padding(right, 1);
     }
   }
 

@@ -24,19 +24,18 @@ export default {
 }
 
 .spinner {
-  width: 70px;
   text-align: center;
+  width: 70px;
 }
 
 .spinner > div {
-  width: 18px;
-  height: 18px;
-  background-color: var(--loading);
-
-  border-radius: 100%;
-  display: inline-block;
   -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
   animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  background-color: var(--loading);
+  border-radius: 100%;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
 }
 
 .spinner .bounce1 {
@@ -50,17 +49,23 @@ export default {
 }
 
 @-webkit-keyframes sk-bouncedelay {
-  0%, 80%, 100% { -webkit-transform: scale(0) }
-  40% { -webkit-transform: scale(1.0) }
+  0%,
+  80%,
+  100% { -webkit-transform: scale(0); }
+  40% { -webkit-transform: scale(1); }
 }
 
 @keyframes sk-bouncedelay {
-  0%, 80%, 100% {
+  0%,
+  80%,
+  100% {
     -webkit-transform: scale(0);
     transform: scale(0);
-  } 40% {
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
+  }
+
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
 }
 </style>

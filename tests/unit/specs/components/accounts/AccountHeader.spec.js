@@ -99,5 +99,4 @@ describe('AccountHeader', () => {
       expect(item.classes()).toContain('negative')
     })
   })
-
 })

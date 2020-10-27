@@ -122,18 +122,18 @@ export default {
   }
 
   &__sep {
-    @extend %h2;
-
     color: var(--acc-header-sep);
     margin: 0 $base*3;
+
+    @extend %h2;
   }
 
   &__balance {
     text-align: center;
 
     &-group {
-      display: flex;
       align-items: center;
+      display: flex;
 
       @include margin(top, 4);
 

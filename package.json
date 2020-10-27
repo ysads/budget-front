@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "npm run lint:js && npm run lint:css",
+    "lint:fix": "npm run lint:js -- \"--fix\" && npm run lint:css -- \"--fix\"",
     "lint:css": "npx stylelint \"src/**/*.{vue,scss}\"",
     "lint:js": "vue-cli-service lint --max-warnings 0",
     "test:unit": "vue-cli-service test:unit",

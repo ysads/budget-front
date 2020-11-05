@@ -52,7 +52,7 @@
     "flush-promises": "^1.0.2",
     "jest-plugin-context": "^2.9.0",
     "sass": "^1.29.0",
-    "sass-loader": "^10.0.4",
+    "sass-loader": "^10.0.5",
     "stylelint": "^13.7.2",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.1.0",

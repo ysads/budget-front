@@ -6,6 +6,7 @@ import * as namespaces from './namespaces'
 import accounts from './accounts'
 import auth from './auth'
 import budgets from './budgets'
+import months from './months'
 
 Vue.use(Vuex)
 
@@ -21,6 +22,10 @@ export const modules = {
   [namespaces.BUDGETS]: {
     namespaced: true,
     ...budgets,
+  },
+  [namespaces.MONTHS]: {
+    namespaced: true,
+    ...months,
   },
 }
 

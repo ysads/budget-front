@@ -47,6 +47,15 @@ describe('SadButton', () => {
     })
   })
 
+  context('when full width prop is true', () => {
+    it('renders button with button--full class', () => {
+      const wrapper = factory({ propsData: { fullWidth: true } })
+      const button = wrapper.find("[data-test='button']")
+
+      expect(button.classes()).toContain('button--full')
+    })
+  })
+
   context('when button is clicked', () => {
     it('emits click', async () => {
       const wrapper = factory()

@@ -12,8 +12,9 @@ export default {
       hour: 'numeric',
       minute: 'numeric'
     },
-    day_month: {
-      month: '2-digit', day: '2-digit'
+    monthOnly: {
+      month: 'long',
+      year: 'numeric'
     }
   },
   en: {
@@ -28,8 +29,9 @@ export default {
       hour: 'numeric',
       minute: 'numeric'
     },
-    day_month: {
-      month: '2-digit', day: '2-digit'
+    monthOnly: {
+      month: 'long',
+      year: 'numeric'
     }
   }
 }

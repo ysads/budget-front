@@ -1,7 +1,7 @@
 <template>
   <button
     class="button"
-    :class="[typeClass, sizeClass]"
+    :class="[typeClass, sizeClass, fullWidthClass]"
     :size="size"
     :type="type"
     data-test="button"
@@ -18,8 +18,14 @@
 </template>
 
 <script>
+const TYPES = ['primary', 'ghost']
+
 export default {
   props: {
+    fullWidth: {
+      type: Boolean,
+      default: false,
+    },
     icon: {
       type: String,
       default: '',
@@ -35,7 +41,7 @@ export default {
       type: String,
       default: 'primary',
       validator (val) {
-        return ['primary'].includes(val)
+        return TYPES.includes(val)
       },
     },
   },
@@ -51,6 +57,10 @@ export default {
 
     iconClass () {
       return `fa-${this.icon}`
+    },
+
+    fullWidthClass () {
+      return this.fullWidth ? 'button--full' : ''
     },
   },
 }
@@ -90,6 +100,10 @@ export default {
     &:hover {
       background: var(--color-primary-hover);
     }
+  }
+
+  &--full {
+    width: 100%;
   }
 }
 </style>

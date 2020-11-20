@@ -20,6 +20,8 @@
     }
   },
   "newAccount": "Nova conta",
+  "newCategory": "Nova categoria",
+  "newCategoryGroup": "Novo grupo",
   "CreateAccountModal": {
     "accountType": "De que tipo é essa conta?",
     "currentBalance": "Quanto você tem hoje nessa conta?",
@@ -27,8 +29,17 @@
     "accountTypePlaceholder": "Escolha um tipo...",
     "currentBalanceTip": "Não tem certeza? Estime! Você pode editar depois."
   },
+  "CreateCategoryGroupModal": {
+    "name": "Nome do grupo"
+  },
+  "CreateCategoryModal": {
+    "categoryGroup": "Em qual grupo de gastos essa categoria está?",
+    "categoryGroupPlaceholder": "Selecione um...",
+    "name": "Nome da categoria"
+  },
   "save": "Salvar",
   "startingBalance": "Saldo inicial",
+  "toBeBudgeted": "Disponível",
   "validations": {
     "required": "Campo obrigatório."
   }

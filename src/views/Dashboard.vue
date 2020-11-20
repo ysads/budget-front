@@ -11,18 +11,23 @@
       :class="{ 'fullscreen': showDrawer }"
     />
     <main class="dashboard__main">
-      <router-view></router-view>
+      <loading v-if="!openBudget" />
+      <router-view v-else />
     </main>
   </div>
 </template>
 
 <script>
 import Drawer from '@/components/Drawer'
+import Loading from '@/components/Loading'
 import { createNamespacedHelpers } from 'vuex'
-import { AUTH, BUDGETS } from '@/store/namespaces'
+import { AUTH, BUDGETS, CATEGORIES, CATEGORY_GROUPS, PAYEES } from '@/store/namespaces'
 
 const authHelper = createNamespacedHelpers(AUTH)
 const budgetsHelper = createNamespacedHelpers(BUDGETS)
+const categoriesHelper = createNamespacedHelpers(CATEGORIES)
+const categoryGroupsHelper = createNamespacedHelpers(CATEGORY_GROUPS)
+const payeesHelper = createNamespacedHelpers(PAYEES)
 
 const MD_BREAKPOINT = 768
 
@@ -31,6 +36,7 @@ export default {
 
   components: {
     Drawer,
+    Loading,
   },
 
   data () {
@@ -44,6 +50,12 @@ export default {
     window.addEventListener('resize', this.onResize)
     await this.validateSession()
     await this.getBudget(this.$route.params.budgetId)
+
+    await Promise.all([
+      this.getCategoryGroups({ budgetId: this.openBudget.id }),
+      this.getCategories({ budgetId: this.openBudget.id }),
+      this.getPayees({ budgetId: this.openBudget.id }),
+    ])
   },
 
   beforeDestroy () {
@@ -61,6 +73,9 @@ export default {
   methods: {
     ...authHelper.mapActions(['getMe']),
     ...budgetsHelper.mapActions(['getBudget']),
+    ...categoriesHelper.mapActions(['getCategories']),
+    ...categoryGroupsHelper.mapActions(['getCategoryGroups']),
+    ...payeesHelper.mapActions(['getPayees']),
 
     async validateSession () {
       try {

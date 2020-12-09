@@ -18,7 +18,7 @@
     "accounting": "^0.4.1",
     "axios": "^0.21.0",
     "core-js": "^3.8.1",
-    "element-ui": "^2.14.0",
+    "element-ui": "^2.14.1",
     "faker": "^5.1.0",
     "fishery": "^1.0.1",
     "jsonapi-serializer": "^3.6.6",

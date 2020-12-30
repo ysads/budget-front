@@ -13,14 +13,14 @@
         class="create-category__item"
         to="categoryGroup"
         :text="st('categoryGroup')"
-        data-test="account-type"
+        data-test="category-group"
       >
         <el-select
           v-model="form.categoryGroupId"
           class="create-category__select"
           :placeholder="st('categoryGroupPlaceholder')"
           data-test="select"
-          @input="validate($v)"
+          @input="validate($v.form.categoryGroupId)"
         >
           <el-option
             v-for="group in categoryGroups"
@@ -43,7 +43,7 @@
         class="create-category__item"
         to="name"
         :text="st('name')"
-        data-test="category-group"
+        data-test="category-name"
       >
         <sad-input
           v-model.trim="form.name"

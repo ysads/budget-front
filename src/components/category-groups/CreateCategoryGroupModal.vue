@@ -16,6 +16,7 @@
         data-test="category-group-name"
       >
         <sad-input
+          ref="name"
           v-model.trim="form.name"
           name="name"
           class="create-category__item-input"

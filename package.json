@@ -16,7 +16,8 @@
   "dependencies": {
     "@vue/composition-api": "^1.0.0-rc.1",
     "accounting": "^0.4.1",
-    "axios": "^0.21.0",
+    "core-js": "^3.8.1",
+    "axios": "^0.21.1",
     "core-js": "^3.8.3",
     "element-ui": "^2.14.1",
     "faker": "^5.1.0",

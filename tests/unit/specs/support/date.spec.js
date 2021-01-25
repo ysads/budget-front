@@ -15,7 +15,7 @@ describe('DateUtils', () => {
   })
 
   describe('#isoMonthToDate', () => {
-    it('converts a YYYY-mm string into a date representing a day in the specified month', () => {
+    it('converts a YYYY-mm string into a date in given month', () => {
       const date1 = DateUtils.isoMonthToDate('2020-01')
       const date2 = DateUtils.isoMonthToDate('2020-12')
       const date3 = DateUtils.isoMonthToDate('2020-04')

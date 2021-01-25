@@ -71,7 +71,7 @@ export default {
   align-items: center;
   background: var(--acc-header-bg);
   display: flex;
-  padding: $base*3 $base*3 $base*3 $base*15 ;
+  padding: $base*3 $base*3 $base*3 $base*15;
 
   @include breakpoint(md) {
     padding: $base*3;
@@ -87,20 +87,20 @@ export default {
 
   &__nav {
     align-items: center;
-    display: flex;
     color: var(--month-header-text);
+    display: flex;
 
     &-icon {
+      cursor: pointer;
       font-size: 18px;
       padding: 0 $base*2;
-      cursor: pointer;
     }
   }
 
   &__month {
-    @extend %h2;
-
     text-transform: capitalize;
+
+    @extend %h2;
   }
 
   &__balance {
@@ -118,6 +118,7 @@ export default {
     }
   }
 }
+
 .positive {
   background: var(--balance-positive);
 }

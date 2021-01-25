@@ -21,7 +21,7 @@ describe('actions', () => {
       await actions.getMonth(mockStore, mockParams)
 
       expect(api.get).toHaveBeenCalledWith(
-        `budgets/${budgetId}/months/${mockMonth.isoMonth}`
+        `budgets/${budgetId}/months/${mockMonth.isoMonth}`,
       )
     })
 

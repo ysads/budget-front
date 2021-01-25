@@ -6,6 +6,7 @@
         icon="plus"
         type="ghost"
         size="small"
+        data-test="new-group-btn"
         @click="toggleCategoryGroupModal"
       >
         {{ t('newCategoryGroup') }}
@@ -16,6 +17,7 @@
         icon="plus"
         type="ghost"
         size="small"
+        data-test="new-category-btn"
         @click="toggleCategoryModal"
       >
         {{ t('newCategory') }}
@@ -24,11 +26,13 @@
       <create-category-group-modal
         v-if="showCategoryGroupModal"
         :budget="openBudget"
+        data-test="new-group-modal"
         @close="toggleCategoryGroupModal"
       />
       <create-category-modal
         v-if="showCategoryModal"
         :budget="openBudget"
+        data-test="new-category-modal"
         @close="toggleCategoryModal"
       />
     </div>
@@ -46,13 +50,6 @@ import { useI18n } from '@/use/i18n'
 const budgetsHelper = createNamespacedHelpers(BUDGETS)
 
 export default {
-  props: {
-    budget: {
-      type: Object,
-      required: true,
-    },
-  },
-
   components: {
     CreateCategoryModal,
     CreateCategoryGroupModal,
@@ -93,6 +90,5 @@ export default {
   padding: $base*2 $base*4;
   border-bottom: 1px solid var(--acc-toolbar-border);
   justify-content: space-between;
-  // box-shadow: $shadow-4;
 }
 </style>

@@ -102,6 +102,15 @@ export default {
     }
   }
 
+  &--ghost {
+    background: none;
+    color: var(--color-primary);
+
+    &:hover {
+      color: var(--color-primary-hover);
+    }
+  }
+
   &--full {
     width: 100%;
   }

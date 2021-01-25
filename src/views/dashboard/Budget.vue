@@ -1,7 +1,7 @@
 <template>
   <div class="budget">
     <loading v-if="isLoading " data-test="loading" />
-    <section>
+    <section v-else>
       <month-header
         :budget="openBudget"
         :month="openMonth"
@@ -45,9 +45,9 @@ export default {
     }
   },
 
-  mounted () {
+  async mounted () {
     this.isLoading = true
-    this.fetchResources()
+    await this.fetchResources()
     this.isLoading = false
   },
 

@@ -8,6 +8,7 @@ export default Factory.define(({ sequence }) => {
   return {
     id: uuid(),
     currency: sample(Object.keys(currencies)),
+    dateFormat: 'dd-MM-YYYY',
     name: Faker.finance.accountName(),
   }
 })

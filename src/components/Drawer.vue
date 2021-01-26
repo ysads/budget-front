@@ -2,7 +2,7 @@
   <aside class="drawer">
     <ul class="drawer__nav">
       <li class="drawer__nav-item" :class="activeClass('Budget')">
-        <router-link class="drawer__nav-link" to="#">
+        <router-link class="drawer__nav-link" :to="{ name: 'Budget' }">
           <i class="icon fas fa-piggy-bank" />{{ t('budget') }}
         </router-link>
       </li>

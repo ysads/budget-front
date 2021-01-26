@@ -1,4 +1,5 @@
 import SadButton from '@/components/sad/SadButton'
+import sample from 'lodash/sample'
 import { factoryBuilder } from '#/factory-builder'
 
 const factory = (args = {}) => factoryBuilder(SadButton, {
@@ -25,10 +26,11 @@ describe('SadButton', () => {
   })
 
   it('adds a class according to type', () => {
-    const wrapper = factory({ propsData: { type: 'primary' } })
+    const type = sample('primary', 'ghost')
+    const wrapper = factory({ propsData: { type } })
     const button = wrapper.find("[data-test='button']")
 
-    expect(button.classes()).toContain('button--primary')
+    expect(button.classes()).toContain(`button--${type}`)
   })
 
   it('adds a class according to size', () => {
@@ -44,6 +46,15 @@ describe('SadButton', () => {
       const icon = wrapper.find("[data-test='icon']")
 
       expect(icon.classes()).toContain('fa-plus')
+    })
+  })
+
+  context('when full width prop is true', () => {
+    it('renders button with button--full class', () => {
+      const wrapper = factory({ propsData: { fullWidth: true } })
+      const button = wrapper.find("[data-test='button']")
+
+      expect(button.classes()).toContain('button--full')
     })
   })
 

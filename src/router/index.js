@@ -9,6 +9,11 @@ const routes = [
     component: () => import('@/views/Dashboard'),
     children: [
       {
+        path: 'budget',
+        name: 'Budget',
+        component: () => import('@/views/dashboard/Budget'),
+      },
+      {
         path: 'accounts',
         name: 'AllAccounts',
         component: () => import('@/views/dashboard/AllAccounts'),

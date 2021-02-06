@@ -21,13 +21,12 @@
 import Drawer from '@/components/Drawer'
 import Loading from '@/components/Loading'
 import { createNamespacedHelpers } from 'vuex'
-import { AUTH, BUDGETS, CATEGORIES, CATEGORY_GROUPS, PAYEES } from '@/store/namespaces'
+import { AUTH, BUDGETS, CATEGORIES, CATEGORY_GROUPS } from '@/store/namespaces'
 
 const authHelper = createNamespacedHelpers(AUTH)
 const budgetsHelper = createNamespacedHelpers(BUDGETS)
 const categoriesHelper = createNamespacedHelpers(CATEGORIES)
 const categoryGroupsHelper = createNamespacedHelpers(CATEGORY_GROUPS)
-const payeesHelper = createNamespacedHelpers(PAYEES)
 
 const MD_BREAKPOINT = 768
 
@@ -54,7 +53,6 @@ export default {
     await Promise.all([
       this.getCategoryGroups({ budgetId: this.openBudget.id }),
       this.getCategories({ budgetId: this.openBudget.id }),
-      this.getPayees({ budgetId: this.openBudget.id }),
     ])
   },
 
@@ -75,7 +73,6 @@ export default {
     ...budgetsHelper.mapActions(['getBudget']),
     ...categoriesHelper.mapActions(['getCategories']),
     ...categoryGroupsHelper.mapActions(['getCategoryGroups']),
-    ...payeesHelper.mapActions(['getPayees']),
 
     async validateSession () {
       try {

@@ -1,30 +1,23 @@
+import CategoryGroupsRepo from '@/repositories/category-groups'
+import CategoriesRepo from '@/repositories/categories'
 import CreateCategoryModal from '@/components/categories/CreateCategoryModal'
 import factories from '#/factories'
-import Faker from 'faker'
-import { CATEGORIES, CATEGORY_GROUPS } from '@/store/namespaces'
+import faker from 'faker'
 import { factoryBuilder } from '#/factory-builder'
 
 const budget = factories.budget.build()
 const categoryGroups = factories.categoryGroup.buildList(2)
 const form = {
   categoryGroupId: categoryGroups[0].id,
-  name: Faker.commerce.department(),
+  name: faker.commerce.department(),
 }
+
+CategoryGroupsRepo.categoryGroups.value = categoryGroups
+CategoriesRepo.createCategory = jest.fn()
 
 const factory = (args = {}) => factoryBuilder(CreateCategoryModal, {
   data: args.data,
   propsData: { budget },
-  mocks: { BaseModal: true },
-  store: {
-    [CATEGORIES]: {
-      actions: {
-        createCategory: args.createCategory || jest.fn(() => Promise.resolve()),
-      },
-    },
-    [CATEGORY_GROUPS]: {
-      state: { categoryGroups },
-    },
-  },
 })
 
 describe('CreateCategoryModal', () => {
@@ -67,15 +60,11 @@ describe('CreateCategoryModal', () => {
     })
 
     it('calls createAccount with form', async () => {
-      const createCategory = jest.fn()
-      const wrapper = factory({
-        data: { form },
-        createCategory,
-      })
+      const wrapper = factory({ data: { form } })
 
       await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-      expect(createCategory).toHaveBeenCalledWith(expect.anything(), {
+      expect(CategoriesRepo.createCategory).toHaveBeenCalledWith({
         ...form,
         budgetId: budget.id,
       })
@@ -83,16 +72,12 @@ describe('CreateCategoryModal', () => {
 
     context('and validation fails', () => {
       it('does call createAccount', async () => {
-        const createCategory = jest.fn()
-        const wrapper = factory({
-          data: { form },
-          createCategory,
-        })
+        const wrapper = factory({ data: { form } })
         jest.spyOn(wrapper.vm, 'isValid').mockReturnValue(false)
 
         await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-        expect(createCategory).not.toHaveBeenCalled()
+        expect(CategoriesRepo.createCategory).not.toHaveBeenCalled()
       })
     })
   })

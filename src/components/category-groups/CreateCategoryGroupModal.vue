@@ -47,17 +47,14 @@
 
 <script>
 import BaseModal from '@/components/BaseModal'
+import CategoryGroupsRepo from '@/repositories/category-groups'
 import SadButton from '@/components/sad/SadButton'
 import SadInput from '@/components/sad/SadInput'
 import SadLabel from '@/components/sad/SadLabel'
 import SadTip from '@/components/sad/SadTip'
-import { CATEGORY_GROUPS } from '@/store/namespaces'
-import { createNamespacedHelpers } from 'vuex'
 import { required } from 'vuelidate/lib/validators'
 import { useI18n } from '@/use/i18n'
 import { useValidation } from '@/use/validation'
-
-const categoryGroupsHelper = createNamespacedHelpers(CATEGORY_GROUPS)
 
 export default {
   name: 'CreateCategoryGroupModal',
@@ -87,7 +84,11 @@ export default {
   },
 
   setup () {
+    const { categoryGroups, createCategoryGroup } = CategoryGroupsRepo
+
     return {
+      createCategoryGroup,
+      categoryGroups,
       ...useI18n('CreateCategoryGroupModal'),
       ...useValidation(),
     }
@@ -101,8 +102,6 @@ export default {
   },
 
   methods: {
-    ...categoryGroupsHelper.mapActions(['createCategoryGroup']),
-
     handleSubmit () {
       if (!this.isValid(this.$v)) return
       this.createCategoryGroup(this.form)

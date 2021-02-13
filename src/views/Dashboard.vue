@@ -18,15 +18,15 @@
 </template>
 
 <script>
+import CategoryGroupsRepo from '@/repositories/category-groups'
+import CategoriesRepo from '@/repositories/categories'
 import Drawer from '@/components/Drawer'
 import Loading from '@/components/Loading'
 import { createNamespacedHelpers } from 'vuex'
-import { AUTH, BUDGETS, CATEGORIES, CATEGORY_GROUPS } from '@/store/namespaces'
+import { AUTH, BUDGETS } from '@/store/namespaces'
 
 const authHelper = createNamespacedHelpers(AUTH)
 const budgetsHelper = createNamespacedHelpers(BUDGETS)
-const categoriesHelper = createNamespacedHelpers(CATEGORIES)
-const categoryGroupsHelper = createNamespacedHelpers(CATEGORY_GROUPS)
 
 const MD_BREAKPOINT = 768
 
@@ -51,8 +51,8 @@ export default {
     await this.getBudget(this.$route.params.budgetId)
 
     await Promise.all([
-      this.getCategoryGroups({ budgetId: this.openBudget.id }),
-      this.getCategories({ budgetId: this.openBudget.id }),
+      CategoryGroupsRepo.getCategoryGroups({ budgetId: this.openBudget.id }),
+      CategoriesRepo.getCategories({ budgetId: this.openBudget.id }),
     ])
   },
 
@@ -71,8 +71,6 @@ export default {
   methods: {
     ...authHelper.mapActions(['getMe']),
     ...budgetsHelper.mapActions(['getBudget']),
-    ...categoriesHelper.mapActions(['getCategories']),
-    ...categoryGroupsHelper.mapActions(['getCategoryGroups']),
 
     async validateSession () {
       try {

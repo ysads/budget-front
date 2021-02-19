@@ -51,7 +51,7 @@
     "eslint-plugin-vue": "^7.5.0",
     "flush-promises": "^1.0.2",
     "jest-plugin-context": "^2.9.0",
-    "sass": "^1.32.7",
+    "sass": "^1.32.8",
     "sass-loader": "^10.1.1",
     "stylelint": "^13.10.0",
     "stylelint-config-standard": "^20.0.0",

@@ -20,6 +20,7 @@
 <script>
 import CategoryGroupsRepo from '@/repositories/category-groups'
 import CategoriesRepo from '@/repositories/categories'
+import BudgetsRepo from '@/repositories/budgets'
 import Drawer from '@/components/Drawer'
 import Loading from '@/components/Loading'
 import { createNamespacedHelpers } from 'vuex'
@@ -49,6 +50,7 @@ export default {
     window.addEventListener('resize', this.onResize)
     await this.validateSession()
     await this.getBudget(this.$route.params.budgetId)
+    await BudgetsRepo.getBudgetById(this.$route.params.budgetId)
 
     await Promise.all([
       CategoryGroupsRepo.getCategoryGroups({ budgetId: this.openBudget.id }),

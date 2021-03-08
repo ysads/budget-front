@@ -10,9 +10,9 @@
       <budget-toolbar
         :budget="openBudget"
       />
-      <div v-for="category in categories" :key="category.id">
-        {{ category.id }} – {{ category.name }}
-      </div>
+      <monthly-budgets-table
+        :budget="openBudget"
+      />
     </section>
   </div>
 </template>
@@ -21,13 +21,13 @@
 import BudgetToolbar from '@/components/budgets/BudgetToolbar'
 import Loading from '@/components/Loading'
 import MonthHeader from '@/components/months/MonthHeader'
-import { BUDGETS, MONTHS, CATEGORIES } from '@/store/namespaces'
+import MonthlyBudgetsTable from '@/components/monthly-budgets/MonthlyBudgetsTable'
+import { MONTHS } from '@/store/namespaces'
 import { createNamespacedHelpers } from 'vuex'
 import { isoMonth } from '@/support/date'
+import { openBudget } from '@/repositories/budgets'
 
-const budgetsHelper = createNamespacedHelpers(BUDGETS)
 const monthsHelper = createNamespacedHelpers(MONTHS)
-const categoriesHelper = createNamespacedHelpers(CATEGORIES)
 
 export default {
   name: 'Budget',
@@ -36,6 +36,7 @@ export default {
     BudgetToolbar,
     Loading,
     MonthHeader,
+    MonthlyBudgetsTable,
   },
 
   data () {
@@ -45,6 +46,10 @@ export default {
     }
   },
 
+  setup () {
+    return { openBudget }
+  },
+
   async mounted () {
     this.isLoading = true
     await this.fetchResources()
@@ -52,9 +57,7 @@ export default {
   },
 
   computed: {
-    ...budgetsHelper.mapState(['openBudget']),
     ...monthsHelper.mapState(['months']),
-    ...categoriesHelper.mapState(['categories']),
 
     currentIsoMonth () {
       return isoMonth(this.currentMonth)

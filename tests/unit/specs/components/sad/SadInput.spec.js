@@ -7,6 +7,7 @@ const factory = (args = {}) => factoryBuilder(SadInput, {
   propsData: {
     value: 'value',
     name: 'input',
+    label: 'label',
     ...args.propsData,
   },
 })
@@ -23,6 +24,25 @@ describe('SadInput', () => {
       const wrapper = factory()
 
       expect(wrapper.vm.placeholder).toEqual('')
+    })
+
+    it('renders label', () => {
+      const wrapper = factory()
+
+      expect(wrapper.find("[data-test='label']").props().text).toEqual('label')
+    })
+  })
+
+  context('when error prop is given', () => {
+    it('renders tip with error', () => {
+      const wrapper = factory({ propsData: { error: 'Invalid' } })
+
+      const tip = wrapper.find("[data-test='tip']")
+
+      expect(tip.props()).toMatchObject({
+        text: 'Invalid',
+        variant: 'error',
+      })
     })
   })
 

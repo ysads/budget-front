@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import CategoryGroupsRepo from '@/repositories/category-groups'
-import CategoriesRepo from '@/repositories/categories'
-import BudgetsRepo from '@/repositories/budgets'
 import Drawer from '@/components/Drawer'
 import Loading from '@/components/Loading'
+import { getCategoryGroups } from '@/repositories/category-groups'
+import { getCategories } from '@/repositories/categories'
+import { getBudgetById } from '@/repositories/budgets'
 import { createNamespacedHelpers } from 'vuex'
 import { AUTH, BUDGETS } from '@/store/namespaces'
 
@@ -50,11 +50,11 @@ export default {
     window.addEventListener('resize', this.onResize)
     await this.validateSession()
     await this.getBudget(this.$route.params.budgetId)
-    await BudgetsRepo.getBudgetById(this.$route.params.budgetId)
+    await getBudgetById(this.$route.params.budgetId)
 
     await Promise.all([
-      CategoryGroupsRepo.getCategoryGroups({ budgetId: this.openBudget.id }),
-      CategoriesRepo.getCategories({ budgetId: this.openBudget.id }),
+      getCategoryGroups({ budgetId: this.openBudget.id }),
+      getCategories({ budgetId: this.openBudget.id }),
     ])
   },
 
@@ -78,7 +78,7 @@ export default {
       try {
         await this.getMe()
       } catch {
-        this.$router.push({ name: 'SignIn' })
+        this.$route.push({ name: 'SignIn' })
       }
     },
 
@@ -126,6 +126,8 @@ export default {
 
   &__main {
     width: 100%;
+    height: 100%;
+    overflow: auto;
 
     @include breakpoint(md) {
       width: 80%;

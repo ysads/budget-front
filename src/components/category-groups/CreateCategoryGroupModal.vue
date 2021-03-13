@@ -47,11 +47,11 @@
 
 <script>
 import BaseModal from '@/components/BaseModal'
-import CategoryGroupsRepo from '@/repositories/category-groups'
 import SadButton from '@/components/sad/SadButton'
 import SadInput from '@/components/sad/SadInput'
 import SadLabel from '@/components/sad/SadLabel'
 import SadTip from '@/components/sad/SadTip'
+import { categoryGroups, createCategoryGroup } from '@/repositories/category-groups'
 import { required } from 'vuelidate/lib/validators'
 import { useI18n } from '@/use/i18n'
 import { useValidation } from '@/use/validation'
@@ -84,8 +84,6 @@ export default {
   },
 
   setup () {
-    const { categoryGroups, createCategoryGroup } = CategoryGroupsRepo
-
     return {
       createCategoryGroup,
       categoryGroups,

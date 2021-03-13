@@ -1,5 +1,5 @@
-import CategoryGroupsRepo from '@/repositories/category-groups'
-import CategoriesRepo from '@/repositories/categories'
+import * as categoryGroupsRepository from '@/repositories/category-groups'
+import * as categoriesRepository from '@/repositories/categories'
 import CreateCategoryModal from '@/components/categories/CreateCategoryModal'
 import factories from '#/factories'
 import faker from 'faker'
@@ -12,8 +12,8 @@ const form = {
   name: faker.commerce.department(),
 }
 
-CategoryGroupsRepo.categoryGroups.value = categoryGroups
-CategoriesRepo.createCategory = jest.fn()
+categoryGroupsRepository.categoryGroups.value = categoryGroups
+categoriesRepository.createCategory = jest.fn()
 
 const factory = (args = {}) => factoryBuilder(CreateCategoryModal, {
   data: args.data,
@@ -30,7 +30,7 @@ describe('CreateCategoryModal', () => {
     expect(input.exists()).toBeTruthy()
   })
 
-  it('renders category group select ', () => {
+  it('renders category group select', () => {
     const wrapper = factory()
     const label = wrapper.find("[data-test='category-group']")
     const options = wrapper.findAll("[data-test='select-option']")
@@ -64,7 +64,7 @@ describe('CreateCategoryModal', () => {
 
       await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-      expect(CategoriesRepo.createCategory).toHaveBeenCalledWith({
+      expect(categoriesRepository.createCategory).toHaveBeenCalledWith({
         ...form,
         budgetId: budget.id,
       })
@@ -77,7 +77,7 @@ describe('CreateCategoryModal', () => {
 
         await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-        expect(CategoriesRepo.createCategory).not.toHaveBeenCalled()
+        expect(categoriesRepository.createCategory).not.toHaveBeenCalled()
       })
     })
   })

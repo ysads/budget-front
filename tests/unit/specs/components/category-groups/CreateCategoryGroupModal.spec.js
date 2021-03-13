@@ -1,4 +1,4 @@
-import CategoryGroupsRepo from '@/repositories/category-groups'
+import * as repository from '@/repositories/category-groups'
 import CreateCategoryGroupModal from '@/components/category-groups/CreateCategoryGroupModal'
 import factories from '#/factories'
 import faker from 'faker'
@@ -14,7 +14,7 @@ const factory = (args = {}) => factoryBuilder(CreateCategoryGroupModal, {
   propsData: { budget },
 })
 
-CreateCategoryGroupModal.createCategoryGroup = jest.fn()
+repository.createCategoryGroup = jest.fn()
 
 describe('CreateCategoryGroupModal', () => {
   it('renders name input', () => {
@@ -51,7 +51,7 @@ describe('CreateCategoryGroupModal', () => {
 
       await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-      expect(CategoryGroupsRepo.createCategoryGroup).toHaveBeenCalledWith({
+      expect(repository.createCategoryGroup).toHaveBeenCalledWith({
         ...form,
         budgetId: budget.id,
       })
@@ -64,7 +64,7 @@ describe('CreateCategoryGroupModal', () => {
 
         await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-        expect(CategoryGroupsRepo.createCategoryGroup).not.toHaveBeenCalled()
+        expect(repository.createCategoryGroup).not.toHaveBeenCalled()
       })
     })
   })

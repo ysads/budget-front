@@ -83,8 +83,8 @@ import SadTip from '@/components/sad/SadTip'
 import { required } from 'vuelidate/lib/validators'
 import { useI18n } from '@/use/i18n'
 import { useValidation } from '@/use/validation'
-import CategoryGroupsRepo from '@/repositories/category-groups'
-import CategoriesRepo from '@/repositories/categories'
+import { categoryGroups } from '@/repositories/category-groups'
+import { createCategory } from '@/repositories/categories'
 
 export default {
   name: 'CreateCategoryModal',
@@ -115,11 +115,7 @@ export default {
   },
 
   setup () {
-    const { createCategory, categories } = CategoriesRepo
-    const { categoryGroups } = CategoryGroupsRepo
-
     return {
-      categories,
       createCategory,
       categoryGroups,
       ...useI18n('CreateCategoryModal'),

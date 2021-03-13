@@ -1,9 +1,9 @@
 import { get, post } from '@/api'
 import { ref } from '@vue/composition-api'
 
-const categoryGroups = ref([])
+export const categoryGroups = ref([])
 
-const createCategoryGroup = async (params) => {
+export const createCategoryGroup = async (params) => {
   const categoryGroup = await post(
     `budgets/${params.budgetId}/category_groups`, params,
   )
@@ -11,15 +11,9 @@ const createCategoryGroup = async (params) => {
   categoryGroups.value.push(categoryGroup)
 }
 
-const getCategoryGroups = async (params) => {
+export const getCategoryGroups = async (params) => {
   const groups = await get(
     `budgets/${params.budgetId}/category_groups`,
   )
   categoryGroups.value = groups
-}
-
-export default {
-  categoryGroups,
-  createCategoryGroup,
-  getCategoryGroups,
 }

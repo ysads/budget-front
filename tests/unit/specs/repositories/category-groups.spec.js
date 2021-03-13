@@ -1,11 +1,11 @@
 import * as api from '@/api'
+import * as categoryGroupRepo from '@/repositories/category-groups'
 import factories from '#/factories'
 import faker from 'faker'
-import CategoryGroupRepo from '@/repositories/category-groups'
 
-describe('CategoryGroupRepo', () => {
+describe('CategoryGroupRepository', () => {
   beforeEach(() => {
-    CategoryGroupRepo.categoryGroups.value = []
+    categoryGroupRepo.categoryGroups.value = []
   })
 
   describe('#createCategoryGroup', () => {
@@ -13,7 +13,7 @@ describe('CategoryGroupRepo', () => {
       const budgetId = faker.random.uuid()
       const params = { mock: true, budgetId }
 
-      await CategoryGroupRepo.createCategoryGroup(params)
+      await categoryGroupRepo.createCategoryGroup(params)
 
       expect(api.post).toHaveBeenCalledWith(
         `budgets/${budgetId}/category_groups`, params,
@@ -26,9 +26,9 @@ describe('CategoryGroupRepo', () => {
 
       api.post.mockResolvedValueOnce(categoryGroup)
 
-      await CategoryGroupRepo.createCategoryGroup(params)
+      await categoryGroupRepo.createCategoryGroup(params)
 
-      expect(CategoryGroupRepo.categoryGroups.value).toEqual([categoryGroup])
+      expect(categoryGroupRepo.categoryGroups.value).toEqual([categoryGroup])
     })
   })
 
@@ -37,7 +37,7 @@ describe('CategoryGroupRepo', () => {
       const budgetId = faker.random.uuid()
       const params = { mock: true, budgetId }
 
-      await CategoryGroupRepo.getCategoryGroups(params)
+      await categoryGroupRepo.getCategoryGroups(params)
 
       expect(api.get).toHaveBeenCalledWith(
         `budgets/${budgetId}/category_groups`,
@@ -50,9 +50,9 @@ describe('CategoryGroupRepo', () => {
 
       api.get.mockResolvedValueOnce(categoryGroups)
 
-      await CategoryGroupRepo.getCategoryGroups(params)
+      await categoryGroupRepo.getCategoryGroups(params)
 
-      expect(CategoryGroupRepo.categoryGroups.value).toEqual(categoryGroups)
+      expect(categoryGroupRepo.categoryGroups.value).toEqual(categoryGroups)
     })
   })
 })

@@ -6,8 +6,3 @@ export const openBudget = ref({})
 export const getBudgetById = async (id) => {
   openBudget.value = await get(`budgets/${id}`)
 }
-
-export default {
-  openBudget,
-  getBudgetById,
-}

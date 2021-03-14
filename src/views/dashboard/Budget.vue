@@ -4,15 +4,15 @@
     <section v-else>
       <month-header
         :budget="openBudget"
-        :month="openMonth"
+        :month="currentMonth"
         @update="updateCurrentMonth"
       />
       <budget-toolbar
         :budget="openBudget"
       />
-      <div v-for="category in categories" :key="category.id">
-        {{ category.id }} – {{ category.name }}
-      </div>
+      <monthly-budgets-table
+        :budget="openBudget"
+      />
     </section>
   </div>
 </template>
@@ -21,13 +21,10 @@
 import BudgetToolbar from '@/components/budgets/BudgetToolbar'
 import Loading from '@/components/Loading'
 import MonthHeader from '@/components/months/MonthHeader'
-import { BUDGETS, MONTHS, CATEGORIES } from '@/store/namespaces'
-import { createNamespacedHelpers } from 'vuex'
+import MonthlyBudgetsTable from '@/components/monthly-budgets/MonthlyBudgetsTable'
 import { isoMonth } from '@/support/date'
-
-const budgetsHelper = createNamespacedHelpers(BUDGETS)
-const monthsHelper = createNamespacedHelpers(MONTHS)
-const categoriesHelper = createNamespacedHelpers(CATEGORIES)
+import { openBudget } from '@/repositories/budgets'
+import { currentMonth, getMonthByIso } from '@/repositories/months'
 
 export default {
   name: 'Budget',
@@ -36,13 +33,18 @@ export default {
     BudgetToolbar,
     Loading,
     MonthHeader,
+    MonthlyBudgetsTable,
   },
 
   data () {
     return {
       isLoading: true,
-      currentMonth: new Date(),
+      currentMonthDate: new Date(),
     }
+  },
+
+  setup () {
+    return { currentMonth, openBudget }
   },
 
   async mounted () {
@@ -52,25 +54,14 @@ export default {
   },
 
   computed: {
-    ...budgetsHelper.mapState(['openBudget']),
-    ...monthsHelper.mapState(['months']),
-    ...categoriesHelper.mapState(['categories']),
-
     currentIsoMonth () {
-      return isoMonth(this.currentMonth)
-    },
-
-    openMonth () {
-      return this.months[this.currentIsoMonth]
+      return isoMonth(this.currentMonthDate)
     },
   },
 
   methods: {
-    ...monthsHelper.mapActions(['getMonth']),
-
     async fetchResources () {
-      console.log(this.currentIsoMonth)
-      await this.getMonth({
+      await getMonthByIso({
         budgetId: this.openBudget.id,
         isoMonth: this.currentIsoMonth,
       })

@@ -1,21 +1,42 @@
 <template>
-  <input
-    :id="name"
-    v-model="val"
-    class="sad-input"
-    data-test="input"
-    :placeholder="placeholder"
-    @input="updateValue"
-    @focus="cleanFormat"
-    @blur="formatValue"
-  />
+  <div>
+    <sad-label to="name" :text="label" data-test="label" />
+    <input
+      :id="name"
+      v-model="val"
+      class="sad-input"
+      data-test="input"
+      :placeholder="placeholder"
+      @input="updateValue"
+      @focus="cleanFormat"
+      @blur="formatValue"
+    />
+    <sad-tip
+      v-if="tipText"
+      class="sad-input__tip"
+      :variant="tipVariant"
+      :text="tipText"
+      data-test="tip"
+    />
+  </div>
 </template>
 
 <script>
+import SadLabel from './SadLabel'
+import SadTip from './SadTip'
+import useTip from '@/use/tip'
 import { VMoney } from 'v-money'
 
 export default {
   props: {
+    label: {
+      type: String,
+      default: '',
+    },
+    error: {
+      type: String,
+      default: '',
+    },
     value: {
       type: [String, Number],
       required: true,
@@ -32,12 +53,27 @@ export default {
       type: String,
       default: '',
     },
+    tip: {
+      type: String,
+      default: '',
+    },
   },
 
   data () {
     return {
       val: this.value,
     }
+  },
+
+  setup (props) {
+    const { tipText, tipVariant } = useTip(props)
+
+    return { tipText, tipVariant }
+  },
+
+  components: {
+    SadLabel,
+    SadTip,
   },
 
   directives: {
@@ -88,7 +124,12 @@ export default {
   color: var(--text-default);
   height: $base * 10;
   padding: $base * 2;
+  width: 100%;
 
   @extend %body-1;
+
+  &__tip {
+    margin-top: $base;
+  }
 }
 </style>

@@ -20,14 +20,14 @@
 <script>
 import Drawer from '@/components/Drawer'
 import Loading from '@/components/Loading'
+import { getCategoryGroups } from '@/repositories/category-groups'
+import { getCategories } from '@/repositories/categories'
+import { getBudgetById } from '@/repositories/budgets'
 import { createNamespacedHelpers } from 'vuex'
-import { AUTH, BUDGETS, CATEGORIES, CATEGORY_GROUPS, PAYEES } from '@/store/namespaces'
+import { AUTH, BUDGETS } from '@/store/namespaces'
 
 const authHelper = createNamespacedHelpers(AUTH)
 const budgetsHelper = createNamespacedHelpers(BUDGETS)
-const categoriesHelper = createNamespacedHelpers(CATEGORIES)
-const categoryGroupsHelper = createNamespacedHelpers(CATEGORY_GROUPS)
-const payeesHelper = createNamespacedHelpers(PAYEES)
 
 const MD_BREAKPOINT = 768
 
@@ -50,11 +50,11 @@ export default {
     window.addEventListener('resize', this.onResize)
     await this.validateSession()
     await this.getBudget(this.$route.params.budgetId)
+    await getBudgetById(this.$route.params.budgetId)
 
     await Promise.all([
-      this.getCategoryGroups({ budgetId: this.openBudget.id }),
-      this.getCategories({ budgetId: this.openBudget.id }),
-      this.getPayees({ budgetId: this.openBudget.id }),
+      getCategoryGroups({ budgetId: this.openBudget.id }),
+      getCategories({ budgetId: this.openBudget.id }),
     ])
   },
 
@@ -73,15 +73,12 @@ export default {
   methods: {
     ...authHelper.mapActions(['getMe']),
     ...budgetsHelper.mapActions(['getBudget']),
-    ...categoriesHelper.mapActions(['getCategories']),
-    ...categoryGroupsHelper.mapActions(['getCategoryGroups']),
-    ...payeesHelper.mapActions(['getPayees']),
 
     async validateSession () {
       try {
         await this.getMe()
       } catch {
-        this.$router.push({ name: 'SignIn' })
+        this.$route.push({ name: 'SignIn' })
       }
     },
 
@@ -128,6 +125,8 @@ export default {
   }
 
   &__main {
+    height: 100%;
+    overflow: auto;
     width: 100%;
 
     @include breakpoint(md) {

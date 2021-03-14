@@ -1,6 +1,3 @@
 export const ACCOUNTS = 'account'
 export const AUTH = 'auth'
 export const BUDGETS = 'budgets'
-export const CATEGORY_GROUPS = 'category_groups'
-export const CATEGORIES = 'categories'
-export const MONTHS = 'months'

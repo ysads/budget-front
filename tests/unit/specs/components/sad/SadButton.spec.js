@@ -26,7 +26,7 @@ describe('SadButton', () => {
   })
 
   it('adds a class according to type', () => {
-    const type = sample('primary', 'ghost')
+    const type = sample(['primary', 'ghost'])
     const wrapper = factory({ propsData: { type } })
     const button = wrapper.find("[data-test='button']")
 

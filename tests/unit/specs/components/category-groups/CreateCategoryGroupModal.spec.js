@@ -1,27 +1,20 @@
+import * as repository from '@/repositories/category-groups'
 import CreateCategoryGroupModal from '@/components/category-groups/CreateCategoryGroupModal'
 import factories from '#/factories'
-import Faker from 'faker'
-import { CATEGORY_GROUPS } from '@/store/namespaces'
+import faker from 'faker'
 import { factoryBuilder } from '#/factory-builder'
 
 const budget = factories.budget.build()
 const form = {
-  name: Faker.commerce.department(),
+  name: faker.commerce.department(),
 }
 
 const factory = (args = {}) => factoryBuilder(CreateCategoryGroupModal, {
   data: args.data,
   propsData: { budget },
-  mocks: { BaseModal: true },
-  store: {
-    [CATEGORY_GROUPS]: {
-      actions: {
-        createCategoryGroup: args.createCategoryGroup ||
-          jest.fn(() => Promise.resolve()),
-      },
-    },
-  },
 })
+
+repository.createCategoryGroup = jest.fn()
 
 describe('CreateCategoryGroupModal', () => {
   it('renders name input', () => {
@@ -54,15 +47,11 @@ describe('CreateCategoryGroupModal', () => {
     })
 
     it('calls createAccount with form', async () => {
-      const createCategoryGroup = jest.fn()
-      const wrapper = factory({
-        data: { form },
-        createCategoryGroup,
-      })
+      const wrapper = factory({ data: { form } })
 
       await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-      expect(createCategoryGroup).toHaveBeenCalledWith(expect.anything(), {
+      expect(repository.createCategoryGroup).toHaveBeenCalledWith({
         ...form,
         budgetId: budget.id,
       })
@@ -70,16 +59,12 @@ describe('CreateCategoryGroupModal', () => {
 
     context('and validation fails', () => {
       it('does call createAccount', async () => {
-        const createCategoryGroup = jest.fn()
-        const wrapper = factory({
-          data: { form },
-          createCategoryGroup,
-        })
+        const wrapper = factory({ data: { form } })
         jest.spyOn(wrapper.vm, 'isValid').mockReturnValue(false)
 
         await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-        expect(createCategoryGroup).not.toHaveBeenCalled()
+        expect(repository.createCategoryGroup).not.toHaveBeenCalled()
       })
     })
   })

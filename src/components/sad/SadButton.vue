@@ -3,7 +3,6 @@
     class="button"
     :class="[typeClass, sizeClass, fullWidthClass]"
     :size="size"
-    :type="type"
     data-test="button"
     @click="$emit('click')"
   >

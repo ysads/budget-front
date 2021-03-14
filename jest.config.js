@@ -6,6 +6,7 @@ module.exports = {
   coverageDirectory: '<rootDir>/tests/unit/coverage',
   coveragePathIgnorePatterns: [
     'tests/unit/factory-builder',
+    'tests/unit/factories/*',
     'src/setup/*',
   ],
   coverageThreshold: {

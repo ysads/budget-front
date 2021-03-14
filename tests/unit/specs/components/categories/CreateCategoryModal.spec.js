@@ -1,30 +1,23 @@
+import * as categoryGroupsRepository from '@/repositories/category-groups'
+import * as categoriesRepository from '@/repositories/categories'
 import CreateCategoryModal from '@/components/categories/CreateCategoryModal'
 import factories from '#/factories'
-import Faker from 'faker'
-import { CATEGORIES, CATEGORY_GROUPS } from '@/store/namespaces'
+import faker from 'faker'
 import { factoryBuilder } from '#/factory-builder'
 
 const budget = factories.budget.build()
 const categoryGroups = factories.categoryGroup.buildList(2)
 const form = {
   categoryGroupId: categoryGroups[0].id,
-  name: Faker.commerce.department(),
+  name: faker.commerce.department(),
 }
+
+categoryGroupsRepository.categoryGroups.value = categoryGroups
+categoriesRepository.createCategory = jest.fn()
 
 const factory = (args = {}) => factoryBuilder(CreateCategoryModal, {
   data: args.data,
   propsData: { budget },
-  mocks: { BaseModal: true },
-  store: {
-    [CATEGORIES]: {
-      actions: {
-        createCategory: args.createCategory || jest.fn(() => Promise.resolve()),
-      },
-    },
-    [CATEGORY_GROUPS]: {
-      state: { categoryGroups },
-    },
-  },
 })
 
 describe('CreateCategoryModal', () => {
@@ -37,7 +30,7 @@ describe('CreateCategoryModal', () => {
     expect(input.exists()).toBeTruthy()
   })
 
-  it('renders category group select ', () => {
+  it('renders category group select', () => {
     const wrapper = factory()
     const label = wrapper.find("[data-test='category-group']")
     const options = wrapper.findAll("[data-test='select-option']")
@@ -67,15 +60,11 @@ describe('CreateCategoryModal', () => {
     })
 
     it('calls createAccount with form', async () => {
-      const createCategory = jest.fn()
-      const wrapper = factory({
-        data: { form },
-        createCategory,
-      })
+      const wrapper = factory({ data: { form } })
 
       await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-      expect(createCategory).toHaveBeenCalledWith(expect.anything(), {
+      expect(categoriesRepository.createCategory).toHaveBeenCalledWith({
         ...form,
         budgetId: budget.id,
       })
@@ -83,16 +72,12 @@ describe('CreateCategoryModal', () => {
 
     context('and validation fails', () => {
       it('does call createAccount', async () => {
-        const createCategory = jest.fn()
-        const wrapper = factory({
-          data: { form },
-          createCategory,
-        })
+        const wrapper = factory({ data: { form } })
         jest.spyOn(wrapper.vm, 'isValid').mockReturnValue(false)
 
         await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-        expect(createCategory).not.toHaveBeenCalled()
+        expect(categoriesRepository.createCategory).not.toHaveBeenCalled()
       })
     })
   })

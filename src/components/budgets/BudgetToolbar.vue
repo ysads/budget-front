@@ -7,7 +7,7 @@
         type="ghost"
         size="small"
         data-test="new-group-btn"
-        @click="toggleCategoryGroupModal"
+        @click="toggle('categoryGroupModal')"
       >
         {{ t('newCategoryGroup') }}
       </sad-button>
@@ -18,22 +18,38 @@
         type="ghost"
         size="small"
         data-test="new-category-btn"
-        @click="toggleCategoryModal"
+        @click="toggle('categoryModal')"
       >
         {{ t('newCategory') }}
       </sad-button>
 
+      <sad-button
+        class="budget-toolbar__button"
+        icon="plus"
+        type="ghost"
+        size="small"
+        data-test="new-monthly-budget-btn"
+        @click="toggle('drawer')"
+      >
+        {{ t('newMonthlyBudget') }}
+      </sad-button>
+
       <create-category-group-modal
-        v-if="showCategoryGroupModal"
+        v-if="isVisible.categoryGroupModal"
         :budget="openBudget"
         data-test="new-group-modal"
-        @close="toggleCategoryGroupModal"
+        @close="toggle('categoryGroupModal')"
       />
       <create-category-modal
-        v-if="showCategoryModal"
+        v-if="isVisible.categoryModal"
         :budget="openBudget"
         data-test="new-category-modal"
-        @close="toggleCategoryModal"
+        @close="toggle('categoryModal')"
+      />
+      <monthly-budget-details
+        v-if="isVisible.drawer"
+        data-test="monthly-budget-details"
+        @close="toggle('drawer')"
       />
     </div>
   </div>
@@ -42,44 +58,32 @@
 <script>
 import CreateCategoryGroupModal from '@/components/category-groups/CreateCategoryGroupModal'
 import CreateCategoryModal from '@/components/categories/CreateCategoryModal'
+import MonthlyBudgetDetails from '@/components/monthly-budgets/MonthlyBudgetDetails'
 import SadButton from '@/components/sad/SadButton'
-import { BUDGETS } from '@/store/namespaces'
-import { createNamespacedHelpers } from 'vuex'
 import { useI18n } from '@/use/i18n'
-
-const budgetsHelper = createNamespacedHelpers(BUDGETS)
+import { openBudget } from '@/repositories/budgets'
+import { reactive } from '@vue/composition-api'
 
 export default {
   components: {
     CreateCategoryModal,
     CreateCategoryGroupModal,
+    MonthlyBudgetDetails,
     SadButton,
-  },
-
-  data () {
-    return {
-      showCategoryGroupModal: false,
-      showCategoryModal: false,
-    }
   },
 
   setup () {
     const { t } = useI18n()
-    return { t }
-  },
+    const isVisible = reactive({
+      categoryGroupModal: false,
+      categoryModal: false,
+      drawer: false,
+    })
+    const toggle = (prop) => {
+      isVisible[prop] = !isVisible[prop]
+    }
 
-  computed: {
-    ...budgetsHelper.mapState(['openBudget']),
-  },
-
-  methods: {
-    toggleCategoryGroupModal () {
-      this.showCategoryGroupModal = !this.showCategoryGroupModal
-    },
-
-    toggleCategoryModal () {
-      this.showCategoryModal = !this.showCategoryModal
-    },
+    return { isVisible, openBudget, toggle, t }
   },
 }
 </script>

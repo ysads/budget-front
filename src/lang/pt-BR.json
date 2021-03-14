@@ -22,6 +22,7 @@
   "newAccount": "Nova conta",
   "newCategory": "Nova categoria",
   "newCategoryGroup": "Novo grupo",
+  "newMonthlyBudget": "Criar orçamento",
   "CreateAccountModal": {
     "accountType": "De que tipo é essa conta?",
     "currentBalance": "Quanto você tem hoje nessa conta?",
@@ -36,6 +37,11 @@
     "categoryGroup": "Em qual grupo de gastos essa categoria está?",
     "categoryGroupPlaceholder": "Selecione um...",
     "name": "Nome da categoria"
+  },
+  "MonthlyBudgetDetails": {
+    "category": "Categoria",
+    "categoryPlaceholder": "Selecione",
+    "budgeted": "Quanto você pretende gastar?"
   },
   "save": "Salvar",
   "startingBalance": "Saldo inicial",

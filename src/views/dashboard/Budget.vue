@@ -4,7 +4,7 @@
     <section v-else>
       <month-header
         :budget="openBudget"
-        :month="openMonth"
+        :month="currentMonth"
         @update="updateCurrentMonth"
       />
       <budget-toolbar
@@ -22,12 +22,9 @@ import BudgetToolbar from '@/components/budgets/BudgetToolbar'
 import Loading from '@/components/Loading'
 import MonthHeader from '@/components/months/MonthHeader'
 import MonthlyBudgetsTable from '@/components/monthly-budgets/MonthlyBudgetsTable'
-import { MONTHS } from '@/store/namespaces'
-import { createNamespacedHelpers } from 'vuex'
 import { isoMonth } from '@/support/date'
 import { openBudget } from '@/repositories/budgets'
-
-const monthsHelper = createNamespacedHelpers(MONTHS)
+import { currentMonth, getMonthByIso } from '@/repositories/months'
 
 export default {
   name: 'Budget',
@@ -42,12 +39,12 @@ export default {
   data () {
     return {
       isLoading: true,
-      currentMonth: new Date(),
+      currentMonthDate: new Date(),
     }
   },
 
   setup () {
-    return { openBudget }
+    return { currentMonth, openBudget }
   },
 
   async mounted () {
@@ -57,23 +54,14 @@ export default {
   },
 
   computed: {
-    ...monthsHelper.mapState(['months']),
-
     currentIsoMonth () {
-      return isoMonth(this.currentMonth)
-    },
-
-    openMonth () {
-      return this.months[this.currentIsoMonth]
+      return isoMonth(this.currentMonthDate)
     },
   },
 
   methods: {
-    ...monthsHelper.mapActions(['getMonth']),
-
     async fetchResources () {
-      console.log(this.currentIsoMonth)
-      await this.getMonth({
+      await getMonthByIso({
         budgetId: this.openBudget.id,
         isoMonth: this.currentIsoMonth,
       })

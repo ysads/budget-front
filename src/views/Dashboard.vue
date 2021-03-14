@@ -125,9 +125,9 @@ export default {
   }
 
   &__main {
-    width: 100%;
     height: 100%;
     overflow: auto;
+    width: 100%;
 
     @include breakpoint(md) {
       width: 80%;

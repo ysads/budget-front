@@ -101,6 +101,7 @@ export default {
   &__control {
     width: 100%;
   }
+
   &__control + &__control {
     margin-top: $base*4;
   }

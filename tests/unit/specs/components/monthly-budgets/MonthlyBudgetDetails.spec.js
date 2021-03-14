@@ -33,7 +33,9 @@ describe('MonthlyBudgetDetails', () => {
 
     const item = wrapper.find("[data-test='category']")
 
-    expect(item.props().placeholder).toEqual('MonthlyBudgetDetails.categoryPlaceholder')
+    expect(item.props().placeholder).toEqual(
+      'MonthlyBudgetDetails.categoryPlaceholder',
+    )
     expect(item.props().label).toEqual('MonthlyBudgetDetails.category')
   })
 

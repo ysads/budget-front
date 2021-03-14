@@ -69,7 +69,7 @@ export default defineComponent({
   &--small { font-size: 16px; }
   &--medium { font-size: 24px; }
 
-  &--green { color: var(--color-success);  }
+  &--green { color: var(--color-success); }
   &--info { color: var(--color-info); }
   &--primary { color: var(--color-primary); }
   &--red { color: var(--color-error); }

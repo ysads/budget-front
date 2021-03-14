@@ -77,8 +77,8 @@ export default {
     overflow: auto;
     padding: $padding;
     position: fixed;
-    top: 0;
     right: 0;
+    top: 0;
     transition: all 0.5s ease;
     width: 100%;
     z-index: 4;
@@ -100,6 +100,7 @@ export default {
 
     &-title {
       color: var(--modal-title);
+
       @extend %h3;
     }
 
@@ -118,9 +119,9 @@ export default {
   }
 
   &__footer {
-    @include margin(top, 4);
-
     width: 100%;
+
+    @include margin(top, 4);
   }
 
   &__group {

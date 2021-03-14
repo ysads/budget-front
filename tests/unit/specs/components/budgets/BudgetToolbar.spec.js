@@ -81,7 +81,8 @@ describe('BudgetToolbar', () => {
   context('when new monthly budget button is clicked', () => {
     it('shows create category modal', async () => {
       const wrapper = factory()
-      await wrapper.find("[data-test='new-monthly-budget-btn']").vm.$emit('click')
+      await wrapper.find("[data-test='new-monthly-budget-btn']")
+        .vm.$emit('click')
 
       const modal = wrapper.find("[data-test='monthly-budget-details']")
 

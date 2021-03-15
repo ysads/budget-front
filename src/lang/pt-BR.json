@@ -19,6 +19,12 @@
       "checking": "Corrente"
     }
   },
+  "errors": {
+    "generic": "Algo deu errado. Tente novamente.",
+    "monthly-budgets": {
+      "already-exists": "Você já tem um orçamento para essa categoria."
+    }
+  },
   "newAccount": "Nova conta",
   "newCategory": "Nova categoria",
   "newCategoryGroup": "Novo grupo",

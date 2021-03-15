@@ -24,6 +24,9 @@ jest.mock('vue-i18n-composable', () => ({
     t: (string) => string,
   }),
 }))
+jest.mock('@/plugins/i18n', () => ({
+  t: (str) => str,
+}))
 
 // Mock routing fns
 config.mocks.$route = {

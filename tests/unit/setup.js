@@ -24,6 +24,9 @@ jest.mock('vue-i18n-composable', () => ({
     t: (string) => string,
   }),
 }))
+jest.mock('@/plugins/i18n', () => ({
+  t: (str) => str,
+}))
 
 // Mock routing fns
 config.mocks.$route = {
@@ -38,4 +41,14 @@ config.mocks.$router = {
 Vue.component('router-link', {
   name: 'RouterLink',
   props: { to: [Object, String] },
+})
+
+Vue.component('transition', {
+  name: 'Transition',
+  template: '<div><slot/></div>',
+})
+
+Vue.component('transition-group', {
+  name: 'TransitionGroup',
+  template: '<div><slot/></div>',
 })

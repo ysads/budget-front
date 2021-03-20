@@ -1,14 +1,7 @@
 import AlertContainer from '@/components/AlertContainer'
-import eventBus, { SHOW_ALERT } from '@/events'
 import faker from 'faker'
+import { eventBus, SHOW_ALERT } from '@/events'
 import { factoryBuilder } from '#/factory-builder'
-import { nextTick } from '@vue/composition-api'
-
-// jest.mock('@/events', () => ({
-//   emit: jest.fn(),
-//   on: jest.fn(),
-//   SHOW_ALERT: 'mock-event',
-// }))
 
 const buildAlert = () => ({
   message: faker.name.findName(),

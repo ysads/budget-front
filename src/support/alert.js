@@ -1,4 +1,4 @@
-import eventBus, { SHOW_ALERT } from '@/events'
+import { eventBus, SHOW_ALERT } from '@/events'
 
 export default {
   error (message) {

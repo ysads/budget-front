@@ -1,8 +1,8 @@
-import eventBus, { SHOW_ALERT } from '@/events'
+import { eventBus, SHOW_ALERT } from '@/events'
 import alert from '@/support/alert'
 
 jest.mock('@/events', () => ({
-  emit: jest.fn(),
+  eventBus: { emit: jest.fn() },
   SHOW_ALERT: 'mock-event',
 }))
 

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import eventBus, { SHOW_ALERT } from '@/events'
+import { eventBus, SHOW_ALERT } from '@/events'
 import SadAlert from '@/components/sad/SadAlert'
 import uuid from 'uuid-random'
 import { defineComponent, onMounted, ref } from '@vue/composition-api'

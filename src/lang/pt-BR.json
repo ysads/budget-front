@@ -47,6 +47,7 @@
   "MonthlyBudgetDetails": {
     "category": "Categoria",
     "categoryPlaceholder": "Selecione",
+    "created": "Orçamento criado",
     "budgeted": "Quanto você pretende gastar?"
   },
   "save": "Salvar",

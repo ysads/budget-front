@@ -55,10 +55,13 @@ export default defineComponent({
   }
 }
 
-.list-enter-active, .list-leave-active {
+.list-enter-active,
+.list-leave-active {
   transition: all 0.3s;
 }
-.list-enter, .list-leave-to {
+
+.list-enter,
+.list-leave-to {
   opacity: 0;
   transform: translateY(30px);
 }

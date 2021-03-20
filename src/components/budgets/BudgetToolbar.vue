@@ -98,14 +98,17 @@ export default {
   padding: $base*2 $base*4;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: all 0.3s;
+.fade-enter-active,
+.fade-leave-active {
   left: 0;
   position: fixed;
   right: 0;
   top: 0;
+  transition: all 0.3s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+.fade-enter,
+.fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
   transform: translateX(30px);
 }

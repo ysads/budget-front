@@ -96,27 +96,30 @@ export default defineComponent({
   width: 350px;
 
   &__ribbon {
-    width: 4px;
     flex-shrink: 0;
+    width: 4px;
   }
   &__ribbon-error { background: var(--color-error); }
   &__ribbon-success { background: var(--color-success); }
   &__ribbon-warning { background: var(--color-warning); }
+
   &__icon {
     align-self: center;
     flex-shrink: 0;
     padding-left: 16px;
   }
+
   &__close {
+    align-self: center;
     background: none;
     border: 0;
     cursor: pointer;
-    align-self: center;
     margin-right: 16px;
   }
+
   &__message {
-    padding: 16px;
     flex-grow: 1;
+    padding: 16px;
   }
 }
 </style>

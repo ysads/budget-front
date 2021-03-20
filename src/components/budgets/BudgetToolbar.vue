@@ -46,11 +46,13 @@
         data-test="new-category-modal"
         @close="toggle('categoryModal')"
       />
-      <monthly-budget-details
-        v-if="isVisible.drawer"
-        data-test="monthly-budget-details"
-        @close="toggle('drawer')"
-      />
+      <transition name="fade">
+        <monthly-budget-details
+          v-if="isVisible.drawer"
+          data-test="monthly-budget-details"
+          @close="toggle('drawer')"
+        />
+      </transition>
     </div>
   </div>
 </template>
@@ -94,5 +96,17 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: $base*2 $base*4;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all 0.3s;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>

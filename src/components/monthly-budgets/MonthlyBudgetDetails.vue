@@ -41,6 +41,8 @@ import SadButton from '@/components/sad/SadButton'
 import SadDrawer from '@/components/sad/SadDrawer'
 import SadInput from '@/components/sad/SadInput'
 import SadSelect from '@/components/sad/SadSelect'
+import alert from '@/support/alert'
+import { handleApiError } from '@/api/errors'
 import { openBudget } from '@/repositories/budgets'
 import { categoriesByGroupId } from '@/repositories/categories'
 import { categoryGroups } from '@/repositories/category-groups'
@@ -73,14 +75,20 @@ export default {
       categoryId: '',
       budgeted: 0,
     })
-    const handleSubmit = () => {
-      createMonthlyBudget({
-        ...form,
-        budgeted: currencyToCents(form.budgeted, openBudget.value),
-        budgetId: openBudget.value.id,
-        monthId: currentMonth.value.id,
-      })
-      emit('close')
+
+    const handleSubmit = async () => {
+      try {
+        await createMonthlyBudget({
+          ...form,
+          budgeted: currencyToCents(form.budgeted, openBudget.value),
+          budgetId: openBudget.value.id,
+          monthId: currentMonth.value.id,
+        })
+        alert.success(st('created'))
+        emit('close')
+      } catch (err) {
+        handleApiError(err)
+      }
     }
 
     return {

@@ -20,6 +20,7 @@
 <script>
 import Drawer from '@/components/Drawer'
 import Loading from '@/components/Loading'
+import { getAccounts } from '@/repositories/accounts'
 import { getCategoryGroups } from '@/repositories/category-groups'
 import { getCategories } from '@/repositories/categories'
 import { getBudgetById, openBudget } from '@/repositories/budgets'
@@ -57,8 +58,9 @@ export default {
     await getBudgetById(this.$route.params.budgetId)
 
     await Promise.all([
-      getCategoryGroups({ budgetId: this.openBudget.id }),
-      getCategories({ budgetId: this.openBudget.id }),
+      getAccounts({ budgetId: openBudget.value.id }),
+      getCategoryGroups({ budgetId: openBudget.value.id }),
+      getCategories({ budgetId: openBudget.value.id }),
     ])
     this.loading = false
   },

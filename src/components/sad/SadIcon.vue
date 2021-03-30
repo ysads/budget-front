@@ -17,7 +17,7 @@
 <script>
 import { computed, defineComponent } from '@vue/composition-api'
 
-const COLORS = ['info', 'green', 'primary', 'red', 'yellow']
+const COLORS = ['green', 'info', 'inherit', 'primary', 'red', 'yellow']
 const SIZES = ['small', 'medium']
 
 export default defineComponent({
@@ -29,7 +29,7 @@ export default defineComponent({
     },
     color: {
       type: String,
-      default: 'gray',
+      default: 'inherit',
       validator: (val) => COLORS.includes(val),
     },
     name: {
@@ -71,6 +71,7 @@ export default defineComponent({
 
   &--green { color: var(--color-success); }
   &--info { color: var(--color-info); }
+  &--inherit { color: inherit; }
   &--primary { color: var(--color-primary); }
   &--red { color: var(--color-error); }
   &--yellow { color: var(--color-warning); }

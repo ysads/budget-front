@@ -2,25 +2,14 @@ import AccountShow from '@/views/dashboard/AccountShow'
 import factories from '#/factories'
 import flushPromises from 'flush-promises'
 import { factoryBuilder } from '#/factory-builder'
-import { ACCOUNTS, BUDGETS } from '@/store/namespaces'
+import * as budgetsRepository from '@/repositories/budgets'
+import * as accountsRepository from '@/repositories/accounts'
 
-const openBudget = factories.budget.build()
+const openBudget = factories
 const accounts = factories.account.buildList(3)
 const selectedAccount = accounts[0]
 
 const factory = (args = {}) => factoryBuilder(AccountShow, {
-  store: {
-    [ACCOUNTS]: {
-      state: {
-        accounts: args.accounts || accounts,
-      },
-    },
-    [BUDGETS]: {
-      state: {
-        openBudget,
-      },
-    },
-  },
   mocks: {
     $route: {
       params: { id: selectedAccount.id },
@@ -30,6 +19,11 @@ const factory = (args = {}) => factoryBuilder(AccountShow, {
 })
 
 describe('AccountShow', () => {
+  beforeEach(() => {
+    budgetsRepository.openBudget.value = openBudget
+    accountsRepository.accounts.value = accounts
+  })
+
   it('renders AccountHeader with selected account data as props', async () => {
     const wrapper = factory()
 
@@ -70,20 +64,6 @@ describe('AccountShow', () => {
       await flushPromises()
 
       expect(header.props().name).toBe(accounts[2].name)
-    })
-  })
-
-  context('when account state changes', () => {
-    it('fetches account', async () => {
-      const wrapper = factory({ accounts: [] })
-      await flushPromises()
-
-      expect(wrapper.find("[data-test='header']").exists()).toBe(false)
-
-      wrapper.vm.$store.state.account.accounts = accounts
-      await flushPromises()
-
-      expect(wrapper.find("[data-test='header']").exists()).toBe(true)
     })
   })
 })

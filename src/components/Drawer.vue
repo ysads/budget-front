@@ -3,13 +3,13 @@
     <ul class="drawer__nav">
       <li class="drawer__nav-item" :class="activeClass('Budget')">
         <router-link class="drawer__nav-link" :to="{ name: 'Budget' }">
-          <i class="icon fas fa-piggy-bank" />{{ t('budget') }}
+          <sad-icon class="icon" name="piggy-bank" />{{ t('budget') }}
         </router-link>
       </li>
 
       <li class="drawer__nav-item" :class="activeClass('Reports')">
         <router-link class="drawer__nav-link" to="#">
-          <i class="icon fas fa-chart-area" />{{ t('reports') }}
+          <sad-icon class="icon" name="chart-area" />{{ t('reports') }}
         </router-link>
       </li>
 
@@ -23,7 +23,7 @@
           :to="{ name: 'AllAccounts' }"
           data-test="all-accounts-link"
         >
-          <i class="icon fas fa-university" />{{ t('allAccounts') }}
+          <sad-icon class="icon" name="university" />{{ t('allAccounts') }}
         </router-link>
       </li>
     </ul>
@@ -83,61 +83,47 @@
 import AccountAccordion from '@/components/accounts/AccountAccordion'
 import CreateAccountModal from '@/components/accounts/CreateAccountModal'
 import SadButton from '@/components/sad/SadButton'
-import { createNamespacedHelpers } from 'vuex'
+import SadIcon from '@/components/sad/SadIcon'
+import { budgetAccounts, trackingAccounts } from '@/repositories/accounts'
+import { openBudget } from '@/repositories/budgets'
 import { useI18n } from '@/use/i18n'
-import { BUDGETS, ACCOUNTS } from '@/store/namespaces'
-
-const accountsHelper = createNamespacedHelpers(ACCOUNTS)
-const budgetsHelper = createNamespacedHelpers(BUDGETS)
+import { computed, ref } from '@vue/composition-api'
 
 export default {
   name: 'Drawer',
-
-  data () {
-    return {
-      activeNames: ['budget', 'tracking'],
-      modalVisible: false,
-    }
-  },
 
   components: {
     AccountAccordion,
     CreateAccountModal,
     SadButton,
-  },
-
-  computed: {
-    ...accountsHelper.mapState(['accounts']),
-    ...accountsHelper.mapGetters(['budgetAccounts', 'trackingAccounts']),
-    ...budgetsHelper.mapState(['openBudget']),
-
-    anyAccounts () {
-      return this.budgetAccounts?.length || this.trackingAccounts?.length
-    },
-  },
-
-  mounted () {
-    this.fetchAccounts()
+    SadIcon,
   },
 
   setup () {
     const { t } = useI18n()
-    return { t }
+    const activeNames = ref(['budget', 'tracking'])
+    const modalVisible = ref(false)
+    const anyAccounts = computed(() => {
+      return budgetAccounts.value?.length || trackingAccounts.value?.length
+    })
+
+    const toggleModal = () => (modalVisible.value = !modalVisible.value)
+
+    return {
+      activeNames,
+      anyAccounts,
+      budgetAccounts,
+      modalVisible,
+      openBudget,
+      t,
+      toggleModal,
+      trackingAccounts,
+    }
   },
 
   methods: {
-    ...accountsHelper.mapActions(['getAccounts']),
-
-    async fetchAccounts () {
-      await this.getAccounts({ budgetId: this.openBudget.id })
-    },
-
     activeClass (route) {
       return this.$route.name === route ? 'active' : ''
-    },
-
-    toggleModal () {
-      this.modalVisible = !this.modalVisible
     },
   },
 }

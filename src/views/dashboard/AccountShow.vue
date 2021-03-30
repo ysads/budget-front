@@ -17,13 +17,10 @@
 </template>
 
 <script>
-import { ACCOUNTS, BUDGETS } from '@/store/namespaces'
-import { createNamespacedHelpers } from 'vuex'
+import { openBudget } from '@/repositories/budgets'
+import { accounts, getAccountById } from '@/repositories/accounts'
 import AccountHeader from '@/components/accounts/AccountHeader'
 import Loading from '@/components/Loading'
-
-const accountsHelper = createNamespacedHelpers(ACCOUNTS)
-const budgetsHelper = createNamespacedHelpers(BUDGETS)
 
 export default {
   name: 'AccountShow',
@@ -31,6 +28,10 @@ export default {
   components: {
     AccountHeader,
     Loading,
+  },
+
+  setup () {
+    return { openBudget }
   },
 
   data () {
@@ -44,29 +45,18 @@ export default {
     await this.fetchAccount()
   },
 
-  computed: {
-    ...accountsHelper.mapState(['accounts']),
-    ...accountsHelper.mapGetters(['getAccountById']),
-    ...budgetsHelper.mapState(['openBudget']),
-  },
-
   methods: {
     fetchAccount () {
-      if (!this.accounts.length) return
+      if (!accounts.value.length) return
 
       this.isLoading = true
-      this.account = this.getAccountById(this.$route.params.id)
+      this.account = getAccountById(this.$route.params.id)
       this.isLoading = false
     },
   },
 
   watch: {
     '$route.params.id' () {
-      this.fetchAccount()
-    },
-
-    // Needed for when another component triggers a store update
-    'accounts' () {
       this.fetchAccount()
     },
   },

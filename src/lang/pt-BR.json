@@ -50,6 +50,11 @@
     "created": "Orçamento criado",
     "budgeted": "Quanto você pretende gastar?"
   },
+  "SignIn": {
+    "email": "Seu email",
+    "password": "Sua senha",
+    "signIn": "Entrar"
+  },
   "save": "Salvar",
   "startingBalance": "Saldo inicial",
   "toBeBudgeted": "Disponível",

@@ -5,13 +5,13 @@
       @click="toggleDrawer"
     />
     <drawer
-      v-if="openBudget"
+      v-if="openBudget.id"
       ref="drawer"
       class="dashboard__drawer"
       :class="{ 'fullscreen': showDrawer }"
     />
     <main class="dashboard__main">
-      <loading v-if="!openBudget" />
+      <loading v-if="loading" />
       <router-view v-else />
     </main>
   </div>
@@ -22,12 +22,9 @@ import Drawer from '@/components/Drawer'
 import Loading from '@/components/Loading'
 import { getCategoryGroups } from '@/repositories/category-groups'
 import { getCategories } from '@/repositories/categories'
-import { getBudgetById } from '@/repositories/budgets'
-import { createNamespacedHelpers } from 'vuex'
-import { AUTH, BUDGETS } from '@/store/namespaces'
-
-const authHelper = createNamespacedHelpers(AUTH)
-const budgetsHelper = createNamespacedHelpers(BUDGETS)
+import { getBudgetById, openBudget } from '@/repositories/budgets'
+import { getMe } from '@/repositories/auth'
+import { ref } from '@vue/composition-api'
 
 const MD_BREAKPOINT = 768
 
@@ -39,9 +36,17 @@ export default {
     Loading,
   },
 
+  setup () {
+    const isDrawerVisible = ref(false)
+    const loading = ref(true)
+
+    const toggleDrawer = () => (isDrawerVisible.value = !isDrawerVisible.value)
+
+    return { isDrawerVisible, loading, openBudget, toggleDrawer }
+  },
+
   data () {
     return {
-      isDrawerVisible: false,
       innerWidth: window.innerWidth,
     }
   },
@@ -49,13 +54,13 @@ export default {
   async mounted () {
     window.addEventListener('resize', this.onResize)
     await this.validateSession()
-    await this.getBudget(this.$route.params.budgetId)
     await getBudgetById(this.$route.params.budgetId)
 
     await Promise.all([
       getCategoryGroups({ budgetId: this.openBudget.id }),
       getCategories({ budgetId: this.openBudget.id }),
     ])
+    this.loading = false
   },
 
   beforeDestroy () {
@@ -63,27 +68,18 @@ export default {
   },
 
   computed: {
-    ...budgetsHelper.mapState(['openBudget']),
-
     showDrawer () {
       return this.isDrawerVisible && this.innerWidth <= MD_BREAKPOINT
     },
   },
 
   methods: {
-    ...authHelper.mapActions(['getMe']),
-    ...budgetsHelper.mapActions(['getBudget']),
-
     async validateSession () {
       try {
-        await this.getMe()
+        await getMe()
       } catch {
         this.$route.push({ name: 'SignIn' })
       }
-    },
-
-    toggleDrawer () {
-      this.isDrawerVisible = !this.isDrawerVisible
     },
 
     onResize () {

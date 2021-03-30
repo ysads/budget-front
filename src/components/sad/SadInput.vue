@@ -7,6 +7,7 @@
       class="sad-input"
       data-test="input"
       :placeholder="placeholder"
+      :type="type"
       @input="updateValue"
       @focus="cleanFormat"
       @blur="formatValue"
@@ -56,6 +57,10 @@ export default {
     tip: {
       type: String,
       default: '',
+    },
+    type: {
+      type: String,
+      default: 'text',
     },
   },
 

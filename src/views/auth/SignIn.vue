@@ -1,44 +1,68 @@
 <template>
   <div class="sign-in">
-    <el-input
+    <sad-input
       v-model="user.email"
-      placeholder="Please input"
+      class="sign-in__control"
+      name="email"
+      :label="st('email')"
     />
-    <el-input
+    <sad-input
       v-model="user.password"
-      placeholder="Please input password"
-      show-password
+      class="sign-in__control"
+      name="password"
+      type="password"
+      :label="st('password')"
     />
-    <el-button @click="handleSignIn">Sign In</el-button>
+    <sad-button
+      class="sign-in__control"
+      @click="handleSignIn"
+    >
+      {{ st('signIn') }}
+    </sad-button>
   </div>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import { AUTH } from '@/store/namespaces'
-
-const authHelper = createNamespacedHelpers(AUTH)
+import SadInput from '@/components/sad/SadInput'
+import SadButton from '@/components/sad/SadButton'
+import { reactive } from '@vue/composition-api'
+import { signIn } from '@/repositories/auth'
+import { useI18n } from '@/use/i18n'
 
 export default {
   name: 'SignIn',
 
-  data () {
-    return {
-      user: {
-        email: '',
-        password: '',
-      },
-    }
+  components: {
+    SadButton,
+    SadInput,
+  },
+
+  setup () {
+    const user = reactive({
+      email: '',
+      password: '',
+    })
+    const { st } = useI18n('SignIn')
+
+    return { user, st }
   },
 
   methods: {
-    ...authHelper.mapActions(['signIn']),
-
     async handleSignIn () {
-      await this.signIn(this.user)
+      await signIn(this.user)
 
       this.$router.push({ name: 'AllAccounts', params: { id: 1234 } })
     },
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.sign-in {
+  padding: $base*8;
+
+  &__control + &__control {
+    @include margin(top, 4);
+  }
+}
+</style>

@@ -2,6 +2,7 @@ import alert from '@/support/alert'
 import i18n from '@/plugins/i18n'
 
 export const MAPPED_ERRORS = [
+  'accounts/duplicate',
   'monthly-budgets/already-exists',
 ]
 

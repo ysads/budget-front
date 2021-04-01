@@ -20,6 +20,9 @@
     }
   },
   "errors": {
+    "accounts": {
+      "duplicate": "Você já cadastrou essa conta."
+    },
     "generic": "Algo deu errado. Tente novamente.",
     "monthly-budgets": {
       "already-exists": "Você já tem um orçamento para essa categoria."
@@ -31,6 +34,7 @@
   "newMonthlyBudget": "Criar orçamento",
   "CreateAccountModal": {
     "accountType": "De que tipo é essa conta?",
+    "created": "Conta criada",
     "currentBalance": "Quanto você tem hoje nessa conta?",
     "accountName": "Como você quer chamar essa conta?",
     "accountTypePlaceholder": "Escolha um tipo...",

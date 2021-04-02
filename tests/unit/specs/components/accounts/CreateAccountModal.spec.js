@@ -1,14 +1,13 @@
-import alert from '@/support/alert'
 import CreateAccountModal from '@/components/accounts/CreateAccountModal'
-import Faker from 'faker'
 import factories from '#/factories'
+import faker from 'faker'
+import flushPromises from 'flush-promises'
 import sample from 'lodash/sample'
 import { factoryBuilder } from '#/factory-builder'
 import { handleApiError } from '@/api/errors'
 import { ACCOUNT_TYPES } from '@/constants/account'
 import * as accountsRepository from '@/repositories/accounts'
 import * as money from '@/support/money'
-import flushPromises from 'flush-promises'
 
 jest.mock('@/api/errors', () => ({
   handleApiError: jest.fn(),
@@ -21,7 +20,7 @@ jest.mock('@/support/alert', () => ({
 
 const budget = factories.budget.build()
 const form = {
-  accountName: Faker.finance.accountName(),
+  accountName: faker.finance.accountName(),
   accountType: sample(ACCOUNT_TYPES),
   currentBalance: '2940,90',
 }

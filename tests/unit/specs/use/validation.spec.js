@@ -1,10 +1,5 @@
 import { useValidation } from '@/use/validation'
-import i18n from '@/plugins/i18n'
 import sample from 'lodash/sample'
-
-jest.mock('@/plugins/i18n', () => ({
-  t: (str, params) => `${str}${JSON.stringify(params)}`,
-}))
 
 describe('useValidation', () => {
   describe('#hasError', () => {

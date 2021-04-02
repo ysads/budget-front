@@ -1,13 +1,11 @@
 import ElementUI from 'element-ui'
 import Vue from 'vue'
-import store from '@/store'
 import { config } from '@vue/test-utils'
 
 import '@/plugins/composition-api'
 import '@/plugins/validation'
 
 Vue.use(ElementUI)
-Vue.use(store)
 
 // Mock api fns
 jest.mock('@/api', () => ({

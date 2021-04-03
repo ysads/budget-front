@@ -1,3 +1,5 @@
+import i18n from '@/plugins/i18n'
+
 export const useValidation = () => {
   const touchFields = new WeakMap()
 
@@ -13,10 +15,19 @@ export const useValidation = () => {
     return field.$error && !field[validator]
   }
 
+  const errorMessage = (field) => {
+    if (!field.$error) return ''
+
+    const key = Object.keys(field.$params).find(key => !field[key])
+    const params = field.$params[key]
+
+    return i18n.t(`validations.${key}`, params)
+  }
+
   const isValid = (v) => {
     v.$touch()
     return !v.$invalid
   }
 
-  return { hasError, validate, isValid }
+  return { errorMessage, hasError, validate, isValid }
 }

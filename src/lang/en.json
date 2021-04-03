@@ -25,7 +25,8 @@
     "currentBalance": "What's your balance in this account today?",
     "accountName": "How is your account called?",
     "accountTypePlaceholder": "Choose a type...",
-    "currentBalanceTip": "Not sure? Estimate it! You can edit that later."
+    "currentBalanceTip": "Not sure? Estimate it! You can edit that later.",
+    "created": "Account created"
   },
   "save": "Save",
   "startingBalance": "Starting balance",
@@ -50,10 +51,18 @@
     "generic": "Something went wrong. Try again.",
     "monthly-budgets": {
       "already-exists": "You already have a monthly budget to this category"
+    },
+    "accounts": {
+      "duplicate": "You already added this account"
     }
   },
   "newCategory": "New category",
   "newCategoryGroup": "New category group",
   "newMonthlyBudget": "Create monthly budget",
-  "toBeBudgeted": "Available"
+  "toBeBudgeted": "Available",
+  "SignIn": {
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in"
+  }
 }

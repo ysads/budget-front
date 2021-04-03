@@ -12,13 +12,10 @@
 
 <script>
 import AccountHeader from '@/components/accounts/AccountHeader'
-import { BUDGETS, ACCOUNTS } from '@/store/namespaces'
-import { createNamespacedHelpers } from 'vuex'
+import { openBudget } from '@/repositories/budgets'
+import { accounts } from '@/repositories/accounts'
 import { useMoney } from '@/use/money'
 import { useI18n } from '@/use/i18n'
-
-const accountsHelper = createNamespacedHelpers(ACCOUNTS)
-const budgetsHelper = createNamespacedHelpers(BUDGETS)
 
 export default {
   name: 'AllAccounts',
@@ -31,12 +28,7 @@ export default {
     const { totalBalance } = useMoney()
     const { t } = useI18n()
 
-    return { totalBalance, t }
-  },
-
-  computed: {
-    ...accountsHelper.mapState(['accounts']),
-    ...budgetsHelper.mapState(['openBudget']),
+    return { accounts, openBudget, totalBalance, t }
   },
 }
 </script>

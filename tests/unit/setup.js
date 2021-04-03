@@ -1,13 +1,12 @@
 import ElementUI from 'element-ui'
+import isEmpty from 'lodash/isEmpty'
 import Vue from 'vue'
-import store from '@/store'
 import { config } from '@vue/test-utils'
 
 import '@/plugins/composition-api'
 import '@/plugins/validation'
 
 Vue.use(ElementUI)
-Vue.use(store)
 
 // Mock api fns
 jest.mock('@/api', () => ({
@@ -19,13 +18,18 @@ jest.mock('@/api', () => ({
 }))
 
 // Mock i18n functions
+const mockT = (str, params = null) => {
+  return isEmpty(params)
+    ? str
+    : `${str}${JSON.stringify(params)}`
+}
 jest.mock('vue-i18n-composable', () => ({
   useI18n: () => ({
-    t: (string) => string,
+    t: mockT,
   }),
 }))
 jest.mock('@/plugins/i18n', () => ({
-  t: (str) => str,
+  t: mockT,
 }))
 
 // Mock routing fns

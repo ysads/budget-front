@@ -9,90 +9,70 @@
       data-test="form"
       @submit.prevent="handleSubmit"
     >
-      <sad-label
-        class="create-account__item"
-        to="accountType"
-        :text="st('accountType')"
-        data-test="account-type"
-      >
-        <el-select
-          v-model="form.accountType"
-          class="create-account__select"
-          :placeholder="st('accountTypePlaceholder')"
-          data-test="select"
-          @input="validate($v)"
+      <div class="create-account__item">
+        <sad-label
+          to="accountType"
+          :text="st('accountType')"
+          data-test="account-type"
         >
-          <el-option
-            v-for="type in accountTypes"
-            :key="type.value"
-            :label="type.label"
-            :value="type.value"
-            data-test="select-option"
-          />
-        </el-select>
-      </sad-label>
+          <el-select
+            v-model="form.accountType"
+            class="create-account__select"
+            :placeholder="st('accountTypePlaceholder')"
+            data-test="select"
+            @input="validate($v)"
+          >
+            <el-option
+              v-for="type in accountTypes"
+              :key="type.value"
+              :label="type.label"
+              :value="type.value"
+              data-test="select-option"
+            />
+          </el-select>
+        </sad-label>
 
-      <sad-tip
-        v-if="hasError($v.form.accountType, 'required')"
-        class="create-account__assistive"
-        variant="error"
-        :text="t('validations.required')"
-      />
+        <sad-tip
+          v-if="hasError($v.form.accountType, 'required')"
+          class="create-account__assistive"
+          variant="error"
+          :text="t('validations.required')"
+        />
+      </div>
 
-      <sad-label
+      <sad-input
+        v-model.trim="form.accountName"
         class="create-account__item"
-        to="name"
-        :text="st('accountName')"
+        name="name"
+        :label="st('accountName')"
+        :error="errorMessage($v.form.accountName)"
         data-test="account-name"
-      >
-        <sad-input
-          v-model.trim="form.accountName"
-          name="name"
-          class="create-account__item-input"
-          data-test="input"
-          @input="validate($v.form.accountName)"
-        />
-      </sad-label>
-
-      <sad-tip
-        v-if="hasError($v.form.accountName, 'required')"
-        class="create-account__assistive"
-        variant="error"
-        :text="t('validations.required')"
+        @input="validate($v.form.accountName)"
       />
 
-      <sad-label
+      <sad-input
+        v-model.trim="form.currentBalance"
         class="create-account__item"
-        to="currentBalance"
-        :text="st('currentBalance')"
+        name="currentBalance"
+        :label="st('currentBalance')"
+        :error="errorMessage($v.form.currentBalance)"
+        :tip="st('currentBalanceTip')"
+        :money="budgetCurrency"
         data-test="current-balance"
-      >
-        <sad-input
-          v-model.trim="form.currentBalance"
-          name="currentBalance"
-          class="create-account__item-input"
-          data-test="input"
-          :money="budgetCurrency"
-        />
-      </sad-label>
-
-      <sad-tip
-        class="create-account__assistive"
-        data-test="current-balance-tip"
-        :variant="currentBalanceVariant"
-        :text="currentBalanceTip"
       />
     </form>
 
-    <div slot="footer" class="create-account__footer">
-      <sad-button
-        size="normal"
-        type="primary"
-        @click="handleSubmit"
-      >
-        {{ t('save') }}
-      </sad-button>
-    </div>
+    <template #footer>
+      <footer class="create-account__footer">
+        <sad-button
+          size="normal"
+          type="primary"
+          @click="handleSubmit"
+        >
+          {{ t('save') }}
+        </sad-button>
+      </footer>
+    </template>
   </base-modal>
 </template>
 
@@ -102,15 +82,14 @@ import SadButton from '@/components/sad/SadButton'
 import SadInput from '@/components/sad/SadInput'
 import SadLabel from '@/components/sad/SadLabel'
 import SadTip from '@/components/sad/SadTip'
-import { ACCOUNTS } from '@/store/namespaces'
+import alert from '@/support/alert'
+import { createAccount } from '@/repositories/accounts'
 import { ACCOUNT_TYPES } from '@/constants/account'
-import { createNamespacedHelpers } from 'vuex'
 import { required } from 'vuelidate/lib/validators'
 import { useI18n } from '@/use/i18n'
 import { useValidation } from '@/use/validation'
-import * as Money from '@/support/money'
-
-const accountsHelper = createNamespacedHelpers(ACCOUNTS)
+import { currencySettings, currencyToCents } from '@/support/money'
+import { handleApiError } from '@/api/errors'
 
 export default {
   name: 'CreateAccountModal',
@@ -166,35 +145,26 @@ export default {
     },
 
     budgetCurrency () {
-      return Money.currencySettings(this.budget)
-    },
-
-    currentBalanceTip () {
-      return this.hasError(this.$v.form.currentBalance, 'required')
-        ? this.t('validations.required')
-        : this.st('currentBalanceTip')
-    },
-
-    currentBalanceVariant () {
-      return this.hasError(this.$v.form.currentBalance, 'required')
-        ? 'error'
-        : 'info'
+      return currencySettings(this.budget)
     },
   },
 
   methods: {
-    ...accountsHelper.mapActions(['createAccount']),
-
-    handleSubmit () {
+    async handleSubmit () {
       if (!this.isValid(this.$v)) return
 
-      this.createAccount({
-        ...this.form,
-        currentBalance: Money.currencyToCents(
-          this.form.currentBalance, this.budget,
-        ),
-      })
-      this.$emit('close')
+      try {
+        await createAccount({
+          ...this.form,
+          currentBalance: currencyToCents(
+            this.form.currentBalance, this.budget,
+          ),
+        })
+        alert.success(this.st('created'))
+        this.$emit('close')
+      } catch (err) {
+        handleApiError(err)
+      }
     },
   },
 }
@@ -209,10 +179,6 @@ export default {
   &__assistive {
     @include margin(top, 1);
     @include margin(bottom, 4);
-  }
-
-  &__item-input {
-    width: 100%;
   }
 
   &__item + &__item {

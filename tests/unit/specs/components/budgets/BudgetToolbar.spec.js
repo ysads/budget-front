@@ -1,17 +1,13 @@
 import BudgetToolbar from '@/components/budgets/BudgetToolbar'
 import factories from '#/factories'
+import * as repository from '@/repositories/budgets'
 import { factoryBuilder } from '#/factory-builder'
-import { BUDGETS } from '@/store/namespaces'
 
 const openBudget = factories.budget.build()
 
-const factory = (args = {}) => factoryBuilder(BudgetToolbar, {
-  store: {
-    [BUDGETS]: {
-      state: { openBudget },
-    },
-  },
-})
+const factory = (args = {}) => factoryBuilder(BudgetToolbar)
+
+repository.openBudget.value = openBudget
 
 describe('BudgetToolbar', () => {
   it('renders new group button', () => {

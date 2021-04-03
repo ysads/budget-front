@@ -2,39 +2,23 @@ import Drawer from '@/components/Drawer'
 import factories from '#/factories'
 import flushPromises from 'flush-promises'
 import { factoryBuilder } from '#/factory-builder'
-import { BUDGETS, ACCOUNTS } from '@/store/namespaces'
+import * as budgetsRepository from '@/repositories/budgets'
+import * as accountsRepository from '@/repositories/accounts'
 
 const accounts = factories.account.buildList(2)
 const openBudget = factories.budget.build()
 
-const factory = (args = {}) => factoryBuilder(Drawer, {
-  propsData: args.propsData,
-  store: {
-    [ACCOUNTS]: {
-      state: {
-        accounts: args.accounts || accounts,
-      },
-      actions: {
-        getAccounts: args.getAccounts || jest.fn(() => Promise.resolve()),
-      },
-    },
-    [BUDGETS]: {
-      state: { openBudget },
-    },
-  },
-  mocks: args.mocks || {},
-})
+const factory = (args = {}) => {
+  accountsRepository.accounts.value = args.accounts || accounts
+  budgetsRepository.openBudget.value = openBudget
+
+  return factoryBuilder(Drawer, {
+    propsData: args.propsData,
+    mocks: args.mocks || {},
+  })
+}
 
 describe('Drawer', () => {
-  it('fetches all accounts from current budget', () => {
-    const getAccounts = jest.fn()
-    factory({ getAccounts })
-
-    expect(getAccounts).toHaveBeenCalledWith(expect.anything(), {
-      budgetId: openBudget.id,
-    })
-  })
-
   it('renders a link to all accounts', async () => {
     const wrapper = factory()
     await flushPromises()

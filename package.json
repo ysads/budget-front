@@ -29,8 +29,7 @@
     "vue": "^2.6.12",
     "vue-i18n-composable": "^0.2.1",
     "vue-router": "^3.5.1",
-    "vuelidate": "^0.7.6",
-    "vuex": "^3.6.2"
+    "vuelidate": "^0.7.6"
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^1.1.0",
@@ -38,7 +37,6 @@
     "@vue/cli-plugin-eslint": "^4.5.12",
     "@vue/cli-plugin-router": "^4.5.12",
     "@vue/cli-plugin-unit-jest": "^4.5.11",
-    "@vue/cli-plugin-vuex": "^4.5.11",
     "@vue/cli-service": "~4.5.12",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/test-utils": "^1.1.3",

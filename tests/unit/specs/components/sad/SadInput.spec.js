@@ -44,6 +44,14 @@ describe('SadInput', () => {
         variant: 'error',
       })
     })
+
+    it('renders error class on input', () => {
+      const wrapper = factory({ propsData: { error: 'Invalid' } })
+
+      const input = wrapper.find("[data-test='input']")
+
+      expect(input.classes()).toContain('sad-input--error')
+    })
   })
 
   context('when parent changes value prop', () => {

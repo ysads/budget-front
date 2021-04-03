@@ -1,31 +1,41 @@
 import CreateAccountModal from '@/components/accounts/CreateAccountModal'
-import Faker from 'faker'
 import factories from '#/factories'
+import faker from 'faker'
+import flushPromises from 'flush-promises'
 import sample from 'lodash/sample'
 import { factoryBuilder } from '#/factory-builder'
-import { ACCOUNTS } from '@/store/namespaces'
+import { handleApiError } from '@/api/errors'
 import { ACCOUNT_TYPES } from '@/constants/account'
+import * as accountsRepository from '@/repositories/accounts'
 import * as money from '@/support/money'
+
+jest.mock('@/api/errors', () => ({
+  handleApiError: jest.fn(),
+}))
+
+jest.mock('@/support/alert', () => ({
+  success: jest.fn(),
+  error: jest.fn(),
+}))
 
 const budget = factories.budget.build()
 const form = {
-  accountName: Faker.finance.accountName(),
+  accountName: faker.finance.accountName(),
   accountType: sample(ACCOUNT_TYPES),
   currentBalance: '2940,90',
 }
 
-const factory = (args = {}) => factoryBuilder(CreateAccountModal, {
-  data: args.data,
-  propsData: { budget: budget },
-  mocks: { BaseModal: true },
-  store: {
-    [ACCOUNTS]: {
-      actions: {
-        createAccount: args.createAccount || jest.fn(() => Promise.resolve()),
-      },
-    },
-  },
-})
+const factory = (args = {}) => {
+  accountsRepository.createAccount = args.createAccount || jest.fn(
+    () => Promise.resolve(),
+  )
+
+  return factoryBuilder(CreateAccountModal, {
+    data: args.data,
+    propsData: { budget: budget },
+    mocks: { BaseModal: true },
+  })
+}
 
 describe('CreateAccountModal', () => {
   it('renders account type select with an option for each account type', () => {
@@ -39,28 +49,19 @@ describe('CreateAccountModal', () => {
 
   it('renders account name input', () => {
     const wrapper = factory()
-    const label = wrapper.find("[data-test='account-name']")
-    const input = label.find("[data-test='input']")
+    const item = wrapper.find("[data-test='account-name']")
 
-    expect(label.props().text).toEqual('CreateAccountModal.accountName')
-    expect(input.exists()).toBeTruthy()
+    expect(item.props().label).toEqual('CreateAccountModal.accountName')
   })
 
   it('renders current balance input', () => {
     const wrapper = factory()
-    const label = wrapper.find("[data-test='current-balance']")
-    const input = label.find("[data-test='input']")
+    const item = wrapper.find("[data-test='current-balance']")
 
-    expect(label.props().text).toEqual('CreateAccountModal.currentBalance')
-    expect(input.props().money).toStrictEqual(money.currencySettings(budget))
-  })
-
-  it('renders current balance tip with info variant', () => {
-    const wrapper = factory()
-    const tip = wrapper.find("[data-test='current-balance-tip']")
-
-    expect(tip.props().text).toEqual('CreateAccountModal.currentBalanceTip')
-    expect(tip.props().variant).toEqual('info')
+    expect(item.props()).toMatchObject({
+      label: 'CreateAccountModal.currentBalance',
+      money: money.currencySettings(budget),
+    })
   })
 
   describe('#accountTypes', () => {
@@ -72,23 +73,6 @@ describe('CreateAccountModal', () => {
       }))
 
       expect(wrapper.vm.accountTypes).toEqual(typesOptions)
-    })
-  })
-
-  context('when current balance is invalid', () => {
-    it('renders current balance tip with error variant', async () => {
-      const wrapper = factory({
-        data: {
-          form: { ...form, currentBalance: '' },
-        },
-      })
-
-      await wrapper.find("[data-test='form']").trigger('submit.prevent')
-
-      const tip = wrapper.find("[data-test='current-balance-tip']")
-
-      expect(tip.props().text).toEqual('validations.required')
-      expect(tip.props().variant).toEqual('error')
     })
   })
 
@@ -113,15 +97,15 @@ describe('CreateAccountModal', () => {
     })
 
     it('calls createAccount with form', async () => {
-      const mockCreateAccount = jest.fn()
+      const createAccount = jest.fn()
       const wrapper = factory({
         data: { form },
-        createAccount: mockCreateAccount,
+        createAccount,
       })
 
       await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-      expect(mockCreateAccount).toHaveBeenCalledWith(expect.anything(), {
+      expect(createAccount).toHaveBeenCalledWith({
         ...form,
         budgetId: budget.id,
         payeeName: expect.stringMatching(/startingBalance/),
@@ -129,18 +113,34 @@ describe('CreateAccountModal', () => {
       })
     })
 
+    context('and api fails', () => {
+      it('handles api error', async () => {
+        const error = new Error()
+        const wrapper = factory({
+          createAccount: jest.fn(() => Promise.reject(error)),
+        })
+
+        await wrapper.setData({ form })
+        await wrapper.find("[data-test='form']").trigger('submit.prevent')
+
+        await flushPromises()
+
+        expect(handleApiError).toHaveBeenCalledWith(error)
+      })
+    })
+
     context('and validation fails', () => {
       it('does call createAccount', async () => {
-        const mockCreateAccount = jest.fn()
+        const createAccount = jest.fn()
         const wrapper = factory({
           data: { form },
-          createAccount: mockCreateAccount,
+          createAccount,
         })
         jest.spyOn(wrapper.vm, 'isValid').mockReturnValue(false)
 
         await wrapper.find("[data-test='form']").trigger('submit.prevent')
 
-        expect(mockCreateAccount).not.toHaveBeenCalled()
+        expect(createAccount).not.toHaveBeenCalled()
       })
     })
   })

@@ -4,9 +4,10 @@
     <input
       :id="name"
       v-model="val"
-      class="sad-input"
+      :class="classes"
       data-test="input"
       :placeholder="placeholder"
+      :type="type"
       @input="updateValue"
       @focus="cleanFormat"
       @blur="formatValue"
@@ -26,6 +27,7 @@ import SadLabel from './SadLabel'
 import SadTip from './SadTip'
 import useTip from '@/use/tip'
 import { VMoney } from 'v-money'
+import { computed } from '@vue/composition-api'
 
 export default {
   props: {
@@ -57,6 +59,10 @@ export default {
       type: String,
       default: '',
     },
+    type: {
+      type: String,
+      default: 'text',
+    },
   },
 
   data () {
@@ -67,8 +73,14 @@ export default {
 
   setup (props) {
     const { tipText, tipVariant } = useTip(props)
+    const classes = computed(() => {
+      return {
+        'sad-input': true,
+        'sad-input--error': props.error,
+      }
+    })
 
-    return { tipText, tipVariant }
+    return { classes, tipText, tipVariant }
   },
 
   components: {
@@ -130,6 +142,10 @@ export default {
 
   &__tip {
     margin-top: $base;
+  }
+
+  &--error {
+    border: 1px solid var(--color-error);
   }
 }
 </style>

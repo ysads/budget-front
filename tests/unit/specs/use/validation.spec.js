@@ -3,7 +3,7 @@ import sample from 'lodash/sample'
 
 describe('useValidation', () => {
   describe('#hasError', () => {
-    context('when $error is false', () => {
+    describe('when $error is false', () => {
       it('is always false', () => {
         const { hasError } = useValidation()
         const field = {
@@ -15,7 +15,7 @@ describe('useValidation', () => {
       })
     })
 
-    context('when $error is true and validator is true', () => {
+    describe('when $error is true and validator is true', () => {
       it('is false', () => {
         const { hasError } = useValidation()
         const field = {
@@ -27,7 +27,7 @@ describe('useValidation', () => {
       })
     })
 
-    context('when $error is true and validator is false', () => {
+    describe('when $error is true and validator is false', () => {
       it('is true', () => {
         const { hasError } = useValidation()
         const field = {
@@ -53,7 +53,7 @@ describe('useValidation', () => {
       expect(v.$touch).toHaveBeenCalled()
     })
 
-    context('when object is invalid', () => {
+    describe('when object is invalid', () => {
       it('is false', () => {
         const v = {
           $touch: jest.fn(),
@@ -65,7 +65,7 @@ describe('useValidation', () => {
       })
     })
 
-    context('when object is not invalid', () => {
+    describe('when object is not invalid', () => {
       it('is true', () => {
         const v = {
           $touch: jest.fn(),
@@ -104,7 +104,7 @@ describe('useValidation', () => {
       expect(field.$touch).toHaveBeenCalled()
     })
 
-    context('when validate is called more than once within delay time', () => {
+    describe('when validate is called more than once within delay time', () => {
       it('clears the timeout', () => {
         jest.useFakeTimers()
 
@@ -138,6 +138,34 @@ describe('useValidation', () => {
 
         expect(field.$touch).not.toHaveBeenCalled()
         expect(setTimeout).toHaveBeenCalledTimes(2)
+      })
+    })
+  })
+
+  describe('#errorMessage', () => {
+    it('interpolates error message for first failed rule using params', () => {
+      const { errorMessage } = useValidation()
+      const field = {
+        $error: true,
+        $params: {
+          ruleOne: { min: 1, max: 2 },
+          ruleTwo: { type: 'required' },
+        },
+        ruleOne: false,
+        ruleTwo: false,
+      }
+
+      expect(errorMessage(field)).toEqual(
+        'validations.ruleOne{"min":1,"max":2}',
+      )
+    })
+
+    describe('when there is no error on field', () => {
+      it('returns []', () => {
+        const { errorMessage } = useValidation()
+        const field = { $error: false }
+
+        expect(errorMessage(field)).toEqual('')
       })
     })
   })

@@ -10,9 +10,7 @@
       <budget-toolbar
         :budget="openBudget"
       />
-      <monthly-budgets-table
-        :budget="openBudget"
-      />
+      <monthly-budgets-table />
     </section>
   </div>
 </template>
@@ -24,6 +22,7 @@ import MonthHeader from '@/components/months/MonthHeader'
 import MonthlyBudgetsTable from '@/components/monthly-budgets/MonthlyBudgetsTable'
 import { isoMonth } from '@/support/date'
 import { openBudget } from '@/repositories/budgets'
+import { getMonthlyBudgets } from '@/repositories/monthly-budgets'
 import { currentMonth, getMonthByIso } from '@/repositories/months'
 
 export default {
@@ -61,10 +60,15 @@ export default {
 
   methods: {
     async fetchResources () {
-      await getMonthByIso({
+      const params = {
         budgetId: this.openBudget.id,
         isoMonth: this.currentIsoMonth,
-      })
+      }
+
+      await Promise.all([
+        getMonthByIso(params),
+        getMonthlyBudgets(params),
+      ])
     },
 
     updateCurrentMonth (updatedMonth) {

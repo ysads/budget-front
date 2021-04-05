@@ -1,31 +1,26 @@
 <template>
-  <section class="monthly-budgets">
+  <section class="monthly-budgets-table">
     <div
-      v-for="group in categoryGroups"
-      :key="group.id"
+      v-for="(monthlyBudgets, groupId) in monthlyBudgetsByCategoryGroup"
+      :key="groupId"
       class="monthly-budgets__item"
     >
-      <header class="category-group-item" role="button">
-        <span class="category-group-item__name">
-          {{ group.name }}
-        </span>
-        <span class="category-group-item__total">
-          {{ localize(totalOf(group, 'budgeted'), budget) }}
-        </span>
-        <span class="category-group-item__total">
-          {{ localize(totalOf(group, 'activity'), budget) }}
-        </span>
-        <span class="category-group-item__total">
-          {{ localize(totalOf(group, 'available'), budget) }}
-        </span>
-      </header>
+      <monthly-budget-header
+        :budget="openBudget"
+        :category-group="categoryGroupById(groupId)"
+        :monthly-budgets="monthlyBudgets"
+        data-test="header"
+      />
 
       <ul>
-        <category-budget
-          v-for="category in categoriesOf(group.id)"
-          :key="category.id"
-          :budget="budget"
-          :category="category"
+        <monthly-budget-row
+          v-for="monthlyBudget in monthlyBudgets"
+          :key="monthlyBudget.id"
+          class="monthly-budgets-table__row"
+          :budget="openBudget"
+          :category="categoryById(monthlyBudget.categoryId)"
+          :monthly-budget="monthlyBudget"
+          data-test="row"
         />
       </ul>
     </div>
@@ -33,85 +28,36 @@
 </template>
 
 <script>
-import { CATEGORIES, CATEGORY_GROUPS, MONTHLY_BUDGETS } from '@/store/namespaces'
-import { createNamespacedHelpers } from 'vuex'
-import { useMoney } from '@/use/money'
-import sumBy from 'lodash/sumBy'
-import CategoryBudget from '@/components/categories/CategoryBudget'
-
-const categoriesHelper = createNamespacedHelpers(CATEGORIES)
-const categoryGroupsHelper = createNamespacedHelpers(CATEGORY_GROUPS)
-const monthlyBudgetsHelper = createNamespacedHelpers(MONTHLY_BUDGETS)
+import { categoryById } from '@/repositories/categories'
+import { categoryGroupById } from '@/repositories/category-groups'
+import { monthlyBudgetsByCategoryGroup } from '@/repositories/monthly-budgets'
+import { openBudget } from '@/repositories/budgets'
+import MonthlyBudgetHeader from '@/components/monthly-budgets/MonthlyBudgetHeader'
+import MonthlyBudgetRow from '@/components/monthly-budgets/MonthlyBudgetRow'
 
 export default {
   name: 'MonthlyBudgetsTable',
 
-  props: {
-    budget: {
-      type: Object,
-      required: true,
-    },
-  },
-
   components: {
-    CategoryBudget,
+    MonthlyBudgetHeader,
+    MonthlyBudgetRow,
   },
 
   setup () {
-    const { localize } = useMoney()
-    return { localize }
-  },
-
-  computed: {
-    ...categoriesHelper.mapState(['categories']),
-    ...categoryGroupsHelper.mapState(['categoryGroups']),
-    ...monthlyBudgetsHelper.mapState(['monthlyBudgets']),
-  },
-
-  methods: {
-    totalOf (categoryGroup, field) {
-      const monthlyBudgets = this.monthlyBudgets.filter(c => {
-        return c.categoryGroupId === categoryGroup.id
-      })
-
-      return sumBy(monthlyBudgets, field)
-    },
-
-    categoriesOf (categoryGroupId) {
-      return this.categories.filter(c => c.categoryGroupId === categoryGroupId)
-    },
+    return {
+      categoryById,
+      categoryGroupById,
+      monthlyBudgetsByCategoryGroup,
+      openBudget,
+    }
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.monthly-budgets__item {
-  margin: $base*2 $base*3;
-}
-
-.category-group-item {
-  background: var(--table-heading);
-  border-bottom: 1px solid var(--acc-toolbar-border);
-  border-top-left-radius: $base;
-  border-top-right-radius: $base;
-  color: var(--table-heading-text);
-  cursor: pointer;
-  display: flex;
-  padding: $base*3 $base*4;
-  width: 100%;
-
-  @extend %body-1;
-  @extend %medium;
-
-  &__name {
-    flex-basis: 40%;
-
-    @extend %semi-bold ;
-  }
-
-  &__total {
-    flex-basis: 20%;
-    text-align: right;
+.monthly-budgets-table {
+  &__row + &__row {
+    border-top: 1px solid var(--table-separator);
   }
 }
 </style>

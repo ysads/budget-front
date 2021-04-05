@@ -1,11 +1,22 @@
 import * as api from '@/api'
-import * as categoriesRepo from '@/repositories/categories'
+import * as repository from '@/repositories/categories'
 import factories from '#/factories'
 import faker from 'faker'
 
 describe('CategoriesRepository', () => {
   beforeEach(() => {
-    categoriesRepo.categories.value = []
+    repository.categories.value = []
+  })
+
+  describe('#categoryGroupById', () => {
+    it('finds the category group matching given id', () => {
+      const categories = factories.category.buildList(3)
+      repository.categories.value = categories
+
+      const response = repository.categoryById(categories[2].id)
+
+      expect(response).toEqual(categories[2])
+    })
   })
 
   describe('#categoriesByGroupId', () => {
@@ -17,9 +28,9 @@ describe('CategoriesRepository', () => {
         factories.category.build({ categoryGroupId: categoryGroups[0].id }),
       ]
 
-      categoriesRepo.categories.value = categories
+      repository.categories.value = categories
 
-      expect(categoriesRepo.categoriesByGroupId(categoryGroups[0].id)).toEqual([
+      expect(repository.categoriesByGroupId(categoryGroups[0].id)).toEqual([
         categories[0],
         categories[2],
       ])
@@ -31,7 +42,7 @@ describe('CategoriesRepository', () => {
       const budgetId = faker.random.uuid()
       const params = { mock: true, budgetId }
 
-      await categoriesRepo.createCategory(params)
+      await repository.createCategory(params)
 
       expect(api.post).toHaveBeenCalledWith(
         `budgets/${budgetId}/categories`, params,
@@ -44,9 +55,9 @@ describe('CategoriesRepository', () => {
 
       api.post.mockResolvedValueOnce(categoryGroup)
 
-      await categoriesRepo.createCategory(params)
+      await repository.createCategory(params)
 
-      expect(categoriesRepo.categories.value).toEqual([categoryGroup])
+      expect(repository.categories.value).toEqual([categoryGroup])
     })
   })
 
@@ -55,7 +66,7 @@ describe('CategoriesRepository', () => {
       const budgetId = faker.random.uuid()
       const params = { mock: true, budgetId }
 
-      await categoriesRepo.getCategories(params)
+      await repository.getCategories(params)
 
       expect(api.get).toHaveBeenCalledWith(
         `budgets/${budgetId}/categories`,
@@ -68,9 +79,9 @@ describe('CategoriesRepository', () => {
 
       api.get.mockResolvedValueOnce(categories)
 
-      await categoriesRepo.getCategories(params)
+      await repository.getCategories(params)
 
-      expect(categoriesRepo.categories.value).toEqual(categories)
+      expect(repository.categories.value).toEqual(categories)
     })
   })
 })

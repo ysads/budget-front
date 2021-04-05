@@ -34,9 +34,10 @@ export default MonthlyBudgetFactory.define(({ params }) => {
 
   return {
     id: faker.random.uuid(),
-    categoryId: faker.random.uuid(),
-    budgeted,
     activity,
+    budgeted,
     available: budgeted - activity,
+    categoryId: faker.random.uuid(),
+    categoryGroupId: faker.random.uuid(),
   }
 })

@@ -9,6 +9,7 @@
         class="sad-select"
         :value="value"
         :placeholder="placeholder"
+        :disabled="disabled"
         data-test="select"
         @input="val => $emit('input', val)"
       >
@@ -45,6 +46,10 @@ import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
   props: {
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     error: {
       type: String,
       default: '',

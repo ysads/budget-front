@@ -10,7 +10,7 @@ const factory = (args = {}) => factoryBuilder(SadSelect, {
       { label: 'label 1', options: [{ value: 'v1', label: 'value 1' }] },
       { label: 'label 2', options: [{ value: 'v2', label: 'value 2' }] },
     ],
-    ...args.propsData,
+    ...args,
   },
 })
 
@@ -27,9 +27,18 @@ describe('SadSelect', () => {
     expect(wrapper.find("[data-test='label']").props().text).toEqual('label')
   })
 
+  describe('when disabled prop is given', () => {
+    it('renders a disabled select', () => {
+      const wrapper = factory({ disabled: true })
+      const item = wrapper.find("[data-test='select']")
+
+      expect(item.props().disabled).toBeTruthy()
+    })
+  })
+
   context('when error prop is given', () => {
     it('renders tip with error', () => {
-      const wrapper = factory({ propsData: { error: 'Invalid' } })
+      const wrapper = factory({ error: 'Invalid' })
 
       const tip = wrapper.find("[data-test='tip']")
 

@@ -1,4 +1,6 @@
 import * as budgetsRepository from '@/repositories/budgets'
+import * as categoriesRepository from '@/repositories/categories'
+import * as categoryGroupsRepository from '@/repositories/category-groups'
 import * as monthlyBudgetRepository from '@/repositories/monthly-budgets'
 import * as monthsRepository from '@/repositories/months'
 import alert from '@/support/alert'
@@ -20,16 +22,28 @@ jest.mock('@/support/alert', () => ({
 
 const openBudget = factories.budget.build()
 const currentMonth = factories.month.build()
+const monthlyBudget = factories.monthlyBudget.build()
 const form = {
   categoryId: factories.category.build().id,
   budgeted: factories.money.build({ currency: openBudget.currency }),
 }
 
+const categoryGroups = factories.categoryGroup.buildList(2)
+const categories = [
+  factories.category.build({ categoryGroupId: categoryGroups[0].id }),
+  factories.category.build({ categoryGroupId: categoryGroups[1].id }),
+]
+
 monthlyBudgetRepository.createMonthlyBudget = jest.fn()
+monthlyBudgetRepository.updateMonthlyBudget = jest.fn()
+categoryGroupsRepository.categoryGroups.value = categoryGroups
+categoriesRepository.categories.value = categories
 monthsRepository.currentMonth.value = currentMonth
 budgetsRepository.openBudget.value = openBudget
 
-const factory = (args = {}) => factoryBuilder(MonthlyBudgetDetails)
+const factory = (args = {}) => factoryBuilder(MonthlyBudgetDetails, {
+  propsData: args,
+})
 
 describe('MonthlyBudgetDetails', () => {
   it('renders budgeted input', () => {
@@ -74,6 +88,7 @@ describe('MonthlyBudgetDetails', () => {
       expect(monthlyBudgetRepository.createMonthlyBudget).toHaveBeenCalledWith(
         {
           ...form,
+          id: '',
           budgeted: currencyToCents(form.budgeted, openBudget),
           budgetId: openBudget.id,
           monthId: currentMonth.id,
@@ -116,6 +131,45 @@ describe('MonthlyBudgetDetails', () => {
         await flushPromises()
 
         expect(handleApiError).toHaveBeenCalledWith(error)
+      })
+    })
+  })
+
+  describe('when monthly budget prop is present', () => {
+    it('renders select disabled', () => {
+      const wrapper = factory({ monthlyBudget })
+      const item = wrapper.find("[data-test='category']")
+
+      expect(item.props().disabled).toBeTruthy()
+    })
+
+    describe('and save button emits click', () => {
+      it('updates monthly budget', async () => {
+        const wrapper = factory({ monthlyBudget })
+
+        await wrapper.setData({ form })
+        await wrapper.find("[data-test='save-btn']").vm.$emit('click')
+
+        expect(monthlyBudgetRepository.updateMonthlyBudget).toBeCalledWith(
+          {
+            ...form,
+            id: monthlyBudget.id,
+            budgeted: currencyToCents(form.budgeted, openBudget),
+            budgetId: openBudget.id,
+            monthId: currentMonth.id,
+          },
+        )
+      })
+
+      it('alerts an success', async () => {
+        const wrapper = factory({ monthlyBudget })
+
+        await wrapper.setData({ form })
+        await wrapper.find("[data-test='save-btn']").vm.$emit('click')
+
+        expect(alert.success).toHaveBeenCalledWith(
+          expect.stringMatching(/updated/),
+        )
       })
     })
   })

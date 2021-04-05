@@ -8,6 +8,7 @@
     <sad-select
       v-model="form.categoryId"
       class="mb-details__control"
+      :disabled="isEdit"
       :label="st('category')"
       :options="categoriesGrouped"
       :placeholder="st('categoryPlaceholder')"
@@ -19,6 +20,7 @@
       v-model="form.budgeted"
       class="mb-details__control"
       :label="st('budgeted')"
+      :money="moneySettings"
       name="budgeted"
       data-test="budgeted"
     />
@@ -46,14 +48,21 @@ import { handleApiError } from '@/api/errors'
 import { openBudget } from '@/repositories/budgets'
 import { categoriesByGroupId } from '@/repositories/categories'
 import { categoryGroups } from '@/repositories/category-groups'
-import { createMonthlyBudget } from '@/repositories/monthly-budgets'
-import { currencyToCents } from '@/support/money'
+import { createMonthlyBudget, updateMonthlyBudget } from '@/repositories/monthly-budgets'
+import { currencyToCents, currencySettings, fromCents } from '@/support/money'
 import { currentMonth } from '@/repositories/months'
-import { reactive } from '@vue/composition-api'
+import { computed, reactive } from '@vue/composition-api'
 import { useI18n } from '@/use/i18n'
 
 export default {
   name: 'MonthlyBudgetDetails',
+
+  props: {
+    monthlyBudget: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
 
   components: {
     SadButton,
@@ -62,8 +71,20 @@ export default {
     SadSelect,
   },
 
-  setup (_, { emit }) {
+  setup ({ monthlyBudget }, { emit }) {
     const { st, t } = useI18n('MonthlyBudgetDetails')
+    const form = reactive({
+      id: monthlyBudget.id || '',
+      categoryId: monthlyBudget.categoryId || '',
+      budgeted: fromCents(monthlyBudget.budgeted) || 0,
+    })
+    const moneySettings = computed(
+      () => currencySettings(openBudget.value),
+    )
+    const isEdit = computed(
+      () => Boolean(form.id),
+    )
+
     const categoriesGrouped = categoryGroups.value.map(group => ({
       label: group.name,
       options: categoriesByGroupId(group.id).map(c => ({
@@ -71,20 +92,22 @@ export default {
         label: c.name,
       })),
     }))
-    const form = reactive({
-      categoryId: '',
-      budgeted: 0,
-    })
 
     const handleSubmit = async () => {
+      const save = isEdit.value
+        ? updateMonthlyBudget
+        : createMonthlyBudget
+
       try {
-        await createMonthlyBudget({
+        await save({
           ...form,
           budgeted: currencyToCents(form.budgeted, openBudget.value),
           budgetId: openBudget.value.id,
           monthId: currentMonth.value.id,
         })
-        alert.success(st('created'))
+        alert.success(
+          isEdit.value ? st('updated') : st('created'),
+        )
         emit('close')
       } catch (err) {
         handleApiError(err)
@@ -95,7 +118,9 @@ export default {
       categoriesGrouped,
       currentMonth,
       form,
+      isEdit,
       handleSubmit,
+      moneySettings,
       openBudget,
       st,
       t,

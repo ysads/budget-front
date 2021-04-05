@@ -1,4 +1,4 @@
-import { get, post } from '@/api'
+import { get, post, put } from '@/api'
 import { computed, ref } from '@vue/composition-api'
 import groupBy from 'lodash/groupBy'
 
@@ -10,6 +10,18 @@ export const createMonthlyBudget = async ({ budgetId, ...rest }) => {
   )
 
   monthlyBudgets.value.push(monthlyBudget)
+}
+
+export const updateMonthlyBudget = async ({ budgetId, id, ...rest }) => {
+  const monthlyBudget = await put(
+    `budgets/${budgetId}/monthly_budgets/${id}`, rest,
+  )
+
+  monthlyBudgets.value = monthlyBudgets.value.map(mb => {
+    return mb.id === monthlyBudget.id
+      ? monthlyBudget
+      : mb
+  })
 }
 
 export const getMonthlyBudgets = async ({ budgetId, ...rest }) => {

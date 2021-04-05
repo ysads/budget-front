@@ -31,7 +31,9 @@
           <span class="account-accordion__item-name">
             {{ account.name }}
           </span>
-          <span>{{ localize(account.balance, budget) }}</span>
+          <span class="account-accordion__item-balance">
+            {{ localize(account.balance, budget) }}
+          </span>
         </router-link>
       </li>
     </ul>
@@ -127,6 +129,9 @@ export default {
       width: 60%;
 
       @include padding(right, 1);
+    }
+    &-balance {
+      flex-shrink: 0;
     }
   }
 

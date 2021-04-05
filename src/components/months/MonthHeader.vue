@@ -70,6 +70,7 @@ export default {
   align-items: center;
   background: var(--acc-header-bg);
   display: flex;
+  justify-content: space-evenly;
   padding: $base*3 $base*3 $base*3 $base*15;
 
   @include breakpoint(md) {

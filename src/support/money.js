@@ -17,12 +17,18 @@ export const cleanMask = (value, budget) => {
   const settings = currencySettings(budget)
 
   return parseFloat(
-    value.replace(settings.thousands, '').replace(settings.decimal, '.'),
+    value.replace(settings.thousands, '')
+      .replace(settings.decimal, '.')
+      .replace(settings.prefix, ''),
   )
 }
 
 export const currencyToCents = (value, budget) => {
-  return toCents(cleanMask(value, budget))
+  const unmasked = typeof value === 'number'
+    ? value
+    : cleanMask(value, budget)
+
+  return toCents(unmasked)
 }
 
 export const totalBalance = (accounts, field) => {

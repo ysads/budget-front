@@ -5,9 +5,10 @@ import * as money from '@/support/money'
 describe('Money', () => {
   describe('#cleanMask', () => {
     it('converts string with decimal and thousands markers to float', () => {
-      const budget = factories.budget.build()
+      const budget = factories.budget.build({ currency: 'GBP' })
 
       expect(money.cleanMask('5.452,96', budget)).toStrictEqual(5452.96)
+      expect(money.cleanMask('£ 5.452,96', budget)).toStrictEqual(5452.96)
     })
   })
 
@@ -16,6 +17,8 @@ describe('Money', () => {
       const budget = factories.budget.build()
 
       expect(money.currencyToCents('5.452,96', budget)).toStrictEqual(545296)
+      expect(money.currencyToCents(5452.96, budget)).toStrictEqual(545296)
+      expect(money.currencyToCents(545296, budget)).toStrictEqual(54529600)
     })
   })
 

@@ -61,7 +61,7 @@ describe('Money', () => {
       })
     })
 
-    context('when accounts array is empty', () => {
+    describe('when accounts array is empty', () => {
       it('is zero', () => {
         expect(money.totalBalance([], 'balance')).toEqual(0)
         expect(money.totalBalance([], 'clearedBalance')).toEqual(0)
@@ -86,6 +86,23 @@ describe('Money', () => {
         settings.thousands,
         settings.decimal,
       )
+    })
+  })
+
+  describe('#balanceClasses', () => {
+    describe('when value is greater than or equals to 0', () => {
+      it('is `positive`', () => {
+        expect(money.balanceClasses(5)).toEqual('positive')
+        expect(money.balanceClasses(0)).toEqual('positive')
+        expect(money.balanceClasses(1.5)).toEqual('positive')
+      })
+    })
+
+    describe('when value is smaller than 0', () => {
+      it('is `negative`', () => {
+        expect(money.balanceClasses(-5)).toEqual('negative')
+        expect(money.balanceClasses(-1.5)).toEqual('negative')
+      })
     })
   })
 })

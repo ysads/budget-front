@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { useMoney } from '@/use/money'
+import { balanceClasses, localize } from '@/support/money'
 import { useI18n } from '@/use/i18n'
 import { addMonths, isoMonthToDate } from '@/support/date'
 
@@ -51,7 +51,6 @@ export default {
   },
 
   setup () {
-    const { balanceClasses, localize } = useMoney()
     const { d, t } = useI18n('MonthHeader')
 
     return { balanceClasses, d, isoMonthToDate, localize, t }

@@ -11,7 +11,7 @@ export const currencySettings = (budget) => ({
 
 export const fromCents = (cents) => cents / 100.0
 
-export const toCents = (unities) => unities * 100
+export const toCents = (units) => units * 100
 
 export const cleanMask = (value, budget) => {
   const settings = currencySettings(budget)
@@ -43,4 +43,8 @@ export const localize = (value, budget) => {
     settings.thousands,
     settings.decimal,
   )
+}
+
+export const balanceClasses = (val) => {
+  return val >= 0 ? 'positive' : 'negative'
 }

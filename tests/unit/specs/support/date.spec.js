@@ -20,9 +20,9 @@ describe('DateUtils', () => {
       const date2 = DateUtils.isoMonthToDate('2020-12')
       const date3 = DateUtils.isoMonthToDate('2020-04')
 
-      expect(date1).toEqual(new Date(2020, 0, 31))
-      expect(date2).toEqual(new Date(2020, 11, 31))
-      expect(date3).toEqual(new Date(2020, 3, 30))
+      expect(date1).toEqual(new Date(2020, 0, 1))
+      expect(date2).toEqual(new Date(2020, 11, 1))
+      expect(date3).toEqual(new Date(2020, 3, 1))
     })
   })
 

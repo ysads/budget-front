@@ -8,12 +8,9 @@ export const isoMonth = (date) => {
 }
 
 export const isoMonthToDate = (isoMonth) => {
-  const newDate = new Date(isoMonth)
+  const [year, month] = isoMonth.split('-')
 
-  newDate.setMonth(newDate.getMonth() + 1)
-  newDate.setDate(0)
-
-  return newDate
+  return new Date(year, month - 1, 1, 0, 0, 0)
 }
 
 export const addMonths = (date, numberOfMonths) => {

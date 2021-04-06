@@ -18,18 +18,19 @@ jest.mock('@/api', () => ({
 }))
 
 // Mock i18n functions
-const mockT = (str, params = null) => {
+const mockI18n = (str, params = null) => {
   return isEmpty(params)
     ? str
     : `${str}${JSON.stringify(params)}`
 }
 jest.mock('vue-i18n-composable', () => ({
   useI18n: () => ({
-    t: mockT,
+    t: mockI18n,
+    d: (str, format) => `${str.toString()}${format}`,
   }),
 }))
 jest.mock('@/plugins/i18n', () => ({
-  t: mockT,
+  t: mockI18n,
 }))
 
 // Mock routing fns

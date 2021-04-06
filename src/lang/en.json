@@ -45,7 +45,8 @@
     "budgeted": "How much do you plan to spend?",
     "category": "Category",
     "categoryPlaceholder": "Pick one",
-    "created": "Monthly budget created"
+    "created": "Monthly budget created",
+    "updated": "Monthly budget updated"
   },
   "errors": {
     "generic": "Something went wrong. Try again.",

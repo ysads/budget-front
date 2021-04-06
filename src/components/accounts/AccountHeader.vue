@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { useMoney } from '@/use/money'
+import { localize } from '@/support/money'
 import { useI18n } from '@/use/i18n'
 
 export default {
@@ -78,7 +78,6 @@ export default {
   },
 
   setup () {
-    const { localize } = useMoney()
     const { t } = useI18n('AccountHeader')
 
     return { localize, t }

@@ -1,11 +1,22 @@
 import * as api from '@/api'
-import * as categoryGroupRepo from '@/repositories/category-groups'
+import * as repository from '@/repositories/category-groups'
 import factories from '#/factories'
 import faker from 'faker'
 
 describe('CategoryGroupRepository', () => {
   beforeEach(() => {
-    categoryGroupRepo.categoryGroups.value = []
+    repository.categoryGroups.value = []
+  })
+
+  describe('#categoryGroupById', () => {
+    it('finds the category group matching given id', () => {
+      const categoryGroups = factories.categoryGroup.buildList(3)
+      repository.categoryGroups.value = categoryGroups
+
+      const response = repository.categoryGroupById(categoryGroups[2].id)
+
+      expect(response).toEqual(categoryGroups[2])
+    })
   })
 
   describe('#createCategoryGroup', () => {
@@ -13,7 +24,7 @@ describe('CategoryGroupRepository', () => {
       const budgetId = faker.random.uuid()
       const params = { mock: true, budgetId }
 
-      await categoryGroupRepo.createCategoryGroup(params)
+      await repository.createCategoryGroup(params)
 
       expect(api.post).toHaveBeenCalledWith(
         `budgets/${budgetId}/category_groups`, params,
@@ -26,9 +37,9 @@ describe('CategoryGroupRepository', () => {
 
       api.post.mockResolvedValueOnce(categoryGroup)
 
-      await categoryGroupRepo.createCategoryGroup(params)
+      await repository.createCategoryGroup(params)
 
-      expect(categoryGroupRepo.categoryGroups.value).toEqual([categoryGroup])
+      expect(repository.categoryGroups.value).toEqual([categoryGroup])
     })
   })
 
@@ -37,7 +48,7 @@ describe('CategoryGroupRepository', () => {
       const budgetId = faker.random.uuid()
       const params = { mock: true, budgetId }
 
-      await categoryGroupRepo.getCategoryGroups(params)
+      await repository.getCategoryGroups(params)
 
       expect(api.get).toHaveBeenCalledWith(
         `budgets/${budgetId}/category_groups`,
@@ -50,9 +61,9 @@ describe('CategoryGroupRepository', () => {
 
       api.get.mockResolvedValueOnce(categoryGroups)
 
-      await categoryGroupRepo.getCategoryGroups(params)
+      await repository.getCategoryGroups(params)
 
-      expect(categoryGroupRepo.categoryGroups.value).toEqual(categoryGroups)
+      expect(repository.categoryGroups.value).toEqual(categoryGroups)
     })
   })
 })

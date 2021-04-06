@@ -136,6 +136,8 @@ export default {
   overflow: auto;
   padding: $base * 3;
 
+  @include transition(all, $cubic-bezier, 0.5s);
+
   &__nav {
     display: flex;
     flex-flow: column;

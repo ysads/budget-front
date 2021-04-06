@@ -14,7 +14,7 @@
 import AccountHeader from '@/components/accounts/AccountHeader'
 import { openBudget } from '@/repositories/budgets'
 import { accounts } from '@/repositories/accounts'
-import { useMoney } from '@/use/money'
+import { totalBalance } from '@/support/money'
 import { useI18n } from '@/use/i18n'
 
 export default {
@@ -25,7 +25,6 @@ export default {
   },
 
   setup () {
-    const { totalBalance } = useMoney()
     const { t } = useI18n()
 
     return { accounts, openBudget, totalBalance, t }

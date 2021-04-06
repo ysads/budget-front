@@ -3,6 +3,10 @@ import { ref } from '@vue/composition-api'
 
 export const categoryGroups = ref([])
 
+export const categoryGroupById = (id) => {
+  return categoryGroups.value.find(c => c.id === id)
+}
+
 export const createCategoryGroup = async (params) => {
   const categoryGroup = await post(
     `budgets/${params.budgetId}/category_groups`, params,

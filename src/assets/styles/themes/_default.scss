@@ -3,16 +3,20 @@
   --app-success: rgba(109, 159, 57, 1);
   --app-white: rgba(255, 255, 255, 1);
   --app-bg: var(--app-white);
-  --acc-header-bg: rgba(242, 242, 242, 1);
+  --app-blue-light: rgba(226, 236, 247, 1);
+  --app-gray-light: rgba(242, 242, 242, 1);
+  --app-gray-medium: rgba(180, 180, 180, 1);
+  --acc-header-bg: var(--app-gray-light);
   --acc-header-text: rgba(56, 62, 65, 1);
   --acc-header-sep: rgba(164, 164, 164, 1);
-  --acc-toolbar-border: rgba(242, 242, 242, 1);
+  --acc-toolbar-border: var(--app-gray-light);
   --balance-positive: var(--app-success);
   --balance-negative: var(--app-error);
+  --balance-zero: var(--app-gray-medium);
   --drawer-bg: var(--app-white);
   --month-header-tbb-text: var(--app-white);
   --month-header-text: rgba(56, 62, 65, 1);
-  --month-header-bg: rgba(242, 242, 242, 1);
+  --month-header-bg: var(--app-gray-light);
   --color-error: var(--app-error);
   --color-info: rgba(130, 130, 130, 1);
   --color-success: var(--app-success);
@@ -32,7 +36,11 @@
   --sidebar-button-bg: rgba(170, 210, 255, 0.2);
   --sidebar-focus: var(--color-primary-hover);
   --sidebar-text: rgba(255, 255, 255, 1);
-  --sidebar-tip: rgba(207, 213, 242, 1);
+  --sidebar-tip: var(--app-blue-light);
   --select-selected-text: var(--color-primary);
+  --table-heading: var(--month-header-bg);
+  --table-separator: var(--table-heading);
+  --table-focus: var(--app-blue-light);
   --text-default: rgba(55, 55, 55, 1);
+  --text-negative: var(--app-white);
 }

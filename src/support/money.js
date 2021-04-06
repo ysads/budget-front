@@ -11,18 +11,24 @@ export const currencySettings = (budget) => ({
 
 export const fromCents = (cents) => cents / 100.0
 
-export const toCents = (unities) => unities * 100
+export const toCents = (units) => units * 100
 
 export const cleanMask = (value, budget) => {
   const settings = currencySettings(budget)
 
   return parseFloat(
-    value.replace(settings.thousands, '').replace(settings.decimal, '.'),
+    value.replace(settings.thousands, '')
+      .replace(settings.decimal, '.')
+      .replace(settings.prefix, ''),
   )
 }
 
 export const currencyToCents = (value, budget) => {
-  return toCents(cleanMask(value, budget))
+  const unmasked = typeof value === 'number'
+    ? value
+    : cleanMask(value, budget)
+
+  return toCents(unmasked)
 }
 
 export const totalBalance = (accounts, field) => {
@@ -43,4 +49,8 @@ export const localize = (value, budget) => {
     settings.thousands,
     settings.decimal,
   )
+}
+
+export const balanceClasses = (val) => {
+  return val >= 0 ? 'positive' : 'negative'
 }

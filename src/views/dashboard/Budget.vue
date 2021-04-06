@@ -5,13 +5,15 @@
       <month-header
         :budget="openBudget"
         :month="currentMonth"
+        data-test="month-header"
         @update="updateCurrentMonth"
       />
       <budget-toolbar
         :budget="openBudget"
+        data-test="toolbar"
       />
       <monthly-budgets-table
-        :budget="openBudget"
+        data-test="table"
       />
     </section>
   </div>
@@ -24,6 +26,7 @@ import MonthHeader from '@/components/months/MonthHeader'
 import MonthlyBudgetsTable from '@/components/monthly-budgets/MonthlyBudgetsTable'
 import { isoMonth } from '@/support/date'
 import { openBudget } from '@/repositories/budgets'
+import { getMonthlyBudgets } from '@/repositories/monthly-budgets'
 import { currentMonth, getMonthByIso } from '@/repositories/months'
 
 export default {
@@ -39,7 +42,6 @@ export default {
   data () {
     return {
       isLoading: true,
-      currentMonthDate: new Date(),
     }
   },
 
@@ -55,20 +57,33 @@ export default {
 
   computed: {
     currentIsoMonth () {
-      return isoMonth(this.currentMonthDate)
+      return this.$route.params.isoMonth || isoMonth(new Date())
     },
   },
 
   methods: {
     async fetchResources () {
-      await getMonthByIso({
+      const params = {
         budgetId: this.openBudget.id,
         isoMonth: this.currentIsoMonth,
-      })
+      }
+
+      await Promise.all([
+        getMonthByIso(params),
+        getMonthlyBudgets(params),
+      ])
     },
 
     updateCurrentMonth (updatedMonth) {
-      this.currentMonth = updatedMonth
+      this.$router.push({
+        name: 'MonthBudget',
+        params: { isoMonth: isoMonth(updatedMonth) },
+      })
+    },
+  },
+
+  watch: {
+    '$route.params.isoMonth' () {
       this.fetchResources()
     },
   },

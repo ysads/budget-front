@@ -5,9 +5,10 @@ import * as money from '@/support/money'
 describe('Money', () => {
   describe('#cleanMask', () => {
     it('converts string with decimal and thousands markers to float', () => {
-      const budget = factories.budget.build()
+      const budget = factories.budget.build({ currency: 'GBP' })
 
       expect(money.cleanMask('5.452,96', budget)).toStrictEqual(5452.96)
+      expect(money.cleanMask('£ 5.452,96', budget)).toStrictEqual(5452.96)
     })
   })
 
@@ -16,6 +17,8 @@ describe('Money', () => {
       const budget = factories.budget.build()
 
       expect(money.currencyToCents('5.452,96', budget)).toStrictEqual(545296)
+      expect(money.currencyToCents(5452.96, budget)).toStrictEqual(545296)
+      expect(money.currencyToCents(545296, budget)).toStrictEqual(54529600)
     })
   })
 
@@ -61,7 +64,7 @@ describe('Money', () => {
       })
     })
 
-    context('when accounts array is empty', () => {
+    describe('when accounts array is empty', () => {
       it('is zero', () => {
         expect(money.totalBalance([], 'balance')).toEqual(0)
         expect(money.totalBalance([], 'clearedBalance')).toEqual(0)
@@ -86,6 +89,23 @@ describe('Money', () => {
         settings.thousands,
         settings.decimal,
       )
+    })
+  })
+
+  describe('#balanceClasses', () => {
+    describe('when value is greater than or equals to 0', () => {
+      it('is `positive`', () => {
+        expect(money.balanceClasses(5)).toEqual('positive')
+        expect(money.balanceClasses(0)).toEqual('positive')
+        expect(money.balanceClasses(1.5)).toEqual('positive')
+      })
+    })
+
+    describe('when value is smaller than 0', () => {
+      it('is `negative`', () => {
+        expect(money.balanceClasses(-5)).toEqual('negative')
+        expect(money.balanceClasses(-1.5)).toEqual('negative')
+      })
     })
   })
 })

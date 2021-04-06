@@ -31,7 +31,9 @@
           <span class="account-accordion__item-name">
             {{ account.name }}
           </span>
-          <span>{{ localize(account.balance, budget) }}</span>
+          <span class="account-accordion__item-balance">
+            {{ localize(account.balance, budget) }}
+          </span>
         </router-link>
       </li>
     </ul>
@@ -39,7 +41,8 @@
 </template>
 
 <script>
-import { useMoney } from '@/use/money'
+import { totalBalance, localize } from '@/support/money'
+import { computed } from '@vue/composition-api'
 
 export default {
   name: 'AccountAccordion',
@@ -63,17 +66,13 @@ export default {
     },
   },
 
-  setup () {
-    const { totalBalance, fromCents, localize } = useMoney()
+  setup ({ accounts }) {
+    const total = computed(() => totalBalance(accounts, 'balance'))
 
-    return { totalBalance, fromCents, localize }
+    return { total, localize }
   },
 
   computed: {
-    total () {
-      return this.totalBalance(this.accounts, 'balance')
-    },
-
     openAccountId () {
       return this.$route.params.id
     },
@@ -130,6 +129,10 @@ export default {
       width: 60%;
 
       @include padding(right, 1);
+    }
+
+    &-balance {
+      flex-shrink: 0;
     }
   }
 

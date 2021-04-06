@@ -103,6 +103,14 @@ export default {
     @include breakpoint(md) {
       display: block;
       height: 100%;
+      width: 30%;
+    }
+
+    @include breakpoint(lg) {
+      width: 25%;
+    }
+
+    @include breakpoint(xl) {
       width: 20%;
     }
 
@@ -113,7 +121,7 @@ export default {
       left: 20px;
       opacity: 0.5;
       position: absolute;
-      top: 16px;
+      top: 32px;
       z-index: 2;
 
       @include breakpoint(md) {
@@ -128,6 +136,14 @@ export default {
     width: 100%;
 
     @include breakpoint(md) {
+      width: 70%;
+    }
+
+    @include breakpoint(lg) {
+      width: 75%;
+    }
+
+    @include breakpoint(xl) {
       width: 80%;
     }
   }
@@ -139,6 +155,6 @@ export default {
   position: fixed;
   width: 100%;
 
-  @include padding(top, 13);
+  @include padding(top, 16);
 }
 </style>

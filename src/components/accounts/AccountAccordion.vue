@@ -130,6 +130,7 @@ export default {
 
       @include padding(right, 1);
     }
+
     &-balance {
       flex-shrink: 0;
     }

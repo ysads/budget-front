@@ -105,9 +105,11 @@ export default {
       height: 100%;
       width: 30%;
     }
+
     @include breakpoint(lg) {
       width: 25%;
     }
+
     @include breakpoint(xl) {
       width: 20%;
     }
@@ -136,9 +138,11 @@ export default {
     @include breakpoint(md) {
       width: 70%;
     }
+
     @include breakpoint(lg) {
       width: 75%;
     }
+
     @include breakpoint(xl) {
       width: 80%;
     }

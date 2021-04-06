@@ -58,7 +58,7 @@ describe('MonthlyBudgetRow', () => {
   describe('when available amount is negative', () => {
     it('renders available with negative class', () => {
       const wrapper = factory({
-        monthlyBudget: factories.monthlyBudget.negative().build()
+        monthlyBudget: factories.monthlyBudget.negative().build(),
       })
       const item = wrapper.find("[data-test='available']")
 
@@ -69,7 +69,7 @@ describe('MonthlyBudgetRow', () => {
   describe('when available amount is positive', () => {
     it('renders available with positive class', () => {
       const wrapper = factory({
-        monthlyBudget: factories.monthlyBudget.positive().build()
+        monthlyBudget: factories.monthlyBudget.positive().build(),
       })
       const item = wrapper.find("[data-test='available']")
 
@@ -80,7 +80,7 @@ describe('MonthlyBudgetRow', () => {
   describe('when available amount is zero', () => {
     it('renders available with zero class', () => {
       const wrapper = factory({
-        monthlyBudget: factories.monthlyBudget.zero().build()
+        monthlyBudget: factories.monthlyBudget.zero().build(),
       })
       const item = wrapper.find("[data-test='available']")
 

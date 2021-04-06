@@ -107,7 +107,7 @@ describe('MonthlyBudgetsTable', () => {
     describe('and drawer emits close', () => {
       it('hides drawer', async () => {
         const wrapper = factory()
-  
+
         await wrapper.find("[data-test='row']").vm.$emit('click')
         const item = wrapper.find("[data-test='details']")
         expect(item.exists()).toBeTruthy()

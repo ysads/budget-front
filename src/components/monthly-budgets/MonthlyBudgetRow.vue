@@ -74,13 +74,14 @@ export default {
 
   &:hover,
   &:focus {
-    background: #e4f1ff;
+    background: var(--table-focus);
   }
 
   &__tag {
-    padding: $base;
     border-radius: var(--radius-4);
+    padding: $base;
   }
+
   &__name {
     flex-basis: 40%;
   }
@@ -90,14 +91,17 @@ export default {
     text-align: right;
   }
 }
+
 .negative {
   background: var(--balance-negative);
   color: var(--text-negative);
 }
+
 .positive {
   background: var(--balance-positive);
   color: var(--text-negative);
 }
+
 .zero {
   background: var(--balance-zero);
   color: var(--text-negative);

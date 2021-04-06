@@ -1,27 +1,32 @@
 <template>
   <header class="month-header">
     <div class="month-header__item month-header__nav">
-      <button
+      <sad-icon
         class="month-header__nav-icon"
+        name="chevron-circle-left"
+        size="medium"
+        clickable
+        data-test="prev"
         @click="updateMonth(-1)"
-      >
-        <i class="icon fas fa-chevron-circle-left" />
-      </button>
+      />
 
-      <h2 class="month-header__month">
+      <h2 class="month-header__month" data-test="month-name">
         {{ d(isoMonthToDate(month.isoMonth), 'monthOnly') }}
       </h2>
 
-      <button
+      <sad-icon
         class="month-header__nav-icon"
+        name="chevron-circle-right"
+        size="medium"
+        clickable
+        data-test="next"
         @click="updateMonth(1)"
-      >
-        <i class="icon fas fa-chevron-circle-right" />
-      </button>
+      />
     </div>
     <div
       class="month-header__item month-header__balance"
       :class="balanceClasses(month.toBeBudgeted)"
+      data-test="to-be-budgeted"
     >
       <p class="month-header__balance-title">
         {{ t('toBeBudgeted') }}
@@ -37,6 +42,7 @@
 import { balanceClasses, localize } from '@/support/money'
 import { useI18n } from '@/use/i18n'
 import { addMonths, isoMonthToDate } from '@/support/date'
+import SadIcon from '@/components/sad/SadIcon'
 
 export default {
   props: {
@@ -50,6 +56,10 @@ export default {
     },
   },
 
+  components: {
+    SadIcon,
+  },
+
   setup () {
     const { d, t } = useI18n('MonthHeader')
 
@@ -58,7 +68,7 @@ export default {
 
   methods: {
     updateMonth (delta) {
-      const newMonth = addMonths(new Date(this.month.isoMonth), delta)
+      const newMonth = addMonths(isoMonthToDate(this.month.isoMonth), delta)
       this.$emit('update', newMonth)
     },
   },
@@ -89,12 +99,8 @@ export default {
     align-items: center;
     color: var(--month-header-text);
     display: flex;
-
-    &-icon {
-      cursor: pointer;
-      font-size: 18px;
-      padding: 0 $base*2;
-    }
+    justify-content: space-between;
+    margin-right: $base*6;
   }
 
   &__month {

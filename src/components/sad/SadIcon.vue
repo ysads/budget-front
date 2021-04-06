@@ -61,7 +61,7 @@ export default defineComponent({
     cursor: pointer;
     outline: none;
 
-    &:focus {
+    &:active {
       @include scale-90;
     }
   }

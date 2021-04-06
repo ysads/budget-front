@@ -5,12 +5,16 @@
       <month-header
         :budget="openBudget"
         :month="currentMonth"
+        data-test="month-header"
         @update="updateCurrentMonth"
       />
       <budget-toolbar
         :budget="openBudget"
+        data-test="toolbar"
       />
-      <monthly-budgets-table />
+      <monthly-budgets-table
+        data-test="table"
+      />
     </section>
   </div>
 </template>
@@ -38,7 +42,6 @@ export default {
   data () {
     return {
       isLoading: true,
-      currentMonthDate: new Date(),
     }
   },
 
@@ -54,7 +57,7 @@ export default {
 
   computed: {
     currentIsoMonth () {
-      return isoMonth(this.currentMonthDate)
+      return this.$route.params.isoMonth || isoMonth(new Date())
     },
   },
 
@@ -72,7 +75,15 @@ export default {
     },
 
     updateCurrentMonth (updatedMonth) {
-      this.currentMonth = updatedMonth
+      this.$router.push({
+        name: 'MonthBudget',
+        params: { isoMonth: isoMonth(updatedMonth) },
+      })
+    },
+  },
+
+  watch: {
+    '$route.params.isoMonth' () {
       this.fetchResources()
     },
   },

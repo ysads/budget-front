@@ -49,7 +49,7 @@ import { openBudget } from '@/repositories/budgets'
 import { categoriesByGroupId } from '@/repositories/categories'
 import { categoryGroups } from '@/repositories/category-groups'
 import { createMonthlyBudget, updateMonthlyBudget } from '@/repositories/monthly-budgets'
-import { currencyToCents, currencySettings, fromCents } from '@/support/money'
+import { currencyToCents, currencySettings, localize } from '@/support/money'
 import { currentMonth } from '@/repositories/months'
 import { computed, reactive } from '@vue/composition-api'
 import { useI18n } from '@/use/i18n'
@@ -76,7 +76,7 @@ export default {
     const form = reactive({
       id: monthlyBudget.id || '',
       categoryId: monthlyBudget.categoryId || '',
-      budgeted: fromCents(monthlyBudget.budgeted) || 0,
+      budgeted: localize(monthlyBudget.budgeted, openBudget.value) || 0,
     })
     const moneySettings = computed(
       () => currencySettings(openBudget.value),

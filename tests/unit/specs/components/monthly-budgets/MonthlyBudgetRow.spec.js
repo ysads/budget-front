@@ -45,6 +45,16 @@ describe('MonthlyBudgetRow', () => {
     expect(item.text()).toEqual(localize(monthlyBudget.available, budget))
   })
 
+  describe('when base element is clicked', () => {
+    it('emits click', async () => {
+      const wrapper = factory()
+
+      await wrapper.find("[data-test='row']").trigger('click')
+
+      expect(wrapper.emitted().click).toBeTruthy()
+    })
+  })
+
   describe('when available amount is negative', () => {
     it('renders available with negative class', () => {
       const wrapper = factory({

@@ -21,9 +21,17 @@
           :category="categoryById(monthlyBudget.categoryId)"
           :monthly-budget="monthlyBudget"
           data-test="row"
+          @click="openDrawer(monthlyBudget)"
         />
       </ul>
     </div>
+
+    <monthly-budget-details
+      v-if="isDrawerOpen"
+      :monthly-budget="openMonthlyBudget"
+      data-test="details"
+      @close="closeDrawer"
+    />
   </section>
 </template>
 
@@ -32,23 +40,36 @@ import { categoryById } from '@/repositories/categories'
 import { categoryGroupById } from '@/repositories/category-groups'
 import { monthlyBudgetsByCategoryGroup } from '@/repositories/monthly-budgets'
 import { openBudget } from '@/repositories/budgets'
+import MonthlyBudgetDetails from '@/components/monthly-budgets/MonthlyBudgetDetails'
 import MonthlyBudgetHeader from '@/components/monthly-budgets/MonthlyBudgetHeader'
 import MonthlyBudgetRow from '@/components/monthly-budgets/MonthlyBudgetRow'
+import { computed, ref } from '@vue/composition-api'
 
 export default {
   name: 'MonthlyBudgetsTable',
 
   components: {
+    MonthlyBudgetDetails,
     MonthlyBudgetHeader,
     MonthlyBudgetRow,
   },
 
   setup () {
+    const openMonthlyBudget = ref({})
+    const isDrawerOpen = computed(() => Boolean(openMonthlyBudget.value.id))
+
+    const openDrawer = (mb) => (openMonthlyBudget.value = mb)
+    const closeDrawer = () => (openMonthlyBudget.value = {})
+
     return {
       categoryById,
       categoryGroupById,
+      closeDrawer,
+      isDrawerOpen,
       monthlyBudgetsByCategoryGroup,
       openBudget,
+      openDrawer,
+      openMonthlyBudget,
     }
   },
 }

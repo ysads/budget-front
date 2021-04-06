@@ -1,5 +1,9 @@
 <template>
-  <li class="category-budget" @click="$emit('click')">
+  <li
+    class="category-budget"
+    data-test="row"
+    @click="$emit('click')"
+  >
     <div class="category-budget__name" data-test="category-name">
       {{ category.name }}
     </div>

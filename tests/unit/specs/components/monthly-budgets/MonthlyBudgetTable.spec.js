@@ -84,4 +84,37 @@ describe('MonthlyBudgetsTable', () => {
       monthlyBudget: monthlyBudgets[2],
     })
   })
+
+  it('does not show details drawer by default', () => {
+    const wrapper = factory()
+    const item = wrapper.find("[data-test='details']")
+
+    expect(item.exists()).toBeFalsy()
+  })
+
+  describe('when row is clicked', () => {
+    it('opens details drawer with selected monthly budget', async () => {
+      const wrapper = factory()
+
+      await wrapper.find("[data-test='row']").vm.$emit('click')
+
+      const item = wrapper.find("[data-test='details']")
+
+      expect(item.exists()).toBeTruthy()
+      expect(item.props().monthlyBudget).toEqual(monthlyBudgets[0])
+    })
+
+    describe('and drawer emits close', () => {
+      it('hides drawer', async () => {
+        const wrapper = factory()
+  
+        await wrapper.find("[data-test='row']").vm.$emit('click')
+        const item = wrapper.find("[data-test='details']")
+        expect(item.exists()).toBeTruthy()
+
+        await item.vm.$emit('close')
+        expect(item.exists()).toBeFalsy()
+      })
+    })
+  })
 })

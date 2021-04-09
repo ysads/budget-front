@@ -32,6 +32,7 @@
   "newCategory": "Nova categoria",
   "newCategoryGroup": "Novo grupo",
   "newMonthlyBudget": "Criar orçamento",
+  "newTransaction": "Adicionar transação",
   "CreateAccountModal": {
     "accountType": "De que tipo é essa conta?",
     "created": "Conta criada",

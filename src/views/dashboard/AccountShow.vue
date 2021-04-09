@@ -5,14 +5,19 @@
       class="account-show__loading"
       data-test="loading"
     />
-    <account-header
-      v-else
-      :name="account.name"
-      :cleared="account.clearedBalance"
-      :uncleared="account.unclearedBalance"
-      :budget="openBudget"
-      data-test="header"
-    />
+    <div v-else>
+      <account-header
+        :name="account.name"
+        :cleared="account.clearedBalance"
+        :uncleared="account.unclearedBalance"
+        :budget="openBudget"
+        data-test="header"
+      />
+      <account-toolbar
+        :account="account"
+        data-test="toolbar"
+      />
+    </div>
   </div>
 </template>
 
@@ -20,6 +25,7 @@
 import { openBudget } from '@/repositories/budgets'
 import { accounts, getAccountById } from '@/repositories/accounts'
 import AccountHeader from '@/components/accounts/AccountHeader'
+import AccountToolbar from '@/components/accounts/AccountToolbar'
 import Loading from '@/components/Loading'
 
 export default {
@@ -27,6 +33,7 @@ export default {
 
   components: {
     AccountHeader,
+    AccountToolbar,
     Loading,
   },
 

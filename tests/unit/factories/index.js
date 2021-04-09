@@ -6,6 +6,7 @@ import currentUser from './current-user'
 import money from './money'
 import month from './month'
 import monthlyBudget from './monthly-budget'
+import payee from './payee'
 
 export default {
   account,
@@ -16,4 +17,5 @@ export default {
   money,
   month,
   monthlyBudget,
+  payee,
 }

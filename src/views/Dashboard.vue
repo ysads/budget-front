@@ -23,8 +23,11 @@ import Loading from '@/components/Loading'
 import { getAccounts } from '@/repositories/accounts'
 import { getCategoryGroups } from '@/repositories/category-groups'
 import { getCategories } from '@/repositories/categories'
+import { getMonthlyBudgets } from '@/repositories/monthly-budgets'
+import { getPayees } from '@/repositories/payees'
 import { getBudgetById, openBudget } from '@/repositories/budgets'
 import { getMe } from '@/repositories/auth'
+import { isoMonth } from '@/support/date'
 import { ref } from '@vue/composition-api'
 
 const MD_BREAKPOINT = 768
@@ -57,10 +60,15 @@ export default {
     await this.validateSession()
     await getBudgetById(this.$route.params.budgetId)
 
+    const params = { budgetId: openBudget.value.id }
+
     await Promise.all([
-      getAccounts({ budgetId: openBudget.value.id }),
-      getCategoryGroups({ budgetId: openBudget.value.id }),
-      getCategories({ budgetId: openBudget.value.id }),
+      getAccounts(params),
+      getCategoryGroups(params),
+      getCategories(params),
+      getPayees(params),
+      // FIXME: account screens rely on that, maybe move it to a more specific view
+      getMonthlyBudgets({ ...params, isoMonth: isoMonth(new Date()) }),
     ])
     this.loading = false
   },

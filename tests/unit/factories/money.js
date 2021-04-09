@@ -5,8 +5,8 @@ import { Factory } from 'fishery'
 
 export default Factory.define(({ params }) => {
   const currency = params.currency || sample(currencies)
-  const units = params.units || faker.random.number(5000)
-  const cents = params.cents || faker.random.number(99)
+  const units = params.units || faker.datatype.number(5000)
+  const cents = params.cents || faker.datatype.number(99)
 
   return `${currency} ${units},${cents}`
 })

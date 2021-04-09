@@ -21,7 +21,7 @@ describe('CategoryGroupRepository', () => {
 
   describe('#createCategoryGroup', () => {
     it('dispatches a POST to api', async () => {
-      const budgetId = faker.random.uuid()
+      const budgetId = faker.datatype.uuid()
       const params = { mock: true, budgetId }
 
       await repository.createCategoryGroup(params)
@@ -45,7 +45,7 @@ describe('CategoryGroupRepository', () => {
 
   describe('#getCategoryGroups', () => {
     it('dispatches a GET to api', async () => {
-      const budgetId = faker.random.uuid()
+      const budgetId = faker.datatype.uuid()
       const params = { mock: true, budgetId }
 
       await repository.getCategoryGroups(params)

@@ -1,7 +1,7 @@
 import faker from 'faker'
 import { Factory } from 'fishery'
 
-const randInt = (min, max) => faker.random.number({ min, max })
+const randInt = (min, max) => faker.datatype.number({ min, max })
 
 class MonthlyBudgetFactory extends Factory {
   negative () {
@@ -33,11 +33,11 @@ export default MonthlyBudgetFactory.define(({ params }) => {
   const activity = params.activity || randInt(20000, 80000)
 
   return {
-    id: faker.random.uuid(),
+    id: faker.datatype.uuid(),
     activity,
     budgeted,
     available: budgeted - activity,
-    categoryId: faker.random.uuid(),
-    categoryGroupId: faker.random.uuid(),
+    categoryId: faker.datatype.uuid(),
+    categoryGroupId: faker.datatype.uuid(),
   }
 })

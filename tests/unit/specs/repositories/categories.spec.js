@@ -39,7 +39,7 @@ describe('CategoriesRepository', () => {
 
   describe('#createCategory', () => {
     it('dispatches a POST to api', async () => {
-      const budgetId = faker.random.uuid()
+      const budgetId = faker.datatype.uuid()
       const params = { mock: true, budgetId }
 
       await repository.createCategory(params)
@@ -63,7 +63,7 @@ describe('CategoriesRepository', () => {
 
   describe('#getCategories', () => {
     it('dispatches a GET to api', async () => {
-      const budgetId = faker.random.uuid()
+      const budgetId = faker.datatype.uuid()
       const params = { mock: true, budgetId }
 
       await repository.getCategories(params)

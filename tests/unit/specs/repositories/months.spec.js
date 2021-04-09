@@ -10,7 +10,7 @@ describe('MonthsRepository', () => {
 
   describe('#getMonthByIso', () => {
     it('dispatches a GET to api', async () => {
-      const id = faker.random.uuid
+      const id = faker.datatype.uuid
       const isoMonth = '2020-03'
       const params = { budgetId: id, isoMonth }
 
@@ -22,7 +22,7 @@ describe('MonthsRepository', () => {
     })
 
     it('updates monthly budgets with newly-created resource', async () => {
-      const id = faker.random.uuid
+      const id = faker.datatype.uuid
       const isoMonth = '2020-03'
       const params = { budgetId: id, isoMonth }
       const month = factories.month.build()

@@ -3,8 +3,8 @@ import { Factory } from 'fishery'
 
 export default Factory.define(() => {
   return {
-    budgetId: Faker.random.uuid(),
-    id: Faker.random.uuid(),
+    budgetId: Faker.datatype.uuid(),
+    id: Faker.datatype.uuid(),
     name: Faker.commerce.productMaterial(),
   }
 })

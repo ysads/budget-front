@@ -8,7 +8,7 @@ const VARIANTS = ['error', 'success', 'warning']
 const factory = (args = {}) => factoryBuilder(SadAlert, {
   propsData: {
     duration: 0,
-    id: faker.random.uuid(),
+    id: faker.datatype.uuid(),
     message: faker.lorem.sentence(),
     variant: sample(VARIANTS),
     ...args,
@@ -70,7 +70,7 @@ describe('SadAlert', () => {
 
   describe('when close button is clicked', () => {
     it('emits close', async () => {
-      const id = faker.random.uuid()
+      const id = faker.datatype.uuid()
       const wrapper = factory({ id })
 
       await wrapper.find("[data-test='close-icon']").trigger('click')
@@ -84,7 +84,7 @@ describe('SadAlert', () => {
       jest.useFakeTimers()
 
       const duration = 5000
-      const id = faker.random.uuid()
+      const id = faker.datatype.uuid()
       const wrapper = factory({ duration, id })
 
       jest.advanceTimersByTime(duration)

@@ -50,7 +50,7 @@ describe('SadInput', () => {
 
       const input = wrapper.find("[data-test='input']")
 
-      expect(input.classes()).toContain('sad-input--error')
+      expect(input.classes()).toContain('error')
     })
   })
 

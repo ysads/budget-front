@@ -1,24 +1,53 @@
 import SadSelect from '@/components/sad/SadSelect'
 import { factoryBuilder } from '#/factory-builder'
 
+const groupOptions = [
+  {
+    label: 'label 1',
+    options: [{ value: 'v1', label: 'value 1' }],
+  },
+  {
+    label: 'label 2',
+    options: [
+      { value: 'v2', label: 'value 2' },
+      { value: 'v3', label: 'value 3' },
+    ],
+  },
+]
+const singleOptions = [
+  { value: 'v1', label: 'value 1' },
+  { value: 'v2', label: 'value 2' },
+]
+
 const factory = (args = {}) => factoryBuilder(SadSelect, {
   propsData: {
     label: 'label',
     name: 'name',
     value: '',
-    options: [
-      { label: 'label 1', options: [{ value: 'v1', label: 'value 1' }] },
-      { label: 'label 2', options: [{ value: 'v2', label: 'value 2' }] },
-    ],
+    options: singleOptions,
     ...args,
   },
 })
 
 describe('SadSelect', () => {
-  it('has no placeholder', () => {
+  it('has no placeholder by default', () => {
     const wrapper = factory()
 
     expect(wrapper.vm.placeholder).toEqual('')
+  })
+
+  it('is filterable', () => {
+    const wrapper = factory()
+    const item = wrapper.find("[data-test='select']")
+
+    expect(item.props().filterable).toEqual(true)
+  })
+
+  it('does not allow creating by default', () => {
+    const wrapper = factory()
+    const item = wrapper.find("[data-test='select']")
+
+    expect(item.props().allowCreate).toEqual(false)
   })
 
   it('renders label', () => {
@@ -36,7 +65,7 @@ describe('SadSelect', () => {
     })
   })
 
-  context('when error prop is given', () => {
+  describe('when error prop is given', () => {
     it('renders tip with error', () => {
       const wrapper = factory({ error: 'Invalid' })
 
@@ -46,6 +75,29 @@ describe('SadSelect', () => {
         text: 'Invalid',
         variant: 'error',
       })
+    })
+  })
+
+  describe('when select emits blur', () => {
+    it('emits blur', async () => {
+      const wrapper = factory()
+
+      await wrapper.find("[data-test='select']").vm.$emit('blur')
+
+      expect(wrapper.emitted().blur).toBeTruthy()
+    })
+  })
+
+  describe('when is grouped', () => {
+    it('renders options grouped', () => {
+      const wrapper = factory({ grouped: true, options: groupOptions })
+
+      const groups = wrapper.findAll("[data-test='select-group']")
+      const groupOneOpts = groups.at(0).findAll("[data-test='select-option']")
+      const groupTwoOpts = groups.at(1).findAll("[data-test='select-option']")
+
+      expect(groupOneOpts.length).toEqual(1)
+      expect(groupTwoOpts.length).toEqual(2)
     })
   })
 })

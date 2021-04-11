@@ -37,6 +37,29 @@ describe('CategoriesRepository', () => {
     })
   })
 
+  describe('#categoriesGroupedByGroupId', () => {
+    it('groups categories according to their group id', () => {
+      const categoryGroups = factories.categoryGroup.buildList(2)
+      const categories = [
+        factories.category.build({ categoryGroupId: categoryGroups[0].id }),
+        factories.category.build({ categoryGroupId: categoryGroups[1].id }),
+        factories.category.build({ categoryGroupId: categoryGroups[0].id }),
+      ]
+
+      repository.categories.value = categories
+
+      expect(repository.categoriesGroupedByGroupId.value).toEqual({
+        [categoryGroups[0].id]: [
+          categories[0],
+          categories[2],
+        ],
+        [categoryGroups[1].id]: [
+          categories[1],
+        ],
+      })
+    })
+  })
+
   describe('#createCategory', () => {
     it('dispatches a POST to api', async () => {
       const budgetId = faker.datatype.uuid()

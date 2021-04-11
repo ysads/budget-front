@@ -1,11 +1,16 @@
 import { get, post } from '@/api'
-import { ref } from '@vue/composition-api'
+import { computed, ref } from '@vue/composition-api'
+import groupBy from 'lodash/groupBy'
 
 export const categories = ref([])
 
 export const categoriesByGroupId = (groupId) => {
   return categories.value.filter(c => c.categoryGroupId === groupId)
 }
+
+export const categoriesGroupedByGroupId = computed(
+  () => groupBy(categories.value, c => c.categoryGroupId),
+)
 
 export const categoryById = (id) => {
   return categories.value.find(c => c.id === id)

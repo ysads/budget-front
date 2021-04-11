@@ -38,6 +38,15 @@ describe('AccountShow', () => {
     })
   })
 
+  it('renders AccountToolbar using selected account', async () => {
+    const wrapper = factory()
+
+    await flushPromises()
+    const item = wrapper.find("[data-test='toolbar']")
+
+    expect(item.props()).toEqual({ account: selectedAccount })
+  })
+
   context('while fetching account', () => {
     it('renders Loading component', async () => {
       const wrapper = factory()

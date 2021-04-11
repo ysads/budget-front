@@ -14,6 +14,24 @@ const factory = (args = {}) => factoryBuilder(DummyComponent, {
 })
 
 describe('useTip', () => {
+  describe('#errorClass', () => {
+    describe('when error prop is set', () => {
+      it('returns `error`', () => {
+        const { vm } = factory({ error: true })
+
+        expect(vm.errorClass).toEqual('error')
+      })
+    })
+
+    describe('when error prop is falsy', () => {
+      it('returns empty string', () => {
+        const { vm } = factory({ error: false })
+
+        expect(vm.errorClass).toEqual('')
+      })
+    })
+  })
+
   describe('#tipText', () => {
     describe('when error prop is present', () => {
       it('is error prop', () => {

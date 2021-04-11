@@ -41,6 +41,11 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   position: relative;
 }
 
+/* Overrides el-input */
 .el-input__inner {
   @extend %body-1;
+}
+
+.error .el-input__inner {
+  border: 1px solid var(--color-error);
 }

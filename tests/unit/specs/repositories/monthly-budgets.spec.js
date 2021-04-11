@@ -10,7 +10,7 @@ describe('MonthlyBudgetsRepository', () => {
 
   describe('#createMonthlyBudget', () => {
     it('dispatches a POST to api', async () => {
-      const budgetId = faker.random.uuid()
+      const budgetId = faker.datatype.uuid()
       const params = { mock: true, budgetId }
 
       await repository.createMonthlyBudget(params)
@@ -34,8 +34,8 @@ describe('MonthlyBudgetsRepository', () => {
 
   describe('#updateMonthlyBudget', () => {
     it('dispatches a PUT to api', async () => {
-      const budgetId = faker.random.uuid()
-      const id = faker.random.uuid()
+      const budgetId = faker.datatype.uuid()
+      const id = faker.datatype.uuid()
       const params = { mock: true, budgetId, id }
 
       await repository.updateMonthlyBudget(params)

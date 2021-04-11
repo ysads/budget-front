@@ -32,6 +32,7 @@
   "newCategory": "Nova categoria",
   "newCategoryGroup": "Novo grupo",
   "newMonthlyBudget": "Criar orçamento",
+  "newTransaction": "Adicionar transação",
   "CreateAccountModal": {
     "accountType": "De que tipo é essa conta?",
     "created": "Conta criada",
@@ -60,9 +61,22 @@
     "password": "Sua senha",
     "signIn": "Entrar"
   },
+  "placeholders": {
+    "select": "Escolha"
+  },
   "save": "Salvar",
   "startingBalance": "Saldo inicial",
   "toBeBudgeted": "Disponível",
+  "TransactionDetails": {
+    "amount":"Valor",
+    "category":"Categoria",
+    "clearedAt":"Aprovada?",
+    "clearedAtTip":"Uma transação está aprovada quando está refletida no seu saldo.",
+    "memo":"Descrição",
+    "memoTip":"Opcional. Algo que te ajude a reconhecer essa transação.",
+    "payee":"Recebedor",
+    "referenceAt": "Data"
+  },
   "validations": {
     "required": "Campo obrigatório."
   }

@@ -87,6 +87,7 @@ export default defineComponent({
   &__input {
     width: 100%;
   }
+
   &__tip {
     margin-top: $base;
   }

@@ -36,14 +36,16 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     content: '';
   }
 }
+
 .el-form-item__error {
   position: relative;
 }
 
 /* Overrides el-input */
-.error .el-input__inner {
-  border: 1px solid var(--color-error);
-}
 .el-input__inner {
   @extend %body-1;
+}
+
+.error .el-input__inner {
+  border: 1px solid var(--color-error);
 }

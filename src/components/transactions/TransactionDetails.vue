@@ -5,6 +5,12 @@
     data-test="drawer"
     @close="$emit('close')"
   >
+    <sad-switch
+      v-model="form.outflow"
+      class="transaction-details__control transaction-details__outflow"
+      :active-label="st('outflow')"
+      :inactive-label="st('inflow')"
+    />
     <sad-select
       v-model="form.payeeName"
       class="transaction-details__control"
@@ -21,13 +27,11 @@
       v-model="form.categoryId"
       class="transaction-details__control"
       name="category"
-      :error="errorMessage($v.form.categoryId)"
       :label="st('category')"
       :options="categoryOptions"
       :placeholder="t('placeholders.select')"
       grouped
       data-test="category"
-      @blur="validate($v.form.categoryId)"
     />
     <sad-date-picker
       v-model="form.referenceAt"
@@ -61,12 +65,13 @@
       data-test="memo"
     />
     <sad-checkbox
-      v-model="form.clearedAt"
       class="transaction-details__control"
       :label="st('clearedAt')"
       :tip="st('clearedAtTip')"
+      :value="Boolean(form.clearedAt)"
       name="cleared-at"
       data-test="cleared-at"
+      @input="handleClearedAt"
     />
     <div slot="footer">
       <sad-button
@@ -74,6 +79,7 @@
         type="primary"
         full-width
         data-test="save-btn"
+        @click="handleSubmit"
       >
         {{ t('save') }}
       </sad-button>
@@ -82,15 +88,18 @@
 </template>
 
 <script>
+import alert from '@/support/alert'
 import SadButton from '@/components/sad/SadButton'
 import SadDatePicker from '@/components/sad/SadDatePicker'
 import SadDrawer from '@/components/sad/SadDrawer'
 import SadInput from '@/components/sad/SadInput'
 import SadCheckbox from '@/components/sad/SadCheckbox'
 import SadSelect from '@/components/sad/SadSelect'
-import { currencySettings } from '@/support/money'
-import { categoriesGroupedByGroupId } from '@/repositories/categories'
-import { categoryGroupById } from '@/repositories/category-groups'
+import SadSwitch from '@/components/sad/SadSwitch'
+import useBudgetCategories from '@/use/budget-categories'
+import { currencySettings, currencyToCents } from '@/support/money'
+import { createTransaction } from '@/repositories/transactions'
+import { handleApiError } from '@/api/errors'
 import { openBudget } from '@/repositories/budgets'
 import { payees } from '@/repositories/payees'
 import { required } from 'vuelidate/lib/validators'
@@ -115,11 +124,13 @@ export default defineComponent({
     SadInput,
     SadCheckbox,
     SadSelect,
+    SadSwitch,
   },
 
-  setup ({ originAccount }) {
+  setup ({ originAccount }, { emit }) {
     const { t, st } = useI18n('TransactionDetails')
     const { errorMessage, validate } = useValidation()
+    const categoryOptions = useBudgetCategories()
 
     const money = currencySettings(openBudget.value)
 
@@ -127,32 +138,42 @@ export default defineComponent({
       label: p.name,
       value: p.name,
     })))
-    const categoryOptions = computed(
-      () => Object
-        .entries(categoriesGroupedByGroupId.value)
-        .map(([groupId, categories]) => ({
-          label: categoryGroupById(groupId).name,
-          options: categories.map(category => ({
-            label: category.name,
-            value: category.id,
-          })),
-        })),
-    )
 
     const form = reactive({
       amount: '',
-      clearedAt: false,
+      budgetId: openBudget.value.id,
+      clearedAt: new Date().toISOString(),
       memo: '',
       categoryId: '',
       originId: originAccount.id,
+      outflow: true,
       payeeName: '',
       referenceAt: new Date(),
     })
+
+    const handleClearedAt = (checked) => {
+      form.clearedAt = checked ? new Date().toISOString() : null
+    }
+
+    const handleSubmit = async () => {
+      try {
+        await createTransaction({
+          ...form,
+          amount: currencyToCents(form.amount, openBudget.value),
+        })
+        alert.success(st('created'))
+        emit('close')
+      } catch (err) {
+        handleApiError(err)
+      }
+    }
 
     return {
       categoryOptions,
       errorMessage,
       form,
+      handleClearedAt,
+      handleSubmit,
       money,
       openBudget,
       payeeOptions,
@@ -165,7 +186,6 @@ export default defineComponent({
   validations: {
     form: {
       amount: { required },
-      categoryId: { required },
       payeeName: { required },
       referenceAt: { required },
     },
@@ -177,6 +197,12 @@ export default defineComponent({
 .transaction-details {
   &__control + &__control {
     margin-top: $base*4;
+  }
+
+  &__outflow {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
   }
 }
 </style>

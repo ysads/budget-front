@@ -67,6 +67,10 @@
   "save": "Salvar",
   "startingBalance": "Saldo inicial",
   "toBeBudgeted": "Disponível",
+  "budgetCategories": {
+    "inflow":"Entrada",
+    "toBeBudgeted":"Para orçar"
+  },
   "TransactionDetails": {
     "amount":"Valor",
     "category":"Categoria",

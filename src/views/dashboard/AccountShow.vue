@@ -1,7 +1,7 @@
 <template>
   <div class="account-show">
     <loading
-      v-if="isLoading"
+      v-if="isEmpty(account)"
       class="account-show__loading"
       data-test="loading"
     />
@@ -23,10 +23,13 @@
 
 <script>
 import { openBudget } from '@/repositories/budgets'
-import { accounts, getAccountById } from '@/repositories/accounts'
+import { getAccountById } from '@/repositories/accounts'
+import { useI18n } from '@/use/i18n'
+import alert from '@/support/alert'
 import AccountHeader from '@/components/accounts/AccountHeader'
 import AccountToolbar from '@/components/accounts/AccountToolbar'
 import Loading from '@/components/Loading'
+import isEmpty from 'lodash/isEmpty'
 
 export default {
   name: 'AccountShow',
@@ -38,33 +41,21 @@ export default {
   },
 
   setup () {
-    return { openBudget }
+    const { t } = useI18n()
+
+    return { isEmpty, openBudget, t }
   },
 
-  data () {
-    return {
-      account: {},
-      isLoading: true,
+  mounted () {
+    if (isEmpty(this.account)) {
+      alert.error(this.t('errors.accounts.not-found'))
+      this.$router.push({ name: 'AllAccounts' })
     }
   },
 
-  async mounted () {
-    await this.fetchAccount()
-  },
-
-  methods: {
-    fetchAccount () {
-      if (!accounts.value.length) return
-
-      this.isLoading = true
-      this.account = getAccountById(this.$route.params.id)
-      this.isLoading = false
-    },
-  },
-
-  watch: {
-    '$route.params.id' () {
-      this.fetchAccount()
+  computed: {
+    account () {
+      return getAccountById(this.$route.params.id) || {}
     },
   },
 }

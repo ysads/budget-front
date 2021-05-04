@@ -31,4 +31,25 @@ describe('PayeesRepository', () => {
       expect(repository.payees.value).toEqual(payees)
     })
   })
+
+  describe('#upsertPayee', () => {
+    it('adds a new payee', () => {
+      const newPayee = factories.payee.build()
+
+      repository.upsertPayee(newPayee)
+
+      expect(repository.payees.value).toContain(newPayee)
+    })
+
+    it('updates an existing payee', () => {
+      const payee = factories.payee.build()
+      repository.payees.value = [factories.payee.build()]
+
+      const newPayee = { ...payee, name: 'NEW PAYEE' }
+
+      repository.upsertPayee(newPayee)
+
+      expect(repository.payees.value).toContain(newPayee)
+    })
+  })
 })

@@ -97,4 +97,25 @@ describe('AccountRepository', () => {
       expect(repository.getAccountById(accounts[0].id)).toEqual(accounts[0])
     })
   })
+
+  describe('#upsertAccount', () => {
+    it('adds a new account', () => {
+      const newAccount = factories.account.build()
+
+      repository.upsertAccount(newAccount)
+
+      expect(repository.accounts.value).toContain(newAccount)
+    })
+
+    it('updates an existing account', () => {
+      const account = factories.account.build()
+      repository.accounts.value = [factories.account.build()]
+
+      const newAccount = { ...account, clearedBalance: 0 }
+
+      repository.upsertAccount(newAccount)
+
+      expect(repository.accounts.value).toContain(newAccount)
+    })
+  })
 })

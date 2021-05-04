@@ -1,5 +1,6 @@
 import { get, post, put } from '@/api'
 import { computed, ref } from '@vue/composition-api'
+import { upsert } from '@/support/collection'
 import groupBy from 'lodash/groupBy'
 
 export const monthlyBudgets = ref([])
@@ -17,16 +18,12 @@ export const updateMonthlyBudget = async ({ budgetId, id, ...rest }) => {
     `budgets/${budgetId}/monthly_budgets/${id}`, rest,
   )
 
-  monthlyBudgets.value = monthlyBudgets.value.map(mb => {
-    return mb.id === monthlyBudget.id
-      ? monthlyBudget
-      : mb
-  })
+  monthlyBudgets.value = upsert(monthlyBudgets.value, monthlyBudget)
 }
 
 export const getMonthlyBudgets = async ({ budgetId, ...rest }) => {
   const response = await get(
-    `budgets/${budgetId}/monthly_budgets/`, rest,
+    `budgets/${budgetId}/monthly_budgets`, rest,
   )
 
   monthlyBudgets.value = response

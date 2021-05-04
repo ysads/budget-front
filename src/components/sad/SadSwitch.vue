@@ -30,16 +30,24 @@ export default defineComponent({
 
 <style lang="scss">
 .el-switch__core {
-  background: var(--color-info);
-  border-color: var(--color-info);
+  background: var(--color-success);
+  border-color: var(--color-success);
 }
 
-.el-switch__label.is-active {
-  color: var(--color-primary);
+.el-switch__label {
+  color: var(--text-default);
+}
+
+.el-switch__label--right.is-active {
+  color: var(--color-error);
+}
+
+.el-switch__label--left.is-active {
+  color: var(--color-success);
 }
 
 .el-switch.is-checked .el-switch__core {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
+  background: var(--color-error);
+  border-color: var(--color-error);
 }
 </style>

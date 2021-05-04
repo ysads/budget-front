@@ -21,7 +21,8 @@
   },
   "errors": {
     "accounts": {
-      "duplicate": "Você já cadastrou essa conta."
+      "duplicate": "Você já cadastrou essa conta.",
+      "not-found": "Parece que essa conta não existe..."
     },
     "generic": "Algo deu errado. Tente novamente.",
     "monthly-budgets": {

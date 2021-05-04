@@ -8,6 +8,29 @@ describe('MonthlyBudgetsRepository', () => {
     repository.monthlyBudgets.value = []
   })
 
+  describe('#getMonthlyBudgets', () => {
+    it('dispatches a GET to api', async () => {
+      const budgetId = faker.datatype.uuid()
+      await repository.getMonthlyBudgets({ budgetId, other: 'param' })
+
+      expect(api.get).toHaveBeenCalledWith(
+        `budgets/${budgetId}/monthly_budgets`,
+        { other: 'param' },
+      )
+    })
+
+    it('commits to monthlyBudgets object', async () => {
+      const budgetId = faker.datatype.uuid()
+      const monthlyBudgets = factories.monthlyBudget.buildList(2)
+
+      api.get.mockResolvedValueOnce(monthlyBudgets)
+
+      await repository.getMonthlyBudgets({ budgetId })
+
+      expect(repository.monthlyBudgets.value).toEqual(monthlyBudgets)
+    })
+  })
+
   describe('#createMonthlyBudget', () => {
     it('dispatches a POST to api', async () => {
       const budgetId = faker.datatype.uuid()

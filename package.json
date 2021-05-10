@@ -1,6 +1,6 @@
 {
   "name": "budget-front",
-  "version": "0.6.4",
+  "version": "0.6.6",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -17,7 +17,7 @@
     "@vue/composition-api": "^1.0.0-rc.8",
     "accounting": "^0.4.1",
     "axios": "^0.21.1",
-    "core-js": "^3.12.0",
+    "core-js": "^3.12.1",
     "element-ui": "^2.15.1",
     "faker": "^5.5.3",
     "fishery": "^1.2.0",
@@ -34,11 +34,11 @@
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^1.1.0",
-    "@vue/cli-plugin-babel": "~4.5.12",
+    "@vue/cli-plugin-babel": "~4.5.13",
     "@vue/cli-plugin-eslint": "^4.5.13",
     "@vue/cli-plugin-router": "^4.5.13",
-    "@vue/cli-plugin-unit-jest": "^4.5.12",
-    "@vue/cli-service": "~4.5.12",
+    "@vue/cli-plugin-unit-jest": "^4.5.13",
+    "@vue/cli-service": "~4.5.13",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/test-utils": "^1.2.0",
     "babel-eslint": "^10.1.0",

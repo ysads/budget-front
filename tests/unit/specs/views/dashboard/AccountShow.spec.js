@@ -1,9 +1,14 @@
 import AccountShow from '@/views/dashboard/AccountShow'
 import factories from '#/factories'
 import flushPromises from 'flush-promises'
+import alert from '@/support/alert'
 import { factoryBuilder } from '#/factory-builder'
 import * as budgetsRepository from '@/repositories/budgets'
 import * as accountsRepository from '@/repositories/accounts'
+
+jest.mock('@/support/alert', () => ({
+  error: jest.fn(),
+}))
 
 const openBudget = factories
 const accounts = factories.account.buildList(3)
@@ -47,20 +52,7 @@ describe('AccountShow', () => {
     expect(item.props()).toEqual({ account: selectedAccount })
   })
 
-  context('while fetching account', () => {
-    it('renders Loading component', async () => {
-      const wrapper = factory()
-      const item = wrapper.find("[data-test='loading']")
-
-      expect(item.exists()).toBe(true)
-
-      await flushPromises()
-
-      expect(item.exists()).toBe(false)
-    })
-  })
-
-  context('when query string id changes', () => {
+  describe('when query string id changes', () => {
     it('fetches new account', async () => {
       const wrapper = factory()
       await flushPromises()
@@ -73,6 +65,32 @@ describe('AccountShow', () => {
       await flushPromises()
 
       expect(header.props().name).toBe(accounts[2].name)
+    })
+  })
+
+  describe('when there is not an account with such id', () => {
+    it('redirects to AllAccounts page', async () => {
+      const $router = { push: jest.fn() }
+      factory({
+        mocks: {
+          $route: { params: { id: 'other-id' } },
+          $router,
+        },
+      })
+
+      await flushPromises()
+
+      expect($router.push).toHaveBeenCalledWith({ name: 'AllAccounts' })
+    })
+
+    it('alerts user', async () => {
+      factory({
+        mocks: { $route: { params: { id: 'other-id' } } },
+      })
+
+      await flushPromises()
+
+      expect(alert.error).toHaveBeenCalledWith('errors.accounts.not-found')
     })
   })
 })

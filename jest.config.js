@@ -8,6 +8,7 @@ module.exports = {
     'tests/unit/factory-builder',
     'tests/unit/factories/*',
     'src/setup/*',
+    'src/components/sad/SadSwitch.vue',
   ],
   coverageThreshold: {
     global: {

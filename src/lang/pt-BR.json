@@ -21,7 +21,8 @@
   },
   "errors": {
     "accounts": {
-      "duplicate": "Você já cadastrou essa conta."
+      "duplicate": "Você já cadastrou essa conta.",
+      "not-found": "Parece que essa conta não existe..."
     },
     "generic": "Algo deu errado. Tente novamente.",
     "monthly-budgets": {
@@ -67,13 +68,20 @@
   "save": "Salvar",
   "startingBalance": "Saldo inicial",
   "toBeBudgeted": "Disponível",
+  "budgetCategories": {
+    "inflow":"Entrada",
+    "toBeBudgeted":"Para orçar"
+  },
   "TransactionDetails": {
     "amount":"Valor",
     "category":"Categoria",
     "clearedAt":"Aprovada?",
     "clearedAtTip":"Uma transação está aprovada quando está refletida no seu saldo.",
+    "created":"Transação registrada",
+    "inflow":"Entrada",
     "memo":"Descrição",
     "memoTip":"Opcional. Algo que te ajude a reconhecer essa transação.",
+    "outflow":"Saída",
     "payee":"Recebedor",
     "referenceAt": "Data"
   },

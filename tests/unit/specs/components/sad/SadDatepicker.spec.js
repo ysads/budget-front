@@ -1,3 +1,4 @@
+import MockDate from 'mockdate'
 import SadDatePicker from '@/components/sad/SadDatePicker'
 import { factoryBuilder } from '#/factory-builder'
 
@@ -31,6 +32,17 @@ describe('SadDatePicker', () => {
     const item = wrapper.find("[data-test='picker']")
 
     expect(item.props().format).toEqual('MM 👍 yyyy 👎 dd')
+  })
+
+  describe('when no value is given', () => {
+    beforeEach(() => MockDate.set(new Date()))
+    afterEach(() => MockDate.reset())
+
+    it('defaults value to current date', () => {
+      const { vm } = factory({ value: undefined })
+
+      expect(vm.value).toEqual(new Date())
+    })
   })
 
   describe('when error prop is given', () => {

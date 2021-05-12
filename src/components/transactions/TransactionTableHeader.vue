@@ -22,27 +22,27 @@
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
-import { useI18n } from '@/use/i18n'
+import { defineComponent } from 'vue';
+import useI18n from '@/use/i18n';
 
 export default defineComponent({
   name: 'TransactionTableHeader',
 
-  setup () {
-    const { st } = useI18n('TransactionTableHeader')
+  setup() {
+    const { st } = useI18n('TransactionTableHeader');
 
-    return { st }
+    return { st };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>
 .transaction-table-header {
   align-items: center;
   display: flex;
-  gap: $base*4;
+  gap: $base * 4;
   font-weight: 500;
-  padding: $base*2 $base*4;
+  padding: $base * 2 $base * 4;
   border-bottom: 1px solid var(--table-separator);
 
   @extend %body-1;

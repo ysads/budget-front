@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
-import { localize, balanceClasses } from '@/support/money'
-import { useI18n } from '@/use/i18n'
-import SadIcon from '@/components/sad/SadIcon'
-import useBudgetCategories from '@/use/budget-categories'
+import { defineComponent } from 'vue';
+import { localize, balanceClasses } from '@/support/money';
+import useI18n from '@/use/i18n';
+import SadIcon from '@/components/sad/SadIcon';
+import useBudgetCategories from '@/use/budget-categories';
 
 export default defineComponent({
   name: 'TransactionCard',
@@ -64,18 +64,14 @@ export default defineComponent({
     SadIcon,
   },
 
-  setup ({ transaction }) {
-    const { d } = useI18n()
-    const { categoryName } = useBudgetCategories()
-    const budgetCategoryName = categoryName(transaction)
+  setup({ transaction }) {
+    const { d } = useI18n();
+    const { categoryName } = useBudgetCategories();
+    const budgetCategoryName = categoryName(transaction);
 
-    const clearedIcon = transaction.clearedAt
-      ? 'check'
-      : 'clock'
+    const clearedIcon = transaction.clearedAt ? 'check' : 'clock';
 
-    const clearedColor = transaction.clearedAt
-      ? 'green'
-      : 'disabled'
+    const clearedColor = transaction.clearedAt ? 'green' : 'disabled';
 
     return {
       balanceClasses,
@@ -84,14 +80,14 @@ export default defineComponent({
       clearedColor,
       d,
       localize,
-    }
+    };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>
 .transaction-card {
-  padding: $base*4;
+  padding: $base * 4;
 
   @extend %body-1;
 

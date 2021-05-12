@@ -5,12 +5,13 @@ import alert from '@/support/alert';
 import setupComponent from '#/setup-component';
 import * as budgetsRepository from '@/repositories/budgets';
 import * as accountsRepository from '@/repositories/accounts';
+import * as transactionsRepository from '@/repositories/transactions';
 
 jest.mock('@/support/alert', () => ({
   error: jest.fn(),
 }));
 
-const openBudget = factories;
+const openBudget = factories.budget.build();
 const accounts = factories.account.buildList(3);
 const selectedAccount = accounts[0];
 
@@ -26,6 +27,7 @@ describe('AccountShow', () => {
   beforeEach(() => {
     budgetsRepository.openBudget.value = openBudget;
     accountsRepository.accounts.value = accounts;
+    transactionsRepository.getTransactions = jest.fn();
   });
 
   it('renders AccountHeader with selected account data as props', async () => {
@@ -49,6 +51,17 @@ describe('AccountShow', () => {
     const item = wrapper.findComponent("[data-test='toolbar']");
 
     expect(item.props()).toEqual({ account: selectedAccount });
+  });
+
+  it('fetches transactions from api', async () => {
+    factory();
+
+    await flushPromises();
+
+    expect(transactionsRepository.getTransactions).toHaveBeenCalledWith({
+      budgetId: openBudget.id,
+      originId: selectedAccount.id,
+    });
   });
 
   describe('when there is not an account with such id', () => {

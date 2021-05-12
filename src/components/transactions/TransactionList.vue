@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
-import { openBudget } from '@/repositories/budgets'
-import useWindowSize from '@/use/window-size'
-import TransactionTableHeader from './TransactionTableHeader'
-import TransactionTableRow from './TransactionTableRow'
-import TransactionCard from './TransactionCard'
+import { defineComponent } from 'vue';
+import { openBudget } from '@/repositories/budgets';
+import useWindowSize from '@/use/window-size';
+import TransactionTableHeader from './TransactionTableHeader';
+import TransactionTableRow from './TransactionTableRow';
+import TransactionCard from './TransactionCard';
 
 export default defineComponent({
   props: {
@@ -46,12 +46,12 @@ export default defineComponent({
     TransactionTableRow,
   },
 
-  setup () {
-    const { isMobile } = useWindowSize()
+  setup() {
+    const { isMobile } = useWindowSize();
 
-    return { isMobile, openBudget }
+    return { isMobile, openBudget };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>

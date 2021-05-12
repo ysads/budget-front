@@ -85,6 +85,14 @@
     "payee": "Recebedor",
     "referenceAt": "Data"
   },
+  "TransactionTableHeader": {
+    "amount":"Valor",
+    "category":"Categoria",
+    "cleared":"Aprovado",
+    "date":"Data",
+    "memo":"Descrição",
+    "payee":"Recebedor"
+  },
   "validations": {
     "required": "Campo obrigatório."
   }

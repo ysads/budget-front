@@ -1,21 +1,27 @@
-import { categoriesGroupedByGroupId } from '@/repositories/categories';
+import {
+  categoryById,
+  categoriesGroupedByGroupId,
+} from '@/repositories/categories';
 import { categoryGroupById } from '@/repositories/category-groups';
 import { computed, ComputedRef } from 'vue';
 import useI18n from '@/use/i18n';
+import { Transaction } from '@/types/models';
 
 interface BudgetCategoryOption {
   label: string | undefined;
   value: string;
 }
-
 interface BudgetCategoryGroupOption {
   label: string | undefined;
   options: BudgetCategoryOption[];
 }
 
-export default function useBudgetCategories(): ComputedRef<
-  BudgetCategoryGroupOption[]
-> {
+interface UseBudgetCategoriesHook {
+  categoryOptions: ComputedRef<BudgetCategoryGroupOption[]>;
+  categoryName: (transaction: Transaction) => string;
+}
+
+export default function useBudgetCategories(): UseBudgetCategoriesHook {
   const { st } = useI18n('budgetCategories');
 
   const inflowCategory = {
@@ -36,8 +42,18 @@ export default function useBudgetCategories(): ComputedRef<
       })),
     }),
   );
-
   const categoryOptions = computed(() => [inflowCategory, ...userCategories]);
 
-  return categoryOptions;
+  const categoryName = (transaction: Transaction) => {
+    if (!transaction.categoryId) {
+      return `${st('inflow')}: ${st('toBeBudgeted')}`;
+    }
+
+    const category = categoryById(transaction.categoryId);
+    const categoryGroup = categoryGroupById(category.categoryGroupId);
+
+    return `${categoryGroup.name}: ${category.name}`;
+  };
+
+  return { categoryOptions, categoryName };
 }

@@ -128,7 +128,7 @@ export default defineComponent({
 
   setup(props, { emit }: SetupContext) {
     const { t, st } = useI18n('TransactionDetails');
-    const categoryOptions = useBudgetCategories();
+    const { categoryOptions } = useBudgetCategories();
 
     const money = currencySettings(openBudget.value);
 

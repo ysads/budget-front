@@ -64,14 +64,14 @@ export default defineComponent({
     SadIcon,
   },
 
-  setup({ transaction }) {
+  setup(props) {
     const { d } = useI18n();
     const { categoryName } = useBudgetCategories();
-    const budgetCategoryName = categoryName(transaction);
+    const budgetCategoryName = categoryName(props.transaction);
 
-    const clearedIcon = transaction.clearedAt ? 'check' : 'clock';
+    const clearedIcon = props.transaction.clearedAt ? 'check' : 'clock';
 
-    const clearedColor = transaction.clearedAt ? 'green' : 'disabled';
+    const clearedColor = props.transaction.clearedAt ? 'green' : 'disabled';
 
     return {
       balanceClasses,
@@ -106,31 +106,38 @@ export default defineComponent({
   &__row + &__row {
     margin-top: $base;
   }
+
   &__category {
     @extend %caption-2;
   }
-  &__date {
-    @extend %caption-2;
 
+  &__date {
     color: var(--color-info);
+
+    @extend %caption-2;
   }
+
   &__payee {
     @extend %body-2;
   }
+
   &__amount {
-    padding-right: $base;
     flex-grow: 1;
+    padding-right: $base;
 
     @extend %body-2;
     @extend %semi-bold;
   }
+
   &__memo {
     color: var(--color-info);
   }
 }
+
 .negative {
   color: var(--balance-negative);
 }
+
 .positive {
   color: var(--balance-positive);
 }

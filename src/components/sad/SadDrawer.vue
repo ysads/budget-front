@@ -1,31 +1,36 @@
 <template>
   <div class="sad-drawer">
-    <div
-      class="sad-drawer__overlay"
-      data-test="overlay"
-      @click="$emit('close')"
-    />
-    <section class="sad-drawer__wrapper">
-      <header class="sad-drawer__header">
-        <sad-icon
-          name="times"
-          color="primary"
-          size="medium"
-          clickable
-          data-test="close-btn"
-          @click="$emit('close')"
-        />
-        <h3 v-if="title" class="sad-drawer__header-title" data-test="title">
-          {{ title }}
-        </h3>
-      </header>
-      <div class="sad-drawer__content">
-        <slot />
-      </div>
-      <footer class="sad-drawer__footer">
-        <slot name="footer" />
-      </footer>
-    </section>
+    <transition name="fade">
+      <div
+        v-if="show"
+        class="sad-drawer__overlay"
+        data-test="overlay"
+        @click="$emit('close')"
+      />
+    </transition>
+    <transition name="slide-right">
+      <section v-if="show" class="sad-drawer__wrapper">
+        <header class="sad-drawer__header">
+          <sad-icon
+            name="times"
+            color="primary"
+            size="medium"
+            clickable
+            data-test="close-btn"
+            @click="$emit('close')"
+          />
+          <h3 v-if="title" class="sad-drawer__header-title" data-test="title">
+            {{ title }}
+          </h3>
+        </header>
+        <div class="sad-drawer__content">
+          <slot />
+        </div>
+        <footer class="sad-drawer__footer">
+          <slot name="footer" />
+        </footer>
+      </section>
+    </transition>
   </div>
 </template>
 
@@ -43,12 +48,16 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    show: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['close'],
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sad-drawer {
   $padding: $base * 6;
 
@@ -123,5 +132,26 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all cubic-bezier(0, 1, 0.41, 0.99) 0.3s;
+}
+
+.slide-right-enter-from,
+.slide-right-leave-to {
+  transform: translateX(400px);
 }
 </style>

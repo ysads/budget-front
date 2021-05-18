@@ -1,5 +1,10 @@
 <template>
-  <sad-modal :title="t('newAccount')" data-test="modal" @close="$emit('close')">
+  <sad-modal
+    :show="show"
+    :title="t('newAccount')"
+    data-test="modal"
+    @close="$emit('close')"
+  >
     <form
       class="create-account"
       data-test="form"
@@ -62,6 +67,10 @@ export default defineComponent({
     budget: {
       type: Object as PropType<Budget>,
       required: true,
+    },
+    show: {
+      type: Boolean,
+      default: false,
     },
   },
 

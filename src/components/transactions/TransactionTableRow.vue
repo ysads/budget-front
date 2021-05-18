@@ -23,29 +23,31 @@
       <sad-icon
         :name="clearedIcon"
         :color="clearedColor"
+        :title="clearedTitle"
         data-test="cleared-icon"
       />
     </span>
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script lang="ts">
+import { defineComponent, PropType } from 'vue';
 import { localize, balanceClasses } from '@/support/money';
+import { Budget, Transaction } from '@/types/models';
 import useI18n from '@/use/i18n';
 import useBudgetCategories from '@/use/budget-categories';
-import SadIcon from '@/components/sad/SadIcon';
+import SadIcon from '@/components/sad/SadIcon.vue';
 
 export default defineComponent({
-  name: 'TransactionRowTable',
+  name: 'TransactionTableRow',
 
   props: {
     budget: {
-      type: Object,
+      type: Object as PropType<Budget>,
       required: true,
     },
     transaction: {
-      type: Object,
+      type: Object as PropType<Transaction>,
       required: true,
     },
   },
@@ -54,20 +56,25 @@ export default defineComponent({
     SadIcon,
   },
 
-  setup({ transaction }) {
-    const { d } = useI18n();
+  setup(props) {
+    const { d, st } = useI18n('TransactionTableRow');
     const { categoryName } = useBudgetCategories();
-    const budgetCategoryName = categoryName(transaction);
+    const budgetCategoryName = categoryName(props.transaction);
 
-    const clearedIcon = transaction.clearedAt ? 'check' : 'clock';
+    const clearedIcon = props.transaction.clearedAt ? 'check' : 'clock';
 
-    const clearedColor = transaction.clearedAt ? 'green' : 'disabled';
+    const clearedColor = props.transaction.clearedAt ? 'green' : 'disabled';
+
+    const clearedTitle = props.transaction.clearedAt
+      ? st('clearedTitle')
+      : st('unclearedTitle');
 
     return {
       balanceClasses,
       budgetCategoryName,
       clearedIcon,
       clearedColor,
+      clearedTitle,
       d,
       localize,
     };
@@ -89,31 +96,38 @@ export default defineComponent({
     background: var(--table-focus);
     cursor: pointer;
   }
+
   &__date {
     flex-basis: 10%;
   }
+
   &__payee {
     flex-basis: 15%;
   }
+
   &__category {
     flex-basis: 25%;
   }
+
   &__memo {
     flex-basis: 20%;
   }
+
   &__cleared {
     flex-basis: 75px;
     text-align: right;
   }
+
   &__amount {
-    padding: $base;
     flex-grow: 1;
     flex-shrink: 0;
+    padding: $base;
     text-align: right;
 
     @extend %semi-bold;
   }
 }
+
 .negative {
   color: var(--balance-negative);
 }

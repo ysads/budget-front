@@ -5,7 +5,7 @@ import {
 import { categoryGroupById } from '@/repositories/category-groups';
 import { computed, ComputedRef } from 'vue';
 import useI18n from '@/use/i18n';
-import { Transaction } from '@/types/models';
+import { Category, CategoryGroup, Transaction } from '@/types/models';
 
 interface BudgetCategoryOption {
   label: string | undefined;
@@ -49,8 +49,10 @@ export default function useBudgetCategories(): UseBudgetCategoriesHook {
       return `${st('inflow')}: ${st('toBeBudgeted')}`;
     }
 
-    const category = categoryById(transaction.categoryId);
-    const categoryGroup = categoryGroupById(category.categoryGroupId);
+    const category = categoryById(transaction.categoryId) as Category;
+    const categoryGroup = categoryGroupById(
+      category.categoryGroupId,
+    ) as CategoryGroup;
 
     return `${categoryGroup.name}: ${category.name}`;
   };

@@ -11,7 +11,7 @@
     </sad-button>
 
     <transaction-details
-      v-if="isVisible.transactionDrawer"
+      :show="isVisible.transactionDrawer"
       :origin-account="account"
       data-test="transaction-drawer"
       @close="toggle('transactionDrawer')"

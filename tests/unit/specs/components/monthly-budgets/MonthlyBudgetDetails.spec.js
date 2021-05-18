@@ -38,7 +38,10 @@ budgetsRepository.openBudget.value = openBudget;
 
 const factory = (args = {}) =>
   setupComponent(MonthlyBudgetDetails, {
-    props: args,
+    props: {
+      monthlyBudget: args.monthlyBudget || undefined,
+      show: true,
+    },
     renderSlots: true,
     withMount: args.withMount,
   });

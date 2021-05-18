@@ -2,6 +2,7 @@
   <sad-drawer
     class="transaction-details"
     :title="t('newTransaction')"
+    :show="show"
     data-test="drawer"
     @close="$emit('close')"
   >
@@ -111,6 +112,10 @@ export default defineComponent({
     originAccount: {
       type: Object as PropType<Account>,
       required: true,
+    },
+    show: {
+      type: Boolean,
+      default: false,
     },
   },
 

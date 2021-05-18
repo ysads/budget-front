@@ -31,13 +31,3 @@ config.global.components['router-link'] = {
   props: { to: [Object, String] },
   template: '<a><slot /></a>',
 };
-
-config.global.components['transition'] = {
-  name: 'Transition',
-  template: '<div><slot/></div>',
-};
-
-config.global.components['transition-group'] = {
-  name: 'TransitionGroup',
-  template: '<div>olá meninas</div>',
-};

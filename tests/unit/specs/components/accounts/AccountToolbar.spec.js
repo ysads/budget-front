@@ -23,7 +23,7 @@ describe('AccountToolbar', () => {
     const wrapper = factory();
     const item = wrapper.findComponent("[data-test='transaction-drawer']");
 
-    expect(item.exists()).toBeFalsy();
+    expect(item.props().show).toBeFalsy();
   });
 
   describe('when new transaction button is clicked', () => {

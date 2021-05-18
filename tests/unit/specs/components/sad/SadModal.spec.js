@@ -3,15 +3,19 @@ import setupComponent from '#/setup-component';
 
 const factory = (args = {}) =>
   setupComponent(SadModal, {
-    props: args.props,
+    props: {
+      show: true,
+      title: args.title,
+    },
     slots: args.slots,
-    withMount: args.withMount,
+    stubs: { transition: false },
+    withMount: true,
   });
 
 describe('SadModal', () => {
   it('renders content passed to foot slot', () => {
     const button = '<button id="btn">hello</button>';
-    const wrapper = factory({ withMount: true, slots: { footer: button } });
+    const wrapper = factory({ slots: { footer: button } });
 
     const item = wrapper.find('#btn');
 
@@ -20,7 +24,7 @@ describe('SadModal', () => {
 
   it('renders content passed to main slot', () => {
     const content = '<div id="content">hello</div>';
-    const wrapper = factory({ withMount: true, slots: { default: content } });
+    const wrapper = factory({ slots: { default: content } });
 
     const item = wrapper.find('#content');
 
@@ -38,7 +42,7 @@ describe('SadModal', () => {
   describe('when title prop is given', () => {
     it('renders a title', () => {
       const mockTitle = 'mock';
-      const wrapper = factory({ props: { title: mockTitle } });
+      const wrapper = factory({ title: mockTitle });
 
       const item = wrapper.find("[data-test='title']");
 

@@ -39,6 +39,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .transaction-table-header {
   align-items: center;
+  border-bottom: 1px solid var(--table-separator);
   display: flex;
   gap: $base * 4;
   font-weight: 500;
@@ -50,19 +51,24 @@ export default defineComponent({
   &__date {
     flex-basis: 10%;
   }
+
   &__payee {
     flex-basis: 15%;
   }
+
   &__category {
     flex-basis: 25%;
   }
+
   &__memo {
     flex-basis: 20%;
   }
+
   &__cleared {
     flex-basis: 75px;
     text-align: right;
   }
+
   &__amount {
     flex-grow: 1;
     text-align: right;

@@ -28,6 +28,7 @@ const mockRouter: router.Router = {
 interface SetupComponentArgs extends MountingOptions<never> {
   route?: router.RouteLocationNormalized;
   router?: router.Router;
+  stubs?: Record<string, string>;
   renderSlots?: boolean;
   withMount?: boolean;
 }
@@ -56,6 +57,7 @@ export default function setupComponent(
     },
     global: {
       renderStubDefaultSlot: args.renderSlots,
+      stubs: args.stubs || {},
     },
   });
 }

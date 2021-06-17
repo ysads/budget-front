@@ -1,12 +1,5 @@
-import ElementUI from 'element-ui'
-import isEmpty from 'lodash/isEmpty'
-import Vue from 'vue'
-import { config } from '@vue/test-utils'
-
-import '@/plugins/composition-api'
-import '@/plugins/validation'
-
-Vue.use(ElementUI)
+import { config } from '@vue/test-utils';
+import * as _ from 'vue-router';
 
 // Mock api fns
 jest.mock('@/api', () => ({
@@ -15,45 +8,36 @@ jest.mock('@/api', () => ({
   put: jest.fn(() => Promise.resolve({})),
   patch: jest.fn(() => Promise.resolve({})),
   del: jest.fn(() => Promise.resolve({})),
-}))
+}));
 
 // Mock i18n functions
-const mockI18n = (str, params = null) => {
-  return isEmpty(params)
-    ? str
-    : `${str}${JSON.stringify(params)}`
-}
-jest.mock('vue-i18n-composable', () => ({
-  useI18n: () => ({
-    t: mockI18n,
-    d: (str, format) => `${str.toString()}${format}`,
-  }),
-}))
-jest.mock('@/plugins/i18n', () => ({
-  t: mockI18n,
-}))
+jest.mock('@/i18n', () => ({
+  global: {
+    t: (str, params = null) =>
+      params ? `${str}${JSON.stringify(params)}` : str,
+    d: (str, format) => `${str}${format}`,
+  },
+}));
 
 // Mock routing fns
-config.mocks.$route = {
-  name: 'mock',
-  params: {},
-}
-config.mocks.$router = {
-  push: jest.fn(),
-  currentRoute: { query: {} },
-}
+jest.mock('vue-router', () => ({
+  useRoute: jest.fn(),
+  useRouter: jest.fn(),
+}));
 
-Vue.component('router-link', {
+// Mock vue higher-order components
+config.global.components['router-link'] = {
   name: 'RouterLink',
   props: { to: [Object, String] },
-})
+  template: '<a><slot /></a>',
+};
 
-Vue.component('transition', {
+config.global.components['transition'] = {
   name: 'Transition',
   template: '<div><slot/></div>',
-})
+};
 
-Vue.component('transition-group', {
+config.global.components['transition-group'] = {
   name: 'TransitionGroup',
-  template: '<div><slot/></div>',
-})
+  template: '<div>olá meninas</div>',
+};

@@ -1,4 +1,4 @@
-import JsonApi from '@/api/json-api'
+import JsonApi from '@/api/json-api';
 
 const mockResponse = {
   data: [
@@ -27,11 +27,11 @@ const mockResponse = {
       },
     },
   ],
-}
+};
 
 describe('json-api', () => {
   it('parses response from json api format', async () => {
-    const parsed = await JsonApi.parse(mockResponse)
+    const parsed = await JsonApi.parse(mockResponse);
 
     expect(parsed).toStrictEqual([
       {
@@ -42,27 +42,27 @@ describe('json-api', () => {
           title: 'Mango',
         },
       },
-    ])
-  })
+    ]);
+  });
 
-  context('when payload is falsy', () => {
+  describe('when payload is falsy', () => {
     it('does not try to parse data', async () => {
-      expect(await JsonApi.parse(null)).toBeFalsy()
-      expect(await JsonApi.parse(undefined)).toBeFalsy()
-    })
-  })
+      expect(await JsonApi.parse(null)).toBeFalsy();
+      expect(await JsonApi.parse(undefined)).toBeFalsy();
+    });
+  });
 
-  context('when payload contains meta', () => {
+  describe('when payload contains meta', () => {
     it('includes meta on parsed object', async () => {
       const mockResponseWithMeta = {
         ...mockResponse,
         meta: { metaInfo: 'This is a meta info' },
-      }
-      const parsed = await JsonApi.parse(mockResponseWithMeta)
+      };
+      const parsed = await JsonApi.parse(mockResponseWithMeta);
 
       expect(parsed.meta).toEqual({
         metaInfo: 'This is a meta info',
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

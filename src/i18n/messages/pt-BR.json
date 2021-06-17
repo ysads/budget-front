@@ -1,0 +1,91 @@
+{
+  "allAccounts": "Contas",
+  "budget": "Orçamento",
+  "cleared": "Aprovado",
+  "currentBalance": "Saldo Atual",
+  "noAccounts": "Não há contas",
+  "noAccountsTip": "Não dá pra poupar sem ter contas aqui. Vamos lá, adicione suas contas e comece a poupar.",
+  "reports": "Relatórios",
+  "uncleared": "Não aprovado",
+  "trackingAccounts": "Acompanhamento",
+  "budgetAccounts": "Orçamento",
+  "addAccount": "Adicionar conta",
+  "account": {
+    "type": {
+      "asset": "Investimento",
+      "cash": "Dinheiro",
+      "credit": "Crédito",
+      "savings": "Poupança",
+      "checking": "Corrente"
+    }
+  },
+  "errors": {
+    "accounts": {
+      "duplicate": "Você já cadastrou essa conta.",
+      "not-found": "Parece que essa conta não existe..."
+    },
+    "generic": "Algo deu errado. Tente novamente.",
+    "monthly-budgets": {
+      "already-exists": "Você já tem um orçamento para essa categoria."
+    }
+  },
+  "newAccount": "Nova conta",
+  "newCategory": "Nova categoria",
+  "newCategoryGroup": "Novo grupo",
+  "newMonthlyBudget": "Criar orçamento",
+  "newTransaction": "Adicionar transação",
+  "CreateAccountModal": {
+    "accountType": "De que tipo é essa conta?",
+    "created": "Conta criada",
+    "currentBalance": "Quanto você tem hoje nessa conta?",
+    "accountName": "Como você quer chamar essa conta?",
+    "accountTypePlaceholder": "Escolha um tipo...",
+    "currentBalanceTip": "Não tem certeza? Estime! Você pode editar depois."
+  },
+  "CreateCategoryGroupModal": {
+    "name": "Nome do grupo"
+  },
+  "CreateCategoryModal": {
+    "categoryGroup": "Em qual grupo de gastos essa categoria está?",
+    "categoryGroupPlaceholder": "Selecione um...",
+    "name": "Nome da categoria"
+  },
+  "MonthlyBudgetDetails": {
+    "category": "Categoria",
+    "categoryPlaceholder": "Selecione",
+    "created": "Orçamento criado",
+    "updated": "Orçamento atualizado",
+    "budgeted": "Quanto você pretende gastar?"
+  },
+  "SignIn": {
+    "email": "Seu email",
+    "password": "Sua senha",
+    "signIn": "Entrar"
+  },
+  "placeholders": {
+    "select": "Escolha"
+  },
+  "save": "Salvar",
+  "startingBalance": "Saldo inicial",
+  "toBeBudgeted": "Disponível",
+  "budgetCategories": {
+    "inflow": "Entrada",
+    "toBeBudgeted": "Para orçar"
+  },
+  "TransactionDetails": {
+    "amount": "Valor",
+    "category": "Categoria",
+    "clearedAt": "Aprovada?",
+    "clearedAtTip": "Uma transação está aprovada quando está refletida no seu saldo.",
+    "created": "Transação registrada",
+    "inflow": "Entrada",
+    "memo": "Descrição",
+    "memoTip": "Opcional. Algo que te ajude a reconhecer essa transação.",
+    "outflow": "Saída",
+    "payee": "Recebedor",
+    "referenceAt": "Data"
+  },
+  "validations": {
+    "required": "Campo obrigatório."
+  }
+}

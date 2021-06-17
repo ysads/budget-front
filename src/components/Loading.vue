@@ -8,10 +8,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'Loading',
-}
+};
 </script>
 
 <style scoped>
@@ -51,8 +51,12 @@ export default {
 @-webkit-keyframes sk-bouncedelay {
   0%,
   80%,
-  100% { -webkit-transform: scale(0); }
-  40% { -webkit-transform: scale(1); }
+  100% {
+    -webkit-transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+  }
 }
 
 @keyframes sk-bouncedelay {

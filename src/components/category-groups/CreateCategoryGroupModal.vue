@@ -1,7 +1,7 @@
 <template>
-  <base-modal
-    data-test="base-modal"
+  <sad-modal
     :title="t('newCategoryGroup')"
+    data-test="modal"
     @close="$emit('close')"
   >
     <form
@@ -9,52 +9,35 @@
       data-test="form"
       @submit.prevent="handleSubmit"
     >
-      <sad-label
-        class="create-category__item"
-        to="name"
-        :text="st('name')"
-        data-test="category-group-name"
-      >
-        <sad-input
-          ref="name"
-          v-model.trim="form.name"
-          name="name"
-          class="create-category__item-input"
-          data-test="input"
-          @input="validate($v.form.name)"
-        />
-      </sad-label>
-
-      <sad-tip
-        v-if="hasError($v.form.name, 'required')"
-        class="create-category__assistive"
-        variant="error"
-        :text="t('validations.required')"
+      <sad-input
+        v-model="form.name"
+        :label="st('name')"
+        name="name"
+        class="create-category__item-input"
+        data-test="name"
       />
     </form>
 
-    <div slot="footer" class="create-category__footer">
-      <sad-button
-        size="normal"
-        type="primary"
-        @click="handleSubmit"
-      >
-        {{ t('save') }}
-      </sad-button>
-    </div>
-  </base-modal>
+    <template #footer>
+      <div class="create-category__footer">
+        <sad-button size="normal" type="primary" @click="handleSubmit">
+          {{ t('save') }}
+        </sad-button>
+      </div>
+    </template>
+  </sad-modal>
 </template>
 
-<script>
-import BaseModal from '@/components/BaseModal'
-import SadButton from '@/components/sad/SadButton'
-import SadInput from '@/components/sad/SadInput'
-import SadLabel from '@/components/sad/SadLabel'
-import SadTip from '@/components/sad/SadTip'
-import { categoryGroups, createCategoryGroup } from '@/repositories/category-groups'
-import { required } from 'vuelidate/lib/validators'
-import { useI18n } from '@/use/i18n'
-import { useValidation } from '@/use/validation'
+<script lang="ts">
+import SadButton from '@/components/sad/SadButton.vue';
+import SadInput from '@/components/sad/SadInput.vue';
+import SadModal from '@/components/sad/SadModal.vue';
+import {
+  categoryGroups,
+  createCategoryGroup,
+} from '@/repositories/category-groups';
+import useI18n from '@/use/i18n';
+import { reactive, SetupContext } from '@vue/runtime-core';
 
 export default {
   name: 'CreateCategoryGroupModal',
@@ -66,47 +49,37 @@ export default {
     },
   },
 
+  emits: ['close'],
+
   components: {
-    BaseModal,
     SadButton,
     SadInput,
-    SadLabel,
-    SadTip,
+    SadModal,
   },
 
-  data () {
-    return {
-      form: {
-        budgetId: this.budget.id,
-        name: '',
-      },
-    }
-  },
+  setup(props: any, { emit }: SetupContext) {
+    const { st, t } = useI18n('CreateCategoryGroupModal');
 
-  setup () {
+    const form = reactive({
+      budgetId: props.budget.id,
+      name: '',
+    });
+
+    const handleSubmit = () => {
+      createCategoryGroup(form);
+      emit('close');
+    };
+
     return {
       createCategoryGroup,
       categoryGroups,
-      ...useI18n('CreateCategoryGroupModal'),
-      ...useValidation(),
-    }
+      form,
+      handleSubmit,
+      st,
+      t,
+    };
   },
-
-  validations: {
-    form: {
-      budgetId: { required },
-      name: { required },
-    },
-  },
-
-  methods: {
-    handleSubmit () {
-      if (!this.isValid(this.$v)) return
-      this.createCategoryGroup(this.form)
-      this.$emit('close')
-    },
-  },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -116,8 +89,8 @@ export default {
   }
 
   &__assistive {
-    @include margin(top, 1);
-    @include margin(bottom, 4);
+    margin-top: $base * 1;
+    margin-bottom: $base * 4;
   }
 
   &__item-input {
@@ -125,7 +98,7 @@ export default {
   }
 
   &__item + &__item {
-    @include margin(top, 4);
+    margin-top: $base * 4;
   }
 
   &__footer {

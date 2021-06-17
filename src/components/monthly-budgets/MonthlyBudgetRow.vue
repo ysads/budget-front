@@ -1,9 +1,5 @@
 <template>
-  <li
-    class="category-budget"
-    data-test="row"
-    @click="$emit('click')"
-  >
+  <li class="category-budget" data-test="row" @click="$emit('click')">
     <div class="category-budget__name" data-test="category-name">
       {{ category.name }}
     </div>
@@ -25,9 +21,9 @@
   </li>
 </template>
 
-<script>
-import { localize, balanceClasses } from '@/support/money'
-import { computed } from '@vue/composition-api'
+<script lang="ts">
+import { localize, balanceClasses } from '@/support/money';
+import { computed } from 'vue';
 
 export default {
   name: 'MonthlyBudgetRow',
@@ -47,19 +43,19 @@ export default {
     },
   },
 
-  setup ({ monthlyBudget }) {
+  setup(props: any) {
     const availableClass = computed(() => {
-      return monthlyBudget.available === 0
+      return props.monthlyBudget.available === 0
         ? 'zero'
-        : balanceClasses(monthlyBudget.available)
-    })
+        : balanceClasses(props.monthlyBudget.available);
+    });
 
     return {
       availableClass,
       localize,
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -67,7 +63,7 @@ export default {
   color: var(--table-heading-text);
   cursor: pointer;
   display: flex;
-  padding: $base*3 $base*4;
+  padding: $base * 3 $base * 4;
   width: 100%;
 
   @extend %body-1;

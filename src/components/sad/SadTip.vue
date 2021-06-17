@@ -4,8 +4,10 @@
   </p>
 </template>
 
-<script>
-const variant = ['error', 'info']
+<script lang="ts">
+import { PropType } from 'vue';
+
+type TipVariant = 'error' | 'info';
 
 export default {
   name: 'SadTip',
@@ -16,14 +18,11 @@ export default {
       required: true,
     },
     variant: {
-      type: String,
+      type: String as PropType<TipVariant>,
       default: 'info',
-      validator (val) {
-        return variant.includes(val)
-      },
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

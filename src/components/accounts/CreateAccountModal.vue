@@ -1,95 +1,59 @@
 <template>
-  <base-modal
-    data-test="base-modal"
-    :title="t('newAccount')"
-    @close="$emit('close')"
-  >
+  <sad-modal :title="t('newAccount')" data-test="modal" @close="$emit('close')">
     <form
       class="create-account"
       data-test="form"
       @submit.prevent="handleSubmit"
     >
-      <div class="create-account__item">
-        <sad-label
-          to="accountType"
-          :text="st('accountType')"
-          data-test="account-type"
-        >
-          <el-select
-            v-model="form.accountType"
-            class="create-account__select"
-            :placeholder="st('accountTypePlaceholder')"
-            data-test="select"
-            @input="validate($v)"
-          >
-            <el-option
-              v-for="type in accountTypes"
-              :key="type.value"
-              :label="type.label"
-              :value="type.value"
-              data-test="select-option"
-            />
-          </el-select>
-        </sad-label>
-
-        <sad-tip
-          v-if="hasError($v.form.accountType, 'required')"
-          class="create-account__assistive"
-          variant="error"
-          :text="t('validations.required')"
-        />
-      </div>
-
+      <sad-select
+        v-model="form.accountType"
+        class="create-account__item"
+        :label="st('accountType')"
+        :placeholder="st('accountTypePlaceholder')"
+        :options="accountTypes"
+        name="account-type"
+        data-test="account-type"
+      />
       <sad-input
-        v-model.trim="form.accountName"
+        v-model="form.accountName"
         class="create-account__item"
         name="name"
         :label="st('accountName')"
-        :error="errorMessage($v.form.accountName)"
         data-test="account-name"
-        @input="validate($v.form.accountName)"
       />
-
       <sad-input
-        v-model.trim="form.currentBalance"
+        v-model="form.currentBalance"
         class="create-account__item"
         name="currentBalance"
         :label="st('currentBalance')"
-        :error="errorMessage($v.form.currentBalance)"
         :tip="st('currentBalanceTip')"
-        :money="budgetCurrency"
         data-test="current-balance"
       />
     </form>
 
     <template #footer>
       <footer class="create-account__footer">
-        <sad-button
-          size="normal"
-          type="primary"
-          @click="handleSubmit"
-        >
+        <sad-button size="normal" type="primary" @click="handleSubmit">
           {{ t('save') }}
         </sad-button>
       </footer>
     </template>
-  </base-modal>
+  </sad-modal>
 </template>
 
-<script>
-import BaseModal from '@/components/BaseModal'
-import SadButton from '@/components/sad/SadButton'
-import SadInput from '@/components/sad/SadInput'
-import SadLabel from '@/components/sad/SadLabel'
-import SadTip from '@/components/sad/SadTip'
-import alert from '@/support/alert'
-import { createAccount } from '@/repositories/accounts'
-import { ACCOUNT_TYPES } from '@/constants/account'
-import { required } from 'vuelidate/lib/validators'
-import { useI18n } from '@/use/i18n'
-import { useValidation } from '@/use/validation'
-import { currencySettings, currencyToCents } from '@/support/money'
-import { handleApiError } from '@/api/errors'
+<script lang="ts">
+import SadButton from '@/components/sad/SadButton.vue';
+import SadInput from '@/components/sad/SadInput.vue';
+import SadModal from '@/components/sad/SadModal.vue';
+import SadSelect from '@/components/sad/SadSelect.vue';
+import alert from '@/support/alert';
+import useI18n from '@/use/i18n';
+import { createAccount } from '@/repositories/accounts';
+import { ACCOUNT_TYPES } from '@/constants/account';
+import { currencyToCents } from '@/support/money';
+import { handleApiError } from '@/api/errors';
+import { reactive, SetupContext } from 'vue';
+import { AccountType } from '@/types/models';
 
 export default {
   name: 'CreateAccountModal',
@@ -101,73 +65,47 @@ export default {
     },
   },
 
+  emits: ['close'],
+
   components: {
-    BaseModal,
     SadButton,
     SadInput,
-    SadLabel,
-    SadTip,
+    SadModal,
+    SadSelect,
   },
 
-  data () {
-    return {
-      form: {
-        accountType: '',
-        accountName: '',
-        budgetId: this.budget.id,
-        currentBalance: '',
-        payeeName: this.t('startingBalance'),
-      },
-    }
-  },
+  setup(props: any, { emit }: SetupContext) {
+    const { st, t } = useI18n('CreateAccountModal');
 
-  setup () {
-    return {
-      ...useI18n('CreateAccountModal'),
-      ...useValidation(),
-    }
-  },
+    const form = reactive({
+      accountType: 'checking' as AccountType,
+      accountName: '',
+      budgetId: props.budget.id,
+      currentBalance: '',
+      payeeName: t('startingBalance'),
+    });
 
-  validations: {
-    form: {
-      accountType: { required },
-      accountName: { required },
-      currentBalance: { required },
-    },
-  },
+    const accountTypes = ACCOUNT_TYPES.map((type) => ({
+      label: t(`account.type.${type}`),
+      value: type,
+    }));
 
-  computed: {
-    accountTypes () {
-      return ACCOUNT_TYPES.map(type => ({
-        label: this.t(`account.type.${type}`),
-        value: type,
-      }))
-    },
-
-    budgetCurrency () {
-      return currencySettings(this.budget)
-    },
-  },
-
-  methods: {
-    async handleSubmit () {
-      if (!this.isValid(this.$v)) return
-
+    const handleSubmit = async () => {
       try {
         await createAccount({
-          ...this.form,
-          currentBalance: currencyToCents(
-            this.form.currentBalance, this.budget,
-          ),
-        })
-        alert.success(this.st('created'))
-        this.$emit('close')
+          ...form,
+          currentBalance: currencyToCents(form.currentBalance, props.budget),
+        });
+        alert.success(st('created'));
+        emit('close');
       } catch (err) {
-        handleApiError(err)
+        handleApiError(err);
       }
-    },
+    };
+
+    return { accountTypes, form, handleSubmit, st, t };
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -177,12 +115,12 @@ export default {
   }
 
   &__assistive {
-    @include margin(top, 1);
-    @include margin(bottom, 4);
+    margin-top: $base * 1;
+    margin-bottom: $base * 4;
   }
 
   &__item + &__item {
-    @include margin(top, 4);
+    margin-top: $base * 4;
   }
 
   &__footer {

@@ -1,0 +1,69 @@
+{
+  "allAccounts": "All accounts",
+  "budget": "Budget",
+  "cleared": "Cleared",
+  "currentBalance": "Current balance",
+  "noAccounts": "No Accounts",
+  "noAccountsTip": "You can't budget without accounts. Let's start adding some!",
+  "reports": "Reports",
+  "uncleared": "Uncleared",
+  "trackingAccounts": "Tracking",
+  "budgetAccounts": "Budget",
+  "addAccount": "Add Account",
+  "account": {
+    "type": {
+      "asset": "Asset",
+      "cash": "Cash",
+      "credit": "Credit",
+      "savings": "Savings",
+      "checking": "Checkin"
+    }
+  },
+  "newAccount": "New account",
+  "CreateAccountModal": {
+    "accountType": "What's the account type?",
+    "currentBalance": "What's your balance in this account today?",
+    "accountName": "How is your account called?",
+    "accountTypePlaceholder": "Choose a type...",
+    "currentBalanceTip": "Not sure? Estimate it! You can edit that later.",
+    "created": "Account created"
+  },
+  "save": "Save",
+  "startingBalance": "Starting balance",
+  "validations": {
+    "required": "This is required."
+  },
+  "CreateCategoryGroupModal": {
+    "name": "Group name"
+  },
+  "CreateCategoryModal": {
+    "categoryGroup": "To which category group this budget belongs?",
+    "categoryGroupPlaceholder": "Pick one...",
+    "name": "Category"
+  },
+  "MonthlyBudgetDetails": {
+    "budgeted": "How much do you plan to spend?",
+    "category": "Category",
+    "categoryPlaceholder": "Pick one",
+    "created": "Monthly budget created",
+    "updated": "Monthly budget updated"
+  },
+  "errors": {
+    "generic": "Something went wrong. Try again.",
+    "monthly-budgets": {
+      "already-exists": "You already have a monthly budget to this category"
+    },
+    "accounts": {
+      "duplicate": "You already added this account"
+    }
+  },
+  "newCategory": "New category",
+  "newCategoryGroup": "New category group",
+  "newMonthlyBudget": "Create monthly budget",
+  "toBeBudgeted": "Available",
+  "SignIn": {
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in"
+  }
+}

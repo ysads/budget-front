@@ -15,8 +15,8 @@
   </header>
 </template>
 
-<script>
-import { localize, totalBalance } from '@/support/money'
+<script lang="ts">
+import { localize, totalBalance } from '@/support/money';
 
 export default {
   name: 'MonthlyBudgetHeader',
@@ -36,13 +36,13 @@ export default {
     },
   },
 
-  setup () {
+  setup() {
     return {
       localize,
       totalBalance,
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -52,7 +52,7 @@ export default {
   border-top-right-radius: $base;
   color: var(--table-heading-text);
   display: flex;
-  padding: $base*3 $base*4;
+  padding: $base * 3 $base * 4;
   width: 100%;
 
   @extend %body-1;
@@ -61,7 +61,7 @@ export default {
   &__name {
     flex-basis: 40%;
 
-    @extend %semi-bold ;
+    @extend %semi-bold;
   }
 
   &__total {

@@ -6,13 +6,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Auth',
+<script lang="ts">
+import { defineComponent } from 'vue';
 
-  components: {
-  },
-}
+export default defineComponent({
+  name: 'Auth',
+});
 </script>
 
 <style lang="scss" scoped>
@@ -20,7 +19,6 @@ export default {
   &__main {
     margin: 0 auto;
     width: 100%;
-
     @include breakpoint(md) {
       width: 400px;
     }

@@ -84,6 +84,8 @@ video {
   margin: 0;
   padding: 0;
   vertical-align: baseline;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 article,

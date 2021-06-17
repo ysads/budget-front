@@ -20,11 +20,10 @@
       v-model="form.budgeted"
       class="mb-details__control"
       :label="st('budgeted')"
-      :money="moneySettings"
       name="budgeted"
       data-test="budgeted"
     />
-    <div slot="footer">
+    <template #footer>
       <sad-button
         size="normal"
         type="primary"
@@ -34,25 +33,28 @@
       >
         {{ t('save') }}
       </sad-button>
-    </div>
+    </template>
   </sad-drawer>
 </template>
 
-<script>
-import SadButton from '@/components/sad/SadButton'
-import SadDrawer from '@/components/sad/SadDrawer'
-import SadInput from '@/components/sad/SadInput'
-import SadSelect from '@/components/sad/SadSelect'
-import alert from '@/support/alert'
-import { handleApiError } from '@/api/errors'
-import { openBudget } from '@/repositories/budgets'
-import { categoriesByGroupId } from '@/repositories/categories'
-import { categoryGroups } from '@/repositories/category-groups'
-import { createMonthlyBudget, updateMonthlyBudget } from '@/repositories/monthly-budgets'
-import { currencyToCents, currencySettings, localize } from '@/support/money'
-import { currentMonth } from '@/repositories/months'
-import { computed, reactive } from '@vue/composition-api'
-import { useI18n } from '@/use/i18n'
+<script lang="ts">
+import SadButton from '@/components/sad/SadButton.vue';
+import SadDrawer from '@/components/sad/SadDrawer.vue';
+import SadInput from '@/components/sad/SadInput.vue';
+import SadSelect from '@/components/sad/SadSelect.vue';
+import alert from '@/support/alert';
+import useI18n from '@/use/i18n';
+import { handleApiError } from '@/api/errors';
+import { openBudget } from '@/repositories/budgets';
+import { categoriesByGroupId } from '@/repositories/categories';
+import { categoryGroups } from '@/repositories/category-groups';
+import {
+  createMonthlyBudget,
+  updateMonthlyBudget,
+} from '@/repositories/monthly-budgets';
+import { currencyToCents, currencySettings, format } from '@/support/money';
+import { currentMonth } from '@/repositories/months';
+import { computed, reactive, SetupContext } from 'vue';
 
 export default {
   name: 'MonthlyBudgetDetails',
@@ -64,6 +66,8 @@ export default {
     },
   },
 
+  emits: ['close'],
+
   components: {
     SadButton,
     SadDrawer,
@@ -71,48 +75,44 @@ export default {
     SadSelect,
   },
 
-  setup ({ monthlyBudget }, { emit }) {
-    const { st, t } = useI18n('MonthlyBudgetDetails')
-    const form = reactive({
-      id: monthlyBudget.id || '',
-      categoryId: monthlyBudget.categoryId || '',
-      budgeted: localize(monthlyBudget.budgeted, openBudget.value) || 0,
-    })
-    const moneySettings = computed(
-      () => currencySettings(openBudget.value),
-    )
-    const isEdit = computed(
-      () => Boolean(form.id),
-    )
+  setup(props: any, { emit }: SetupContext) {
+    const { st, t } = useI18n('MonthlyBudgetDetails');
 
-    const categoriesGrouped = categoryGroups.value.map(group => ({
+    const moneySettings = currencySettings(openBudget.value);
+
+    const form = reactive({
+      id: props.monthlyBudget.id || '',
+      categoryId: props.monthlyBudget.categoryId || '',
+      budgeted:
+        format(props.monthlyBudget.budgeted, moneySettings, false) || '',
+    });
+
+    const isEdit = computed(() => Boolean(form.id));
+
+    const categoriesGrouped = categoryGroups.value.map((group) => ({
       label: group.name,
-      options: categoriesByGroupId(group.id).map(c => ({
+      options: categoriesByGroupId(group.id).map((c) => ({
         value: c.id,
         label: c.name,
       })),
-    }))
+    }));
 
     const handleSubmit = async () => {
-      const save = isEdit.value
-        ? updateMonthlyBudget
-        : createMonthlyBudget
+      const save = isEdit.value ? updateMonthlyBudget : createMonthlyBudget;
 
       try {
         await save({
           ...form,
           budgeted: currencyToCents(form.budgeted, openBudget.value),
           budgetId: openBudget.value.id,
-          monthId: currentMonth.value.id,
-        })
-        alert.success(
-          isEdit.value ? st('updated') : st('created'),
-        )
-        emit('close')
+          monthId: currentMonth.value.id || '',
+        });
+        alert.success(isEdit.value ? st('updated') : st('created'));
+        emit('close');
       } catch (err) {
-        handleApiError(err)
+        handleApiError(err);
       }
-    }
+    };
 
     return {
       categoriesGrouped,
@@ -124,9 +124,9 @@ export default {
       openBudget,
       st,
       t,
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -136,7 +136,7 @@ export default {
   }
 
   &__control + &__control {
-    margin-top: $base*4;
+    margin-top: $base * 4;
   }
 }
 </style>

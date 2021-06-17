@@ -19,11 +19,11 @@
   </div>
 </template>
 
-<script>
-import SadButton from '@/components/sad/SadButton'
-import TransactionDetails from '@/components/transactions/TransactionDetails'
-import { useI18n } from '@/use/i18n'
-import { defineComponent, reactive } from '@vue/composition-api'
+<script lang="ts">
+import SadButton from '@/components/sad/SadButton.vue';
+import TransactionDetails from '@/components/transactions/TransactionDetails.vue';
+import useI18n from '@/use/i18n';
+import { defineComponent, reactive } from 'vue';
 
 export default defineComponent({
   props: {
@@ -38,18 +38,18 @@ export default defineComponent({
     TransactionDetails,
   },
 
-  setup () {
-    const { t } = useI18n()
+  setup() {
+    const { t } = useI18n();
     const isVisible = reactive({
       transactionDrawer: false,
-    })
-    const toggle = (prop) => {
-      isVisible[prop] = !isVisible[prop]
-    }
+    });
+    const toggle = (prop: keyof typeof isVisible) => {
+      isVisible[prop] = !isVisible[prop];
+    };
 
-    return { isVisible, t, toggle }
+    return { isVisible, t, toggle };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -57,6 +57,6 @@ export default defineComponent({
   border-bottom: 1px solid var(--acc-toolbar-border);
   display: flex;
   justify-content: space-between;
-  padding: $base*2 $base*4;
+  padding: $base * 2 $base * 4;
 }
 </style>

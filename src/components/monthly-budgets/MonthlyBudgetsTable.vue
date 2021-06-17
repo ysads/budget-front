@@ -35,15 +35,16 @@
   </section>
 </template>
 
-<script>
-import { categoryById } from '@/repositories/categories'
-import { categoryGroupById } from '@/repositories/category-groups'
-import { monthlyBudgetsByCategoryGroup } from '@/repositories/monthly-budgets'
-import { openBudget } from '@/repositories/budgets'
-import MonthlyBudgetDetails from '@/components/monthly-budgets/MonthlyBudgetDetails'
-import MonthlyBudgetHeader from '@/components/monthly-budgets/MonthlyBudgetHeader'
-import MonthlyBudgetRow from '@/components/monthly-budgets/MonthlyBudgetRow'
-import { computed, ref } from '@vue/composition-api'
+<script lang="ts">
+import { categoryById } from '@/repositories/categories';
+import { categoryGroupById } from '@/repositories/category-groups';
+import { computed, ref } from 'vue';
+import { MonthlyBudget } from '@/types/models';
+import { monthlyBudgetsByCategoryGroup } from '@/repositories/monthly-budgets';
+import { openBudget } from '@/repositories/budgets';
+import MonthlyBudgetDetails from '@/components/monthly-budgets/MonthlyBudgetDetails.vue';
+import MonthlyBudgetHeader from '@/components/monthly-budgets/MonthlyBudgetHeader.vue';
+import MonthlyBudgetRow from '@/components/monthly-budgets/MonthlyBudgetRow.vue';
 
 export default {
   name: 'MonthlyBudgetsTable',
@@ -54,12 +55,12 @@ export default {
     MonthlyBudgetRow,
   },
 
-  setup () {
-    const openMonthlyBudget = ref({})
-    const isDrawerOpen = computed(() => Boolean(openMonthlyBudget.value.id))
+  setup() {
+    const openMonthlyBudget = ref<MonthlyBudget | Record<string, unknown>>({});
+    const isDrawerOpen = computed(() => Boolean(openMonthlyBudget.value?.id));
 
-    const openDrawer = (mb) => (openMonthlyBudget.value = mb)
-    const closeDrawer = () => (openMonthlyBudget.value = {})
+    const openDrawer = (mb: MonthlyBudget) => (openMonthlyBudget.value = mb);
+    const closeDrawer = () => (openMonthlyBudget.value = {});
 
     return {
       categoryById,
@@ -70,9 +71,9 @@ export default {
       openBudget,
       openDrawer,
       openMonthlyBudget,
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

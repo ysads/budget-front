@@ -15,26 +15,22 @@
           data-test="close-btn"
           @click="$emit('close')"
         />
-        <h3
-          v-if="title"
-          class="sad-drawer__header-title"
-          data-test="title"
-        >
+        <h3 v-if="title" class="sad-drawer__header-title" data-test="title">
           {{ title }}
         </h3>
       </header>
       <div class="sad-drawer__content">
-        <slot></slot>
+        <slot />
       </div>
       <footer class="sad-drawer__footer">
-        <slot name="footer"></slot>
+        <slot name="footer" />
       </footer>
     </section>
   </div>
 </template>
 
-<script>
-import SadIcon from './SadIcon'
+<script lang="ts">
+import SadIcon from './SadIcon.vue';
 
 export default {
   name: 'SadDrawer',
@@ -47,12 +43,13 @@ export default {
       default: '',
     },
   },
-}
+  emits: ['close'],
+};
 </script>
 
 <style lang="scss">
 .sad-drawer {
-  $padding: $base*6;
+  $padding: $base * 6;
 
   &__overlay {
     background: var(--modal-overlay);
@@ -95,8 +92,8 @@ export default {
     font-size: 1.75rem;
     justify-content: space-between;
 
-    @include margin(bottom, 6);
-    @include margin(bottom, 6);
+    margin-bottom: $base * 6;
+    margin-bottom: $base * 6;
 
     &-title {
       color: var(--modal-title);
@@ -109,7 +106,7 @@ export default {
       cursor: pointer;
 
       &:active {
-        @include scale-90;
+        // @include scale-90;
       }
     }
   }
@@ -121,7 +118,7 @@ export default {
   &__footer {
     width: 100%;
 
-    @include margin(top, 4);
+    margin-top: $base * 4;
   }
 
   &__group {

@@ -1,6 +1,6 @@
 <template>
   <div class="budget">
-    <loading v-if="isLoading " data-test="loading" />
+    <loading v-if="isLoading" data-test="loading" />
     <section v-else>
       <month-header
         :budget="openBudget"
@@ -8,26 +8,24 @@
         data-test="month-header"
         @update="updateCurrentMonth"
       />
-      <budget-toolbar
-        :budget="openBudget"
-        data-test="toolbar"
-      />
-      <monthly-budgets-table
-        data-test="table"
-      />
+      <budget-toolbar :budget="openBudget" data-test="toolbar" />
+      <monthly-budgets-table data-test="table" />
     </section>
   </div>
 </template>
 
-<script>
-import BudgetToolbar from '@/components/budgets/BudgetToolbar'
-import Loading from '@/components/Loading'
-import MonthHeader from '@/components/months/MonthHeader'
-import MonthlyBudgetsTable from '@/components/monthly-budgets/MonthlyBudgetsTable'
-import { isoMonth } from '@/support/date'
-import { openBudget } from '@/repositories/budgets'
-import { getMonthlyBudgets } from '@/repositories/monthly-budgets'
-import { currentMonth, getMonthByIso } from '@/repositories/months'
+<script lang="ts">
+import BudgetToolbar from '@/components/budgets/BudgetToolbar.vue';
+import Loading from '@/components/Loading.vue';
+import MonthHeader from '@/components/months/MonthHeader.vue';
+import MonthlyBudgetsTable from '@/components/monthly-budgets/MonthlyBudgetsTable.vue';
+import { isoMonth } from '@/support/date';
+import { openBudget } from '@/repositories/budgets';
+import { getMonthlyBudgets } from '@/repositories/monthly-budgets';
+import { currentMonth, getMonthByIso } from '@/repositories/months';
+import { useRoute, useRouter } from 'vue-router';
+import { computed, ref, watchEffect } from '@vue/runtime-core';
+import { IsoMonth } from '@/types/models';
 
 export default {
   name: 'Budget',
@@ -39,53 +37,33 @@ export default {
     MonthlyBudgetsTable,
   },
 
-  data () {
-    return {
-      isLoading: true,
-    }
-  },
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
 
-  setup () {
-    return { currentMonth, openBudget }
-  },
+    const isLoading = ref(true);
+    const currentIsoMonth = computed(() => {
+      return (route.params.isoMonth as IsoMonth) || isoMonth(new Date());
+    });
 
-  async mounted () {
-    this.isLoading = true
-    await this.fetchResources()
-    this.isLoading = false
-  },
-
-  computed: {
-    currentIsoMonth () {
-      return this.$route.params.isoMonth || isoMonth(new Date())
-    },
-  },
-
-  methods: {
-    async fetchResources () {
-      const params = {
-        budgetId: this.openBudget.id,
-        isoMonth: this.currentIsoMonth,
-      }
-
-      await Promise.all([
-        getMonthByIso(params),
-        getMonthlyBudgets(params),
-      ])
-    },
-
-    updateCurrentMonth (updatedMonth) {
-      this.$router.push({
+    const updateCurrentMonth = (updatedMonth: Date) => {
+      router.push({
         name: 'MonthBudget',
         params: { isoMonth: isoMonth(updatedMonth) },
-      })
-    },
-  },
+      });
+    };
 
-  watch: {
-    '$route.params.isoMonth' () {
-      this.fetchResources()
-    },
+    watchEffect(async () => {
+      const params = {
+        budgetId: openBudget.value.id,
+        isoMonth: currentIsoMonth.value,
+      };
+
+      await Promise.all([getMonthByIso(params), getMonthlyBudgets(params)]);
+      isLoading.value = false;
+    });
+
+    return { isLoading, currentMonth, openBudget, updateCurrentMonth };
   },
-}
+};
 </script>

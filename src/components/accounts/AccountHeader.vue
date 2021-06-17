@@ -51,9 +51,10 @@
   </nav>
 </template>
 
-<script>
-import { localize } from '@/support/money'
-import { useI18n } from '@/use/i18n'
+<script lang="ts">
+import { localize } from '@/support/money';
+import useI18n from '@/use/i18n';
+import { computed } from '@vue/runtime-core';
 
 export default {
   name: 'AccountHeader',
@@ -77,24 +78,19 @@ export default {
     },
   },
 
-  setup () {
-    const { t } = useI18n('AccountHeader')
+  setup(props: any) {
+    const { t } = useI18n('AccountHeader');
+    const current = computed(() => props.cleared + props.uncleared);
 
-    return { localize, t }
-  },
-
-  computed: {
-    current () {
-      return this.cleared + this.uncleared
-    },
+    return { current, localize, t };
   },
 
   methods: {
-    balanceClasses (val) {
-      return val >= 0 ? 'positive' : 'negative'
+    balanceClasses(val: number): string {
+      return val >= 0 ? 'positive' : 'negative';
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -105,7 +101,7 @@ export default {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-  padding: $base*3 $base*6;
+  padding: $base * 3 $base * 6;
 
   @include breakpoint(md) {
     flex-flow: row;
@@ -122,7 +118,7 @@ export default {
 
   &__sep {
     color: var(--acc-header-sep);
-    margin: 0 $base*3;
+    margin: 0 $base * 3;
 
     @extend %h2;
   }
@@ -134,7 +130,7 @@ export default {
       align-items: center;
       display: flex;
 
-      @include margin(top, 4);
+      margin-top: $base * 4;
 
       @include breakpoint(md) {
         margin: 0;
@@ -151,7 +147,7 @@ export default {
   }
 
   &__balance + &__balance {
-    @include margin(left, 6);
+    margin-left: $base * 6;
   }
 }
 

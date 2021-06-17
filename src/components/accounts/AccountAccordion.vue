@@ -1,11 +1,6 @@
 <template>
-  <el-collapse-item
-    v-if="accounts.length"
-    class="account-accordion"
-    :name="name"
-    data-test="accordion"
-  >
-    <template slot="title">
+  <sad-collapse start-open>
+    <template #header>
       <div class="account-accordion__header" data-test="title">
         <span class="account-accordion__title">
           {{ label }}
@@ -37,19 +32,22 @@
         </router-link>
       </li>
     </ul>
-  </el-collapse-item>
+  </sad-collapse>
 </template>
 
-<script>
-import { totalBalance, localize } from '@/support/money'
-import { computed } from '@vue/composition-api'
+<script lang="ts">
+import { totalBalance, localize } from '@/support/money';
+import { computed, PropType } from 'vue';
+import { Account } from '@/types/models';
+import { useRoute } from 'vue-router';
+import SadCollapse from '@/components/sad/SadCollapse.vue';
 
 export default {
   name: 'AccountAccordion',
 
   props: {
     accounts: {
-      type: Array,
+      type: Array as PropType<Account[]>,
       required: true,
     },
     budget: {
@@ -60,30 +58,27 @@ export default {
       type: String,
       required: true,
     },
-    name: {
-      type: String,
-      required: true,
-    },
   },
 
-  setup ({ accounts }) {
-    const total = computed(() => totalBalance(accounts, 'balance'))
-
-    return { total, localize }
+  components: {
+    SadCollapse,
   },
 
-  computed: {
-    openAccountId () {
-      return this.$route.params.id
-    },
-  },
+  setup(props: any) {
+    const total = computed(() => totalBalance(props.accounts, 'balance'));
+    const route = useRoute();
 
-  methods: {
-    activeClass (account) {
-      return (this.openAccountId === account.id) ? 'active' : ''
-    },
+    const openAccountId = computed(() => {
+      return route.params.id;
+    });
+
+    const activeClass = (account: Account) => {
+      return openAccountId.value === account.id ? 'active' : '';
+    };
+
+    return { activeClass, openAccountId, localize, total };
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -95,10 +90,9 @@ export default {
     justify-content: space-between;
     text-transform: uppercase;
     width: 100%;
+    padding: $base * 3 $base * 2;
 
     @extend %caption-2;
-
-    @include margin(right, 2);
   }
 
   &__item {
@@ -120,7 +114,7 @@ export default {
     &-link {
       display: flex;
       justify-content: space-between;
-      padding: $base * 2 $base * 3;
+      padding: $base * 2;
     }
 
     &-name {
@@ -128,7 +122,7 @@ export default {
       text-overflow: ellipsis;
       width: 60%;
 
-      @include padding(right, 1);
+      padding-right: $base * 1;
     }
 
     &-balance {
@@ -137,7 +131,7 @@ export default {
   }
 
   &__item + &__item {
-    @include margin(top, 1);
+    margin-top: $base * 1;
   }
 }
 </style>

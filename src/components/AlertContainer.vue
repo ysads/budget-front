@@ -15,30 +15,38 @@
   </div>
 </template>
 
-<script>
-import { eventBus, SHOW_ALERT } from '@/events'
-import SadAlert from '@/components/sad/SadAlert'
-import uuid from 'uuid-random'
-import { defineComponent, onMounted, ref } from '@vue/composition-api'
+<script lang="ts">
+import SadAlert from '@/components/sad/SadAlert.vue';
+import uuid from 'uuid-random';
+import { eventBus, Events } from '@/events';
+import { defineComponent, onMounted, ref } from 'vue';
+
+interface Alert {
+  id: string;
+  title: string | undefined;
+  message: string;
+}
 
 export default defineComponent({
   components: {
     SadAlert,
   },
-  setup () {
-    const alerts = ref([])
-    const destroy = (id) => {
-      alerts.value = alerts.value.filter(alert => alert.id !== id)
-    }
-    onMounted(() => {
-      eventBus.on(SHOW_ALERT, (alert) => {
-        alerts.value.push({ ...alert, id: uuid() })
-      })
-    })
+  setup() {
+    const alerts = ref<Alert[]>([]);
 
-    return { alerts, destroy }
+    const destroy = (id: string) => {
+      alerts.value = alerts.value.filter((alert) => alert.id !== id);
+    };
+
+    onMounted(() => {
+      eventBus.on(Events.SHOW_ALERT, (alert) => {
+        alerts.value.push({ ...alert, id: uuid() });
+      });
+    });
+
+    return { alerts, destroy };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -50,7 +58,7 @@ export default defineComponent({
 
   &__item {
     &:not(:first-of-type) {
-      @include margin(top, 2);
+      margin-top: $base * 2;
     }
   }
 }

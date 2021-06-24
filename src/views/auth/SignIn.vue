@@ -13,23 +13,21 @@
       type="password"
       :label="st('password')"
     />
-    <sad-button
-      class="sign-in__control"
-      @click="handleSignIn"
-    >
+    <sad-button class="sign-in__control" @click="handleSignIn">
       {{ st('signIn') }}
     </sad-button>
   </div>
 </template>
 
-<script>
-import SadInput from '@/components/sad/SadInput'
-import SadButton from '@/components/sad/SadButton'
-import { reactive } from '@vue/composition-api'
-import { signIn } from '@/repositories/auth'
-import { useI18n } from '@/use/i18n'
+<script lang="ts">
+import SadInput from '@/components/sad/SadInput.vue';
+import SadButton from '@/components/sad/SadButton.vue';
+import useI18n from '@/use/i18n';
+import { useRouter } from 'vue-router';
+import { defineComponent, reactive } from 'vue';
+import { getMe, signIn } from '@/repositories/auth';
 
-export default {
+export default defineComponent({
   name: 'SignIn',
 
   components: {
@@ -37,32 +35,34 @@ export default {
     SadInput,
   },
 
-  setup () {
+  setup() {
     const user = reactive({
       email: '',
       password: '',
-    })
-    const { st } = useI18n('SignIn')
+    });
+    const { st } = useI18n('SignIn');
 
-    return { user, st }
+    const router = useRouter();
+    const handleSignIn = async () => {
+      await signIn(user);
+      const currentUser = await getMe();
+      router.push({
+        name: 'Budget',
+        params: { budgetId: currentUser.defaultBudgetId },
+      });
+    };
+
+    return { handleSignIn, st, user };
   },
-
-  methods: {
-    async handleSignIn () {
-      await signIn(this.user)
-
-      this.$router.push({ name: 'AllAccounts', params: { id: 1234 } })
-    },
-  },
-}
+});
 </script>
 
 <style lang="scss" scoped>
 .sign-in {
-  padding: $base*8;
+  padding: $base * 8;
 
   &__control + &__control {
-    @include margin(top, 4);
+    margin-top: $base * 4;
   }
 }
 </style>

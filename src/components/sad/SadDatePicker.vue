@@ -1,26 +1,17 @@
 <template>
-  <div
-    class="sad-date-picker"
-  >
-    <sad-label
-      to="name"
-      :text="label"
-      data-test="label"
-    >
-      <el-date-picker
-        class="sad-date-picker__input"
-        :class="[errorClass]"
-        type="date"
-        :placeholder="placeholder"
-        :format="format"
-        :value="value"
-        :name="name"
-        value-format="yyyy-MM-dd"
-        data-test="picker"
-        @input="val => $emit('input', val)"
-        @blur="$emit('blur')"
-      />
-    </sad-label>
+  <div class="sad-date-picker">
+    <sad-label to="name" :text="label" data-test="label" />
+    <el-date-picker
+      class="sad-date-picker__input"
+      :class="[errorClass]"
+      type="date"
+      :placeholder="placeholder"
+      :format="format"
+      :model-value="modelValue"
+      :name="name"
+      @update:model-value="(val) => $emit('update:model-value', val)"
+      @blur="$emit('blur')"
+    />
     <sad-tip
       v-if="tipText"
       class="sad-date-picker__tip"
@@ -31,11 +22,12 @@
   </div>
 </template>
 
-<script>
-import SadLabel from './SadLabel'
-import SadTip from './SadTip'
-import useTip from '@/use/tip'
-import { defineComponent } from '@vue/composition-api'
+<script lang="ts">
+import SadLabel from './SadLabel.vue';
+import SadTip from './SadTip.vue';
+import useTip from '@/use/tip';
+import { defineComponent } from 'vue';
+import { ElDatePicker } from 'element-plus';
 
 export default defineComponent({
   props: {
@@ -63,31 +55,30 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    value: {
+    modelValue: {
       type: [String, Date],
       default: () => new Date(),
     },
   },
 
+  emits: ['blur', 'update:model-value'],
+
   components: {
+    ElDatePicker,
     SadLabel,
     SadTip,
   },
 
-  setup (props) {
-    const { errorClass, tipText, tipVariant } = useTip(props)
+  setup(props) {
+    const { errorClass, tipText, tipVariant } = useTip(props);
 
-    return { errorClass, tipText, tipVariant }
+    return { errorClass, tipText, tipVariant };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>
 .sad-date-picker {
-  &__input {
-    width: 100%;
-  }
-
   &__tip {
     margin-top: $base;
   }

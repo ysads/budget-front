@@ -3,15 +3,14 @@
     <sad-label to="name" :text="label" data-test="label" />
     <input
       :id="name"
-      v-model="val"
+      v-bind="$attrs"
+      :value="modelValue"
       class="sad-input"
       :class="[errorClass]"
       data-test="input"
       :placeholder="placeholder"
       :type="type"
-      @input="updateValue"
-      @focus="cleanFormat"
-      @blur="formatValue"
+      @input="(e) => $emit('update:model-value', e.target.value)"
     />
     <sad-tip
       v-if="tipText"
@@ -23,13 +22,13 @@
   </div>
 </template>
 
-<script>
-import SadLabel from './SadLabel'
-import SadTip from './SadTip'
-import useTip from '@/use/tip'
-import { VMoney } from 'v-money'
+<script lang="ts">
+import SadLabel from './SadLabel.vue';
+import SadTip from './SadTip.vue';
+import useTip from '@/use/tip';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
   props: {
     label: {
       type: String,
@@ -39,13 +38,9 @@ export default {
       type: String,
       default: '',
     },
-    value: {
+    modelValue: {
       type: [String, Number],
       required: true,
-    },
-    money: {
-      type: Object,
-      required: false,
     },
     name: {
       type: String,
@@ -65,62 +60,19 @@ export default {
     },
   },
 
-  data () {
-    return {
-      val: this.value,
-    }
-  },
+  emits: ['update:model-value'],
 
-  setup (props) {
-    const { errorClass, tipText, tipVariant } = useTip(props)
+  setup(props) {
+    const { errorClass, tipText, tipVariant } = useTip(props);
 
-    return { errorClass, tipText, tipVariant }
+    return { errorClass, tipText, tipVariant };
   },
 
   components: {
     SadLabel,
     SadTip,
   },
-
-  directives: {
-    money: VMoney,
-  },
-
-  computed: {
-    formattedValue () {
-      if (!this.val) {
-        return ''
-      }
-      return `${this.money.prefix}${this.value}`
-    },
-  },
-
-  methods: {
-    updateValue (event) {
-      this.$emit('input', event.target.value)
-    },
-
-    cleanFormat () {
-      if (this.money) {
-        this.val = this.value
-      }
-      this.$emit('focus')
-    },
-
-    formatValue () {
-      if (this.money) {
-        this.val = this.formattedValue
-      }
-      this.$emit('blur')
-    },
-  },
-
-  watch: {
-    value (newValue) {
-      this.val = newValue
-    },
-  },
-}
+});
 </script>
 
 <style lang="scss" scoped>

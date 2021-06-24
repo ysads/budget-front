@@ -26,9 +26,15 @@
   </div>
 </template>
 
-<script>
-import SadIcon from './SadIcon'
-import { computed, defineComponent, onMounted } from '@vue/composition-api'
+<script lang="ts">
+import SadIcon from './SadIcon.vue';
+import {
+  PropType,
+  SetupContext,
+  computed,
+  defineComponent,
+  onMounted,
+} from 'vue';
 
 const VARIANTS = {
   error: {
@@ -43,13 +49,17 @@ const VARIANTS = {
     icon: 'exclamation-triangle',
     color: 'yellow',
   },
-}
+};
+
+type AlertVariant = 'error' | 'success' | 'warning';
 
 export default defineComponent({
   name: 'SadAlert',
+
   components: {
     SadIcon,
   },
+
   props: {
     duration: {
       type: Number,
@@ -64,25 +74,29 @@ export default defineComponent({
       required: true,
     },
     variant: {
-      type: String,
+      type: String as PropType<AlertVariant>,
       required: true,
-      validator (val) {
-        return Object.keys(VARIANTS).includes(val)
-      },
     },
   },
-  setup (props, { emit }) {
-    const variantColor = computed(() => VARIANTS[props.variant].color)
-    const variantIcon = computed(() => VARIANTS[props.variant].icon)
+
+  emits: ['close'],
+
+  setup(props, { emit }: SetupContext) {
+    const variantColor = computed(
+      () => VARIANTS[props.variant as AlertVariant].color,
+    );
+    const variantIcon = computed(
+      () => VARIANTS[props.variant as AlertVariant].icon,
+    );
 
     onMounted(() => {
-      if (props.duration === 0) return
-      setTimeout(() => emit('close', props.id), props.duration)
-    })
+      if (props.duration === 0) return;
+      setTimeout(() => emit('close', props.id), props.duration);
+    });
 
-    return { emit, variantColor, variantIcon }
+    return { emit, variantColor, variantIcon };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -99,9 +113,18 @@ export default defineComponent({
     flex-shrink: 0;
     width: 4px;
   }
-  &__ribbon-error { background: var(--color-error); }
-  &__ribbon-success { background: var(--color-success); }
-  &__ribbon-warning { background: var(--color-warning); }
+
+  &__ribbon-error {
+    background: var(--color-error);
+  }
+
+  &__ribbon-success {
+    background: var(--color-success);
+  }
+
+  &__ribbon-warning {
+    background: var(--color-warning);
+  }
 
   &__icon {
     align-self: center;

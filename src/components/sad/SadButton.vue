@@ -16,10 +16,14 @@
   </button>
 </template>
 
-<script>
-const TYPES = ['primary', 'ghost']
+<script lang="ts">
+import { computed } from 'vue';
+import { defineComponent, PropType } from 'vue';
 
-export default {
+type ButtonVariant = 'primary' | 'ghost';
+type ButtonSize = 'normal' | 'small';
+
+export default defineComponent({
   props: {
     fullWidth: {
       type: Boolean,
@@ -30,39 +34,28 @@ export default {
       default: '',
     },
     size: {
-      type: String,
+      type: String as PropType<ButtonSize>,
       default: 'normal',
-      validator (val) {
-        return ['normal', 'small'].includes(val)
-      },
     },
     type: {
-      type: String,
+      type: String as PropType<ButtonVariant>,
       default: 'primary',
-      validator (val) {
-        return TYPES.includes(val)
-      },
     },
   },
 
-  computed: {
-    typeClass () {
-      return `button--${this.type}`
-    },
+  emits: ['click'],
 
-    sizeClass () {
-      return `button--${this.size}`
-    },
+  setup(props) {
+    const typeClass = computed(() => `button--${props.type}`);
+    const sizeClass = computed(() => `button--${props.size}`);
+    const iconClass = computed(() => `fa-${props.icon}`);
+    const fullWidthClass = computed(() =>
+      props.fullWidth ? 'button--full' : '',
+    );
 
-    iconClass () {
-      return `fa-${this.icon}`
-    },
-
-    fullWidthClass () {
-      return this.fullWidth ? 'button--full' : ''
-    },
+    return { typeClass, sizeClass, iconClass, fullWidthClass };
   },
-}
+});
 </script>
 
 <style lang="scss" scoped>
@@ -77,11 +70,7 @@ export default {
   @include transition;
 
   &__icon {
-    @include margin(right, 1);
-  }
-
-  &:active {
-    @include scale-90;
+    margin-right: $base * 1;
   }
 
   &--normal {

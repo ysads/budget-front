@@ -57,16 +57,16 @@
   </div>
 </template>
 
-<script>
-import CreateCategoryGroupModal from '@/components/category-groups/CreateCategoryGroupModal'
-import CreateCategoryModal from '@/components/categories/CreateCategoryModal'
-import MonthlyBudgetDetails from '@/components/monthly-budgets/MonthlyBudgetDetails'
-import SadButton from '@/components/sad/SadButton'
-import { useI18n } from '@/use/i18n'
-import { openBudget } from '@/repositories/budgets'
-import { reactive } from '@vue/composition-api'
+<script lang="ts">
+import CreateCategoryGroupModal from '@/components/category-groups/CreateCategoryGroupModal.vue';
+import CreateCategoryModal from '@/components/categories/CreateCategoryModal.vue';
+import MonthlyBudgetDetails from '@/components/monthly-budgets/MonthlyBudgetDetails.vue';
+import SadButton from '@/components/sad/SadButton.vue';
+import useI18n from '@/use/i18n';
+import { openBudget } from '@/repositories/budgets';
+import { defineComponent, reactive } from 'vue';
 
-export default {
+export default defineComponent({
   components: {
     CreateCategoryModal,
     CreateCategoryGroupModal,
@@ -74,20 +74,20 @@ export default {
     SadButton,
   },
 
-  setup () {
-    const { t } = useI18n()
+  setup() {
+    const { t } = useI18n();
     const isVisible = reactive({
       categoryGroupModal: false,
       categoryModal: false,
       drawer: false,
-    })
-    const toggle = (prop) => {
-      isVisible[prop] = !isVisible[prop]
-    }
+    });
+    const toggle = (prop: keyof typeof isVisible) => {
+      isVisible[prop] = !isVisible[prop];
+    };
 
-    return { isVisible, openBudget, toggle, t }
+    return { isVisible, openBudget, toggle, t };
   },
-}
+});
 </script>
 
 <style lang="scss" scoped>
@@ -95,7 +95,7 @@ export default {
   border-bottom: 1px solid var(--acc-toolbar-border);
   display: flex;
   justify-content: space-between;
-  padding: $base*2 $base*4;
+  padding: $base * 2 $base * 4;
 }
 
 .fade-enter-active,

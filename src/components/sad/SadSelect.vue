@@ -1,21 +1,17 @@
 <template>
   <div>
-    <sad-label
-      :to="name"
-      :text="label"
-      data-test="label"
-    >
+    <sad-label :to="name" :text="label" data-test="label">
       <el-select
         class="sad-select"
         :class="[errorClass]"
-        :value="value"
+        :model-value="modelValue"
         :placeholder="placeholder"
         :disabled="disabled"
         :allow-create="allowCreate"
         default-first-option
         filterable
         data-test="select"
-        @input="val => $emit('input', val)"
+        @update:model-value="(val) => $emit('update:model-value', val)"
         @blur="$emit('blur')"
       >
         <div v-if="grouped">
@@ -55,11 +51,12 @@
   </div>
 </template>
 
-<script>
-import SadLabel from './SadLabel'
-import SadTip from './SadTip'
-import useTip from '@/use/tip'
-import { defineComponent } from '@vue/composition-api'
+<script lang="ts">
+import SadLabel from './SadLabel.vue';
+import SadTip from './SadTip.vue';
+import useTip from '@/use/tip';
+import { defineComponent } from 'vue';
+import { ElOption, ElOptionGroup, ElSelect } from 'element-plus';
 
 export default defineComponent({
   props: {
@@ -83,6 +80,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    modelValue: {
+      type: [Number, String],
+      default: '',
+    },
     name: {
       type: String,
       required: true,
@@ -99,23 +100,24 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    value: {
-      type: [Number, String],
-      default: null,
-    },
   },
 
+  emits: ['blur', 'update:model-value'],
+
   components: {
+    ElSelect,
+    ElOptionGroup,
+    ElOption,
     SadLabel,
     SadTip,
   },
 
-  setup (props) {
-    const { errorClass, tipText, tipVariant } = useTip(props)
+  setup(props) {
+    const { errorClass, tipText, tipVariant } = useTip(props);
 
-    return { errorClass, tipText, tipVariant }
+    return { errorClass, tipText, tipVariant };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>

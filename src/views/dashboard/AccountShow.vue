@@ -13,25 +13,24 @@
         :budget="openBudget"
         data-test="header"
       />
-      <account-toolbar
-        :account="account"
-        data-test="toolbar"
-      />
+      <account-toolbar :account="account" data-test="toolbar" />
     </div>
   </div>
 </template>
 
-<script>
-import { openBudget } from '@/repositories/budgets'
-import { getAccountById } from '@/repositories/accounts'
-import { useI18n } from '@/use/i18n'
-import alert from '@/support/alert'
-import AccountHeader from '@/components/accounts/AccountHeader'
-import AccountToolbar from '@/components/accounts/AccountToolbar'
-import Loading from '@/components/Loading'
-import isEmpty from 'lodash/isEmpty'
+<script lang="ts">
+import { openBudget } from '@/repositories/budgets';
+import { getAccountById } from '@/repositories/accounts';
+import { useRoute, useRouter } from 'vue-router';
+import { computed, defineComponent, onMounted } from 'vue';
+import useI18n from '@/use/i18n';
+import alert from '@/support/alert';
+import AccountHeader from '@/components/accounts/AccountHeader.vue';
+import AccountToolbar from '@/components/accounts/AccountToolbar.vue';
+import Loading from '@/components/Loading.vue';
+import isEmpty from 'lodash/isEmpty';
 
-export default {
+export default defineComponent({
   name: 'AccountShow',
 
   components: {
@@ -40,23 +39,23 @@ export default {
     Loading,
   },
 
-  setup () {
-    const { t } = useI18n()
+  setup() {
+    const { t } = useI18n();
+    const route = useRoute();
+    const router = useRouter();
 
-    return { isEmpty, openBudget, t }
-  },
+    const account = computed(() => {
+      return getAccountById(String(route.params.id)) || {};
+    });
 
-  mounted () {
-    if (isEmpty(this.account)) {
-      alert.error(this.t('errors.accounts.not-found'))
-      this.$router.push({ name: 'AllAccounts' })
-    }
-  },
+    onMounted(() => {
+      if (isEmpty(account.value)) {
+        alert.error(t('errors.accounts.not-found'));
+        router.push({ name: 'AllAccounts' });
+      }
+    });
 
-  computed: {
-    account () {
-      return getAccountById(this.$route.params.id) || {}
-    },
+    return { account, isEmpty, openBudget, t };
   },
-}
+});
 </script>

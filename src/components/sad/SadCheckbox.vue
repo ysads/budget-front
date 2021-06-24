@@ -1,23 +1,16 @@
 <template>
-  <div
-    class="sad-checkbox"
-    data-test="sad-checkbox"
-  >
+  <div class="sad-checkbox" data-test="sad-checkbox">
     <div class="sad-checkbox__input-wrapper">
       <input
         :id="id"
         class="sad-checkbox__input"
         type="checkbox"
-        :checked="value"
+        :checked="modelValue"
         :name="name"
         data-test="input"
-        @input="e => $emit('input', e.target.checked)"
-      >
-      <label
-        class="sad-checkbox__label"
-        :for="id"
-        data-test="label"
-      >
+        @input="(e) => $emit('update:modelValue', e.target.checked)"
+      />
+      <label class="sad-checkbox__label" :for="id" data-test="label">
         {{ label }}
       </label>
     </div>
@@ -30,12 +23,14 @@
     />
   </div>
 </template>
-<script>
-import SadTip from './SadTip'
-import useTip from '@/use/tip'
-import uuid from 'uuid-random'
 
-export default {
+<script lang="ts">
+import SadTip from './SadTip.vue';
+import useTip from '@/use/tip';
+import uuid from 'uuid-random';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   name: 'SadCheckbox',
 
   components: {
@@ -55,7 +50,7 @@ export default {
       type: [String, Number],
       default: () => uuid(),
     },
-    value: {
+    modelValue: {
       type: Boolean,
       default: false,
     },
@@ -65,12 +60,14 @@ export default {
     },
   },
 
-  setup (props) {
-    const { tipText, tipVariant } = useTip(props)
+  emits: ['update:modelValue'],
 
-    return { tipText, tipVariant }
+  setup(props) {
+    const { tipText, tipVariant } = useTip(props);
+
+    return { tipText, tipVariant };
   },
-}
+});
 </script>
 
 <style lang="scss">
@@ -96,7 +93,7 @@ export default {
     }
 
     &:checked + label::after {
-      content: "";
+      content: '';
     }
 
     &:focus + label::before,
@@ -112,16 +109,17 @@ export default {
   }
 
   &__label {
+    color: var(--text-default);
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    height: 6*$base;
+    height: 6 * $base;
     justify-content: center;
-    padding-left: 6*$base;
+    padding-left: 6 * $base;
 
     &::before,
     &::after {
-      content: "";
+      content: '';
       display: inline-block;
       position: absolute;
     }

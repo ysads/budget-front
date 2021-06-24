@@ -1,70 +1,71 @@
-import SadButton from '@/components/sad/SadButton'
-import sample from 'lodash/sample'
-import { factoryBuilder } from '#/factory-builder'
+import SadButton from '@/components/sad/SadButton';
+import sample from 'lodash/sample';
+import setupComponent from '#/setup-component';
 
-const factory = (args = {}) => factoryBuilder(SadButton, {
-  propsData: {
-    type: 'primary',
-    size: 'normal',
-    ...args.propsData,
-  },
-})
+const factory = (args = {}) =>
+  setupComponent(SadButton, {
+    props: {
+      type: 'primary',
+      size: 'normal',
+      ...args.props,
+    },
+  });
 
 describe('SadButton', () => {
-  context('default behaviour', () => {
+  describe('default behaviour', () => {
     it('has primary type', () => {
-      const wrapper = factory()
+      const wrapper = factory();
 
-      expect(wrapper.vm.type).toEqual('primary')
-    })
+      expect(wrapper.vm.type).toEqual('primary');
+    });
 
     it('has normal size', () => {
-      const wrapper = factory()
+      const wrapper = factory();
 
-      expect(wrapper.vm.size).toEqual('normal')
-    })
-  })
+      expect(wrapper.vm.size).toEqual('normal');
+    });
+  });
 
   it('adds a class according to type', () => {
-    const type = sample(['primary', 'ghost'])
-    const wrapper = factory({ propsData: { type } })
-    const button = wrapper.find("[data-test='button']")
+    const type = sample(['primary', 'ghost']);
+    const wrapper = factory({ props: { type } });
+    const button = wrapper.find("[data-test='button']");
 
-    expect(button.classes()).toContain(`button--${type}`)
-  })
+    expect(button.classes()).toContain(`button--${type}`);
+  });
 
   it('adds a class according to size', () => {
-    const wrapper = factory({ propsData: { size: 'small' } })
-    const button = wrapper.find("[data-test='button']")
+    const wrapper = factory({ props: { size: 'small' } });
+    const button = wrapper.find("[data-test='button']");
 
-    expect(button.classes()).toContain('button--small')
-  })
+    expect(button.classes()).toContain('button--small');
+  });
 
-  context('when icon prop is given', () => {
+  describe('when icon prop is given', () => {
     it('renders a matching icon', () => {
-      const wrapper = factory({ propsData: { icon: 'plus' } })
-      const icon = wrapper.find("[data-test='icon']")
+      const wrapper = factory({ props: { icon: 'plus' } });
+      const icon = wrapper.find("[data-test='icon']");
 
-      expect(icon.classes()).toContain('fa-plus')
-    })
-  })
+      expect(icon.classes()).toContain('fa-plus');
+    });
+  });
 
-  context('when full width prop is true', () => {
+  describe('when full width prop is true', () => {
     it('renders button with button--full class', () => {
-      const wrapper = factory({ propsData: { fullWidth: true } })
-      const button = wrapper.find("[data-test='button']")
+      const wrapper = factory({ props: { fullWidth: true } });
+      const button = wrapper.find("[data-test='button']");
 
-      expect(button.classes()).toContain('button--full')
-    })
-  })
+      expect(button.classes()).toContain('button--full');
+    });
+  });
 
-  context('when button is clicked', () => {
+  describe('when button is clicked', () => {
     it('emits click', async () => {
-      const wrapper = factory()
+      const wrapper = factory();
 
-      await wrapper.find("[data-test='button']").trigger('click')
+      await wrapper.find("[data-test='button']").trigger('click');
 
-      expect(wrapper.emitted().click).toBeTruthy()
-    })
-  })
-})
+      expect(wrapper.emitted().click).toBeTruthy();
+    });
+  });
+});

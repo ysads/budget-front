@@ -1,77 +1,83 @@
-import AccountAccordion from '@/components/accounts/AccountAccordion'
-import * as Money from '@/support/money'
-import Faker from 'faker'
-import factories from '#/factories'
-import sample from 'lodash/sample'
-import { factoryBuilder } from '#/factory-builder'
+import * as Money from '@/support/money';
+import AccountAccordion from '@/components/accounts/AccountAccordion';
+import faker from 'faker';
+import factories from '#/factories';
+import setupComponent from '#/setup-component';
+import SadCollapse from '@/components/sad/SadCollapse';
 
-const accounts = factories.account.buildList(2)
-const budget = factories.budget.build()
-const label = Faker.name.findName()
-const name = sample(['tracking', 'budget'])
+const accounts = factories.account.buildList(2);
+const budget = factories.budget.build();
+const label = faker.name.findName();
 
-const factory = (args = {}) => factoryBuilder(AccountAccordion, {
-  propsData: {
-    accounts,
-    budget,
-    label,
-    name,
-    ...args.propsData,
-  },
-  mocks: {
-    ...args.mocks,
-  },
-})
+const factory = (args = {}) => {
+  return setupComponent(AccountAccordion, {
+    props: {
+      accounts,
+      budget,
+      label,
+      ...args.props,
+    },
+    route: args.route,
+    renderSlots: true,
+    withMount: args.withMount,
+  });
+};
 
 describe('AccountAccordion', () => {
+  it('renders open by default', () => {
+    const wrapper = factory();
+    const item = wrapper.findComponent(SadCollapse);
+
+    expect(item.props().startOpen).toEqual(true);
+  });
   it('renders account totals', () => {
-    const wrapper = factory()
-    const item = wrapper.find("[data-test='title']")
+    const wrapper = factory({ withMount: true });
+    const item = wrapper.find("[data-test='title']");
 
-    const total = accounts.reduce((total, a) => total + a.balance, 0)
+    const total = accounts.reduce((total, a) => total + a.balance, 0);
 
-    expect(item.text()).toMatch(label)
-    expect(item.text()).toMatch(Money.localize(total, budget))
-  })
+    expect(item.text()).toMatch(label);
+    expect(item.text()).toMatch(Money.localize(total, budget));
+  });
 
   it('renders a list item to each account', () => {
-    const wrapper = factory()
-    const items = wrapper.findAll("[data-test='account-item']")
+    const wrapper = factory();
+    const items = wrapper.findAll("[data-test='account-item']");
 
-    expect(items.length).toBe(accounts.length)
-  })
+    expect(items.length).toBe(accounts.length);
+  });
 
   it('renders the open account item with active class', () => {
-    const $route = { params: { id: accounts[1].id } }
-    const wrapper = factory({ mocks: { $route } })
-    const items = wrapper.findAll("[data-test='account-item']")
+    const route = { params: { id: accounts[1].id } };
+    const wrapper = factory({ route });
+    const items = wrapper.findAll("[data-test='account-item']");
 
-    expect(items.at(0).classes()).not.toContain('active')
-    expect(items.at(1).classes()).toContain('active')
-  })
+    expect(items[0].classes()).not.toContain('active');
+    expect(items[1].classes()).toContain('active');
+  });
 
   it('renders a link to each account', () => {
-    const wrapper = factory()
-    const items = wrapper.findAll("[data-test='account-link']")
+    const wrapper = factory();
+    const items = wrapper.findAllComponents("[data-test='account-link']");
 
     accounts.map((account, index) => {
-      expect(items.at(index).props().to).toEqual({
+      expect(items[index].props().to).toEqual({
         name: 'AccountShow',
         params: { id: account.id },
-      })
-      expect(items.at(index).text()).toMatch(
+      });
+      expect(items[index].text()).toMatch(
         Money.localize(account.balance, budget),
-      )
-      expect(items.at(index).text()).toMatch(account.name)
-    })
-  })
+      );
+      expect(items[index].text()).toMatch(account.name);
+    });
+  });
 
-  context('when there is no account', () => {
+  describe('when there is no account', () => {
     it('does not render accordion', () => {
-      const wrapper = factory({ propsData: { accounts: [] } })
-      const item = wrapper.find("[data-test='accordion']")
+      const wrapper = factory({ props: { accounts: [] } });
+      const item = wrapper.find("[data-test='accordion']");
 
-      expect(item.exists()).toBe(false)
-    })
-  })
-})
+      expect(item.exists()).toBe(false);
+    });
+  });
+});

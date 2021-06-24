@@ -7,18 +7,14 @@
   >
     <i class="sad-icon icon fas" :class="classes" />
   </button>
-  <i
-    v-else
-    class="sad-icon icon fas"
-    :class="classes"
-  />
+  <i v-else class="sad-icon icon fas" :class="classes" />
 </template>
 
-<script>
-import { computed, defineComponent } from '@vue/composition-api'
+<script lang="ts">
+import { PropType, computed, defineComponent } from 'vue';
 
-const COLORS = ['green', 'info', 'inherit', 'primary', 'red', 'yellow']
-const SIZES = ['small', 'medium']
+type IconColor = 'green' | 'info' | 'inherit' | 'primary' | 'red' | 'yellow';
+type IconSize = 'small' | 'medium';
 
 export default defineComponent({
   name: 'SadIcon',
@@ -28,30 +24,31 @@ export default defineComponent({
       default: false,
     },
     color: {
-      type: String,
+      type: String as PropType<IconColor>,
       default: 'inherit',
-      validator: (val) => COLORS.includes(val),
     },
     name: {
       type: String,
       required: true,
     },
     size: {
-      type: String,
+      type: String as PropType<IconSize>,
       default: 'small',
-      validator: (val) => SIZES.includes(val),
     },
   },
-  setup (props) {
-    const classes = computed(() => ([
+
+  emits: ['click'],
+
+  setup(props) {
+    const classes = computed(() => [
       `fa-${props.name}`,
       `sad-icon--${props.color}`,
       `sad-icon--${props.size}`,
-    ]))
+    ]);
 
-    return { classes }
+    return { classes };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -62,18 +59,40 @@ export default defineComponent({
     outline: none;
 
     &:active {
-      @include scale-90;
+      // @include scale-90;
     }
   }
 
-  &--small { font-size: 16px; }
-  &--medium { font-size: 24px; }
+  &--small {
+    font-size: 16px;
+  }
 
-  &--green { color: var(--color-success); }
-  &--info { color: var(--color-info); }
-  &--inherit { color: inherit; }
-  &--primary { color: var(--color-primary); }
-  &--red { color: var(--color-error); }
-  &--yellow { color: var(--color-warning); }
+  &--medium {
+    font-size: 24px;
+  }
+
+  &--green {
+    color: var(--color-success);
+  }
+
+  &--info {
+    color: var(--color-info);
+  }
+
+  &--inherit {
+    color: inherit;
+  }
+
+  &--primary {
+    color: var(--color-primary);
+  }
+
+  &--red {
+    color: var(--color-error);
+  }
+
+  &--yellow {
+    color: var(--color-warning);
+  }
 }
 </style>

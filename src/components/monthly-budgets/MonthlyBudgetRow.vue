@@ -1,9 +1,5 @@
 <template>
-  <li
-    class="category-budget"
-    data-test="row"
-    @click="$emit('click')"
-  >
+  <li class="category-budget" data-test="row" @click="$emit('click')">
     <div class="category-budget__name" data-test="category-name">
       {{ category.name }}
     </div>
@@ -25,41 +21,42 @@
   </li>
 </template>
 
-<script>
-import { localize, balanceClasses } from '@/support/money'
-import { computed } from '@vue/composition-api'
+<script lang="ts">
+import { balanceClasses, localize } from '@/support/money';
+import { Budget, Category, MonthlyBudget } from '@/types/models';
+import { computed, defineComponent, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'MonthlyBudgetRow',
 
   props: {
     budget: {
-      type: Object,
+      type: Object as PropType<Budget>,
       required: true,
     },
     category: {
-      type: Object,
+      type: Object as PropType<Category>,
       required: true,
     },
     monthlyBudget: {
-      type: Object,
+      type: Object as PropType<MonthlyBudget>,
       required: true,
     },
   },
 
-  setup ({ monthlyBudget }) {
+  setup(props) {
     const availableClass = computed(() => {
-      return monthlyBudget.available === 0
+      return props.monthlyBudget.available === 0
         ? 'zero'
-        : balanceClasses(monthlyBudget.available)
-    })
+        : balanceClasses(props.monthlyBudget.available);
+    });
 
     return {
       availableClass,
       localize,
-    }
+    };
   },
-}
+});
 </script>
 
 <style lang="scss" scoped>
@@ -67,7 +64,7 @@ export default {
   color: var(--table-heading-text);
   cursor: pointer;
   display: flex;
-  padding: $base*3 $base*4;
+  padding: $base * 3 $base * 4;
   width: 100%;
 
   @extend %body-1;

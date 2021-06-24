@@ -1,14 +1,11 @@
 <template>
   <div class="dashboard">
-    <i
-      class="fas fa-bars dashboard__drawer-toggle"
-      @click="toggleDrawer"
-    />
-    <drawer
+    <i class="fas fa-bars dashboard__drawer-toggle" @click="toggleDrawer" />
+    <dashboard-menu
       v-if="openBudget.id"
       ref="drawer"
       class="dashboard__drawer"
-      :class="{ 'fullscreen': showDrawer }"
+      :class="{ fullscreen: showDrawer }"
     />
     <main class="dashboard__main">
       <loading v-if="loading" />
@@ -18,49 +15,49 @@
 </template>
 
 <script>
-import Drawer from '@/components/Drawer'
-import Loading from '@/components/Loading'
-import { getAccounts } from '@/repositories/accounts'
-import { getCategoryGroups } from '@/repositories/category-groups'
-import { getCategories } from '@/repositories/categories'
-import { getMonthlyBudgets } from '@/repositories/monthly-budgets'
-import { getPayees } from '@/repositories/payees'
-import { getBudgetById, openBudget } from '@/repositories/budgets'
-import { getMe } from '@/repositories/auth'
-import { isoMonth } from '@/support/date'
-import { ref } from '@vue/composition-api'
+import DashboardMenu from '@/components/DashboardMenu';
+import Loading from '@/components/Loading';
+import { getAccounts } from '@/repositories/accounts';
+import { getCategoryGroups } from '@/repositories/category-groups';
+import { getCategories } from '@/repositories/categories';
+import { getMonthlyBudgets } from '@/repositories/monthly-budgets';
+import { getPayees } from '@/repositories/payees';
+import { getBudgetById, openBudget } from '@/repositories/budgets';
+import { getMe } from '@/repositories/auth';
+import { isoMonth } from '@/support/date';
+import { defineComponent, ref } from 'vue';
 
-const MD_BREAKPOINT = 768
+const MD_BREAKPOINT = 768;
 
-export default {
+export default defineComponent({
   name: 'Dashboard',
 
   components: {
-    Drawer,
+    DashboardMenu,
     Loading,
   },
 
-  setup () {
-    const isDrawerVisible = ref(false)
-    const loading = ref(true)
+  setup() {
+    const isDrawerVisible = ref(false);
+    const loading = ref(true);
 
-    const toggleDrawer = () => (isDrawerVisible.value = !isDrawerVisible.value)
+    const toggleDrawer = () => (isDrawerVisible.value = !isDrawerVisible.value);
 
-    return { isDrawerVisible, loading, openBudget, toggleDrawer }
+    return { isDrawerVisible, loading, openBudget, toggleDrawer };
   },
 
-  data () {
+  data() {
     return {
       innerWidth: window.innerWidth,
-    }
+    };
   },
 
-  async mounted () {
-    window.addEventListener('resize', this.onResize)
-    await this.validateSession()
-    await getBudgetById(this.$route.params.budgetId)
+  async mounted() {
+    window.addEventListener('resize', this.onResize);
+    await this.validateSession();
+    await getBudgetById(this.$route.params.budgetId);
 
-    const params = { budgetId: openBudget.value.id }
+    const params = { budgetId: openBudget.value.id };
 
     await Promise.all([
       getAccounts(params),
@@ -69,34 +66,34 @@ export default {
       getPayees(params),
       // FIXME: account screens rely on that, maybe move it to a more specific view
       getMonthlyBudgets({ ...params, isoMonth: isoMonth(new Date()) }),
-    ])
-    this.loading = false
+    ]);
+    this.loading = false;
   },
 
-  beforeDestroy () {
-    window.removeEventListener('resize', this.onResize)
+  beforeUnmount() {
+    window.removeEventListener('resize', this.onResize);
   },
 
   computed: {
-    showDrawer () {
-      return this.isDrawerVisible && this.innerWidth <= MD_BREAKPOINT
+    showDrawer() {
+      return this.isDrawerVisible && this.innerWidth <= MD_BREAKPOINT;
     },
   },
 
   methods: {
-    async validateSession () {
+    async validateSession() {
       try {
-        await getMe()
+        await getMe();
       } catch {
-        this.$route.push({ name: 'SignIn' })
+        this.$route.push({ name: 'SignIn' });
       }
     },
 
-    onResize () {
-      this.innerWidth = window.innerWidth
+    onResize() {
+      this.innerWidth = window.innerWidth;
     },
   },
-}
+});
 </script>
 
 <style lang="scss" scoped>
@@ -160,9 +157,8 @@ export default {
 .fullscreen {
   display: block;
   height: 100%;
+  padding-top: $base * 16;
   position: fixed;
   width: 100%;
-
-  @include padding(top, 16);
 }
 </style>

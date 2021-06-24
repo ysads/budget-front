@@ -6,13 +6,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Auth',
+<script lang="ts">
+import { defineComponent } from 'vue';
 
-  components: {
-  },
-}
+export default defineComponent({
+  name: 'Auth',
+});
 </script>
 
 <style lang="scss" scoped>

@@ -1,38 +1,41 @@
-import AccountToolbar from '@/components/accounts/AccountToolbar'
-import factories from '#/factories'
-import { factoryBuilder } from '#/factory-builder'
+import AccountToolbar from '@/components/accounts/AccountToolbar';
+import factories from '#/factories';
+import setupComponent from '#/setup-component';
 
-const account = factories.account.build()
+const account = factories.account.build();
 
-const factory = () => factoryBuilder(AccountToolbar, {
-  propsData: {
-    account,
-  },
-})
+const factory = () =>
+  setupComponent(AccountToolbar, {
+    props: {
+      account,
+    },
+  });
 
 describe('AccountToolbar', () => {
   it('renders new group button', () => {
-    const wrapper = factory()
-    const item = wrapper.find("[data-test='new-transaction']")
+    const wrapper = factory();
+    const item = wrapper.findComponent("[data-test='new-transaction']");
 
-    expect(item.text()).toMatch('newTransaction')
-  })
+    expect(item.exists()).toBeTruthy();
+  });
 
   it('does not render transaction drawer by default', () => {
-    const wrapper = factory()
-    const item = wrapper.find("[data-test='transaction-drawer']")
+    const wrapper = factory();
+    const item = wrapper.findComponent("[data-test='transaction-drawer']");
 
-    expect(item.exists()).toBeFalsy()
-  })
+    expect(item.exists()).toBeFalsy();
+  });
 
-  context('when new transaction button is clicked', () => {
+  describe('when new transaction button is clicked', () => {
     it('renders transaction drawer with origin account', async () => {
-      const wrapper = factory()
-      await wrapper.find("[data-test='new-transaction']").vm.$emit('click')
+      const wrapper = factory();
+      await wrapper
+        .findComponent("[data-test='new-transaction']")
+        .vm.$emit('click');
 
-      const drawer = wrapper.find("[data-test='transaction-drawer']")
+      const drawer = wrapper.findComponent("[data-test='transaction-drawer']");
 
-      expect(drawer.props().originAccount).toEqual(account)
-    })
-  })
-})
+      expect(drawer.props().originAccount).toEqual(account);
+    });
+  });
+});

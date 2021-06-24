@@ -5,8 +5,10 @@
   </label>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   props: {
     text: {
       type: String,
@@ -17,9 +19,8 @@ export default {
       required: true,
     },
   },
-
   name: 'SadLabel',
-}
+});
 </script>
 
 <style lang="scss" scoped>
@@ -29,7 +30,7 @@ export default {
   font-size: 1rem;
 
   &__text {
-    @include margin(bottom, 2);
+    margin-bottom: $base * 2;
   }
 }
 </style>

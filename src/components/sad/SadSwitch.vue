@@ -1,14 +1,15 @@
 <template>
   <el-switch
-    :value="value"
+    :model-value="modelValue"
     :active-text="activeLabel"
     :inactive-text="inactiveLabel"
-    @input="val => $emit('input', val)"
+    @update:model-value="(val) => $emit('update:model-value', val)"
   />
 </template>
 
-<script>
-import { defineComponent } from '@vue/composition-api'
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { ElSwitch } from 'element-plus';
 
 export default defineComponent({
   props: {
@@ -20,12 +21,18 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    value: {
+    modelValue: {
       type: Boolean,
       default: false,
     },
   },
-})
+
+  emits: ['update:model-value'],
+
+  components: {
+    ElSwitch,
+  },
+});
 </script>
 
 <style lang="scss">

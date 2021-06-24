@@ -2,17 +2,15 @@ module.exports = {
   css: {
     loaderOptions: {
       scss: {
-        additionalData: '@import "@/assets/styles/tokens/main.scss";',
+        prependData: '@import "@/assets/styles/tokens/main.scss";',
       },
     },
   },
-
-  pluginOptions: {
-    i18n: {
-      locale: 'pt-BR',
-      fallbackLocale: 'en',
-      localeDir: 'lang',
-      enableInSFC: true,
+  configureWebpack: {
+    resolve: {
+      alias: {
+        'vue-i18n': 'vue-i18n/dist/vue-i18n.esm-bundler.js',
+      },
     },
   },
-}
+};

@@ -15,19 +15,21 @@
   </header>
 </template>
 
-<script>
-import { localize, totalBalance } from '@/support/money'
+<script lang="ts">
+import { localize, totalBalance } from '@/support/money';
+import { Budget, CategoryGroup } from '@/types/models';
+import { defineComponent, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'MonthlyBudgetHeader',
 
   props: {
     budget: {
-      type: Object,
+      type: Object as PropType<Budget>,
       required: true,
     },
     categoryGroup: {
-      type: Object,
+      type: Object as PropType<CategoryGroup>,
       required: true,
     },
     monthlyBudgets: {
@@ -36,13 +38,13 @@ export default {
     },
   },
 
-  setup () {
+  setup() {
     return {
       localize,
       totalBalance,
-    }
+    };
   },
-}
+});
 </script>
 
 <style lang="scss" scoped>
@@ -52,7 +54,7 @@ export default {
   border-top-right-radius: $base;
   color: var(--table-heading-text);
   display: flex;
-  padding: $base*3 $base*4;
+  padding: $base * 3 $base * 4;
   width: 100%;
 
   @extend %body-1;
@@ -61,7 +63,7 @@ export default {
   &__name {
     flex-basis: 40%;
 
-    @extend %semi-bold ;
+    @extend %semi-bold;
   }
 
   &__total {

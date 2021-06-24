@@ -1,60 +1,58 @@
 module.exports = {
   root: true,
-
   env: {
-    jest: true,
     node: true,
   },
-
   extends: [
-    'plugin:jest/recommended',
-    'plugin:vue/essential',
+    'plugin:vue/vue3-essential',
     'eslint:recommended',
-    '@vue/standard',
+    '@vue/typescript/recommended',
+    '@vue/prettier',
+    '@vue/prettier/@typescript-eslint',
   ],
-
-  globals: {
-    context: true,
-  },
-
-  plugins: [
-    'jest',
-  ],
-
   parserOptions: {
-    parser: 'babel-eslint',
+    ecmaVersion: 2020,
   },
-
   rules: {
-    'comma-dangle': [
+    '@typescript-eslint/explicit-module-boundary-types': [
       'error',
-      'always-multiline',
-      { functions: 'never' },
+      {
+        allowArgumentsExplicitlyTypedAsAny: true,
+      },
     ],
-    'jest/no-identical-title': 'off',
-    'max-len': [
+    '@typescript-eslint/no-explicit-any': [
       'error',
-      { ignorePattern: '@/', ignoreComments: true },
+      {
+        fixToUnknown: true,
+      },
     ],
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    quotes: [
-      'error',
-      'single', { avoidEscape: true },
-    ],
-    semi: [
-      'error',
-      'never',
-    ],
-    'space-before-function-paren': 'error',
+    'comma-dangle': ['error', 'always-multiline', { functions: 'never' }],
+    'max-len': ['error', { ignorePattern: '@/', ignoreComments: true }],
+    quotes: ['error', 'single', { avoidEscape: true }],
     'vue/attributes-order': 'error',
     'vue/component-tags-order': [
       'error',
       { order: ['template', 'script', 'style', 'i18n'] },
     ],
-    'vue/max-attributes-per-line': [
-      'error',
-      { singleline: 5, multiline: 1 },
-    ],
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },
-}
+  overrides: [
+    {
+      files: ['*.vue', '*.js'],
+      rules: {
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+      },
+    },
+    {
+      files: [
+        '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)',
+        '**/tests/unit/setup.ts',
+      ],
+      env: {
+        jest: true,
+      },
+    },
+  ],
+};

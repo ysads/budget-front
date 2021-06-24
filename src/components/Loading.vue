@@ -8,12 +8,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Loading',
-}
-</script>
-
 <style scoped>
 .spinner-wrapper {
   align-items: center;
@@ -51,8 +45,13 @@ export default {
 @-webkit-keyframes sk-bouncedelay {
   0%,
   80%,
-  100% { -webkit-transform: scale(0); }
-  40% { -webkit-transform: scale(1); }
+  100% {
+    -webkit-transform: scale(0);
+  }
+
+  40% {
+    -webkit-transform: scale(1);
+  }
 }
 
 @keyframes sk-bouncedelay {

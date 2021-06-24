@@ -9,23 +9,24 @@ jobs:
   bump-version:
     runs-on: ubuntu-latest
     steps:
-    - name: Cancel previous workflows
-      uses: styfle/cancel-workflow-action@0.7.0
-      with:
-        access_token: ${{ github.token }}
-    - uses: actions/checkout@v2
-    - name: Setup Node.JS
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.8.0
-    - name: Bumping version
-      id: version-bump
-      uses: phips28/gh-action-bump-version@master
-      with:
-        target-branch: main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Output
-      run: echo "New version > $NEW_TAG"
-      env:
-        NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.7.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - name: Setup Node.JS
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.8.0
+      - name: Bumping version
+        id: version-bump
+        uses: phips28/gh-action-bump-version@master
+        with:
+          target-branch: main
+          tag-prefix: 'v'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Output
+        run: echo "New version > $NEW_TAG"
+        env:
+          NEW_TAG: ${{ steps.version-bump.outputs.newTag }}

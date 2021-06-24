@@ -16,8 +16,9 @@ import useI18n from '@/use/i18n';
 import { openBudget } from '@/repositories/budgets';
 import { accounts } from '@/repositories/accounts';
 import { totalBalance } from '@/support/money';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'AllAccounts',
 
   components: {
@@ -29,5 +30,5 @@ export default {
 
     return { accounts, openBudget, totalBalance, t };
   },
-};
+});
 </script>

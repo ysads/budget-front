@@ -64,9 +64,9 @@ import MonthlyBudgetDetails from '@/components/monthly-budgets/MonthlyBudgetDeta
 import SadButton from '@/components/sad/SadButton.vue';
 import useI18n from '@/use/i18n';
 import { openBudget } from '@/repositories/budgets';
-import { reactive } from 'vue';
+import { defineComponent, reactive } from 'vue';
 
-export default {
+export default defineComponent({
   components: {
     CreateCategoryModal,
     CreateCategoryGroupModal,
@@ -87,7 +87,7 @@ export default {
 
     return { isVisible, openBudget, toggle, t };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

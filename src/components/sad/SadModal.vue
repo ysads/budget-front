@@ -63,15 +63,14 @@ export default defineComponent({
     display: flex;
     flex-flow: column;
     left: 0;
+    margin-left: $base * 4;
+    margin-right: $base * 4;
     padding: $base * 6;
     position: fixed;
     top: $modal-top;
     transition: all 0.5s ease;
     width: $modal-width;
     z-index: 4;
-
-    margin-left: $base * 4;
-    margin-right: $base * 4;
 
     @include breakpoint(md) {
       left: calc(50% - 300px);
@@ -86,8 +85,6 @@ export default defineComponent({
     flex-direction: row-reverse;
     font-size: 1.75rem;
     justify-content: space-between;
-
-    margin-bottom: $base * 6;
     margin-bottom: $base * 6;
 
     &-title {
@@ -100,9 +97,9 @@ export default defineComponent({
       color: var(--modal-close-btn);
       cursor: pointer;
 
-      &:active {
-        // @include scale-90;
-      }
+      // &:active {
+      //   @include scale-90;
+      // }
     }
   }
 

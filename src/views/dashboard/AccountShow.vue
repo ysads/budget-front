@@ -22,7 +22,7 @@
 import { openBudget } from '@/repositories/budgets';
 import { getAccountById } from '@/repositories/accounts';
 import { useRoute, useRouter } from 'vue-router';
-import { computed, onMounted } from '@vue/runtime-core';
+import { computed, defineComponent, onMounted } from 'vue';
 import useI18n from '@/use/i18n';
 import alert from '@/support/alert';
 import AccountHeader from '@/components/accounts/AccountHeader.vue';
@@ -30,7 +30,7 @@ import AccountToolbar from '@/components/accounts/AccountToolbar.vue';
 import Loading from '@/components/Loading.vue';
 import isEmpty from 'lodash/isEmpty';
 
-export default {
+export default defineComponent({
   name: 'AccountShow',
 
   components: {
@@ -57,5 +57,5 @@ export default {
 
     return { account, isEmpty, openBudget, t };
   },
-};
+});
 </script>

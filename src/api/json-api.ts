@@ -3,7 +3,8 @@ import { Deserializer } from 'jsonapi-serializer';
 const JSONAPIDeserializer = new Deserializer({ keyForAttribute: 'camelCase' });
 
 export default {
-  async parse(payload: any) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async parse(payload: any): Promise<any | undefined> {
     if (!payload) return;
 
     const parsedData = await JSONAPIDeserializer.deserialize(payload);

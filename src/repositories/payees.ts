@@ -6,12 +6,12 @@ import { BudgetReq } from '@/types/api';
 
 export const payees = ref<Payee[]>([]);
 
-export const getPayees = async (params: BudgetReq) => {
+export const getPayees = async (params: BudgetReq): Promise<void> => {
   const response = await get(`budgets/${params.budgetId}/payees`);
 
   payees.value = response;
 };
 
-export const upsertPayee = (newPayee: Payee) => {
+export const upsertPayee = (newPayee: Payee): void => {
   payees.value = upsert(payees.value, newPayee);
 };

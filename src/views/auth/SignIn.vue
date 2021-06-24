@@ -24,10 +24,10 @@ import SadInput from '@/components/sad/SadInput.vue';
 import SadButton from '@/components/sad/SadButton.vue';
 import useI18n from '@/use/i18n';
 import { useRouter } from 'vue-router';
-import { reactive } from 'vue';
-import { signIn, getMe } from '@/repositories/auth';
+import { defineComponent, reactive } from 'vue';
+import { getMe, signIn } from '@/repositories/auth';
 
-export default {
+export default defineComponent({
   name: 'SignIn',
 
   components: {
@@ -54,7 +54,7 @@ export default {
 
     return { handleSignIn, st, user };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

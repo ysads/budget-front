@@ -1,6 +1,8 @@
 import Axios from 'axios';
 import * as api from '@/api';
 
+const axiosRequest = Axios.request as jest.MockedFunction<typeof Axios.request>;
+
 const mockResponse = {
   data: [
     {
@@ -27,8 +29,7 @@ process.env.VUE_APP_API_URL = 'https://mock-host';
 
 describe('api', () => {
   beforeEach(() => {
-    // @ts-ignore
-    Axios.request.mockImplementationOnce(() =>
+    axiosRequest.mockImplementationOnce(() =>
       Promise.resolve({ data: mockResponse }),
     );
   });
@@ -43,7 +44,7 @@ describe('api', () => {
 
       await api.get('test-endpoint', mockParams);
 
-      expect(Axios.request).toBeCalledWith({
+      expect(axiosRequest).toBeCalledWith({
         headers: { Accept: 'application/json' },
         method: 'get',
         params: { test_param: 1 },
@@ -59,7 +60,7 @@ describe('api', () => {
 
       await api.post('test-endpoint', mockParams);
 
-      expect(Axios.request).toBeCalledWith({
+      expect(axiosRequest).toBeCalledWith({
         headers: { Accept: 'application/json' },
         method: 'post',
         data: { test_param: 1 },
@@ -75,7 +76,7 @@ describe('api', () => {
 
       await api.put('test-endpoint', mockParams);
 
-      expect(Axios.request).toBeCalledWith({
+      expect(axiosRequest).toBeCalledWith({
         headers: { Accept: 'application/json' },
         method: 'put',
         data: { test_param: 1 },
@@ -91,7 +92,7 @@ describe('api', () => {
 
       await api.del('test-endpoint', mockParams);
 
-      expect(Axios.request).toBeCalledWith({
+      expect(axiosRequest).toBeCalledWith({
         headers: { Accept: 'application/json' },
         method: 'delete',
         params: { test_param: 1 },
@@ -111,7 +112,7 @@ describe('api', () => {
 
       await api.get('test-endpoint', mockParams);
 
-      expect(Axios.request).toBeCalledWith({
+      expect(axiosRequest).toBeCalledWith({
         headers: { Accept: 'application/json' },
         method: 'get',
         params: { test_param: 1 },
@@ -125,7 +126,7 @@ describe('api', () => {
     it('defaults request params to {}', async () => {
       await api.get('test-endpoint');
 
-      expect(Axios.request).toBeCalledWith({
+      expect(axiosRequest).toBeCalledWith({
         headers: { Accept: 'application/json' },
         method: 'get',
         params: {},

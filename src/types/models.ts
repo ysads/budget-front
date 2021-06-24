@@ -1,5 +1,7 @@
 import { Currency } from '@/support/currencies';
 
+export type NullishDate = string | null | undefined;
+
 export type AccountNature = 'tracking' | 'budget';
 
 export type AccountTotal = 'clearedBalance' | 'unclearedBalance' | 'balance';
@@ -11,7 +13,7 @@ export interface Account {
   balance: number;
   budgetId?: string;
   clearedBalance: number;
-  closedAt: Date | null;
+  closedAt: NullishDate;
   name: string;
   nature: AccountNature;
   type: AccountType;
@@ -81,7 +83,7 @@ export interface Payee {
 export interface Transaction {
   id?: string;
   amount: number;
-  clearedAt: string | null;
+  clearedAt: NullishDate;
   destinationId: string | undefined;
   memo: string | undefined;
   monthlyBudgetId: string | undefined;

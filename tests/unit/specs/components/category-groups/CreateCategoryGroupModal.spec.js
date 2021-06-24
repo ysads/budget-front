@@ -9,7 +9,7 @@ const form = {
   name: faker.commerce.department(),
 };
 
-const factory = (args = {}) =>
+const factory = () =>
   setupComponent(CreateCategoryGroupModal, {
     props: { budget },
     renderSlots: true,

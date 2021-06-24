@@ -1,5 +1,5 @@
 import { config } from '@vue/test-utils';
-import * as _ from 'vue-router';
+import 'vue-router';
 
 // Mock api fns
 jest.mock('@/api', () => ({
@@ -13,9 +13,9 @@ jest.mock('@/api', () => ({
 // Mock i18n functions
 jest.mock('@/i18n', () => ({
   global: {
-    t: (str, params = null) =>
+    t: (str: string, params = null) =>
       params ? `${str}${JSON.stringify(params)}` : str,
-    d: (str, format) => `${str}${format}`,
+    d: (str: string, format: string) => `${str}${format}`,
   },
 }));
 

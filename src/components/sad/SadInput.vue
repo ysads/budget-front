@@ -26,8 +26,9 @@
 import SadLabel from './SadLabel.vue';
 import SadTip from './SadTip.vue';
 import useTip from '@/use/tip';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
   props: {
     label: {
       type: String,
@@ -61,7 +62,7 @@ export default {
 
   emits: ['update:model-value'],
 
-  setup(props: any) {
+  setup(props) {
     const { errorClass, tipText, tipVariant } = useTip(props);
 
     return { errorClass, tipText, tipVariant };
@@ -71,7 +72,7 @@ export default {
     SadLabel,
     SadTip,
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

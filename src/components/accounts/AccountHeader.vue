@@ -53,15 +53,16 @@
 
 <script lang="ts">
 import { localize } from '@/support/money';
+import { Budget } from '@/types/models';
 import useI18n from '@/use/i18n';
-import { computed } from '@vue/runtime-core';
+import { computed, defineComponent, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'AccountHeader',
 
   props: {
     budget: {
-      type: Object,
+      type: Object as PropType<Budget>,
       required: true,
     },
     name: {
@@ -78,7 +79,7 @@ export default {
     },
   },
 
-  setup(props: any) {
+  setup(props) {
     const { t } = useI18n('AccountHeader');
     const current = computed(() => props.cleared + props.uncleared);
 
@@ -90,7 +91,7 @@ export default {
       return val >= 0 ? 'positive' : 'negative';
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
@@ -129,7 +130,6 @@ export default {
     &-group {
       align-items: center;
       display: flex;
-
       margin-top: $base * 4;
 
       @include breakpoint(md) {

@@ -24,10 +24,10 @@ import { openBudget } from '@/repositories/budgets';
 import { getMonthlyBudgets } from '@/repositories/monthly-budgets';
 import { currentMonth, getMonthByIso } from '@/repositories/months';
 import { useRoute, useRouter } from 'vue-router';
-import { computed, ref, watchEffect } from '@vue/runtime-core';
+import { computed, defineComponent, ref, watchEffect } from 'vue';
 import { IsoMonth } from '@/types/models';
 
-export default {
+export default defineComponent({
   name: 'Budget',
 
   components: {
@@ -65,5 +65,5 @@ export default {
 
     return { isLoading, currentMonth, openBudget, updateCurrentMonth };
   },
-};
+});
 </script>

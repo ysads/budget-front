@@ -9,15 +9,15 @@ $--font-path: '~element-plus/lib/theme-chalk/fonts';
 }
 
 .el-collapse-item__header {
-  flex-flow: row-reverse;
   background: transparent !important;
   border: 0 !important;
   color: var(--sidebar-text);
+  flex-flow: row-reverse;
 }
 
 .el-collapse-item__wrap {
-  border: 0 !important;
   background: transparent !important;
+  border: 0 !important;
 }
 
 .el-collapse-item__content {
@@ -33,9 +33,8 @@ $--font-path: '~element-plus/lib/theme-chalk/fonts';
 .el-form--label-top .el-form-item__label {
   font-size: 0.9rem;
   line-height: 1.25rem;
-  padding: 0;
-
   margin-bottom: $base * 2;
+  padding: 0;
 
   &::before {
     content: '';

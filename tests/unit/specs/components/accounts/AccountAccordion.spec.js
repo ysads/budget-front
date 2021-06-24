@@ -19,6 +19,7 @@ const factory = (args = {}) => {
     },
     route: args.route,
     renderSlots: true,
+    withMount: args.withMount,
   });
 };
 
@@ -30,7 +31,7 @@ describe('AccountAccordion', () => {
     expect(item.props().startOpen).toEqual(true);
   });
   it('renders account totals', () => {
-    const wrapper = factory();
+    const wrapper = factory({ withMount: true });
     const item = wrapper.find("[data-test='title']");
 
     const total = accounts.reduce((total, a) => total + a.balance, 0);

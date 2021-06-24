@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
+import { PropType, computed, defineComponent } from 'vue';
 
 type IconColor = 'green' | 'info' | 'inherit' | 'primary' | 'red' | 'yellow';
 type IconSize = 'small' | 'medium';
@@ -66,6 +66,7 @@ export default defineComponent({
   &--small {
     font-size: 16px;
   }
+
   &--medium {
     font-size: 24px;
   }
@@ -73,18 +74,23 @@ export default defineComponent({
   &--green {
     color: var(--color-success);
   }
+
   &--info {
     color: var(--color-info);
   }
+
   &--inherit {
     color: inherit;
   }
+
   &--primary {
     color: var(--color-primary);
   }
+
   &--red {
     color: var(--color-error);
   }
+
   &--yellow {
     color: var(--color-warning);
   }

@@ -5,6 +5,34 @@ import { Currency } from '@/support/currencies';
 import { AccountTotal } from '@/types/models';
 
 describe('Money', () => {
+  describe('#format', () => {
+    it('formats value using settings', () => {
+      const value = 429829;
+      const settings = {
+        decimal: '.',
+        thousands: '_',
+        prefix: '¥ ',
+        precision: 2,
+      };
+
+      expect(money.format(value, settings)).toEqual('¥ 4_298.29');
+    });
+
+    describe('when withCurrency is false', () => {
+      it('formats value using without prefix', () => {
+        const value = 429829;
+        const settings = {
+          decimal: '.',
+          thousands: '_',
+          prefix: '¥ ',
+          precision: 2,
+        };
+
+        expect(money.format(value, settings, false)).toEqual('4_298.29');
+      });
+    });
+  });
+
   describe('#cleanMask', () => {
     it('converts string with decimal and thousands markers to float', () => {
       const budget = factories.budget.build({ currency: 'GBP' });

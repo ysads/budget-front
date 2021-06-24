@@ -84,10 +84,10 @@ import SadIcon from '@/components/sad/SadIcon.vue';
 import useI18n from '@/use/i18n';
 import { budgetAccounts, trackingAccounts } from '@/repositories/accounts';
 import { openBudget } from '@/repositories/budgets';
-import { computed, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-export default {
+export default defineComponent({
   name: 'DashboardMenu',
 
   components: {
@@ -100,9 +100,6 @@ export default {
   setup() {
     const { t } = useI18n();
     const modalVisible = ref(false);
-    // const anyAccounts = computed(() => {
-    //   return budgetAccounts.value?.length || trackingAccounts.value?.length;
-    // });
 
     const currentRoute = useRoute();
     const activeClass = (route: string) => {
@@ -113,7 +110,6 @@ export default {
 
     return {
       activeClass,
-      // anyAccounts,
       budgetAccounts,
       modalVisible,
       openBudget,
@@ -122,7 +118,7 @@ export default {
       trackingAccounts,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
@@ -180,8 +176,8 @@ export default {
       background: var(--sidebar-button-bg);
       border: 0;
       color: var(--sidebar-text);
-      width: 100%;
       margin-top: $base * 5;
+      width: 100%;
 
       &:hover {
         background: var(--sidebar-focus);
@@ -191,15 +187,14 @@ export default {
     &--empty {
       background: var(--sidebar-active);
       border-radius: $radius-8;
-      padding: $base * 4;
       margin-top: $base * 6;
+      padding: $base * 4;
 
       .tip {
         color: var(--sidebar-tip);
+        margin-top: $base * 4;
 
         @extend %caption;
-
-        margin-top: $base * 4;
       }
     }
   }

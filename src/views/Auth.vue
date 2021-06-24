@@ -19,6 +19,7 @@ export default defineComponent({
   &__main {
     margin: 0 auto;
     width: 100%;
+
     @include breakpoint(md) {
       width: 400px;
     }

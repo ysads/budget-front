@@ -1,9 +1,21 @@
 import { categoriesGroupedByGroupId } from '@/repositories/categories';
 import { categoryGroupById } from '@/repositories/category-groups';
-import { computed } from 'vue';
+import { computed, ComputedRef } from 'vue';
 import useI18n from '@/use/i18n';
 
-export default function useBudgetCategories() {
+interface BudgetCategoryOption {
+  label: string | undefined;
+  value: string;
+}
+
+interface BudgetCategoryGroupOption {
+  label: string | undefined;
+  options: BudgetCategoryOption[];
+}
+
+export default function useBudgetCategories(): ComputedRef<
+  BudgetCategoryGroupOption[]
+> {
   const { st } = useI18n('budgetCategories');
 
   const inflowCategory = {

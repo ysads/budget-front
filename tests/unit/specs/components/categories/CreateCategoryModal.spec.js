@@ -2,20 +2,15 @@ import * as categoryGroupsRepository from '@/repositories/category-groups';
 import * as categoriesRepository from '@/repositories/categories';
 import CreateCategoryModal from '@/components/categories/CreateCategoryModal';
 import factories from '#/factories';
-import faker from 'faker';
 import setupComponent from '#/setup-component';
 
 const budget = factories.budget.build();
 const categoryGroups = factories.categoryGroup.buildList(2);
-const form = {
-  categoryGroupId: categoryGroups[0].id,
-  name: faker.commerce.department(),
-};
 
 categoryGroupsRepository.categoryGroups.value = categoryGroups;
 categoriesRepository.createCategory = jest.fn();
 
-const factory = (args = {}) =>
+const factory = () =>
   setupComponent(CreateCategoryModal, {
     props: { budget },
     renderSlots: true,

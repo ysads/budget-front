@@ -45,10 +45,10 @@ import SadSelect from '@/components/sad/SadSelect.vue';
 import useI18n from '@/use/i18n';
 import { categoryGroups } from '@/repositories/category-groups';
 import { createCategory } from '@/repositories/categories';
-import { reactive, PropType, SetupContext } from 'vue';
+import { PropType, SetupContext, reactive, defineComponent } from 'vue';
 import { Budget } from '@/types/models';
 
-export default {
+export default defineComponent({
   name: 'CreateCategoryModal',
 
   props: {
@@ -67,7 +67,7 @@ export default {
     SadSelect,
   },
 
-  setup(props: any, { emit }: SetupContext) {
+  setup(props, { emit }: SetupContext) {
     const { st, t } = useI18n('CreateCategoryModal');
     const form = reactive({
       budgetId: props.budget.id,
@@ -94,7 +94,7 @@ export default {
       t,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

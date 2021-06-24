@@ -9,6 +9,6 @@ export const openBudget = ref<Budget>({
   name: 'Budget',
 });
 
-export const getBudgetById = async (id: string) => {
+export const getBudgetById = async (id: string): Promise<void> => {
   openBudget.value = await get(`budgets/${id}`);
 };

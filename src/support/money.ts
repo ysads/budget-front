@@ -14,7 +14,9 @@ interface CurrencySettings {
   precision: number;
 }
 
-export const currencySettings = ({ currency }: Currenciable) => ({
+export const currencySettings = ({
+  currency,
+}: Currenciable): CurrencySettings => ({
   decimal: ',',
   thousands: '.',
   prefix: `${currencies[currency]} `,
@@ -25,7 +27,7 @@ export const fromCents = (cents: number): number => cents / 100.0;
 
 export const toCents = (units: number): number => units * 100;
 
-export const cleanMask = (value: string, budget: Budget) => {
+export const cleanMask = (value: string, budget: Budget): number => {
   const settings = currencySettings(budget);
 
   return parseFloat(
@@ -36,13 +38,19 @@ export const cleanMask = (value: string, budget: Budget) => {
   );
 };
 
-export const currencyToCents = (value: number | string, budget: Budget) => {
+export const currencyToCents = (
+  value: number | string,
+  budget: Budget,
+): number => {
   const unmasked = typeof value === 'number' ? value : cleanMask(value, budget);
 
   return toCents(unmasked);
 };
 
-export const totalBalance = (accounts: Account[], field: AccountTotal) => {
+export const totalBalance = (
+  accounts: Account[],
+  field: AccountTotal,
+): number => {
   if (!accounts.length) return 0;
 
   return accounts
@@ -50,7 +58,7 @@ export const totalBalance = (accounts: Account[], field: AccountTotal) => {
     .reduce((total, balance) => total + balance);
 };
 
-export const localize = (value: number, budget: Budget) => {
+export const localize = (value: number, budget: Budget): string => {
   const settings = currencySettings(budget);
 
   return accounting.formatMoney(
@@ -78,6 +86,6 @@ export const format = (
   );
 };
 
-export const balanceClasses = (val: number) => {
+export const balanceClasses = (val: number): string => {
   return val >= 0 ? 'positive' : 'negative';
 };

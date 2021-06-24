@@ -18,8 +18,8 @@
 <script lang="ts">
 import SadAlert from '@/components/sad/SadAlert.vue';
 import uuid from 'uuid-random';
-import { eventBus, Events } from '@/events';
-import { defineComponent, onMounted, ref } from 'vue';
+import { Events, eventBus } from '@/events';
+import { defineComponent, onMounted, Ref, ref } from 'vue';
 
 interface Alert {
   id: string;
@@ -31,7 +31,7 @@ export default defineComponent({
   components: {
     SadAlert,
   },
-  setup() {
+  setup(): { alerts: Ref<Alert[]>; destroy: (id: string) => void } {
     const alerts = ref<Alert[]>([]);
 
     const destroy = (id: string) => {

@@ -4,7 +4,7 @@ import { upsert } from '@/support/collection';
 import { Account, AccountType } from '@/types/models';
 import { BudgetReq } from '@/types/api';
 
-interface ApiAccountCreateRequest {
+interface AccountCreateReq {
   accountName: string;
   accountType: AccountType;
   budgetId: string;
@@ -25,20 +25,20 @@ export const trackingAccounts = computed(() => {
 export const createAccount = async ({
   budgetId,
   ...rest
-}: ApiAccountCreateRequest) => {
+}: AccountCreateReq): Promise<void> => {
   const account = await post(`budgets/${budgetId}/accounts`, rest);
 
   accounts.value = [...accounts.value, account];
 };
 
-export const getAccounts = async ({ budgetId }: BudgetReq) => {
+export const getAccounts = async ({ budgetId }: BudgetReq): Promise<void> => {
   accounts.value = await get(`budgets/${budgetId}/accounts`);
 };
 
-export const getAccountById = (id: string) => {
+export const getAccountById = (id: string): Account | undefined => {
   return accounts.value.find((a) => a.id === id);
 };
 
-export const upsertAccount = async (account: Account) => {
+export const upsertAccount = async (account: Account): Promise<void> => {
   accounts.value = upsert<Account>(accounts.value, account);
 };

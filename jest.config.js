@@ -10,6 +10,7 @@ module.exports = {
     'src/setup/*',
     'src/components/sad/SadSwitch.vue',
     'src/components/sad/SadDatePicker.vue',
+    'src/api/index.ts',
   ],
   coverageThreshold: {
     global: {
@@ -24,7 +25,7 @@ module.exports = {
     '\\.(css|scss)$': '<rootDir>/tests/__mocks__/style-mock.js',
   },
   preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel',
-  setupFiles: ['<rootDir>/tests/unit/setup'],
+  setupFiles: ['<rootDir>/tests/unit/setup.ts'],
   transform: {
     '^.+\\.vue$': 'vue-jest',
   },

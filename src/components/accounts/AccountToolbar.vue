@@ -23,12 +23,13 @@
 import SadButton from '@/components/sad/SadButton.vue';
 import TransactionDetails from '@/components/transactions/TransactionDetails.vue';
 import useI18n from '@/use/i18n';
-import { defineComponent, reactive } from 'vue';
+import { Budget } from '@/types/models';
+import { defineComponent, PropType, reactive } from 'vue';
 
 export default defineComponent({
   props: {
     account: {
-      type: Object,
+      type: Object as PropType<Budget>,
       required: true,
     },
   },

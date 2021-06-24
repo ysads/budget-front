@@ -1,4 +1,4 @@
-import { eventBus, Events } from '@/events';
+import { Events, eventBus } from '@/events';
 import alert from '@/support/alert';
 
 jest.mock('@/events', () => ({

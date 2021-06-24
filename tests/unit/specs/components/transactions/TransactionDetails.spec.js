@@ -42,6 +42,7 @@ const factory = (args = {}) => {
       originAccount: args.account || account,
     },
     renderSlots: true,
+    withMount: args.withMount,
   });
 };
 
@@ -124,7 +125,7 @@ describe('TransactionDetails', () => {
 
   describe('when save button emits click', () => {
     it('creates a new monthly budget', async () => {
-      const wrapper = factory();
+      const wrapper = factory({ withMount: true });
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -132,7 +133,7 @@ describe('TransactionDetails', () => {
     });
 
     it('emits close', async () => {
-      const wrapper = factory();
+      const wrapper = factory({ withMount: true });
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -140,7 +141,7 @@ describe('TransactionDetails', () => {
     });
 
     it('alerts an success', async () => {
-      const wrapper = factory();
+      const wrapper = factory({ withMount: true });
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -151,7 +152,7 @@ describe('TransactionDetails', () => {
 
     describe('and request fails', () => {
       it('handles api error', async () => {
-        const wrapper = factory();
+        const wrapper = factory({ withMount: true });
         const error = new Error();
 
         transactionsRepository.createTransaction.mockResolvedValueOnce(

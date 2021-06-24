@@ -31,7 +31,6 @@ const factory = (args = {}) => {
   return setupComponent(CreateAccountModal, {
     data: args.data,
     props: { budget: budget },
-    mocks: { BaseModal: true },
     renderSlots: true,
   });
 };

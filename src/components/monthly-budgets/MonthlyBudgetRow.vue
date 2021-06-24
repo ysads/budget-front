@@ -22,28 +22,29 @@
 </template>
 
 <script lang="ts">
-import { localize, balanceClasses } from '@/support/money';
-import { computed } from 'vue';
+import { balanceClasses, localize } from '@/support/money';
+import { Budget, Category, MonthlyBudget } from '@/types/models';
+import { computed, defineComponent, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'MonthlyBudgetRow',
 
   props: {
     budget: {
-      type: Object,
+      type: Object as PropType<Budget>,
       required: true,
     },
     category: {
-      type: Object,
+      type: Object as PropType<Category>,
       required: true,
     },
     monthlyBudget: {
-      type: Object,
+      type: Object as PropType<MonthlyBudget>,
       required: true,
     },
   },
 
-  setup(props: any) {
+  setup(props) {
     const availableClass = computed(() => {
       return props.monthlyBudget.available === 0
         ? 'zero'
@@ -55,7 +56,7 @@ export default {
       localize,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

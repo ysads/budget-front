@@ -11,6 +11,7 @@ const i18n = createI18n({
     en,
     'pt-BR': ptBR,
   },
+  // @ts-expect-error for some reason flow types aren't being recognized by ts
   datetimeFormats,
   numberFormats,
 });

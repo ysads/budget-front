@@ -21,6 +21,6 @@ export const getMe = async (): Promise<User> => {
   return currentUser.value;
 };
 
-export const signIn = (user: ApiSignInRequest) => {
+export const signIn = (user: ApiSignInRequest): Promise<User> => {
   return post('sign_in', { user });
 };

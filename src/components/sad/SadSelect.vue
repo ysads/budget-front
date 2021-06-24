@@ -56,7 +56,7 @@ import SadLabel from './SadLabel.vue';
 import SadTip from './SadTip.vue';
 import useTip from '@/use/tip';
 import { defineComponent } from 'vue';
-import { ElSelect, ElOptionGroup, ElOption } from 'element-plus';
+import { ElOption, ElOptionGroup, ElSelect } from 'element-plus';
 
 export default defineComponent({
   props: {

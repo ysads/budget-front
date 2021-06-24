@@ -1,7 +1,7 @@
 import AlertContainer from '@/components/AlertContainer.vue';
 import faker from 'faker';
 import setupComponent from '#/setup-component';
-import { eventBus, Events } from '@/events';
+import { Events, eventBus } from '@/events';
 
 const buildAlert = () => ({
   message: faker.name.findName(),

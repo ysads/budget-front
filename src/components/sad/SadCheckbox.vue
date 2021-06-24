@@ -109,13 +109,13 @@ export default defineComponent({
   }
 
   &__label {
+    color: var(--text-default);
     cursor: pointer;
     display: flex;
     flex-direction: column;
     height: 6 * $base;
     justify-content: center;
     padding-left: 6 * $base;
-    color: var(--text-default);
 
     &::before,
     &::after {

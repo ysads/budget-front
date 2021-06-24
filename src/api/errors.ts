@@ -14,7 +14,7 @@ export const MAPPED_ERRORS = [
   'monthly-budgets/already-exists',
 ];
 
-export const handleApiError = (err: ErrorResponse) => {
+export const handleApiError = (err: ErrorResponse): void => {
   const { t } = useI18n('errors');
 
   const errorCode = err.response?.data?.code;

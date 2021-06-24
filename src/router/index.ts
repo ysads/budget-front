@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {

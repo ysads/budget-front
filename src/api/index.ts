@@ -1,8 +1,13 @@
-import Axios, { AxiosRequestConfig, Method } from 'axios';
 import JsonApi from './json-api';
 import snakecaseKeys from 'snakecase-keys';
+import Axios, { AxiosRequestConfig, Method } from 'axios';
 
-async function request(method: Method, endpoint: string, params = {}) {
+async function request(
+  method: Method,
+  endpoint: string,
+  params: Record<string, unknown>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> {
   const apiUrl: string = process.env.VUE_APP_API_URL || 'http://localhost:9091';
   const options: AxiosRequestConfig = {
     headers: {
@@ -28,11 +33,13 @@ async function request(method: Method, endpoint: string, params = {}) {
   return JsonApi.parse(response.data);
 }
 
-export const get = (endpoint: string, params = {}) =>
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const get = (endpoint: string, params = {}): Promise<any> =>
   request('get', endpoint, params);
-export const post = (endpoint: string, params = {}) =>
+export const post = (endpoint: string, params = {}): Promise<any> =>
   request('post', endpoint, params);
-export const put = (endpoint: string, params = {}) =>
+export const put = (endpoint: string, params = {}): Promise<any> =>
   request('put', endpoint, params);
-export const del = (endpoint: string, params = {}) =>
+export const del = (endpoint: string, params = {}): Promise<any> =>
   request('delete', endpoint, params);
+/* eslint-enable @typescript-eslint/no-explicit-any */

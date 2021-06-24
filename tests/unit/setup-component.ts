@@ -1,4 +1,10 @@
-import { shallowMount, mount } from '@vue/test-utils';
+import {
+  mount,
+  MountingOptions,
+  shallowMount,
+  VueWrapper,
+} from '@vue/test-utils';
+import { ComponentPublicInstance, DefineComponent } from 'vue';
 import * as router from 'vue-router';
 
 const mockRoute: router.RouteLocationNormalized = {
@@ -14,32 +20,33 @@ const mockRoute: router.RouteLocationNormalized = {
 };
 
 const mockRouter: router.Router = {
-  // @ts-ignore
+  // @ts-expect-error: we just want to mock what is needed, not everything
   currentRoute: mockRoute,
   push: () => Promise.resolve(),
 };
 
-interface SetupComponentArgs {
-  props?: Record<string, any>;
-  mocks?: Record<string, any>;
-  slots?: Record<string, any>;
-  data?: Record<string, any>;
+interface SetupComponentArgs extends MountingOptions<never> {
   route?: router.RouteLocationNormalized;
-  router?: any;
+  router?: router.Router;
   renderSlots?: boolean;
   withMount?: boolean;
 }
 
 export default function setupComponent(
-  component: any,
+  component: DefineComponent,
   args: SetupComponentArgs = {},
-) {
+): VueWrapper<ComponentPublicInstance> {
   const mountingFn = args.withMount ? mount : shallowMount;
+  const useRoute = router.useRoute as jest.MockedFunction<
+    typeof router.useRoute
+  >;
 
-  // @ts-ignore
-  router.useRoute.mockReturnValueOnce(args.route || mockRoute);
-  // @ts-ignore
-  router.useRouter.mockReturnValueOnce(args.router || mockRouter);
+  const useRouter = router.useRouter as jest.MockedFunction<
+    typeof router.useRouter
+  >;
+
+  useRoute.mockReturnValueOnce(args.route || mockRoute);
+  useRouter.mockReturnValueOnce(args.router || mockRouter);
 
   return mountingFn(component, {
     props: args.props,
@@ -48,7 +55,6 @@ export default function setupComponent(
       return args.data || {};
     },
     global: {
-      mocks: args.mocks,
       renderStubDefaultSlot: args.renderSlots,
     },
   });

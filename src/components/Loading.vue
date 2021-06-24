@@ -8,12 +8,6 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'Loading',
-};
-</script>
-
 <style scoped>
 .spinner-wrapper {
   align-items: center;
@@ -54,6 +48,7 @@ export default {
   100% {
     -webkit-transform: scale(0);
   }
+
   40% {
     -webkit-transform: scale(1);
   }

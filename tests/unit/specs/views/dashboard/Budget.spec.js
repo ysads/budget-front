@@ -1,12 +1,12 @@
+import * as budgetsRepository from '@/repositories/budgets';
+import * as monthsRepository from '@/repositories/months';
+import * as monthlyBudgetsRepository from '@/repositories/monthly-budgets';
+import { isoMonth } from '@/support/date';
 import Budget from '@/views/dashboard/Budget';
 import factories from '#/factories';
 import flushPromises from 'flush-promises';
 import MockDate from 'mockdate';
 import setupComponent from '#/setup-component';
-import { isoMonth } from '@/support/date';
-import * as budgetsRepository from '@/repositories/budgets';
-import * as monthsRepository from '@/repositories/months';
-import * as monthlyBudgetsRepository from '@/repositories/monthly-budgets';
 
 const month = factories.month.build();
 const budget = factories.budget.build();

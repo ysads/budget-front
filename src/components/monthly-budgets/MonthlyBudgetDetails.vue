@@ -52,16 +52,23 @@ import {
   createMonthlyBudget,
   updateMonthlyBudget,
 } from '@/repositories/monthly-budgets';
-import { currencyToCents, currencySettings, format } from '@/support/money';
+import { currencySettings, currencyToCents, format } from '@/support/money';
 import { currentMonth } from '@/repositories/months';
-import { computed, reactive, SetupContext } from 'vue';
+import {
+  SetupContext,
+  computed,
+  reactive,
+  defineComponent,
+  PropType,
+} from 'vue';
+import { MonthlyBudget } from '@/types/models';
 
-export default {
+export default defineComponent({
   name: 'MonthlyBudgetDetails',
 
   props: {
     monthlyBudget: {
-      type: Object,
+      type: Object as PropType<MonthlyBudget>,
       default: () => ({}),
     },
   },
@@ -75,19 +82,20 @@ export default {
     SadSelect,
   },
 
-  setup(props: any, { emit }: SetupContext) {
+  setup(props, { emit }: SetupContext) {
     const { st, t } = useI18n('MonthlyBudgetDetails');
+
+    const isEdit = computed(() => Boolean(props.monthlyBudget.id));
 
     const moneySettings = currencySettings(openBudget.value);
 
     const form = reactive({
       id: props.monthlyBudget.id || '',
       categoryId: props.monthlyBudget.categoryId || '',
-      budgeted:
-        format(props.monthlyBudget.budgeted, moneySettings, false) || '',
+      budgeted: isEdit.value
+        ? format(props.monthlyBudget.budgeted, moneySettings, false)
+        : '',
     });
-
-    const isEdit = computed(() => Boolean(form.id));
 
     const categoriesGrouped = categoryGroups.value.map((group) => ({
       label: group.name,
@@ -105,7 +113,7 @@ export default {
           ...form,
           budgeted: currencyToCents(form.budgeted, openBudget.value),
           budgetId: openBudget.value.id,
-          monthId: currentMonth.value.id || '',
+          monthId: currentMonth.value.id,
         });
         alert.success(isEdit.value ? st('updated') : st('created'));
         emit('close');
@@ -126,7 +134,7 @@ export default {
       t,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

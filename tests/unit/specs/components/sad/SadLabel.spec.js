@@ -3,7 +3,7 @@ import setupComponent from '#/setup-component';
 
 const DummyInput = '<input type="text" id="input" ref="input" />';
 
-const factory = (args = {}) =>
+const factory = () =>
   setupComponent(SadLabel, {
     props: {
       text: 'label-text',

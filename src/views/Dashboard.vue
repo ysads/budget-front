@@ -157,8 +157,8 @@ export default defineComponent({
 .fullscreen {
   display: block;
   height: 100%;
+  padding-top: $base * 16;
   position: fixed;
   width: 100%;
-  padding-top: $base * 16;
 }
 </style>

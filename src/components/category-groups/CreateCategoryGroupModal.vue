@@ -36,15 +36,16 @@ import {
   categoryGroups,
   createCategoryGroup,
 } from '@/repositories/category-groups';
+import { Budget } from '@/types/models';
 import useI18n from '@/use/i18n';
-import { reactive, SetupContext } from '@vue/runtime-core';
+import { SetupContext, reactive, defineComponent, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'CreateCategoryGroupModal',
 
   props: {
     budget: {
-      type: Object,
+      type: Object as PropType<Budget>,
       required: true,
     },
   },
@@ -57,7 +58,7 @@ export default {
     SadModal,
   },
 
-  setup(props: any, { emit }: SetupContext) {
+  setup(props, { emit }: SetupContext) {
     const { st, t } = useI18n('CreateCategoryGroupModal');
 
     const form = reactive({
@@ -79,7 +80,7 @@ export default {
       t,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
@@ -89,8 +90,8 @@ export default {
   }
 
   &__assistive {
-    margin-top: $base * 1;
     margin-bottom: $base * 4;
+    margin-top: $base * 1;
   }
 
   &__item-input {

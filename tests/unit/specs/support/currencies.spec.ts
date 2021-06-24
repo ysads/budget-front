@@ -1,4 +1,4 @@
-import currencies from '@/support/currencies'
+import currencies from '@/support/currencies';
 
 describe('currencies', () => {
   it('maps every ISO abbrev to its corresponding symbol', () => {
@@ -176,6 +176,6 @@ describe('currencies', () => {
       YER: '﷼',
       ZAR: 'R',
       ZWD: 'Z$',
-    })
-  })
-})
+    });
+  });
+});

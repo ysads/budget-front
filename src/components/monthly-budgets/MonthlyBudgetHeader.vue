@@ -17,17 +17,19 @@
 
 <script lang="ts">
 import { localize, totalBalance } from '@/support/money';
+import { Budget, CategoryGroup } from '@/types/models';
+import { defineComponent, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'MonthlyBudgetHeader',
 
   props: {
     budget: {
-      type: Object,
+      type: Object as PropType<Budget>,
       required: true,
     },
     categoryGroup: {
-      type: Object,
+      type: Object as PropType<CategoryGroup>,
       required: true,
     },
     monthlyBudgets: {
@@ -42,7 +44,7 @@ export default {
       totalBalance,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

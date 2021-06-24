@@ -17,7 +17,7 @@ export const currentMonth = ref<Month>({
   toBeBudgeted: 0,
 });
 
-export const getMonthByIso = async (params: ApiMonthRequest) => {
+export const getMonthByIso = async (params: ApiMonthRequest): Promise<void> => {
   const month = await get(
     `budgets/${params.budgetId}/months/${params.isoMonth}`,
   );

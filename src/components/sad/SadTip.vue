@@ -5,11 +5,11 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue';
+import { defineComponent, PropType } from 'vue';
 
 type TipVariant = 'error' | 'info';
 
-export default {
+export default defineComponent({
   name: 'SadTip',
 
   props: {
@@ -22,7 +22,7 @@ export default {
       default: 'info',
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

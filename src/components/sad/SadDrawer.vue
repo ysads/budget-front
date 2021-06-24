@@ -30,9 +30,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import SadIcon from './SadIcon.vue';
 
-export default {
+export default defineComponent({
   name: 'SadDrawer',
   components: {
     SadIcon,
@@ -44,7 +45,7 @@ export default {
     },
   },
   emits: ['close'],
-};
+});
 </script>
 
 <style lang="scss">
@@ -91,8 +92,6 @@ export default {
     flex-direction: row-reverse;
     font-size: 1.75rem;
     justify-content: space-between;
-
-    margin-bottom: $base * 6;
     margin-bottom: $base * 6;
 
     &-title {
@@ -105,9 +104,9 @@ export default {
       color: var(--modal-close-btn);
       cursor: pointer;
 
-      &:active {
-        // @include scale-90;
-      }
+      // &:active {
+      //   @include scale-90;
+      // }
     }
   }
 
@@ -116,9 +115,8 @@ export default {
   }
 
   &__footer {
-    width: 100%;
-
     margin-top: $base * 4;
+    width: 100%;
   }
 
   &__group {

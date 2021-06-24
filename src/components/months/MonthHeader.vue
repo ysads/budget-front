@@ -43,16 +43,17 @@ import { balanceClasses, localize } from '@/support/money';
 import { addMonths, isoMonthToDate } from '@/support/date';
 import useI18n from '@/use/i18n';
 import SadIcon from '@/components/sad/SadIcon.vue';
-import { SetupContext } from '@vue/runtime-core';
+import { defineComponent, PropType, SetupContext } from 'vue';
+import { Budget, Month } from '@/types/models';
 
-export default {
+export default defineComponent({
   props: {
     budget: {
-      type: Object,
+      type: Object as PropType<Budget>,
       required: true,
     },
     month: {
-      type: Object,
+      type: Object as PropType<Month>,
       required: true,
     },
   },
@@ -61,7 +62,7 @@ export default {
     SadIcon,
   },
 
-  setup(props: any, { emit }: SetupContext) {
+  setup(props, { emit }: SetupContext) {
     const { d, t } = useI18n('MonthHeader');
 
     const updateMonth = (delta: number) => {
@@ -71,7 +72,7 @@ export default {
 
     return { balanceClasses, d, isoMonthToDate, localize, t, updateMonth };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

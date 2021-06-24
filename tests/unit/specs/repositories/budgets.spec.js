@@ -1,31 +1,31 @@
-import * as api from '@/api'
-import * as repository from '@/repositories/budgets'
-import factories from '#/factories'
-import faker from 'faker'
+import * as api from '@/api';
+import * as repository from '@/repositories/budgets';
+import factories from '#/factories';
+import faker from 'faker';
 
 describe('BudgetsRepository', () => {
   beforeEach(() => {
-    repository.openBudget.value = {}
-  })
+    repository.openBudget.value = {};
+  });
 
   describe('#getBudgetById', () => {
     it('dispatches a GET to api', async () => {
-      const id = faker.datatype.uuid
+      const id = faker.datatype.uuid;
 
-      await repository.getBudgetById(id)
+      await repository.getBudgetById(id);
 
-      expect(api.get).toHaveBeenCalledWith(`budgets/${id}`)
-    })
+      expect(api.get).toHaveBeenCalledWith(`budgets/${id}`);
+    });
 
     it('updates monthly budgets with newly-created resource', async () => {
-      const id = faker.datatype.uuid
-      const budget = factories.budget.build()
+      const id = faker.datatype.uuid;
+      const budget = factories.budget.build();
 
-      api.get.mockResolvedValueOnce(budget)
+      api.get.mockResolvedValueOnce(budget);
 
-      await repository.getBudgetById(id)
+      await repository.getBudgetById(id);
 
-      expect(repository.openBudget.value).toEqual(budget)
-    })
-  })
-})
+      expect(repository.openBudget.value).toEqual(budget);
+    });
+  });
+});

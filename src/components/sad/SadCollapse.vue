@@ -49,33 +49,37 @@ $opening-bezier: cubic-bezier(0.06, 0.82, 0.57, 1.03);
 $closing-bezier: cubic-bezier(0.74, 0.01, 1, 0.57);
 
 .header {
-  display: flex;
-  cursor: pointer;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
   align-items: center;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  outline: none;
+  text-align: left;
+  width: 100%;
 }
+
 .caret {
   margin-left: $base;
   margin-right: $base * 3;
   transition: transform 0.3s ease-in-out;
 }
+
 .content {
   max-height: 100vh;
   overflow: hidden;
   transition: max-height 0.3s $closing-bezier;
 }
+
 .collapsed {
   .caret {
     transform: rotate(-90deg);
     transition: transform 0.3s ease-in-out;
   }
+
   .content {
+    max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s $opening-bezier;
-    max-height: 0;
   }
 }
 </style>

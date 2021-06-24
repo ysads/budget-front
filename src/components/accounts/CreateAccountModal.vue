@@ -52,15 +52,15 @@ import { createAccount } from '@/repositories/accounts';
 import { ACCOUNT_TYPES } from '@/constants/account';
 import { currencyToCents } from '@/support/money';
 import { handleApiError } from '@/api/errors';
-import { reactive, SetupContext } from 'vue';
-import { AccountType } from '@/types/models';
+import { SetupContext, reactive, defineComponent, PropType } from 'vue';
+import { AccountType, Budget } from '@/types/models';
 
-export default {
+export default defineComponent({
   name: 'CreateAccountModal',
 
   props: {
     budget: {
-      type: Object,
+      type: Object as PropType<Budget>,
       required: true,
     },
   },
@@ -74,7 +74,7 @@ export default {
     SadSelect,
   },
 
-  setup(props: any, { emit }: SetupContext) {
+  setup(props, { emit }: SetupContext) {
     const { st, t } = useI18n('CreateAccountModal');
 
     const form = reactive({
@@ -105,7 +105,7 @@ export default {
 
     return { accountTypes, form, handleSubmit, st, t };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
@@ -115,8 +115,8 @@ export default {
   }
 
   &__assistive {
-    margin-top: $base * 1;
     margin-bottom: $base * 4;
+    margin-top: $base * 1;
   }
 
   &__item + &__item {

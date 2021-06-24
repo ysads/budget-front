@@ -1,12 +1,11 @@
 import BudgetToolbar from '@/components/budgets/BudgetToolbar';
 import factories from '#/factories';
-import * as repository from '@/repositories/budgets';
 import setupComponent from '#/setup-component';
+import * as repository from '@/repositories/budgets';
 
 const openBudget = factories.budget.build();
 
-const factory = (args = {}) =>
-  setupComponent(BudgetToolbar, { renderSlots: true });
+const factory = () => setupComponent(BudgetToolbar, { renderSlots: true });
 
 repository.openBudget.value = openBudget;
 

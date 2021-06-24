@@ -96,13 +96,13 @@ import { handleApiError } from '@/api/errors';
 import { openBudget } from '@/repositories/budgets';
 import { payees } from '@/repositories/payees';
 import {
+  PropType,
+  SetupContext,
   computed,
   defineComponent,
-  PropType,
   reactive,
-  SetupContext,
 } from 'vue';
-import { Account } from '@/types/models';
+import { Account, NullishDate } from '@/types/models';
 
 export default defineComponent({
   name: 'TransactionDetails',
@@ -126,7 +126,7 @@ export default defineComponent({
     SadSwitch,
   },
 
-  setup(props: any, { emit }: SetupContext) {
+  setup(props, { emit }: SetupContext) {
     const { t, st } = useI18n('TransactionDetails');
     const categoryOptions = useBudgetCategories();
 
@@ -139,10 +139,10 @@ export default defineComponent({
       })),
     );
 
-    const form: any = reactive({
+    const form = reactive({
       amount: '',
       budgetId: openBudget.value.id,
-      clearedAt: new Date().toISOString(),
+      clearedAt: new Date().toISOString() as NullishDate,
       memo: '',
       categoryId: '',
       originId: props.originAccount.id,

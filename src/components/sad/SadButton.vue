@@ -18,12 +18,12 @@
 
 <script lang="ts">
 import { computed } from 'vue';
-import { PropType } from '@vue/runtime-core';
+import { defineComponent, PropType } from 'vue';
 
 type ButtonVariant = 'primary' | 'ghost';
 type ButtonSize = 'normal' | 'small';
 
-export default {
+export default defineComponent({
   props: {
     fullWidth: {
       type: Boolean,
@@ -45,7 +45,7 @@ export default {
 
   emits: ['click'],
 
-  setup(props: any) {
+  setup(props) {
     const typeClass = computed(() => `button--${props.type}`);
     const sizeClass = computed(() => `button--${props.size}`);
     const iconClass = computed(() => `fa-${props.icon}`);
@@ -55,7 +55,7 @@ export default {
 
     return { typeClass, sizeClass, iconClass, fullWidthClass };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

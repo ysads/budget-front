@@ -36,13 +36,13 @@
 </template>
 
 <script lang="ts">
-import { totalBalance, localize } from '@/support/money';
-import { computed, PropType } from 'vue';
-import { Account } from '@/types/models';
-import { useRoute } from 'vue-router';
 import SadCollapse from '@/components/sad/SadCollapse.vue';
+import { Account, Budget } from '@/types/models';
+import { localize, totalBalance } from '@/support/money';
+import { PropType, computed, defineComponent } from 'vue';
+import { useRoute } from 'vue-router';
 
-export default {
+export default defineComponent({
   name: 'AccountAccordion',
 
   props: {
@@ -51,7 +51,7 @@ export default {
       required: true,
     },
     budget: {
-      type: Object,
+      type: Object as PropType<Budget>,
       required: true,
     },
     label: {
@@ -64,7 +64,7 @@ export default {
     SadCollapse,
   },
 
-  setup(props: any) {
+  setup(props) {
     const total = computed(() => totalBalance(props.accounts, 'balance'));
     const route = useRoute();
 
@@ -78,7 +78,7 @@ export default {
 
     return { activeClass, openAccountId, localize, total };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
@@ -88,9 +88,9 @@ export default {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    padding: $base * 3 $base * 2;
     text-transform: uppercase;
     width: 100%;
-    padding: $base * 3 $base * 2;
 
     @extend %caption-2;
   }
@@ -119,10 +119,9 @@ export default {
 
     &-name {
       overflow: hidden;
+      padding-right: $base * 1;
       text-overflow: ellipsis;
       width: 60%;
-
-      padding-right: $base * 1;
     }
 
     &-balance {

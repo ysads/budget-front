@@ -1,5 +1,5 @@
 import alert from '@/support/alert';
-import { handleApiError, MAPPED_ERRORS } from '@/api/errors';
+import { MAPPED_ERRORS, handleApiError } from '@/api/errors';
 import { sample } from '@/support/collection';
 
 jest.mock('@/support/alert', () => ({

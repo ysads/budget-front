@@ -40,6 +40,7 @@ const factory = (args = {}) =>
   setupComponent(MonthlyBudgetDetails, {
     props: args,
     renderSlots: true,
+    withMount: args.withMount,
   });
 
 describe('MonthlyBudgetDetails', () => {
@@ -62,21 +63,9 @@ describe('MonthlyBudgetDetails', () => {
     expect(item.props().label).toEqual('MonthlyBudgetDetails.category');
   });
 
-  it('renders save button', () => {
-    const wrapper = factory();
-
-    const item = wrapper.findComponent("[data-test='save-btn']");
-
-    expect(item.props()).toMatchObject({
-      fullWidth: true,
-      size: 'normal',
-      type: 'primary',
-    });
-  });
-
   describe('when save button emits click', () => {
     it('creates a new monthly budget', async () => {
-      const wrapper = factory();
+      const wrapper = factory({ withMount: true });
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -84,7 +73,7 @@ describe('MonthlyBudgetDetails', () => {
     });
 
     it('emits close', async () => {
-      const wrapper = factory();
+      const wrapper = factory({ withMount: true });
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -92,7 +81,7 @@ describe('MonthlyBudgetDetails', () => {
     });
 
     it('alerts an success', async () => {
-      const wrapper = factory();
+      const wrapper = factory({ withMount: true });
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -103,7 +92,7 @@ describe('MonthlyBudgetDetails', () => {
 
     describe('and request fails', () => {
       it('handles api error', async () => {
-        const wrapper = factory();
+        const wrapper = factory({ withMount: true });
         const error = new Error();
 
         monthlyBudgetRepository.createMonthlyBudget.mockResolvedValueOnce(
@@ -129,7 +118,7 @@ describe('MonthlyBudgetDetails', () => {
 
     describe('and save button emits click', () => {
       it('updates monthly budget', async () => {
-        const wrapper = factory({ monthlyBudget });
+        const wrapper = factory({ monthlyBudget, withMount: true });
 
         await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -137,7 +126,7 @@ describe('MonthlyBudgetDetails', () => {
       });
 
       it('alerts an success', async () => {
-        const wrapper = factory({ monthlyBudget });
+        const wrapper = factory({ monthlyBudget, withMount: true });
 
         await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 

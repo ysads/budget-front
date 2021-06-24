@@ -29,11 +29,11 @@
 <script lang="ts">
 import SadIcon from './SadIcon.vue';
 import {
+  PropType,
+  SetupContext,
   computed,
   defineComponent,
   onMounted,
-  PropType,
-  SetupContext,
 } from 'vue';
 
 const VARIANTS = {
@@ -81,7 +81,7 @@ export default defineComponent({
 
   emits: ['close'],
 
-  setup(props: any, { emit }: SetupContext) {
+  setup(props, { emit }: SetupContext) {
     const variantColor = computed(
       () => VARIANTS[props.variant as AlertVariant].color,
     );
@@ -113,12 +113,15 @@ export default defineComponent({
     flex-shrink: 0;
     width: 4px;
   }
+
   &__ribbon-error {
     background: var(--color-error);
   }
+
   &__ribbon-success {
     background: var(--color-success);
   }
+
   &__ribbon-warning {
     background: var(--color-warning);
   }

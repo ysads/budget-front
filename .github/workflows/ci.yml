@@ -6,44 +6,43 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - name: Cancel previous workflows
-      uses: styfle/cancel-workflow-action@0.7.0
-      with:
-        access_token: ${{ github.token }}
-    - uses: actions/checkout@v2
-    - name: Setup Node.JS
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.8.0
-    - name: Cache node-modules
-      id: node-cache
-      uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: node-modules-${{ hashFiles('package-lock.json') }}
-    - run: npm install --prefer-offline --no-audit
-      if: steps.node-cache.outputs.cache-hit != 'true'
-    - run: npm run lint
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.7.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - name: Setup Node.JS
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.8.0
+      - name: Cache node-modules
+        id: node-cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('yarn.lock') }}
+      - run: yarn
+        if: steps.node-cache.outputs.cache-hit != 'true'
+      - run: yarn lint
 
   specs:
     runs-on: ubuntu-latest
     steps:
-    - name: Cancel previous workflows
-      uses: styfle/cancel-workflow-action@0.7.0
-      with:
-        access_token: ${{ github.token }}
-    - uses: actions/checkout@v2
-    - name: Setup Node.JS
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.8.0
-    - name: Cache node-modules
-      id: node-cache
-      uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: node-modules-${{ hashFiles('package-lock.json') }}
-    - run: npm install --prefer-offline --no-audit
-      if: steps.node-cache.outputs.cache-hit != 'true'
-    - run: npm install --prefer-offline --no-audit
-    - run: npm run test:unit
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.7.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - name: Setup Node.JS
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.8.0
+      - name: Cache node-modules
+        id: node-cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('yarn.lock') }}
+      - run: yarn
+        if: steps.node-cache.outputs.cache-hit != 'true'
+      - run: yarn test:unit

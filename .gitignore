@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 /dist
+test/unit/coverage/*
 
 # local env files
 .env.local
@@ -12,4 +13,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-tests/unit/coverage/*
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

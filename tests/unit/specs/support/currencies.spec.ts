@@ -1,4 +1,5 @@
-import currencies from '@/support/currencies';
+import { sample } from '@/support/collection';
+import currencies, { Currency, symbolOf } from '@/support/currencies';
 
 describe('currencies', () => {
   it('maps every ISO abbrev to its corresponding symbol', () => {
@@ -177,5 +178,13 @@ describe('currencies', () => {
       ZAR: 'R',
       ZWD: 'Z$',
     });
+  });
+});
+
+describe('symbolOf', () => {
+  it('returns the symbol of a given ISO currency', () => {
+    const isoCurrency: Currency = sample(Object.keys(currencies)) as Currency;
+
+    expect(symbolOf(isoCurrency)).toEqual(currencies[isoCurrency]);
   });
 });

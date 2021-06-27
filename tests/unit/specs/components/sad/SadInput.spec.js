@@ -32,6 +32,13 @@ describe('SadInput', () => {
         'label',
       );
     });
+
+    it('does not render prefix', () => {
+      const wrapper = factory();
+      const item = wrapper.find("[data-test='prefix']");
+
+      expect(item.exists()).toBeFalsy();
+    });
   });
 
   describe('when error prop is given', () => {
@@ -62,6 +69,15 @@ describe('SadInput', () => {
       await wrapper.find("[data-test='input']").trigger('input');
 
       expect(wrapper.emitted()['update:model-value']).toBeTruthy();
+    });
+  });
+
+  describe('when prefix is given', () => {
+    it('renders prefix', () => {
+      const wrapper = factory({ props: { prefix: '🐛' } });
+      const item = wrapper.find("[data-test='prefix']");
+
+      expect(item.text()).toEqual('🐛');
     });
   });
 });

@@ -180,3 +180,6 @@ export default currencies;
  * All supported currencies as their ISO 4217 codes
  */
 export type Currency = keyof typeof currencies;
+
+export const symbolOf = (isoCurrency: Currency): string =>
+  currencies[isoCurrency];

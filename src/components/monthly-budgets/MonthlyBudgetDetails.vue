@@ -21,6 +21,7 @@
       v-model="form.budgeted"
       class="mb-details__control"
       :label="st('budgeted')"
+      :prefix="currencySymbol"
       name="budgeted"
       data-test="budgeted"
     />
@@ -63,6 +64,7 @@ import {
   PropType,
 } from 'vue';
 import { MonthlyBudget } from '@/types/models';
+import { symbolOf } from '@/support/currencies';
 
 export default defineComponent({
   name: 'MonthlyBudgetDetails',
@@ -91,6 +93,7 @@ export default defineComponent({
     const { st, t } = useI18n('MonthlyBudgetDetails');
 
     const isEdit = computed(() => Boolean(props.monthlyBudget.id));
+    const currencySymbol = computed(() => symbolOf(openBudget.value.currency));
 
     const moneySettings = currencySettings(openBudget.value);
 
@@ -130,6 +133,7 @@ export default defineComponent({
     return {
       categoriesGrouped,
       currentMonth,
+      currencySymbol,
       form,
       isEdit,
       handleSubmit,

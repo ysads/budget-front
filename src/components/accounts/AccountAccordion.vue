@@ -17,6 +17,7 @@
         class="account-accordion__item"
         :class="activeClass(account)"
         data-test="account-item"
+        @click="emitNavigate"
       >
         <router-link
           :to="{ name: 'AccountShow', params: { id: account.id } }"
@@ -41,6 +42,7 @@ import { Account, Budget } from '@/types/models';
 import { localize, totalBalance } from '@/support/money';
 import { PropType, computed, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
+import { eventBus, Events } from '@/events';
 
 export default defineComponent({
   name: 'AccountAccordion',
@@ -76,7 +78,9 @@ export default defineComponent({
       return openAccountId.value === account.id ? 'active' : '';
     };
 
-    return { activeClass, openAccountId, localize, total };
+    const emitNavigate = () => eventBus.emit(Events.CLOSE_DRAWER);
+
+    return { activeClass, emitNavigate, openAccountId, localize, total };
   },
 });
 </script>
@@ -88,7 +92,7 @@ export default defineComponent({
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
-    padding: $base * 3 $base * 2;
+    padding: $base * 3;
     text-transform: uppercase;
     width: 100%;
 

@@ -14,9 +14,10 @@
   </div>
 </template>
 
-<script>
-import DashboardMenu from '@/components/DashboardMenu';
-import Loading from '@/components/Loading';
+<script lang="ts">
+import DashboardMenu from '@/components/DashboardMenu.vue';
+import Loading from '@/components/Loading.vue';
+import useWindowSize from '@/use/window-size';
 import { getAccounts } from '@/repositories/accounts';
 import { getCategoryGroups } from '@/repositories/category-groups';
 import { getCategories } from '@/repositories/categories';
@@ -25,9 +26,9 @@ import { getPayees } from '@/repositories/payees';
 import { getBudgetById, openBudget } from '@/repositories/budgets';
 import { getMe } from '@/repositories/auth';
 import { isoMonth } from '@/support/date';
-import { defineComponent, ref } from 'vue';
-
-const MD_BREAKPOINT = 768;
+import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue';
+import { Events, eventBus } from '@/events';
+import { useRoute, useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'Dashboard',
@@ -41,57 +42,56 @@ export default defineComponent({
     const isDrawerVisible = ref(false);
     const loading = ref(true);
 
-    const toggleDrawer = () => (isDrawerVisible.value = !isDrawerVisible.value);
+    const router = useRouter();
+    const route = useRoute();
 
-    return { isDrawerVisible, loading, openBudget, toggleDrawer };
-  },
+    // INFO: fetch all resources needed application-wise; note they might be used deep
+    // below on components tree.
+    const fetchResources = async () => {
+      await getBudgetById(route.params.budgetId as string);
 
-  data() {
-    return {
-      innerWidth: window.innerWidth,
+      const params = { budgetId: openBudget.value.id };
+
+      await Promise.all([
+        getAccounts(params),
+        getCategoryGroups(params),
+        getCategories(params),
+        getPayees(params),
+        // FIXME: account screens rely on that, maybe move it to a more specific view
+        getMonthlyBudgets({ ...params, isoMonth: isoMonth(new Date()) }),
+      ]);
     };
-  },
 
-  async mounted() {
-    window.addEventListener('resize', this.onResize);
-    await this.validateSession();
-    await getBudgetById(this.$route.params.budgetId);
-
-    const params = { budgetId: openBudget.value.id };
-
-    await Promise.all([
-      getAccounts(params),
-      getCategoryGroups(params),
-      getCategories(params),
-      getPayees(params),
-      // FIXME: account screens rely on that, maybe move it to a more specific view
-      getMonthlyBudgets({ ...params, isoMonth: isoMonth(new Date()) }),
-    ]);
-    this.loading = false;
-  },
-
-  beforeUnmount() {
-    window.removeEventListener('resize', this.onResize);
-  },
-
-  computed: {
-    showDrawer() {
-      return this.isDrawerVisible && this.innerWidth <= MD_BREAKPOINT;
-    },
-  },
-
-  methods: {
-    async validateSession() {
+    // INFO: validates if there is a user session active; otherwise, redirects to login page
+    const validateSession = async () => {
       try {
         await getMe();
       } catch {
-        this.$route.push({ name: 'SignIn' });
+        router.push({ name: 'SignIn' });
       }
-    },
+    };
 
-    onResize() {
-      this.innerWidth = window.innerWidth;
-    },
+    const { isMobile } = useWindowSize();
+    const showDrawer = computed(() => isDrawerVisible.value && isMobile.value);
+
+    const toggleDrawer = () => {
+      isDrawerVisible.value = !isDrawerVisible.value;
+    };
+
+    onMounted(async () => {
+      await validateSession();
+
+      eventBus.on(Events.CLOSE_DRAWER, toggleDrawer);
+
+      await fetchResources();
+      loading.value = false;
+    });
+
+    onUnmounted(() => {
+      eventBus.off(Events.CLOSE_DRAWER, toggleDrawer);
+    });
+
+    return { isDrawerVisible, loading, openBudget, showDrawer, toggleDrawer };
   },
 });
 </script>

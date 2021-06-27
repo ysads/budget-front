@@ -4,6 +4,7 @@ import faker from 'faker';
 import factories from '#/factories';
 import setupComponent from '#/setup-component';
 import SadCollapse from '@/components/sad/SadCollapse';
+import { Events, eventBus } from '@/events';
 
 const accounts = factories.account.buildList(2);
 const budget = factories.budget.build();
@@ -30,6 +31,7 @@ describe('AccountAccordion', () => {
 
     expect(item.props().startOpen).toEqual(true);
   });
+
   it('renders account totals', () => {
     const wrapper = factory({ withMount: true });
     const item = wrapper.find("[data-test='title']");
@@ -78,6 +80,19 @@ describe('AccountAccordion', () => {
       const item = wrapper.find("[data-test='accordion']");
 
       expect(item.exists()).toBe(false);
+    });
+  });
+
+  describe('when account item is clicked', () => {
+    it('emits CloseDrawer event', async () => {
+      const wrapper = factory();
+      const mockHandler = jest.fn();
+
+      eventBus.on(Events.CLOSE_DRAWER, mockHandler);
+
+      await wrapper.find("[data-test='account-item']").trigger('click');
+
+      expect(mockHandler).toHaveBeenCalled();
     });
   });
 });

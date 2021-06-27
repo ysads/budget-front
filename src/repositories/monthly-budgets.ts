@@ -2,7 +2,7 @@ import { get, post, put } from '@/api';
 import { computed, ref } from 'vue';
 import { upsert } from '@/support/collection';
 import groupBy from 'lodash/groupBy';
-import { MonthlyBudget } from '@/types/models';
+import { IsoMonth, MonthlyBudget } from '@/types/models';
 import { BudgetReq } from '@/types/api';
 
 export interface ApiMonthlyBudgetRequest extends BudgetReq {
@@ -10,6 +10,11 @@ export interface ApiMonthlyBudgetRequest extends BudgetReq {
   budgeted: number;
   categoryId: string;
   monthId: string;
+}
+
+export interface GetMonthlyBudgets {
+  budgetId: string;
+  isoMonth: IsoMonth;
 }
 
 export const monthlyBudgets = ref<MonthlyBudget[]>([]);
@@ -39,7 +44,7 @@ export const updateMonthlyBudget = async ({
 export const getMonthlyBudgets = async ({
   budgetId,
   ...rest
-}: BudgetReq): Promise<void> => {
+}: GetMonthlyBudgets): Promise<void> => {
   const response = await get(`budgets/${budgetId}/monthly_budgets`, rest);
 
   monthlyBudgets.value = response;

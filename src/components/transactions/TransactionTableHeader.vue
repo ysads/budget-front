@@ -41,10 +41,9 @@ export default defineComponent({
   align-items: center;
   border-bottom: 1px solid var(--table-separator);
   display: flex;
-  gap: $base * 4;
   font-weight: 500;
+  gap: $base * 4;
   padding: $base * 2 $base * 4;
-  border-bottom: 1px solid var(--table-separator);
 
   @extend %body-1;
 

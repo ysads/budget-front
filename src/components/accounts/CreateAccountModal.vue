@@ -30,6 +30,7 @@
         v-model="form.currentBalance"
         class="create-account__item"
         name="currentBalance"
+        :prefix="currencySymbol"
         :label="st('currentBalance')"
         :tip="st('currentBalanceTip')"
         data-test="current-balance"
@@ -59,6 +60,7 @@ import { currencyToCents } from '@/support/money';
 import { handleApiError } from '@/api/errors';
 import { SetupContext, reactive, defineComponent, PropType } from 'vue';
 import { AccountType, Budget } from '@/types/models';
+import { symbolOf } from '@/support/currencies';
 
 export default defineComponent({
   name: 'CreateAccountModal',
@@ -98,6 +100,7 @@ export default defineComponent({
       label: t(`account.type.${type}`),
       value: type,
     }));
+    const currencySymbol = symbolOf(props.budget.currency);
 
     const handleSubmit = async () => {
       try {
@@ -112,7 +115,7 @@ export default defineComponent({
       }
     };
 
-    return { accountTypes, form, handleSubmit, st, t };
+    return { accountTypes, currencySymbol, form, handleSubmit, st, t };
   },
 });
 </script>

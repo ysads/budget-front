@@ -1,17 +1,22 @@
 <template>
-  <div>
+  <div class="sad-input">
     <sad-label to="name" :text="label" data-test="label" />
-    <input
-      :id="name"
-      v-bind="$attrs"
-      :value="modelValue"
-      class="sad-input"
-      :class="[errorClass]"
-      data-test="input"
-      :placeholder="placeholder"
-      :type="type"
-      @input="(e) => $emit('update:model-value', e.target.value)"
-    />
+    <div class="sad-input__wrapper">
+      <div v-if="prefix" class="sad-input__prefix" data-test="prefix">
+        {{ prefix }}
+      </div>
+      <input
+        :id="name"
+        v-bind="$attrs"
+        :value="modelValue"
+        class="sad-input__control"
+        :class="[errorClass]"
+        data-test="input"
+        :placeholder="placeholder"
+        :type="type"
+        @input="(e) => $emit('update:model-value', e.target.value)"
+      />
+    </div>
     <sad-tip
       v-if="tipText"
       class="sad-input__tip"
@@ -30,11 +35,11 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   props: {
-    label: {
+    error: {
       type: String,
       default: '',
     },
-    error: {
+    label: {
       type: String,
       default: '',
     },
@@ -47,6 +52,10 @@ export default defineComponent({
       required: true,
     },
     placeholder: {
+      type: String,
+      default: '',
+    },
+    prefix: {
       type: String,
       default: '',
     },
@@ -77,19 +86,32 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .sad-input {
-  border: 1px solid var(--input-border);
-  border-radius: $radius-4;
-  color: var(--text-default);
-  height: $base * 10;
-  padding: $base * 2;
-  width: 100%;
+  &__prefix {
+    color: var(--color-info);
+    margin-right: $base * 2;
+    margin-top: $base/2;
+  }
 
-  @extend %body-1;
+  &__wrapper {
+    align-items: center;
+    border: 1px solid var(--input-border);
+    border-radius: $radius-4;
+    color: var(--text-default);
+    display: flex;
+    height: $base * 10;
+    padding: $base * 2;
+    width: 100%;
 
-  &:focus,
-  &:active {
-    border-color: var(--input-focus);
-    transition: 0.2s;
+    &:focus-within {
+      border-color: var(--input-focus);
+      transition: 0.2s;
+    }
+  }
+
+  &__control {
+    flex-grow: 1;
+
+    @extend %body-1;
   }
 
   &__tip {

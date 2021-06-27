@@ -45,7 +45,7 @@
       v-model="form.amount"
       class="transaction-details__control"
       :label="st('amount')"
-      :money="money"
+      :prefix="currencySymbol"
       name="amount"
       data-test="amount"
     />
@@ -104,6 +104,7 @@ import {
   reactive,
 } from 'vue';
 import { Account, NullishDate } from '@/types/models';
+import { symbolOf } from '@/support/currencies';
 
 export default defineComponent({
   name: 'TransactionDetails',
@@ -136,6 +137,7 @@ export default defineComponent({
     const { categoryOptions } = useBudgetCategories();
 
     const money = currencySettings(openBudget.value);
+    const currencySymbol = computed(() => symbolOf(openBudget.value.currency));
 
     const payeeOptions = computed(() =>
       payees.value.map((p) => ({
@@ -175,6 +177,7 @@ export default defineComponent({
 
     return {
       categoryOptions,
+      currencySymbol,
       form,
       handleClearedAt,
       handleSubmit,

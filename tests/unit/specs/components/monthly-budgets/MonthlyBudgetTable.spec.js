@@ -89,7 +89,7 @@ describe('MonthlyBudgetsTable', () => {
     const wrapper = factory();
     const item = wrapper.findComponent("[data-test='details']");
 
-    expect(item.exists()).toBeFalsy();
+    expect(item.props().show).toBeFalsy();
   });
 
   describe('when row is clicked', () => {
@@ -100,7 +100,7 @@ describe('MonthlyBudgetsTable', () => {
 
       const item = wrapper.findComponent("[data-test='details']");
 
-      expect(item.exists()).toBeTruthy();
+      expect(item.props().show).toBeTruthy();
       expect(item.props().monthlyBudget).toEqual(monthlyBudgets[0]);
     });
 
@@ -109,13 +109,12 @@ describe('MonthlyBudgetsTable', () => {
         const wrapper = factory();
 
         await wrapper.findComponent("[data-test='row']").vm.$emit('click');
+
         const item = wrapper.findComponent("[data-test='details']");
-        expect(item.exists()).toBeTruthy();
+        expect(item.props().show).toBeTruthy();
 
         await item.vm.$emit('close');
-        expect(
-          wrapper.findComponent("[data-test='details']").exists(),
-        ).toBeFalsy();
+        expect(item.props().show).toBeFalsy();
       });
     });
   });

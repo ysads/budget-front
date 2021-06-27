@@ -13,7 +13,14 @@
 <script lang="ts">
 import { PropType, computed, defineComponent } from 'vue';
 
-type IconColor = 'green' | 'info' | 'inherit' | 'primary' | 'red' | 'yellow';
+type IconColor =
+  | 'disabled'
+  | 'green'
+  | 'info'
+  | 'inherit'
+  | 'primary'
+  | 'red'
+  | 'yellow';
 type IconSize = 'small' | 'medium';
 
 export default defineComponent({
@@ -57,10 +64,6 @@ export default defineComponent({
     background: none;
     cursor: pointer;
     outline: none;
-
-    &:active {
-      // @include scale-90;
-    }
   }
 
   &--small {
@@ -77,6 +80,10 @@ export default defineComponent({
 
   &--info {
     color: var(--color-info);
+  }
+
+  &--disabled {
+    color: var(--color-disabled);
   }
 
   &--inherit {

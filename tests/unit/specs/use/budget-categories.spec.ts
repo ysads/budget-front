@@ -16,7 +16,7 @@ categoryGroupsRepo.categoryGroups.value = categoryGroups;
 describe('useBudgetCategories', () => {
   describe('#categoryOptions', () => {
     it('groups real categories and adds an virtual inflow category', () => {
-      const categoryOptions = useBudgetCategories();
+      const { categoryOptions } = useBudgetCategories();
 
       expect(categoryOptions.value).toEqual([
         {
@@ -51,6 +51,30 @@ describe('useBudgetCategories', () => {
           ],
         },
       ]);
+    });
+  });
+
+  describe('#categoryName', () => {
+    it('conjoins category group name and category name', () => {
+      const { categoryName } = useBudgetCategories();
+      const transaction = factories.transaction.build({
+        categoryId: categories[2].id,
+      });
+
+      expect(categoryName(transaction)).toEqual(
+        `${categoryGroups[1].name}: ${categories[2].name}`,
+      );
+    });
+
+    describe('when categoryId of transaction is null', () => {
+      it('equals to `inflow: toBeBudgeted`', () => {
+        const { categoryName } = useBudgetCategories();
+        const transaction = factories.transaction.build({ categoryId: '' });
+
+        expect(categoryName(transaction)).toEqual(
+          'budgetCategories.inflow: budgetCategories.toBeBudgeted',
+        );
+      });
     });
   });
 });

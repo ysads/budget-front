@@ -1,5 +1,6 @@
 <template>
   <sad-modal
+    :show="show"
     :title="t('newCategoryGroup')"
     data-test="modal"
     @close="$emit('close')"
@@ -47,6 +48,10 @@ export default defineComponent({
     budget: {
       type: Object as PropType<Budget>,
       required: true,
+    },
+    show: {
+      type: Boolean,
+      default: false,
     },
   },
 

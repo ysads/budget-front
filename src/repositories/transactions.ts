@@ -1,4 +1,4 @@
-import { post } from '@/api';
+import { get, post } from '@/api';
 import { ref } from 'vue';
 import { upsertAccount } from '@/repositories/accounts';
 import { upsertPayee } from '@/repositories/payees';
@@ -16,6 +16,11 @@ interface ApiTransactionReq {
   budgetId: string;
 }
 
+interface ApiGetTransaction {
+  budgetId: string;
+  originId?: string;
+}
+
 export const transactions = ref<Transaction[]>([]);
 
 export const createTransaction = async (
@@ -30,4 +35,12 @@ export const createTransaction = async (
 
   upsertPayee(response.payee);
   upsertAccount(response.origin);
+};
+
+export const getTransactions = async (
+  params: ApiGetTransaction,
+): Promise<void> => {
+  const response = await get(`budgets/${params.budgetId}/transactions`, params);
+
+  transactions.value = response;
 };

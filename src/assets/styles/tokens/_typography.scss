@@ -66,14 +66,6 @@ $font-size: 13px;
   @extend %medium;
 }
 
-%button {
-  font-size: 1rem;
-  line-height: 1.25rem;
-
-  @extend %barlow;
-  @extend %regular;
-}
-
 %caption {
   font-size: 0.9rem;
   line-height: 1rem;
@@ -102,7 +94,7 @@ $font-size: 13px;
   font-size: 1.2rem;
   line-height: 1.6rem;
 
-  @extend %inter;
+  @extend %barlow;
   @extend %regular;
 }
 

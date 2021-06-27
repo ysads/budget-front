@@ -1,22 +1,31 @@
 <template>
   <div class="sad-modal">
-    <div
-      class="sad-modal__overlay"
-      data-test="overlay"
-      @click="$emit('close')"
-    />
-    <section class="sad-modal__wrapper">
-      <header class="sad-modal__header">
-        <i class="fas fa-times" data-test="close-btn" @click="$emit('close')" />
-        <h3 v-if="title" class="sad-modal__header-title" data-test="title">
-          {{ title }}
-        </h3>
-      </header>
-      <slot />
-      <footer class="sad-modal__footer">
-        <slot name="footer"></slot>
-      </footer>
-    </section>
+    <transition name="fade">
+      <div
+        v-if="show"
+        class="sad-modal__overlay"
+        data-test="overlay"
+        @click="$emit('close')"
+      />
+    </transition>
+    <transition name="fade-up">
+      <section v-if="show" class="sad-modal__wrapper">
+        <header class="sad-modal__header">
+          <i
+            class="fas fa-times"
+            data-test="close-btn"
+            @click="$emit('close')"
+          />
+          <h3 v-if="title" class="sad-modal__header-title" data-test="title">
+            {{ title }}
+          </h3>
+        </header>
+        <slot />
+        <footer class="sad-modal__footer">
+          <slot name="footer"></slot>
+        </footer>
+      </section>
+    </transition>
   </div>
 </template>
 
@@ -30,6 +39,10 @@ export default defineComponent({
     title: {
       type: String,
       default: '',
+    },
+    show: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -111,5 +124,28 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-up-enter-active,
+.fade-up-leave-active {
+  opacity: 1;
+  transition: all cubic-bezier(0.17, 0.67, 0.23, 2.05) 0.3s;
+}
+
+.fade-up-enter-from,
+.fade-up-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>

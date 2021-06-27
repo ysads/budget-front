@@ -51,10 +51,14 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .alert-container {
-  bottom: 20px;
-  left: calc(50% - 200px);
+  bottom: 80px;
+  left: calc(50% - 175px);
   position: fixed;
   z-index: 99999;
+
+  @include breakpoint(md) {
+    bottom: 20px;
+  }
 
   &__item {
     &:not(:first-of-type) {

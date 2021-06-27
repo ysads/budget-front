@@ -35,24 +35,22 @@
       </sad-button>
 
       <create-category-group-modal
-        v-if="isVisible.categoryGroupModal"
+        :show="isVisible.categoryGroupModal"
         :budget="openBudget"
         data-test="new-group-modal"
         @close="toggle('categoryGroupModal')"
       />
       <create-category-modal
-        v-if="isVisible.categoryModal"
+        :show="isVisible.categoryModal"
         :budget="openBudget"
         data-test="new-category-modal"
         @close="toggle('categoryModal')"
       />
-      <transition name="fade">
-        <monthly-budget-details
-          v-if="isVisible.drawer"
-          data-test="monthly-budget-details"
-          @close="toggle('drawer')"
-        />
-      </transition>
+      <monthly-budget-details
+        :show="isVisible.drawer"
+        data-test="monthly-budget-details"
+        @close="toggle('drawer')"
+      />
     </div>
   </div>
 </template>
@@ -96,20 +94,5 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   padding: $base * 2 $base * 4;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
-  transition: all 0.3s;
-}
-
-.fade-enter,
-.fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-  transform: translateX(30px);
 }
 </style>

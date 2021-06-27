@@ -40,6 +40,10 @@ const factory = (args = {}) => {
   return setupComponent(TransactionDetails, {
     props: {
       originAccount: args.account || account,
+      show: true,
+    },
+    stubs: {
+      transition: false,
     },
     renderSlots: true,
     withMount: args.withMount,
@@ -124,7 +128,7 @@ describe('TransactionDetails', () => {
   });
 
   describe('when save button emits click', () => {
-    it('creates a new monthly budget', async () => {
+    it('creates a transaction', async () => {
       const wrapper = factory({ withMount: true });
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');

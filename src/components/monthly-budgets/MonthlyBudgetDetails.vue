@@ -2,6 +2,7 @@
   <sad-drawer
     class="mb-details"
     :title="t('newMonthlyBudget')"
+    :show="show"
     data-test="drawer"
     @close="$emit('close')"
   >
@@ -70,6 +71,10 @@ export default defineComponent({
     monthlyBudget: {
       type: Object as PropType<MonthlyBudget>,
       default: () => ({}),
+    },
+    show: {
+      type: Boolean,
+      default: false,
     },
   },
 

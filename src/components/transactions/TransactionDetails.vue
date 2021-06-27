@@ -2,6 +2,7 @@
   <sad-drawer
     class="transaction-details"
     :title="t('newTransaction')"
+    :show="show"
     data-test="drawer"
     @close="$emit('close')"
   >
@@ -112,6 +113,10 @@ export default defineComponent({
       type: Object as PropType<Account>,
       required: true,
     },
+    show: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['close'],
@@ -128,7 +133,7 @@ export default defineComponent({
 
   setup(props, { emit }: SetupContext) {
     const { t, st } = useI18n('TransactionDetails');
-    const categoryOptions = useBudgetCategories();
+    const { categoryOptions } = useBudgetCategories();
 
     const money = currencySettings(openBudget.value);
 

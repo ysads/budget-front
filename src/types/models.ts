@@ -83,6 +83,7 @@ export interface Payee {
 export interface Transaction {
   id?: string;
   amount: number;
+  categoryId?: string;
   clearedAt: NullishDate;
   destinationId: string | undefined;
   memo: string | undefined;

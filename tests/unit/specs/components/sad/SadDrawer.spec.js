@@ -3,12 +3,15 @@ import SadDrawer from '@/components/sad/SadDrawer';
 
 const factory = (args = {}) =>
   setupComponent(SadDrawer, {
-    props: args.props,
+    props: {
+      title: args.title,
+      show: true,
+    },
     slots: {
       default: '<p id="content">my content</p>',
       footer: '<p id="footer">my footer</p>',
     },
-    renderSlots: true,
+    withMount: true,
   });
 
 describe('SadDrawer', () => {
@@ -28,7 +31,7 @@ describe('SadDrawer', () => {
 
   describe('when title is given', () => {
     it('renders title', () => {
-      const wrapper = factory({ props: { title: 'my title' } });
+      const wrapper = factory({ title: 'my title' });
       const item = wrapper.find("[data-test='title']");
 
       expect(item.text()).toEqual('my title');

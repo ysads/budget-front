@@ -35,21 +35,21 @@ describe('BudgetToolbar', () => {
     const wrapper = factory();
     const item = wrapper.findComponent("[data-test='new-group-modal']");
 
-    expect(item.exists()).toBeFalsy();
+    expect(item.props().show).toBeFalsy();
   });
 
   it('does not render create category modal by default', () => {
     const wrapper = factory();
     const item = wrapper.findComponent("[data-test='new-category-modal']");
 
-    expect(item.exists()).toBeFalsy();
+    expect(item.props().show).toBeFalsy();
   });
 
   it('does not render create monthly budget details by default', () => {
     const wrapper = factory();
     const item = wrapper.findComponent("[data-test='monthly-budget-details']");
 
-    expect(item.exists()).toBeFalsy();
+    expect(item.props().show).toBeFalsy();
   });
 
   describe('when new group button is clicked', () => {
@@ -61,7 +61,7 @@ describe('BudgetToolbar', () => {
 
       const modal = wrapper.findComponent("[data-test='new-category-modal']");
 
-      expect(modal.exists()).toBeTruthy();
+      expect(modal.props().show).toBeTruthy();
     });
   });
 
@@ -74,7 +74,7 @@ describe('BudgetToolbar', () => {
 
       const modal = wrapper.findComponent("[data-test='new-group-modal']");
 
-      expect(modal.exists()).toBeTruthy();
+      expect(modal.props().show).toBeTruthy();
     });
   });
 
@@ -89,7 +89,7 @@ describe('BudgetToolbar', () => {
         "[data-test='monthly-budget-details']",
       );
 
-      expect(modal.exists()).toBeTruthy();
+      expect(modal.props().show).toBeTruthy();
     });
   });
 });

@@ -27,7 +27,7 @@
     </div>
 
     <monthly-budget-details
-      v-if="isDrawerOpen"
+      :show="isDrawerOpen"
       :monthly-budget="openMonthlyBudget"
       data-test="details"
       @close="closeDrawer"

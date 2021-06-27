@@ -68,7 +68,7 @@
     </sad-button>
 
     <create-account-modal
-      v-if="modalVisible"
+      :show="modalVisible"
       :budget="openBudget"
       data-test="create-account-modal"
       @close="toggleModal"

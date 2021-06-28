@@ -1,8 +1,17 @@
 <template>
   <aside class="dashboard-menu">
     <ul class="dashboard-menu__nav">
-      <li class="dashboard-menu__nav-item" :class="activeClass('Budget')">
-        <router-link class="dashboard-menu__nav-link" :to="{ name: 'Budget' }">
+      <li
+        class="dashboard-menu__nav-item"
+        :class="activeClass('Budget')"
+        data-test="budget-item"
+      >
+        <router-link
+          class="dashboard-menu__nav-link"
+          :to="{ name: 'Budget' }"
+          data-test="budget-link"
+          @click="emitNavigate"
+        >
           <sad-icon class="icon" name="piggy-bank" />{{ t('budget') }}
         </router-link>
       </li>
@@ -22,6 +31,7 @@
           class="dashboard-menu__nav-link"
           :to="{ name: 'AllAccounts' }"
           data-test="all-accounts-link"
+          @click="emitNavigate"
         >
           <sad-icon class="icon" name="university" />{{ t('allAccounts') }}
         </router-link>
@@ -86,6 +96,7 @@ import { budgetAccounts, trackingAccounts } from '@/repositories/accounts';
 import { openBudget } from '@/repositories/budgets';
 import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { eventBus, Events } from '@/events';
 
 export default defineComponent({
   name: 'DashboardMenu',
@@ -105,12 +116,14 @@ export default defineComponent({
     const activeClass = (route: string) => {
       return currentRoute.name === route ? 'active' : '';
     };
+    const emitNavigate = () => eventBus.emit(Events.CLOSE_DRAWER);
 
     const toggleModal = () => (modalVisible.value = !modalVisible.value);
 
     return {
       activeClass,
       budgetAccounts,
+      emitNavigate,
       modalVisible,
       openBudget,
       t,

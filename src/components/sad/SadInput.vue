@@ -89,7 +89,8 @@ export default defineComponent({
   &__prefix {
     color: var(--color-info);
     margin-right: $base * 2;
-    margin-top: $base/2;
+
+    @extend %body-1;
   }
 
   &__wrapper {

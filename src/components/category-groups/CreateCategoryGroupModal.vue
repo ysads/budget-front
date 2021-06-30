@@ -39,7 +39,7 @@ import {
 } from '@/repositories/category-groups';
 import { Budget } from '@/types/models';
 import useI18n from '@/use/i18n';
-import { SetupContext, reactive, defineComponent, PropType } from 'vue';
+import { SetupContext, reactive, defineComponent, watch, PropType } from 'vue';
 
 export default defineComponent({
   name: 'CreateCategoryGroupModal',
@@ -70,6 +70,13 @@ export default defineComponent({
       budgetId: props.budget.id,
       name: '',
     });
+
+    watch(
+      () => props.show,
+      () => {
+        form.name = '';
+      },
+    );
 
     const handleSubmit = () => {
       createCategoryGroup(form);

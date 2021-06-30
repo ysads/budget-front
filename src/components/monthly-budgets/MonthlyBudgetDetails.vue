@@ -46,6 +46,7 @@ import SadInput from '@/components/sad/SadInput.vue';
 import SadSelect from '@/components/sad/SadSelect.vue';
 import alert from '@/support/alert';
 import useI18n from '@/use/i18n';
+import useMonthlyBudgetForm from '@/use/forms/monthly-budget';
 import { handleApiError } from '@/api/errors';
 import { openBudget } from '@/repositories/budgets';
 import { categoriesByGroupId } from '@/repositories/categories';
@@ -54,15 +55,9 @@ import {
   createMonthlyBudget,
   updateMonthlyBudget,
 } from '@/repositories/monthly-budgets';
-import { currencySettings, currencyToCents, format } from '@/support/money';
+import { currencySettings, currencyToCents } from '@/support/money';
 import { currentMonth } from '@/repositories/months';
-import {
-  SetupContext,
-  computed,
-  reactive,
-  defineComponent,
-  PropType,
-} from 'vue';
+import { SetupContext, computed, defineComponent, PropType } from 'vue';
 import { MonthlyBudget } from '@/types/models';
 import { symbolOf } from '@/support/currencies';
 
@@ -97,21 +92,21 @@ export default defineComponent({
 
     const moneySettings = currencySettings(openBudget.value);
 
-    const form = reactive({
-      id: props.monthlyBudget.id || '',
-      categoryId: props.monthlyBudget.categoryId || '',
-      budgeted: isEdit.value
-        ? format(props.monthlyBudget.budgeted, moneySettings, false)
-        : '',
-    });
+    const { form, resetForm } = useMonthlyBudgetForm(
+      props,
+      isEdit,
+      moneySettings,
+    );
 
-    const categoriesGrouped = categoryGroups.value.map((group) => ({
-      label: group.name,
-      options: categoriesByGroupId(group.id).map((c) => ({
-        value: c.id,
-        label: c.name,
+    const categoriesGrouped = computed(() =>
+      categoryGroups.value.map((group) => ({
+        label: group.name,
+        options: categoriesByGroupId(group.id).map((c) => ({
+          value: c.id,
+          label: c.name,
+        })),
       })),
-    }));
+    );
 
     const handleSubmit = async () => {
       const save = isEdit.value ? updateMonthlyBudget : createMonthlyBudget;
@@ -124,6 +119,7 @@ export default defineComponent({
           monthId: currentMonth.value.id,
         });
         alert.success(isEdit.value ? st('updated') : st('created'));
+        resetForm();
         emit('close');
       } catch (err) {
         handleApiError(err);

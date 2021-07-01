@@ -4,10 +4,10 @@ import setupComponent from '#/setup-component';
 
 const account = factories.account.build();
 
-const factory = () =>
+const factory = (args = {}) =>
   setupComponent(AccountToolbar, {
     props: {
-      account,
+      account: 'account' in args ? args.account : account,
     },
   });
 
@@ -36,6 +36,15 @@ describe('AccountToolbar', () => {
       const drawer = wrapper.findComponent("[data-test='transaction-drawer']");
 
       expect(drawer.props().originAccount).toEqual(account);
+    });
+  });
+
+  describe('when no account prop is given', () => {
+    it('passes a null originAccount to TransactionDetails', () => {
+      const wrapper = factory({ account: null });
+      const item = wrapper.findComponent("[data-test='transaction-drawer']");
+
+      expect(item.props().originAccount).toBeNull();
     });
   });
 });

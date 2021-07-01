@@ -8,6 +8,7 @@ import * as categoriesRepo from '@/repositories/categories';
 import * as categoryGroupsRepo from '@/repositories/category-groups';
 import * as budgetsRepo from '@/repositories/budgets';
 import * as payeesRepo from '@/repositories/payees';
+import * as accountsRepo from '@/repositories/accounts';
 import * as transactionsRepository from '@/repositories/transactions';
 import { handleApiError } from '@/api/errors';
 
@@ -20,6 +21,7 @@ jest.mock('@/support/alert', () => ({
   error: jest.fn(),
 }));
 
+const allAccounts = factories.account.buildList(2);
 const account = factories.account.budget().build();
 const budget = factories.budget.build();
 const payees = factories.payee.buildList(2);
@@ -31,6 +33,7 @@ const categories = [
 ];
 
 const factory = (args = {}) => {
+  accountsRepo.accounts.value = allAccounts;
   budgetsRepo.openBudget.value = budget;
   categoriesRepo.categories.value = categories;
   categoryGroupsRepo.categoryGroups.value = categoryGroups;
@@ -39,7 +42,7 @@ const factory = (args = {}) => {
 
   return setupComponent(TransactionDetails, {
     props: {
-      originAccount: args.account || account,
+      originAccount: 'account' in args ? args.account : account,
       show: true,
     },
     stubs: {
@@ -100,6 +103,18 @@ describe('TransactionDetails', () => {
     expect(item.props()).toMatchObject({
       label: expect.stringMatching(/clearedAt/),
       tip: expect.stringMatching(/clearedAtTip/),
+    });
+  });
+
+  describe('when originAccount is null', () => {
+    it('renders account select', () => {
+      const wrapper = factory({ account: null });
+      const item = wrapper.findComponent("[data-test='origin-account']");
+
+      expect(item.props()).toMatchObject({
+        label: expect.stringMatching(/account/),
+        options: allAccounts.map((a) => ({ label: a.name, value: a.id })),
+      });
     });
   });
 

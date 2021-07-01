@@ -12,8 +12,8 @@ categoriesRepository.createCategory = jest.fn();
 
 const factory = () =>
   setupComponent(CreateCategoryModal, {
-    props: { budget },
-    renderSlots: true,
+    props: { budget, show: true },
+    withMount: true,
   });
 
 describe('CreateCategoryModal', () => {

@@ -11,8 +11,8 @@ const form = {
 
 const factory = () =>
   setupComponent(CreateCategoryGroupModal, {
-    props: { budget },
-    renderSlots: true,
+    props: { budget, show: true },
+    withMount: true,
   });
 
 repository.createCategoryGroup = jest.fn();

@@ -20,8 +20,10 @@ describe('AllAccounts', () => {
     transactionsRepository.getTransactions = jest.fn();
   });
 
-  it('renders AccountHeader with accounts totals as props', () => {
+  it('renders AccountHeader with accounts totals as props', async () => {
     const wrapper = factory();
+    await flushPromises();
+
     const item = wrapper.findComponent("[data-test='header']");
 
     expect(item.props()).toEqual({
@@ -32,15 +34,19 @@ describe('AllAccounts', () => {
     });
   });
 
-  it('renders AccountToolbar without an origin account', () => {
+  it('renders AccountToolbar without an origin account', async () => {
     const wrapper = factory();
+    await flushPromises();
+
     const item = wrapper.findComponent("[data-test='toolbar']");
 
     expect(item.props().account).toBeNull();
   });
 
-  it('renders TransactionList', () => {
+  it('renders TransactionList', async () => {
     const wrapper = factory();
+    await flushPromises();
+
     const item = wrapper.findComponent("[data-test='transaction-list']");
 
     expect(item.props().transactions).toEqual(transactions);
@@ -48,11 +54,22 @@ describe('AllAccounts', () => {
 
   it('fetches transactions', async () => {
     factory();
-
     await flushPromises();
 
     expect(transactionsRepository.getTransactions).toHaveBeenCalledWith({
       budgetId: openBudget.id,
+    });
+  });
+
+  describe('when fetching transactions', () => {
+    it('displays Loading component', async () => {
+      const wrapper = factory();
+
+      expect(wrapper.find("[data-test='loading']").exists()).toBeTruthy();
+
+      await flushPromises();
+
+      expect(wrapper.find("[data-test='loading']").exists()).toBeFalsy();
     });
   });
 });

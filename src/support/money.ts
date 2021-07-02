@@ -7,7 +7,7 @@ interface Currenciable {
   currency: Currency;
 }
 
-interface CurrencySettings {
+export interface CurrencySettings {
   decimal: string;
   thousands: string;
   prefix: string;

@@ -7,7 +7,7 @@ import { BudgetReq } from '@/types/api';
 
 export interface ApiMonthlyBudgetRequest extends BudgetReq {
   id: string;
-  budgeted: number;
+  budgeted: string | number;
   categoryId: string;
   monthId: string;
 }

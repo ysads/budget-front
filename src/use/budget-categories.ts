@@ -33,16 +33,21 @@ export default function useBudgetCategories(): UseBudgetCategoriesHook {
       },
     ],
   };
-  const userCategories = Object.entries(categoriesGroupedByGroupId.value).map(
-    ([groupId, categories]) => ({
-      label: categoryGroupById(groupId)?.name,
-      options: categories.map((category) => ({
-        label: category.name,
-        value: category.id,
-      })),
-    }),
+  const userCategories = computed(() =>
+    Object.entries(categoriesGroupedByGroupId.value).map(
+      ([groupId, categories]) => ({
+        label: categoryGroupById(groupId)?.name,
+        options: categories.map((category) => ({
+          label: category.name,
+          value: category.id,
+        })),
+      }),
+    ),
   );
-  const categoryOptions = computed(() => [inflowCategory, ...userCategories]);
+  const categoryOptions = computed(() => [
+    inflowCategory,
+    ...userCategories.value,
+  ]);
 
   const categoryName = (transaction: Transaction) => {
     if (!transaction.categoryId) {

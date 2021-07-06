@@ -13,6 +13,16 @@
       :inactive-label="st('inflow')"
     />
     <sad-select
+      v-if="!originAccount"
+      v-model="form.originId"
+      class="transaction-details__control"
+      :label="st('account')"
+      :options="accountOptions"
+      :placeholder="t('placeholders.select')"
+      name="origin"
+      data-test="origin-account"
+    />
+    <sad-select
       v-model="form.payeeName"
       class="transaction-details__control"
       :label="st('payee')"
@@ -95,6 +105,7 @@ import { currencySettings, currencyToCents } from '@/support/money';
 import { createTransaction } from '@/repositories/transactions';
 import { handleApiError } from '@/api/errors';
 import { openBudget } from '@/repositories/budgets';
+import { accounts } from '@/repositories/accounts';
 import { payees } from '@/repositories/payees';
 import {
   PropType,
@@ -111,8 +122,8 @@ export default defineComponent({
 
   props: {
     originAccount: {
-      type: Object as PropType<Account>,
-      required: true,
+      type: Object as PropType<Account | null>,
+      default: null,
     },
     show: {
       type: Boolean,
@@ -146,13 +157,20 @@ export default defineComponent({
       })),
     );
 
+    const accountOptions = computed(() =>
+      accounts.value.map((a) => ({
+        label: a.name,
+        value: a.id,
+      })),
+    );
+
     const form = reactive({
       amount: '',
       budgetId: openBudget.value.id,
       clearedAt: new Date().toISOString() as NullishDate,
       memo: '',
       categoryId: '',
-      originId: props.originAccount.id,
+      originId: props.originAccount?.id || '',
       outflow: true,
       payeeName: '',
       referenceAt: new Date(),
@@ -176,6 +194,7 @@ export default defineComponent({
     };
 
     return {
+      accountOptions,
       categoryOptions,
       currencySymbol,
       form,

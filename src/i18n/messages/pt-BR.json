@@ -73,6 +73,7 @@
     "toBeBudgeted": "Para orçar"
   },
   "TransactionDetails": {
+    "account": "Conta",
     "amount": "Valor",
     "category": "Categoria",
     "clearedAt": "Aprovada?",
@@ -86,16 +87,16 @@
     "referenceAt": "Data"
   },
   "TransactionTableHeader": {
-    "amount":"Valor",
-    "category":"Categoria",
-    "cleared":"Aprovado",
-    "date":"Data",
-    "memo":"Descrição",
-    "payee":"Recebedor"
+    "amount": "Valor",
+    "category": "Categoria",
+    "cleared": "Aprovado",
+    "date": "Data",
+    "memo": "Descrição",
+    "payee": "Recebedor"
   },
   "TransactionTableRow": {
-    "clearedTitle":"Essa transação já está refletida no seu extrato bancário.",
-    "unclearedTitle":"Essa transação ainda não foi confirmada no banco."
+    "clearedTitle": "Essa transação já está refletida no seu extrato bancário.",
+    "unclearedTitle": "Essa transação ainda não foi confirmada no banco."
   },
   "validations": {
     "required": "Campo obrigatório."

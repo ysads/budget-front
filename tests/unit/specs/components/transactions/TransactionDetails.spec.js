@@ -8,6 +8,7 @@ import * as categoriesRepo from '@/repositories/categories';
 import * as categoryGroupsRepo from '@/repositories/category-groups';
 import * as budgetsRepo from '@/repositories/budgets';
 import * as payeesRepo from '@/repositories/payees';
+import * as accountsRepo from '@/repositories/accounts';
 import * as transactionsRepository from '@/repositories/transactions';
 import { handleApiError } from '@/api/errors';
 
@@ -20,6 +21,7 @@ jest.mock('@/support/alert', () => ({
   error: jest.fn(),
 }));
 
+const allAccounts = factories.account.buildList(2);
 const account = factories.account.budget().build();
 const budget = factories.budget.build();
 const payees = factories.payee.buildList(2);
@@ -31,6 +33,7 @@ const categories = [
 ];
 
 const factory = (args = {}) => {
+  accountsRepo.accounts.value = allAccounts;
   budgetsRepo.openBudget.value = budget;
   categoriesRepo.categories.value = categories;
   categoryGroupsRepo.categoryGroups.value = categoryGroups;
@@ -39,14 +42,13 @@ const factory = (args = {}) => {
 
   return setupComponent(TransactionDetails, {
     props: {
-      originAccount: args.account || account,
+      originAccount: 'account' in args ? args.account : account,
       show: true,
     },
     stubs: {
       transition: false,
     },
-    renderSlots: true,
-    withMount: args.withMount,
+    withMount: true,
   });
 };
 
@@ -104,6 +106,18 @@ describe('TransactionDetails', () => {
     });
   });
 
+  describe('when originAccount is null', () => {
+    it('renders account select', () => {
+      const wrapper = factory({ account: null });
+      const item = wrapper.findComponent("[data-test='origin-account']");
+
+      expect(item.props()).toMatchObject({
+        label: expect.stringMatching(/account/),
+        options: allAccounts.map((a) => ({ label: a.name, value: a.id })),
+      });
+    });
+  });
+
   describe('when cleared-at is checked', () => {
     it('sets form.clearedAt as true', async () => {
       const wrapper = factory();
@@ -129,7 +143,7 @@ describe('TransactionDetails', () => {
 
   describe('when save button emits click', () => {
     it('creates a transaction', async () => {
-      const wrapper = factory({ withMount: true });
+      const wrapper = factory();
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -137,7 +151,7 @@ describe('TransactionDetails', () => {
     });
 
     it('emits close', async () => {
-      const wrapper = factory({ withMount: true });
+      const wrapper = factory();
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -145,7 +159,7 @@ describe('TransactionDetails', () => {
     });
 
     it('alerts an success', async () => {
-      const wrapper = factory({ withMount: true });
+      const wrapper = factory();
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -156,7 +170,7 @@ describe('TransactionDetails', () => {
 
     describe('and request fails', () => {
       it('handles api error', async () => {
-        const wrapper = factory({ withMount: true });
+        const wrapper = factory();
         const error = new Error();
 
         transactionsRepository.createTransaction.mockResolvedValueOnce(

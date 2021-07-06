@@ -30,8 +30,8 @@ const factory = (args = {}) => {
 
   return setupComponent(CreateAccountModal, {
     data: args.data,
-    props: { budget: budget },
-    renderSlots: true,
+    props: { budget: budget, show: true },
+    withMount: true,
   });
 };
 

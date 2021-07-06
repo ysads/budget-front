@@ -11,8 +11,8 @@ const form = {
 
 const factory = () =>
   setupComponent(CreateCategoryGroupModal, {
-    props: { budget },
-    renderSlots: true,
+    props: { budget, show: true },
+    withMount: true,
   });
 
 repository.createCategoryGroup = jest.fn();
@@ -62,6 +62,22 @@ describe('CreateCategoryGroupModal', () => {
 
         expect(repository.createCategoryGroup).not.toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('when show prop changes', () => {
+    it('cleans forms', async () => {
+      const wrapper = factory();
+
+      await wrapper
+        .findComponent('[data-test="name"]')
+        .vm.$emit('update:model-value', 'test');
+
+      expect(wrapper.vm.form.name).toEqual('test');
+
+      await wrapper.setProps({ show: false });
+
+      expect(wrapper.vm.form.name).toEqual('');
     });
   });
 });

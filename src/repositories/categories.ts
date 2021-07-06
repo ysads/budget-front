@@ -29,12 +29,9 @@ export const categoryById = (id: string): Category | undefined => {
 export const createCategory = async (
   params: ApiCreateCategoryRequest,
 ): Promise<void> => {
-  const categoryGroup = await post(
-    `budgets/${params.budgetId}/categories`,
-    params,
-  );
+  const category = await post(`budgets/${params.budgetId}/categories`, params);
 
-  categories.value.push(categoryGroup);
+  categories.value.push(category);
 };
 
 export const getCategories = async (params: BudgetReq): Promise<void> => {

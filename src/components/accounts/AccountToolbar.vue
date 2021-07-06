@@ -9,7 +9,6 @@
     >
       {{ t('newTransaction') }}
     </sad-button>
-
     <transaction-details
       :show="isVisible.transactionDrawer"
       :origin-account="account"
@@ -23,14 +22,14 @@
 import SadButton from '@/components/sad/SadButton.vue';
 import TransactionDetails from '@/components/transactions/TransactionDetails.vue';
 import useI18n from '@/use/i18n';
-import { Budget } from '@/types/models';
+import { Account } from '@/types/models';
 import { defineComponent, PropType, reactive } from 'vue';
 
 export default defineComponent({
   props: {
     account: {
-      type: Object as PropType<Budget>,
-      required: true,
+      type: Object as PropType<Account | null>,
+      default: null,
     },
   },
 

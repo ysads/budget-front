@@ -28,10 +28,7 @@ export default function useMonthlyBudgetForm(
       : '';
   };
 
-  watch(
-    () => props.monthlyBudget,
-    (newRecord) => updateForm(newRecord),
-  );
+  watch(() => props.monthlyBudget, updateForm);
 
   const resetForm = () => updateForm({} as MonthlyBudget);
 

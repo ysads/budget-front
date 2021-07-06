@@ -42,8 +42,7 @@ const factory = (args = {}) =>
       monthlyBudget: args.monthlyBudget || undefined,
       show: true,
     },
-    renderSlots: true,
-    withMount: args.withMount,
+    withMount: true,
   });
 
 describe('MonthlyBudgetDetails', () => {
@@ -68,7 +67,7 @@ describe('MonthlyBudgetDetails', () => {
 
   describe('when save button emits click', () => {
     it('creates a new monthly budget', async () => {
-      const wrapper = factory({ withMount: true });
+      const wrapper = factory();
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -76,7 +75,7 @@ describe('MonthlyBudgetDetails', () => {
     });
 
     it('emits close', async () => {
-      const wrapper = factory({ withMount: true });
+      const wrapper = factory();
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -84,7 +83,7 @@ describe('MonthlyBudgetDetails', () => {
     });
 
     it('alerts an success', async () => {
-      const wrapper = factory({ withMount: true });
+      const wrapper = factory();
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
 
@@ -95,7 +94,7 @@ describe('MonthlyBudgetDetails', () => {
 
     describe('and request fails', () => {
       it('handles api error', async () => {
-        const wrapper = factory({ withMount: true });
+        const wrapper = factory();
         const error = new Error();
 
         monthlyBudgetRepository.createMonthlyBudget.mockResolvedValueOnce(

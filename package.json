@@ -34,7 +34,7 @@
     "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
-    "@types/accounting": "^0.4.1",
+    "@types/accounting": "^0.4.2",
     "@types/faker": "^5.5.7",
     "@types/jest": "^26.0.24",
     "@types/jsonapi-serializer": "^3.6.3",

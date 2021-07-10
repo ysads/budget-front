@@ -1236,10 +1236,10 @@
     remark "^13.0.0"
     unist-util-find-all-after "^3.0.2"
 
-"@types/accounting@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@types/accounting/-/accounting-0.4.1.tgz#865d9f5694fd7c438fba34eb4bc82eec6f34cdd5"
-  integrity sha512-qIN2yvRFvTtUtzG3bs7NKnsqHCPwRIIZMvBNWxiyF4LfOBMhwbwmsefqOt1T7KfkvCgOOxWYVqvlnKKZARSHgg==
+"@types/accounting@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@types/accounting/-/accounting-0.4.2.tgz#81239fc56bc62511a3d3ff535dde2e0bbf3c53c1"
+  integrity sha512-M8W6tsLZguGdRaSQMmg58PUM/5HgoDuBGVyMiYNGi0FZkLzJDjUBGGYRYj1J9OWELCTqfux+ogVyKObCzfWJgg==
 
 "@types/babel__core@^7.1.0":
   version "7.1.14"

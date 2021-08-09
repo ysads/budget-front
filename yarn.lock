@@ -2057,10 +2057,10 @@
   resolved "https://registry.yarnpkg.com/@vue/web-component-wrapper/-/web-component-wrapper-1.3.0.tgz#b6b40a7625429d2bd7c2281ddba601ed05dc7f1a"
   integrity sha512-Iu8Tbg3f+emIIMmI2ycSI8QcEuAUgPTgHwesDU1eKMLE4YC/c/sFbGc70QgMq31ijRftV0R7vCm9co6rldCeOA==
 
-"@vuelidate/core@^2.0.0-alpha.21":
-  version "2.0.0-alpha.21"
-  resolved "https://registry.yarnpkg.com/@vuelidate/core/-/core-2.0.0-alpha.21.tgz#37077421007b8ff925840ee937e9e821fbc03f12"
-  integrity sha512-Qk8UzmadmVO1fg527lRKzI29kpQf4wW1XZICerIZuhDinm3VDsq+lG2LSI21NV1uGbNJLdmDTYWF+tKvk+zLoQ==
+"@vuelidate/core@^2.0.0-alpha.23":
+  version "2.0.0-alpha.23"
+  resolved "https://registry.yarnpkg.com/@vuelidate/core/-/core-2.0.0-alpha.23.tgz#ef0edf70d9f9e1a9fd585bd168679a81c59911c5"
+  integrity sha512-1ZwoEdYMzenFbEx+UuLwu0ZcpH/XBQhSKkHUkYgc0Bv22GmncQckZARASugla1FrwwkHRWpXsv4G7sgwuY17/Q==
   dependencies:
     vue-demi "^0.9.1"
 

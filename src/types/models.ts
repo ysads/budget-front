@@ -89,8 +89,12 @@ export interface Transaction {
   memo: string | undefined;
   monthlyBudgetId: string | undefined;
   origin: Account;
+  originId: string | undefined;
+  outflow: boolean;
   payee: Payee;
+  payeeName: string;
   referenceAt: string;
+  unsignedAmount: number;
 }
 
 export interface User {

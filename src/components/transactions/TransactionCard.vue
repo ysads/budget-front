@@ -1,5 +1,5 @@
 <template>
-  <div class="transaction-card">
+  <div class="transaction-card" @click="$emit('click')">
     <div class="transaction-card__row">
       <span class="transaction-card__category" data-test="category">
         {{ budgetCategoryName }}
@@ -63,6 +63,8 @@ export default defineComponent({
   components: {
     SadIcon,
   },
+
+  emits: ['click'],
 
   setup(props) {
     const { d } = useI18n();

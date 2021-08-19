@@ -9,6 +9,7 @@
         :budget="openBudget"
         class="transaction"
         data-test="table-row"
+        @click="openDrawer(transaction)"
       />
     </div>
     <div v-else>
@@ -19,23 +20,33 @@
         :budget="openBudget"
         class="transaction"
         data-test="card"
+        @click="openDrawer(transaction)"
       />
     </div>
+    <transaction-details
+      :transaction="openTransaction"
+      :origin-account="openTransaction.origin"
+      :show="isDrawerOpen"
+      data-test="transaction-details"
+      @close="closeDrawer"
+    />
   </section>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script lang="ts">
+import { computed, defineComponent, PropType, ref } from 'vue';
 import { openBudget } from '@/repositories/budgets';
+import { Transaction } from '@/types/models';
 import useWindowSize from '@/use/window-size';
-import TransactionTableHeader from './TransactionTableHeader';
-import TransactionTableRow from './TransactionTableRow';
-import TransactionCard from './TransactionCard';
+import TransactionTableHeader from './TransactionTableHeader.vue';
+import TransactionTableRow from './TransactionTableRow.vue';
+import TransactionCard from './TransactionCard.vue';
+import TransactionDetails from './TransactionDetails.vue';
 
 export default defineComponent({
   props: {
     transactions: {
-      type: Array,
+      type: Array as PropType<Transaction[]>,
       required: true,
     },
   },
@@ -44,12 +55,26 @@ export default defineComponent({
     TransactionCard,
     TransactionTableHeader,
     TransactionTableRow,
+    TransactionDetails,
   },
 
   setup() {
     const { isMobile } = useWindowSize();
 
-    return { isMobile, openBudget };
+    const openTransaction = ref({} as Transaction);
+    const isDrawerOpen = computed(() => Boolean(openTransaction.value.id));
+
+    const openDrawer = (t: Transaction) => (openTransaction.value = t);
+    const closeDrawer = () => (openTransaction.value = {} as Transaction);
+
+    return {
+      closeDrawer,
+      isDrawerOpen,
+      isMobile,
+      openBudget,
+      openDrawer,
+      openTransaction,
+    };
   },
 });
 </script>

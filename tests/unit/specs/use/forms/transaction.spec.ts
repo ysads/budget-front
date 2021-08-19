@@ -65,7 +65,7 @@ describe('useTransactionForm', () => {
     describe('when categoryId changes', () => {
       describe('and new value is blank', () => {
         it('sets outflow to false', () => {
-          let reactiveTransaction = reactive({ ...transaction });
+          const reactiveTransaction = reactive({ ...transaction });
           const { form } = useTransactionForm({
             props: { transaction: reactiveTransaction },
             isEdit: ref(true),
@@ -90,7 +90,7 @@ describe('useTransactionForm', () => {
       });
 
       it('keeps form own outflow otherwise', () => {
-        let reactiveTransaction = reactive({ ...transaction });
+        const reactiveTransaction = reactive({ ...transaction });
         const { form } = useTransactionForm({
           props: { transaction: reactiveTransaction },
           isEdit: ref(true),

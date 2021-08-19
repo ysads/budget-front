@@ -44,6 +44,7 @@
       data-test="accounts-accordion"
     >
       <account-accordion
+        v-if="budgetAccounts.length"
         class="dashboard-menu__accounts-list"
         :accounts="budgetAccounts"
         :budget="openBudget"
@@ -51,6 +52,7 @@
         data-test="budget-accounts-accordion"
       />
       <account-accordion
+        v-if="trackingAccounts.length"
         class="dashboard-menu__accounts-list"
         :accounts="trackingAccounts"
         :budget="openBudget"

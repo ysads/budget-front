@@ -29,6 +29,7 @@ export default Factory.define<Month>(() => {
   return {
     id: faker.datatype.uuid(),
     budgeted: faker.datatype.number(3000),
+    budgetId: faker.datatype.uuid(),
     activity: faker.datatype.number(6500),
     income: faker.datatype.number(5000),
     isoMonth: randomMonth(),

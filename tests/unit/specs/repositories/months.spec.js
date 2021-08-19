@@ -32,4 +32,17 @@ describe('MonthsRepository', () => {
       expect(repository.currentMonth.value).toEqual(month);
     });
   });
+
+  describe('#refreshMonth', () => {
+    it('fetches current month again from api', () => {
+      const currentMonth = factories.month.build();
+      repository.currentMonth.value = currentMonth;
+
+      repository.refreshMonth();
+
+      expect(api.get).toHaveBeenCalledWith(
+        `budgets/${currentMonth.budgetId}/months/${currentMonth.isoMonth}`,
+      );
+    });
+  });
 });

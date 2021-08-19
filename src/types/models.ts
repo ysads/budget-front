@@ -60,6 +60,7 @@ export interface Month {
   id: string;
   activity: number;
   budgeted: number;
+  budgetId: string;
   income: number;
   isoMonth: IsoMonth;
   toBeBudgeted: number;

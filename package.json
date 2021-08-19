@@ -1,6 +1,6 @@
 {
   "name": "budget-front",
-  "version": "2.4.6",
+  "version": "2.5.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -37,7 +37,7 @@
     "@types/accounting": "^0.4.2",
     "@types/faker": "^5.5.7",
     "@types/jest": "^26.0.24",
-    "@types/jsonapi-serializer": "^3.6.4",
+    "@types/jsonapi-serializer": "^3.6.5",
     "@types/lodash": "^4.14.171",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",

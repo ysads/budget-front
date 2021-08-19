@@ -3,6 +3,7 @@
     :model-value="modelValue"
     :active-text="activeLabel"
     :inactive-text="inactiveLabel"
+    :disabled="disabled"
     @update:model-value="(val) => $emit('update:model-value', val)"
   />
 </template>
@@ -16,6 +17,10 @@ export default defineComponent({
     activeLabel: {
       type: String,
       required: true,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     inactiveLabel: {
       type: String,

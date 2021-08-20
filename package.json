@@ -1,6 +1,6 @@
 {
   "name": "budget-front",
-  "version": "2.5.1",
+  "version": "2.8.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@vuelidate/core": "^2.0.0-alpha.24",
-    "@vuelidate/validators": "^2.0.0-alpha.15",
+    "@vuelidate/validators": "^2.0.0-alpha.21",
     "accounting": "^0.4.1",
     "axios": "^0.21.1",
     "core-js": "^3.15.2",
@@ -35,12 +35,12 @@
   },
   "devDependencies": {
     "@types/accounting": "^0.4.2",
-    "@types/faker": "^5.5.7",
+    "@types/faker": "^5.5.8",
     "@types/jest": "^26.0.24",
     "@types/jsonapi-serializer": "^3.6.4",
     "@types/lodash": "^4.14.172",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
-    "@typescript-eslint/parser": "^4.28.2",
+    "@typescript-eslint/parser": "^4.29.2",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
@@ -58,7 +58,7 @@
     "flush-promises": "^1.0.2",
     "mockdate": "^3.0.5",
     "prettier": "^2.3.2",
-    "sass": "^1.35.2",
+    "sass": "^1.38.0",
     "sass-loader": "^10.1.0",
     "stylelint": "^13.13.1",
     "typescript": "^4.3.5",

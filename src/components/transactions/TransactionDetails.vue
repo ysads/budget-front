@@ -6,16 +6,10 @@
     data-test="drawer"
     @close="$emit('close')"
   >
-    <sad-switch
-      v-model="form.outflow"
-      class="transaction-details__control transaction-details__outflow"
-      :active-label="st('outflow')"
-      :inactive-label="st('inflow')"
-    />
     <sad-select
-      v-if="!originAccount"
       v-model="form.originId"
       class="transaction-details__control"
+      :disabled="isAccountDisabled"
       :label="st('account')"
       :options="accountOptions"
       :placeholder="t('placeholders.select')"
@@ -52,20 +46,27 @@
       data-test="category"
     />
     <sad-input
-      v-model="form.amount"
-      class="transaction-details__control"
-      :label="st('amount')"
-      :prefix="currencySymbol"
-      name="amount"
-      data-test="amount"
-    />
-    <sad-input
       v-model="form.memo"
       class="transaction-details__control"
       :label="st('memo')"
       :tip="st('memoTip')"
       name="memo"
       data-test="memo"
+    />
+    <sad-switch
+      v-model="form.outflow"
+      class="transaction-details__outflow"
+      :active-label="st('outflow')"
+      :inactive-label="st('inflow')"
+      :disabled="!form.categoryId"
+    />
+    <sad-input
+      v-model="form.amount"
+      class="transaction-details__control"
+      :label="st('amount')"
+      :prefix="currencySymbol"
+      name="amount"
+      data-test="amount"
     />
     <sad-checkbox
       class="transaction-details__control"
@@ -100,21 +101,15 @@ import SadCheckbox from '@/components/sad/SadCheckbox.vue';
 import SadSelect from '@/components/sad/SadSelect.vue';
 import SadSwitch from '@/components/sad/SadSwitch.vue';
 import useBudgetCategories from '@/use/budget-categories';
+import useTransactionForm from '@/use/forms/transaction';
 import useI18n from '@/use/i18n';
 import { currencySettings, currencyToCents } from '@/support/money';
-import { createTransaction } from '@/repositories/transactions';
 import { handleApiError } from '@/api/errors';
 import { openBudget } from '@/repositories/budgets';
 import { accounts } from '@/repositories/accounts';
 import { payees } from '@/repositories/payees';
-import {
-  PropType,
-  SetupContext,
-  computed,
-  defineComponent,
-  reactive,
-} from 'vue';
-import { Account, NullishDate } from '@/types/models';
+import { PropType, SetupContext, computed, defineComponent } from 'vue';
+import { Account, Transaction } from '@/types/models';
 import { symbolOf } from '@/support/currencies';
 
 export default defineComponent({
@@ -122,12 +117,16 @@ export default defineComponent({
 
   props: {
     originAccount: {
-      type: Object as PropType<Account | null>,
+      type: Object as PropType<Account | undefined>,
       default: null,
     },
     show: {
       type: Boolean,
       default: false,
+    },
+    transaction: {
+      type: Object as PropType<Transaction>,
+      default: () => ({} as Transaction),
     },
   },
 
@@ -147,7 +146,14 @@ export default defineComponent({
     const { t, st } = useI18n('TransactionDetails');
     const { categoryOptions } = useBudgetCategories();
 
-    const money = currencySettings(openBudget.value);
+    const isEdit = computed(() => Boolean(props.transaction.id));
+
+    // INFO: needed since we won't allow moving transactions between accounts here
+    const isAccountDisabled = computed(
+      () => isEdit.value || Boolean(props.originAccount?.id),
+    );
+
+    const moneySettings = currencySettings(openBudget.value);
     const currencySymbol = computed(() => symbolOf(openBudget.value.currency));
 
     const payeeOptions = computed(() =>
@@ -164,16 +170,10 @@ export default defineComponent({
       })),
     );
 
-    const form = reactive({
-      amount: '',
-      budgetId: openBudget.value.id,
-      clearedAt: new Date().toISOString() as NullishDate,
-      memo: '',
-      categoryId: '',
-      originId: props.originAccount?.id || '',
-      outflow: true,
-      payeeName: '',
-      referenceAt: new Date(),
+    const { form, saveMessage, resetForm, saveForm } = useTransactionForm({
+      props,
+      isEdit,
+      moneySettings,
     });
 
     const handleClearedAt = (checked: boolean) => {
@@ -182,11 +182,12 @@ export default defineComponent({
 
     const handleSubmit = async () => {
       try {
-        await createTransaction({
+        await saveForm({
           ...form,
           amount: currencyToCents(form.amount, openBudget.value),
         });
-        alert.success(st('created'));
+        alert.success(saveMessage.value);
+        resetForm();
         emit('close');
       } catch (err) {
         handleApiError(err);
@@ -200,7 +201,7 @@ export default defineComponent({
       form,
       handleClearedAt,
       handleSubmit,
-      money,
+      isAccountDisabled,
       openBudget,
       payeeOptions,
       st,
@@ -219,6 +220,7 @@ export default defineComponent({
   &__outflow {
     display: inline-flex;
     justify-content: center;
+    margin-top: $base * 4;
     width: 100%;
   }
 }

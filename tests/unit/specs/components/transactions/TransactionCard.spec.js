@@ -110,4 +110,14 @@ describe('TransactionCard', () => {
       expect(item.text()).toEqual(transaction.memo);
     });
   });
+
+  describe('when clicked', () => {
+    it('emits click', async () => {
+      const wrapper = factory();
+
+      await wrapper.find('div').trigger('click');
+
+      expect(wrapper.emitted().click).toBeTruthy();
+    });
+  });
 });

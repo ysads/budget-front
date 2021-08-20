@@ -1,6 +1,5 @@
 import alert from '@/support/alert';
 import factories from '#/factories';
-import flushPromises from 'flush-promises';
 import MockDate from 'mockdate';
 import TransactionDetails from '@/components/transactions/TransactionDetails';
 import setupComponent from '#/setup-component';
@@ -11,6 +10,7 @@ import * as payeesRepo from '@/repositories/payees';
 import * as accountsRepo from '@/repositories/accounts';
 import * as transactionsRepository from '@/repositories/transactions';
 import { handleApiError } from '@/api/errors';
+import { flushPromises } from '@vue/test-utils';
 
 jest.mock('@/api/errors', () => ({
   handleApiError: jest.fn(),
@@ -31,6 +31,7 @@ const categories = [
   factories.category.build({ categoryGroupId: categoryGroups[0].id }),
   factories.category.build({ categoryGroupId: categoryGroups[1].id }),
 ];
+const transaction = factories.transaction.build();
 
 const factory = (args = {}) => {
   accountsRepo.accounts.value = allAccounts;
@@ -44,6 +45,7 @@ const factory = (args = {}) => {
     props: {
       originAccount: 'account' in args ? args.account : account,
       show: true,
+      transaction: args.transaction,
     },
     stubs: {
       transition: false,
@@ -106,6 +108,29 @@ describe('TransactionDetails', () => {
     });
   });
 
+  describe('origin account select', () => {
+    it('is disabled when editing', () => {
+      const wrapper = factory({ transaction });
+      const item = wrapper.findComponent("[data-test='origin-account']");
+
+      expect(item.props().disabled).toBeTruthy();
+    });
+
+    it('is disabled when origin account is present', () => {
+      const wrapper = factory({ account });
+      const item = wrapper.findComponent("[data-test='origin-account']");
+
+      expect(item.props().disabled).toBeTruthy();
+    });
+
+    it('is enabled otherwise', () => {
+      const wrapper = factory({ account: null, transaction: {} });
+      const item = wrapper.findComponent("[data-test='origin-account']");
+
+      expect(item.props().disabled).toBeFalsy();
+    });
+  });
+
   describe('when originAccount is null', () => {
     it('renders account select', () => {
       const wrapper = factory({ account: null });
@@ -142,18 +167,11 @@ describe('TransactionDetails', () => {
   });
 
   describe('when save button emits click', () => {
-    it('creates a transaction', async () => {
-      const wrapper = factory();
-
-      await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
-
-      expect(transactionsRepository.createTransaction).toHaveBeenCalled();
-    });
-
     it('emits close', async () => {
       const wrapper = factory();
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
+      await flushPromises();
 
       expect(wrapper.emitted().close).toBeTruthy();
     });
@@ -162,10 +180,9 @@ describe('TransactionDetails', () => {
       const wrapper = factory();
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
+      await flushPromises();
 
-      expect(alert.success).toHaveBeenCalledWith(
-        expect.stringMatching(/created/),
-      );
+      expect(alert.success).toHaveBeenCalled();
     });
 
     describe('and request fails', () => {
@@ -178,7 +195,6 @@ describe('TransactionDetails', () => {
         );
 
         await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
-
         await flushPromises();
 
         expect(handleApiError).toHaveBeenCalledWith(error);

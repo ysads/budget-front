@@ -152,6 +152,10 @@ export default defineComponent({
 
 .slide-right-enter-from,
 .slide-right-leave-to {
-  transform: translateX(400px);
+  transform: translateX(100%);
+
+  @include breakpoint(md) {
+    transform: translateX(400px);
+  }
 }
 </style>

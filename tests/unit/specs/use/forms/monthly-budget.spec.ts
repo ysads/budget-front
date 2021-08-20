@@ -23,7 +23,7 @@ describe('useMonthlyBudgetForm', () => {
 
     describe('when monthly budget changes', () => {
       it('updates form fields to match new monthly budget', async () => {
-        let reactiveMonthlyBudget = reactive({ ...monthlyBudget });
+        const reactiveMonthlyBudget = reactive({ ...monthlyBudget });
         const { form } = useMonthlyBudgetForm(
           { monthlyBudget: reactiveMonthlyBudget },
           ref(true),

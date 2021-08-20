@@ -1,5 +1,5 @@
 <template>
-  <div class="transaction-table-row">
+  <div class="transaction-table-row" @click="$emit('click')">
     <span class="transaction-table-row__date" data-test="date">
       {{ d(new Date(transaction.referenceAt), 'short') }}
     </span>
@@ -55,6 +55,8 @@ export default defineComponent({
   components: {
     SadIcon,
   },
+
+  emits: ['click'],
 
   setup(props) {
     const { d, st } = useI18n('TransactionTableRow');

@@ -1,20 +1,10 @@
-import { get, post } from '@/api';
+import { get, post, put } from '@/api';
 import { ref } from 'vue';
 import { upsertAccount } from '@/repositories/accounts';
 import { upsertPayee } from '@/repositories/payees';
-import { NullishDate, Transaction } from '@/types/models';
-
-interface ApiTransactionReq {
-  amount: number;
-  clearedAt: NullishDate;
-  memo: string;
-  categoryId: string;
-  originId: string;
-  outflow: boolean;
-  payeeName: string;
-  referenceAt: Date;
-  budgetId: string;
-}
+import { Transaction } from '@/types/models';
+import { ApiTransactionForm } from '@/use/forms/transaction';
+import { upsert } from '@/support/collection';
 
 interface ApiGetTransaction {
   budgetId: string;
@@ -24,7 +14,7 @@ interface ApiGetTransaction {
 export const transactions = ref<Transaction[]>([]);
 
 export const createTransaction = async (
-  params: ApiTransactionReq,
+  params: ApiTransactionForm,
 ): Promise<void> => {
   const response = await post(
     `budgets/${params.budgetId}/transactions`,
@@ -35,6 +25,22 @@ export const createTransaction = async (
 
   upsertPayee(response.payee);
   upsertAccount(response.origin);
+};
+
+export const updateTransaction = async (
+  params: ApiTransactionForm,
+): Promise<void> => {
+  console.log('params', params);
+  const response = await put(
+    `budgets/${params.budgetId}/transactions/${params.id}`,
+    params,
+  );
+
+  const { payee, origin, ...transaction } = response;
+
+  upsert(transactions.value, transaction);
+  upsertPayee(payee);
+  upsertAccount(origin);
 };
 
 export const getTransactions = async (

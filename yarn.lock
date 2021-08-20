@@ -1388,10 +1388,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.7.tgz#98a993516c859eb0d5c4c8f098317a9ea68db9ad"
   integrity sha512-cxWFQVseBm6O9Gbw1IWb8r6OS4OhSt3hPZLkFApLjM8TEXROBuQGLAH2i2gZpcXdLBIrpXuTDhH7Vbm1iXmNGA==
 
-"@types/jsonapi-serializer@^3.6.4":
-  version "3.6.4"
-  resolved "https://registry.yarnpkg.com/@types/jsonapi-serializer/-/jsonapi-serializer-3.6.4.tgz#b8d2b589be6bbb7c79a39d9a5157d3b950f310df"
-  integrity sha512-PlyCOWULlGW7o9/dfekIFT+pHXrHsCcdGEcg3bBHuAEWS2QTRmUKQ3ZubkOT4M+WNueg5bJ1+FZ3g0O/OtqWdg==
+"@types/jsonapi-serializer@^3.6.5":
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/@types/jsonapi-serializer/-/jsonapi-serializer-3.6.5.tgz#1dad7efa6f3886687d47706964aa1bf873893e0a"
+  integrity sha512-y8dG2lg3oiC0CGIRhOBh8bsvgwGnxtVVs1E/wOhH4x9BHXuc3LdH21KgRUQ4dsf2Yt0hhgX99BdfHkEw6gT7kQ==
 
 "@types/lodash@^4.14.161", "@types/lodash@^4.14.172":
   version "4.14.172"

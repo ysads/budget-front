@@ -1,6 +1,7 @@
 import { get, post } from '@/api';
 import { computed, ref } from 'vue';
 import { upsert } from '@/support/collection';
+import { refreshMonth } from './months';
 import { Account, AccountType } from '@/types/models';
 import { BudgetReq } from '@/types/api';
 
@@ -29,6 +30,10 @@ export const createAccount = async ({
   const account = await post(`budgets/${budgetId}/accounts`, rest);
 
   accounts.value = [...accounts.value, account];
+
+  // INFO: needed so current month totals reflect the increase coming
+  // from account balance
+  refreshMonth();
 };
 
 export const getAccounts = async ({ budgetId }: BudgetReq): Promise<void> => {

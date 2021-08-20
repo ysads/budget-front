@@ -1,5 +1,4 @@
 import { get } from '@/api';
-import { isoMonth } from '@/support/date';
 import { IsoMonth, Month } from '@/types/models';
 import { ref } from 'vue';
 
@@ -8,14 +7,7 @@ interface ApiMonthRequest {
   isoMonth: IsoMonth;
 }
 
-export const currentMonth = ref<Month>({
-  id: '',
-  activity: 0,
-  budgeted: 0,
-  income: 0,
-  isoMonth: isoMonth(new Date()),
-  toBeBudgeted: 0,
-});
+export const currentMonth = ref<Month>({} as Month);
 
 export const getMonthByIso = async (params: ApiMonthRequest): Promise<void> => {
   const month = await get(
@@ -23,4 +15,10 @@ export const getMonthByIso = async (params: ApiMonthRequest): Promise<void> => {
   );
 
   currentMonth.value = month;
+};
+
+export const refreshMonth = (): void => {
+  const { budgetId, isoMonth } = currentMonth.value;
+
+  getMonthByIso({ budgetId, isoMonth });
 };

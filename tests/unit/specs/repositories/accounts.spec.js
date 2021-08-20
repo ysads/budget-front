@@ -1,5 +1,6 @@
 import * as api from '@/api';
 import * as repository from '@/repositories/accounts';
+import * as monthRepository from '@/repositories/months';
 import factories from '#/factories';
 import omit from 'lodash/omit';
 
@@ -8,6 +9,7 @@ const budget = factories.budget.build();
 describe('AccountRepository', () => {
   beforeEach(() => {
     repository.accounts.value = [];
+    monthRepository.refreshMonth = jest.fn();
   });
 
   describe('#getAccounts', () => {
@@ -59,6 +61,15 @@ describe('AccountRepository', () => {
         ...previousAccounts,
         newAccount,
       ]);
+    });
+
+    it('refreshes month', async () => {
+      const params = {
+        budgetId: budget.id,
+      };
+      await repository.createAccount(params);
+
+      expect(monthRepository.refreshMonth).toHaveBeenCalled();
     });
   });
 

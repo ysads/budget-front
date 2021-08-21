@@ -21,6 +21,7 @@ class AccountFactory extends Factory<Account> {
 export default AccountFactory.define(() => {
   const balance = random(-10000, 60000);
   const clearedBalance = random(-10000, 60000);
+  const nature = sample(ACCOUNT_NATURES);
 
   return {
     id: uuid(),
@@ -28,7 +29,9 @@ export default AccountFactory.define(() => {
     budgetId: uuid(),
     clearedBalance: clearedBalance,
     closedAt: null,
-    nature: sample(ACCOUNT_NATURES),
+    isBudget: nature === 'budget',
+    isTracking: nature === 'tracking',
+    nature,
     name: faker.finance.accountName(),
     type: sample(ACCOUNT_TYPES),
     unclearedBalance: balance - clearedBalance,

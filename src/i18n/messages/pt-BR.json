@@ -50,6 +50,11 @@
     "categoryGroupPlaceholder": "Selecione um...",
     "name": "Nome da categoria"
   },
+  "general": {
+    "created": "Criado",
+    "newTransfer": "Transferir entre contas",
+    "updated": "Atualizado"
+  },
   "MonthlyBudgetDetails": {
     "category": "Categoria",
     "categoryPlaceholder": "Selecione",
@@ -84,6 +89,16 @@
     "memoTip": "Opcional. Algo que te ajude a reconhecer essa transação.",
     "outflow": "Saída",
     "payee": "Recebedor",
+    "referenceAt": "Data"
+  },
+  "TransferDetails": {
+    "origin": "De",
+    "category": "Categoria",
+    "categoryTip": "Esse tipo de transferência também precisa de uma categoria.",
+    "destination": "Para",
+    "amount": "Valor",
+    "memo": "Descrição",
+    "memoTip": "Opcional. Algo que te ajude a reconhecer essa transação.",
     "referenceAt": "Data"
   },
   "TransactionTableHeader": {

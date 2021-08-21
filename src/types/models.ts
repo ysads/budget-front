@@ -14,6 +14,8 @@ export interface Account {
   budgetId?: string;
   clearedBalance: number;
   closedAt: NullishDate;
+  isBudget: boolean;
+  isTracking: boolean;
   name: string;
   nature: AccountNature;
   type: AccountType;

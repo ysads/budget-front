@@ -54,7 +54,7 @@
     "babel-plugin-import": "^1.13.3",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.4.1",
-    "eslint-plugin-vue": "^7.16.0",
+    "eslint-plugin-vue": "^7.17.0",
     "flush-promises": "^1.0.2",
     "mockdate": "^3.0.5",
     "prettier": "^2.3.2",

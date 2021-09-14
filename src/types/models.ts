@@ -91,8 +91,8 @@ export interface Transaction {
   destinationId: string | undefined;
   memo: string | undefined;
   monthlyBudgetId: string | undefined;
-  origin: Account;
-  originId: string | undefined;
+  account: Account;
+  accountId: string | undefined;
   outflow: boolean;
   payee: Payee;
   payeeName: string;

@@ -15,7 +15,7 @@ export interface TransactionForm {
   categoryId: string;
   id: string | undefined;
   memo: string;
-  originId: string;
+  accountId: string;
   outflow: boolean;
   payeeName: string;
   referenceAt: Date;
@@ -33,7 +33,7 @@ interface TransactionFormHook {
 }
 
 interface PropTypes {
-  props: { originAccount?: Account; transaction: Transaction };
+  props: { account?: Account; transaction: Transaction };
   isEdit: Ref<boolean>;
   moneySettings: CurrencySettings;
 }
@@ -50,9 +50,10 @@ export default function useTransactionForm({
     form.budgetId = openBudget.value.id;
     form.memo = newRecord.memo || '';
     form.categoryId = newRecord.categoryId || '';
-    form.originId = props.transaction.originId || props.originAccount?.id || '';
     form.outflow = newRecord.outflow ?? true;
     form.payeeName = newRecord.payeeName || '';
+
+    updateAccount();
 
     if (isEdit.value) {
       form.amount = format(newRecord.unsignedAmount, moneySettings, false);
@@ -65,16 +66,20 @@ export default function useTransactionForm({
     }
   };
 
+  const updateAccount = (): void => {
+    form.accountId = props.transaction.accountId || props.account?.id || '';
+  };
+
   // INFO: make sure that incomes (blank category id) are always inflows
   const updateOutflow = (newCategoryId: string): void => {
     form.outflow = !newCategoryId ? false : form.outflow;
   };
 
+  watch(() => props.account, updateAccount);
   watch(() => props.transaction, updateForm, { immediate: true });
   watch(() => form.categoryId, updateOutflow, { immediate: true });
 
   const resetForm = () => updateForm({} as Transaction);
-
   const saveForm = async (params: ApiTransactionForm) => {
     const saveFn = isEdit.value ? updateTransaction : createTransaction;
 

@@ -8,7 +8,7 @@ import { upsert } from '@/support/collection';
 
 interface ApiGetTransaction {
   budgetId: string;
-  originId?: string;
+  accountId?: string;
 }
 
 export const transactions = ref<Transaction[]>([]);
@@ -24,7 +24,7 @@ export const createTransaction = async (
   transactions.value = [...transactions.value, response];
 
   upsertPayee(response.payee);
-  upsertAccount(response.origin);
+  upsertAccount(response.account);
 };
 
 export const updateTransaction = async (
@@ -36,11 +36,11 @@ export const updateTransaction = async (
     params,
   );
 
-  const { payee, origin, ...transaction } = response;
+  const { payee, account, ...transaction } = response;
 
   upsert(transactions.value, transaction);
   upsertPayee(payee);
-  upsertAccount(origin);
+  upsertAccount(account);
 };
 
 export const getTransactions = async (

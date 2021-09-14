@@ -43,7 +43,7 @@ const factory = (args = {}) => {
 
   return setupComponent(TransactionDetails, {
     props: {
-      originAccount: 'account' in args ? args.account : account,
+      account: 'account' in args ? args.account : account,
       show: true,
       transaction: args.transaction,
     },
@@ -108,33 +108,33 @@ describe('TransactionDetails', () => {
     });
   });
 
-  describe('origin account select', () => {
+  describe('account account select', () => {
     it('is disabled when editing', () => {
       const wrapper = factory({ transaction });
-      const item = wrapper.findComponent("[data-test='origin-account']");
+      const item = wrapper.findComponent("[data-test='account']");
 
       expect(item.props().disabled).toBeTruthy();
     });
 
-    it('is disabled when origin account is present', () => {
+    it('is disabled when account account is present', () => {
       const wrapper = factory({ account });
-      const item = wrapper.findComponent("[data-test='origin-account']");
+      const item = wrapper.findComponent("[data-test='account']");
 
       expect(item.props().disabled).toBeTruthy();
     });
 
     it('is enabled otherwise', () => {
       const wrapper = factory({ account: null, transaction: {} });
-      const item = wrapper.findComponent("[data-test='origin-account']");
+      const item = wrapper.findComponent("[data-test='account']");
 
       expect(item.props().disabled).toBeFalsy();
     });
   });
 
-  describe('when originAccount is null', () => {
+  describe('when account is null', () => {
     it('renders account select', () => {
       const wrapper = factory({ account: null });
-      const item = wrapper.findComponent("[data-test='origin-account']");
+      const item = wrapper.findComponent("[data-test='account']");
 
       expect(item.props()).toMatchObject({
         label: expect.stringMatching(/account/),

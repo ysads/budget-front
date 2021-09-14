@@ -44,7 +44,7 @@ describe('TransactionsRepository', () => {
       ]);
     });
 
-    it("upserts transaction's origin to accountRepository", async () => {
+    it("upserts transaction's account to accountRepository", async () => {
       const params = { budgetId: budget.id };
       const transaction = factories.transaction.build();
 
@@ -53,7 +53,7 @@ describe('TransactionsRepository', () => {
       await transactionRepository.createTransaction(params);
 
       expect(accountRepository.upsertAccount).toHaveBeenCalledWith(
-        transaction.origin,
+        transaction.account,
       );
     });
 

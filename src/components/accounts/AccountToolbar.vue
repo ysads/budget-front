@@ -20,13 +20,13 @@
     </sad-button>
     <transaction-details
       :show="isVisible.transactionDrawer"
-      :origin-account="account"
+      :account="account"
       data-test="transaction-drawer"
       @close="toggle('transactionDrawer')"
     />
     <transfer-details
       :show="isVisible.transferDrawer"
-      :origin-account="account"
+      :origin="account"
       @close="toggle('transferDrawer')"
     />
   </div>

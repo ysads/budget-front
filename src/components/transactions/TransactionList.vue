@@ -25,7 +25,7 @@
     </div>
     <transaction-details
       :transaction="openTransaction"
-      :origin-account="openTransaction.origin"
+      :account="openTransaction.account"
       :show="isDrawerOpen"
       data-test="transaction-details"
       @close="closeDrawer"

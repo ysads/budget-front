@@ -7,14 +7,14 @@
     @close="$emit('close')"
   >
     <sad-select
-      v-model="form.originId"
+      v-model="form.accountId"
       class="transaction-details__control"
       :disabled="isAccountDisabled"
       :label="st('account')"
       :options="accountOptions"
       :placeholder="t('placeholders.select')"
-      name="origin"
-      data-test="origin-account"
+      name="account"
+      data-test="account"
     />
     <sad-select
       v-model="form.payeeName"
@@ -116,7 +116,7 @@ export default defineComponent({
   name: 'TransactionDetails',
 
   props: {
-    originAccount: {
+    account: {
       type: Object as PropType<Account | undefined>,
       default: null,
     },
@@ -150,7 +150,7 @@ export default defineComponent({
 
     // INFO: needed since we won't allow moving transactions between accounts here
     const isAccountDisabled = computed(
-      () => isEdit.value || Boolean(props.originAccount?.id),
+      () => isEdit.value || Boolean(props.account?.id),
     );
 
     const moneySettings = currencySettings(openBudget.value);

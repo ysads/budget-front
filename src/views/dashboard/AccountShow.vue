@@ -59,7 +59,7 @@ export default defineComponent({
     const fetchTransactions = () =>
       getTransactions({
         budgetId: openBudget.value.id,
-        originId: account.value.id,
+        accountId: account.value.id,
       });
 
     onMounted(() => {

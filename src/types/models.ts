@@ -84,7 +84,7 @@ export interface Payee {
 }
 
 export interface Transaction {
-  id?: string;
+  id: string;
   amount: number;
   categoryId?: string;
   clearedAt: NullishDate;
@@ -98,7 +98,23 @@ export interface Transaction {
   payeeName: string;
   referenceAt: string;
   unsignedAmount: number;
+  linkedTransactionId: string;
 }
+
+export interface Transfer {
+  id?: string;
+  amount: number;
+  memo: string | undefined;
+  originId: string;
+  referenceAt: string;
+  unsignedAmount: number;
+  linkedTransactionId: string;
+}
+
+export type TransferType =
+  | 'spending' // Moving money into a tracking account requires a budget
+  | 'income' // Moving money out of tracking accounts make it available to budget
+  | 'rebalance'; // Moving money between accounts of same type is just a balance update
 
 export interface User {
   id?: string;

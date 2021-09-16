@@ -1,5 +1,4 @@
 import random from 'lodash/random';
-import uuid from 'uuid-random';
 import faker from 'faker';
 import { ACCOUNT_TYPES } from '@/constants/account';
 import { Factory } from 'fishery';
@@ -18,15 +17,15 @@ class AccountFactory extends Factory<Account> {
   }
 }
 
-export default AccountFactory.define(() => {
+export default AccountFactory.define(({ params }) => {
   const balance = random(-10000, 60000);
   const clearedBalance = random(-10000, 60000);
-  const nature = sample(ACCOUNT_NATURES);
+  const nature = params.nature || sample(ACCOUNT_NATURES);
 
   return {
-    id: uuid(),
+    id: faker.datatype.uuid(),
     balance: balance,
-    budgetId: uuid(),
+    budgetId: faker.datatype.uuid(),
     clearedBalance: clearedBalance,
     closedAt: null,
     isBudget: nature === 'budget',

@@ -10,12 +10,12 @@
         <sad-select
           v-model="form.originId"
           class="transfer-details__accounts-input"
-          :disabled="Boolean(originAccount?.id)"
+          :disabled="Boolean(origin?.id)"
           :label="st('origin')"
           :options="originOptions"
           :placeholder="t('placeholders.select')"
           name="transfer-origin"
-          data-test="origin-account"
+          data-test="origin"
         />
         <sad-icon
           class="transfer-details__icon"
@@ -27,11 +27,12 @@
         <sad-select
           v-model="form.destinationId"
           class="transfer-details__accounts-input"
+          :disabled="isEdit"
           :label="st('destination')"
           :options="destinationOptions"
           :placeholder="t('placeholders.select')"
           name="transfer-destination"
-          data-test="destination-account"
+          data-test="destination"
         />
       </div>
       <sad-select
@@ -72,7 +73,6 @@
         data-test="memo"
       />
     </form>
-
     <template #footer>
       <sad-button
         size="normal"
@@ -98,21 +98,21 @@ import SadSelect from '@/components/sad/SadSelect.vue';
 import useBudgetCategories from '@/use/budget-categories';
 import useTransferForm from '@/use/forms/transfer';
 import useI18n from '@/use/i18n';
-// import { currencySettings, currencyToCents } from '@/support/money';
-// import { handleApiError } from '@/api/errors';
 import { openBudget } from '@/repositories/budgets';
-import { accounts, getAccountById } from '@/repositories/accounts';
+import { accounts } from '@/repositories/accounts';
 import { PropType, computed, defineComponent, SetupContext } from 'vue';
 import { Account, Transaction } from '@/types/models';
 import { symbolOf } from '@/support/currencies';
+import { handleApiError } from '@/api/errors';
+import { currencySettings, currencyToCents } from '@/support/money';
 
 export default defineComponent({
   name: 'TransferDetails',
 
   props: {
-    originAccount: {
+    origin: {
       type: Object as PropType<Account | undefined>,
-      default: null,
+      default: undefined,
     },
     show: {
       type: Boolean,
@@ -141,8 +141,13 @@ export default defineComponent({
 
     const isEdit = computed(() => Boolean(props.transaction.id));
     const currencySymbol = computed(() => symbolOf(openBudget.value.currency));
+    const moneySettings = currencySettings(openBudget.value);
 
-    const { form, resetForm, saveMessage } = useTransferForm({ props, isEdit });
+    const { form, resetForm, saveForm, saveMessage } = useTransferForm({
+      props,
+      isEdit,
+      moneySettings,
+    });
 
     const originOptions = computed(() =>
       accounts.value.map((a) => ({
@@ -159,17 +164,20 @@ export default defineComponent({
         })),
     );
 
-    const hasToSelectCategory = computed(() => {
-      return (
-        getAccountById(form.originId)?.nature === 'budget' &&
-        getAccountById(form.destinationId)?.nature === 'tracking'
-      );
-    });
+    const hasToSelectCategory = computed(() => form.type === 'spending');
 
-    const handleSubmit = () => {
-      alert.success(saveMessage.value);
-      resetForm();
-      emit('close');
+    const handleSubmit = async () => {
+      try {
+        await saveForm({
+          ...form,
+          amount: currencyToCents(form.amount, openBudget.value),
+        });
+        resetForm();
+        emit('close');
+        alert.success(saveMessage.value);
+      } catch (err) {
+        handleApiError(err);
+      }
     };
 
     return {
@@ -180,6 +188,7 @@ export default defineComponent({
       form,
       handleSubmit,
       hasToSelectCategory,
+      isEdit,
       openBudget,
       t,
       st,

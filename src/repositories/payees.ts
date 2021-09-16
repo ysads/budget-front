@@ -13,5 +13,7 @@ export const getPayees = async (params: BudgetReq): Promise<void> => {
 };
 
 export const upsertPayee = (newPayee: Payee): void => {
+  if (!newPayee) return;
+
   payees.value = upsert(payees.value, newPayee);
 };

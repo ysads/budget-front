@@ -27,7 +27,7 @@ describe('AccountToolbar', () => {
   });
 
   describe('when new transaction button is clicked', () => {
-    it('renders transaction drawer with origin account', async () => {
+    it('renders transaction drawer with account account', async () => {
       const wrapper = factory();
       await wrapper
         .findComponent("[data-test='new-transaction']")
@@ -35,16 +35,16 @@ describe('AccountToolbar', () => {
 
       const drawer = wrapper.findComponent("[data-test='transaction-drawer']");
 
-      expect(drawer.props().originAccount).toEqual(account);
+      expect(drawer.props().account).toEqual(account);
     });
   });
 
   describe('when no account prop is given', () => {
-    it('passes a null originAccount to TransactionDetails', () => {
+    it('passes a null account to TransactionDetails', () => {
       const wrapper = factory({ account: null });
       const item = wrapper.findComponent("[data-test='transaction-drawer']");
 
-      expect(item.props().originAccount).toBeNull();
+      expect(item.props().account).toBeNull();
     });
   });
 });

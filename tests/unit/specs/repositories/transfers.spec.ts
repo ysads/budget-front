@@ -16,7 +16,7 @@ describe('TransfersRepository', () => {
   describe('#createTransaction', () => {
     it('dispatches a POST to api', async () => {
       // @ts-expect-error
-      api.post.mockResolvedValueOnce([factories.transaction.build()]);
+      api.post.mockResolvedValueOnce([factories.transfer.build()]);
 
       await transfersRepository.createTransfer(params);
 
@@ -27,7 +27,7 @@ describe('TransfersRepository', () => {
     });
 
     it('upserts transactions received from API', async () => {
-      const transactions = factories.transaction.buildList(2);
+      const transactions = factories.transfer.buildList(2);
       // @ts-expect-error
       api.post.mockResolvedValueOnce(transactions);
 
@@ -45,7 +45,7 @@ describe('TransfersRepository', () => {
   describe('#updateTransaction', () => {
     it('dispatches a PUT to api', async () => {
       // @ts-expect-error
-      api.put.mockResolvedValueOnce([factories.transaction.build()]);
+      api.put.mockResolvedValueOnce([factories.transfer.build()]);
 
       await transfersRepository.updateTransfer(params);
 
@@ -56,7 +56,7 @@ describe('TransfersRepository', () => {
     });
 
     it('removes previous transactions using ids received from API', async () => {
-      const transactions = factories.transaction.buildList(2);
+      const transactions = factories.transfer.buildList(2);
       // @ts-expect-error
       api.put.mockResolvedValueOnce(transactions);
 
@@ -71,7 +71,7 @@ describe('TransfersRepository', () => {
     });
 
     it('upserts transactions received from API', async () => {
-      const transactions = factories.transaction.buildList(2);
+      const transactions = factories.transfer.buildList(2);
       // @ts-expect-error
       api.put.mockResolvedValueOnce(transactions);
 

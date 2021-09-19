@@ -8,6 +8,7 @@ import month from './month';
 import monthlyBudget from './monthly-budget';
 import payee from './payee';
 import transaction from './transaction';
+import transfer from './transfer';
 
 export default {
   account,
@@ -20,4 +21,5 @@ export default {
   monthlyBudget,
   payee,
   transaction,
+  transfer,
 };

@@ -2,11 +2,11 @@ import { get, post, put } from '@/api';
 import { ref } from 'vue';
 import { upsertAccount } from '@/repositories/accounts';
 import { upsertPayee } from '@/repositories/payees';
-import { Transaction } from '@/types/models';
+import { Transaction, Transactionable } from '@/types/models';
 import { ApiTransactionMutation, ApiTransactionFetch } from '@/types/api';
 import { upsert } from '@/support/collection';
 
-export const transactions = ref<Transaction[]>([]);
+export const transactions = ref<Transactionable[]>([]);
 
 export const createTransaction = async (
   params: ApiTransactionMutation,
@@ -54,6 +54,6 @@ export const upsertTransaction = (response: any): void => {
 
 export const removeTransaction = (id: string): void => {
   transactions.value = transactions.value.filter(
-    (t: Transaction) => t.id !== id,
+    (t: Transactionable) => t.id !== id,
   );
 };

@@ -10,7 +10,7 @@
         <sad-select
           v-model="form.originId"
           class="transfer-details__accounts-input"
-          :disabled="Boolean(origin?.id)"
+          :disabled="isEdit || Boolean(origin?.id)"
           :label="st('origin')"
           :options="originOptions"
           :placeholder="t('placeholders.select')"
@@ -101,7 +101,7 @@ import useI18n from '@/use/i18n';
 import { openBudget } from '@/repositories/budgets';
 import { accounts } from '@/repositories/accounts';
 import { PropType, computed, defineComponent, SetupContext } from 'vue';
-import { Account, Transaction } from '@/types/models';
+import { Account, Transfer } from '@/types/models';
 import { symbolOf } from '@/support/currencies';
 import { handleApiError } from '@/api/errors';
 import { currencySettings, currencyToCents } from '@/support/money';
@@ -119,8 +119,8 @@ export default defineComponent({
       default: false,
     },
     transaction: {
-      type: Object as PropType<Transaction>,
-      default: () => ({} as Transaction),
+      type: Object as PropType<Transfer>,
+      default: () => ({} as Transfer),
     },
   },
 

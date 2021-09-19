@@ -83,33 +83,35 @@ export interface Payee {
   name: string;
 }
 
-export interface Transaction {
+export interface StatementItem {
   id: string;
   amount: number;
-  categoryId?: string;
+  categoryId: string;
   clearedAt: NullishDate;
-  destinationId: string | undefined;
-  memo: string | undefined;
-  monthlyBudgetId: string | undefined;
+  memo: string | null;
+  monthlyBudgetId: string | null;
   account: Account;
-  accountId: string | undefined;
+  accountId: string;
   outflow: boolean;
-  payee: Payee;
-  payeeName: string;
   referenceAt: string;
   unsignedAmount: number;
-  linkedTransactionId: string;
 }
 
-export interface Transfer {
-  id?: string;
-  amount: number;
-  memo: string | undefined;
-  originId: string;
-  referenceAt: string;
-  unsignedAmount: number;
-  linkedTransactionId: string;
+export interface Transaction extends StatementItem {
+  payee: Payee;
+  payeeName: string;
+  linkedTransactionId: null;
+  linkedTransactionAccountId: null;
 }
+
+export interface Transfer extends StatementItem {
+  payee: null;
+  payeeName: null;
+  linkedTransactionId: string;
+  linkedTransactionAccountId: string;
+}
+
+export type Transactionable = Transaction | Transfer;
 
 export type TransferType =
   | 'spending' // Moving money into a tracking account requires a budget

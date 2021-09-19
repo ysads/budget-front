@@ -6,7 +6,7 @@ import { currencySettings } from '@/support/money';
 import { ref, nextTick } from 'vue';
 import { createTransfer, updateTransfer } from '@/repositories/transfers';
 import { ApiTransferMutation } from '@/types/api';
-import { Account, NullishDate, Transaction } from '@/types/models';
+import { Account, NullishDate, Transfer } from '@/types/models';
 import { sample } from '@/support/collection';
 
 jest.mock('@/repositories/transfers', () => ({
@@ -18,7 +18,7 @@ const trackingAccount = factories.account.tracking().build();
 const budgetAccount = factories.account.budget().build();
 
 const origin = sample([trackingAccount, budgetAccount]);
-const transaction = factories.transaction.build({
+const transaction = factories.transfer.build({
   unsignedAmount: 2550,
   outflow: true,
 });
@@ -57,7 +57,7 @@ describe('useTransferForm', () => {
       });
 
       expect(form).toMatchObject({
-        destinationId: transaction.linkedTransactionId,
+        destinationId: transaction.linkedTransactionAccountId,
         originId: transaction.accountId,
       });
     });
@@ -84,7 +84,7 @@ describe('useTransferForm', () => {
       describe('but account prop is present', () => {
         it('takes originId from origin prop', () => {
           const { form } = useTransferForm({
-            props: { origin, transaction: {} as Transaction },
+            props: { origin, transaction: {} as Transfer },
             isEdit: ref(false),
             moneySettings,
           });
@@ -98,7 +98,7 @@ describe('useTransferForm', () => {
           const { form } = useTransferForm({
             props: {
               origin: {} as Account,
-              transaction: {} as Transaction,
+              transaction: {} as Transfer,
             },
             isEdit: ref(false),
             moneySettings,
@@ -109,7 +109,79 @@ describe('useTransferForm', () => {
       });
     });
 
-    describe('transfer type', () => {
+    describe('destinationTransactionId', () => {
+      it('is the linkedTransactionId when transaction is outflow', () => {
+        const transaction = factories.transfer.build({
+          outflow: true,
+        });
+        const { form } = useTransferForm({
+          props: {
+            origin: {} as Account,
+            transaction,
+          },
+          isEdit: ref(true),
+          moneySettings,
+        });
+
+        expect(form.destinationTransactionId).toEqual(
+          transaction.linkedTransactionId,
+        );
+      });
+
+      it('is the own transactionId otherwise', () => {
+        const transaction = factories.transfer.build({
+          outflow: false,
+        });
+        const { form } = useTransferForm({
+          props: {
+            origin: {} as Account,
+            transaction,
+          },
+          isEdit: ref(true),
+          moneySettings,
+        });
+
+        expect(form.destinationTransactionId).toEqual(transaction.id);
+      });
+    });
+
+    describe('originTransactionId', () => {
+      it('is the linkedTransactionId when transaction is inflow', () => {
+        const transaction = factories.transfer.build({
+          outflow: false,
+        });
+        const { form } = useTransferForm({
+          props: {
+            origin: {} as Account,
+            transaction,
+          },
+          isEdit: ref(true),
+          moneySettings,
+        });
+
+        expect(form.originTransactionId).toEqual(
+          transaction.linkedTransactionId,
+        );
+      });
+
+      it('is the own transactionId otherwise', () => {
+        const transaction = factories.transfer.build({
+          outflow: true,
+        });
+        const { form } = useTransferForm({
+          props: {
+            origin: {} as Account,
+            transaction,
+          },
+          isEdit: ref(true),
+          moneySettings,
+        });
+
+        expect(form.originTransactionId).toEqual(transaction.id);
+      });
+    });
+
+    describe('type', () => {
       describe('when both originId and destinationId have same nature', () => {
         it('uses `rebalance`type', async () => {
           const { form } = useTransferForm({
@@ -170,7 +242,7 @@ describe('useTransferForm', () => {
       expect(form).toMatchObject({
         amount: '25,50',
         categoryId: transaction.categoryId,
-        destinationId: transaction.linkedTransactionId,
+        destinationId: transaction.linkedTransactionAccountId,
         id: transaction.id,
         memo: transaction.memo,
         originId: transaction.accountId,

@@ -1,6 +1,6 @@
 import { post, put } from '@/api';
 import { ApiTransferMutation } from '@/types/api';
-import { Transaction } from '@/types/models';
+import { Transfer } from '@/types/models';
 import { removeTransaction, upsertTransaction } from './transactions';
 
 export const createTransfer = async (
@@ -8,7 +8,7 @@ export const createTransfer = async (
 ): Promise<void> => {
   const response = await post(`budgets/${params.budgetId}/transfers`, params);
 
-  response.map((t: Transaction) => upsertTransaction(t));
+  response.map((t: Transfer) => upsertTransaction(t));
 };
 
 export const updateTransfer = async (
@@ -16,7 +16,7 @@ export const updateTransfer = async (
 ): Promise<void> => {
   const response = await put(`budgets/${params.budgetId}/transfers`, params);
 
-  response.map((t: Transaction) => {
+  response.map((t: Transfer) => {
     removeTransaction(t.id);
     upsertTransaction(t);
   });

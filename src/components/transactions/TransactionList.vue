@@ -26,7 +26,14 @@
     <transaction-details
       :transaction="openTransaction"
       :account="openTransaction.account"
-      :show="isDrawerOpen"
+      :show="isDrawerOpen && !isTransferOpen"
+      data-test="transaction-details"
+      @close="closeDrawer"
+    />
+    <transfer-details
+      :transaction="openTransaction"
+      :origin="openTransaction.account"
+      :show="isDrawerOpen && isTransferOpen"
       data-test="transaction-details"
       @close="closeDrawer"
     />
@@ -42,6 +49,7 @@ import TransactionTableHeader from './TransactionTableHeader.vue';
 import TransactionTableRow from './TransactionTableRow.vue';
 import TransactionCard from './TransactionCard.vue';
 import TransactionDetails from './TransactionDetails.vue';
+import TransferDetails from './TransferDetails.vue';
 
 export default defineComponent({
   props: {
@@ -56,6 +64,7 @@ export default defineComponent({
     TransactionTableHeader,
     TransactionTableRow,
     TransactionDetails,
+    TransferDetails,
   },
 
   setup() {
@@ -63,6 +72,9 @@ export default defineComponent({
 
     const openTransaction = ref({} as Transaction);
     const isDrawerOpen = computed(() => Boolean(openTransaction.value.id));
+    const isTransferOpen = computed(() => {
+      return Boolean(openTransaction.value.linkedTransactionId);
+    });
 
     const openDrawer = (t: Transaction) => (openTransaction.value = t);
     const closeDrawer = () => (openTransaction.value = {} as Transaction);
@@ -71,6 +83,7 @@ export default defineComponent({
       closeDrawer,
       isDrawerOpen,
       isMobile,
+      isTransferOpen,
       openBudget,
       openDrawer,
       openTransaction,

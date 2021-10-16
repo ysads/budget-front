@@ -21,7 +21,7 @@ describe('TransactionsRepository', () => {
     });
 
     it('dispatches a POST to api', async () => {
-      // @ts-expect-error
+      // @ts-expect-error: api is mocked but types are not recognized
       api.post.mockResolvedValueOnce(factories.transaction.build());
 
       await transactionRepository.createTransaction(createParams);
@@ -35,7 +35,7 @@ describe('TransactionsRepository', () => {
     it('calls upsertTransaction with API response', async () => {
       const transactionWithRelationships = factories.transaction.build();
 
-      // @ts-expect-error
+      // @ts-expect-error: api is mocked but types are not recognized
       api.post.mockResolvedValueOnce(transactionWithRelationships);
       await transactionRepository.createTransaction(createParams);
 

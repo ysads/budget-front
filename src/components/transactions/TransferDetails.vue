@@ -217,8 +217,8 @@ export default defineComponent({
   }
 
   &__icon {
-    padding: 0 8px 12px;
     align-self: flex-end;
+    padding: 0 8px 12px;
   }
 }
 </style>

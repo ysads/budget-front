@@ -6,7 +6,7 @@ module.exports = {
   extends: [
     'plugin:vue/vue3-essential',
     'eslint:recommended',
-    '@vue/typescript/recommended',
+    '@vue/typescript/recommended', // INFO: extends @typescript-eslint/eslint-recommended
     '@vue/prettier',
     '@vue/prettier/@typescript-eslint',
   ],
@@ -16,16 +16,10 @@ module.exports = {
   rules: {
     '@typescript-eslint/explicit-module-boundary-types': [
       'error',
-      {
-        allowArgumentsExplicitlyTypedAsAny: true,
-      },
+      { allowArgumentsExplicitlyTypedAsAny: true },
     ],
-    '@typescript-eslint/no-explicit-any': [
-      'error',
-      {
-        fixToUnknown: true,
-      },
-    ],
+    '@typescript-eslint/no-explicit-any': ['error', { fixToUnknown: true }],
+    '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
     'comma-dangle': ['error', 'always-multiline', { functions: 'never' }],
     'max-len': ['error', { ignorePattern: '@/', ignoreComments: true }],
     quotes: ['error', 'single', { avoidEscape: true }],

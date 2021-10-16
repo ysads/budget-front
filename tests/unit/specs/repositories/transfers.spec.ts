@@ -15,7 +15,7 @@ describe('TransfersRepository', () => {
 
   describe('#createTransaction', () => {
     it('dispatches a POST to api', async () => {
-      // @ts-expect-error
+      // @ts-expect-error: api is mocked but types are not recognized
       api.post.mockResolvedValueOnce([factories.transfer.build()]);
 
       await transfersRepository.createTransfer(params);
@@ -28,7 +28,7 @@ describe('TransfersRepository', () => {
 
     it('upserts transactions received from API', async () => {
       const transactions = factories.transfer.buildList(2);
-      // @ts-expect-error
+      // @ts-expect-error: api is mocked but types are not recognized
       api.post.mockResolvedValueOnce(transactions);
 
       await transfersRepository.createTransfer(params);
@@ -44,7 +44,7 @@ describe('TransfersRepository', () => {
 
   describe('#updateTransaction', () => {
     it('dispatches a PUT to api', async () => {
-      // @ts-expect-error
+      // @ts-expect-error: api is mocked but types are not recognized
       api.put.mockResolvedValueOnce([factories.transfer.build()]);
 
       await transfersRepository.updateTransfer(params);
@@ -55,9 +55,9 @@ describe('TransfersRepository', () => {
       );
     });
 
-    it('removes previous transactions using ids received from API', async () => {
+    it('removes prev transactions using ids received from API', async () => {
       const transactions = factories.transfer.buildList(2);
-      // @ts-expect-error
+      // @ts-expect-error: api is mocked but types are not recognized
       api.put.mockResolvedValueOnce(transactions);
 
       await transfersRepository.updateTransfer(params);
@@ -72,7 +72,7 @@ describe('TransfersRepository', () => {
 
     it('upserts transactions received from API', async () => {
       const transactions = factories.transfer.buildList(2);
-      // @ts-expect-error
+      // @ts-expect-error: api is mocked but types are not recognized
       api.put.mockResolvedValueOnce(transactions);
 
       await transfersRepository.updateTransfer(params);

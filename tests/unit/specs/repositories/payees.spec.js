@@ -2,6 +2,7 @@ import * as api from '@/api';
 import * as repository from '@/repositories/payees';
 import factories from '#/factories';
 import faker from 'faker';
+import { sample } from 'lodash';
 
 describe('PayeesRepository', () => {
   beforeEach(() => {
@@ -48,6 +49,14 @@ describe('PayeesRepository', () => {
       repository.upsertPayee(newPayee);
 
       expect(repository.payees.value).toContainEqual(newPayee);
+    });
+
+    describe('when newItem is nullish', () => {
+      const newPayee = sample([null, undefined]);
+
+      repository.upsertPayee(newPayee);
+
+      expect(repository.payees.value).toEqual([]);
     });
   });
 });

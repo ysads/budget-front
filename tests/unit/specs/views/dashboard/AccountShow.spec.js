@@ -60,7 +60,7 @@ describe('AccountShow', () => {
 
     expect(transactionsRepository.getTransactions).toHaveBeenCalledWith({
       budgetId: openBudget.id,
-      originId: selectedAccount.id,
+      accountId: selectedAccount.id,
     });
   });
 

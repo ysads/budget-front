@@ -34,7 +34,7 @@ describe('AllAccounts', () => {
     });
   });
 
-  it('renders AccountToolbar without an origin account', async () => {
+  it('renders AccountToolbar without an account account', async () => {
     const wrapper = factory();
     await flushPromises();
 

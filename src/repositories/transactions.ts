@@ -2,51 +2,58 @@ import { get, post, put } from '@/api';
 import { ref } from 'vue';
 import { upsertAccount } from '@/repositories/accounts';
 import { upsertPayee } from '@/repositories/payees';
-import { Transaction } from '@/types/models';
-import { ApiTransactionForm } from '@/use/forms/transaction';
+import { Transaction, Transactionable } from '@/types/models';
+import { ApiTransactionMutation, ApiTransactionFetch } from '@/types/api';
 import { upsert } from '@/support/collection';
 
-interface ApiGetTransaction {
-  budgetId: string;
-  originId?: string;
-}
-
-export const transactions = ref<Transaction[]>([]);
+export const transactions = ref<Transactionable[]>([]);
 
 export const createTransaction = async (
-  params: ApiTransactionForm,
+  params: ApiTransactionMutation,
 ): Promise<void> => {
   const response = await post(
     `budgets/${params.budgetId}/transactions`,
     params,
   );
 
-  transactions.value = [...transactions.value, response];
-
-  upsertPayee(response.payee);
-  upsertAccount(response.origin);
+  upsertTransaction(response);
 };
 
 export const updateTransaction = async (
-  params: ApiTransactionForm,
+  params: ApiTransactionMutation,
 ): Promise<void> => {
-  console.log('params', params);
   const response = await put(
     `budgets/${params.budgetId}/transactions/${params.id}`,
     params,
   );
 
-  const { payee, origin, ...transaction } = response;
-
-  upsert(transactions.value, transaction);
-  upsertPayee(payee);
-  upsertAccount(origin);
+  upsertTransaction(response);
 };
 
 export const getTransactions = async (
-  params: ApiGetTransaction,
+  params: ApiTransactionFetch,
+  upsert = false,
 ): Promise<void> => {
   const response = await get(`budgets/${params.budgetId}/transactions`, params);
 
-  transactions.value = response;
+  if (upsert) {
+    response.map((t: Transaction) => upsertTransaction(t));
+  } else {
+    transactions.value = response;
+  }
+};
+
+// eslint-disable-next-line
+export const upsertTransaction = (response: any): void => {
+  const { payee, account, ...transaction } = response;
+
+  transactions.value = upsert(transactions.value, transaction);
+  upsertPayee(payee);
+  upsertAccount(account);
+};
+
+export const removeTransaction = (id: string): void => {
+  transactions.value = transactions.value.filter(
+    (t: Transactionable) => t.id !== id,
+  );
 };

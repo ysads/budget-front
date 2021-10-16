@@ -28,6 +28,9 @@
     "currentBalanceTip": "Not sure? Estimate it! You can edit that later.",
     "created": "Account created"
   },
+  "general": {
+    "newTransfer": "Transfer money"
+  },
   "save": "Save",
   "startingBalance": "Starting balance",
   "validations": {

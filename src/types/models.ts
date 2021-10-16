@@ -14,6 +14,8 @@ export interface Account {
   budgetId?: string;
   clearedBalance: number;
   closedAt: NullishDate;
+  isBudget: boolean;
+  isTracking: boolean;
   name: string;
   nature: AccountNature;
   type: AccountType;
@@ -81,22 +83,40 @@ export interface Payee {
   name: string;
 }
 
-export interface Transaction {
-  id?: string;
+export interface StatementItem {
+  id: string;
   amount: number;
-  categoryId?: string;
+  categoryId: string;
   clearedAt: NullishDate;
-  destinationId: string | undefined;
-  memo: string | undefined;
-  monthlyBudgetId: string | undefined;
-  origin: Account;
-  originId: string | undefined;
+  memo: string | null;
+  monthlyBudgetId: string | null;
+  account: Account;
+  accountId: string;
   outflow: boolean;
-  payee: Payee;
-  payeeName: string;
   referenceAt: string;
   unsignedAmount: number;
 }
+
+export interface Transaction extends StatementItem {
+  payee: Payee;
+  payeeName: string;
+  linkedTransactionId: null;
+  linkedTransactionAccountId: null;
+}
+
+export interface Transfer extends StatementItem {
+  payee: null;
+  payeeName: null;
+  linkedTransactionId: string;
+  linkedTransactionAccountId: string;
+}
+
+export type Transactionable = Transaction | Transfer;
+
+export type TransferType =
+  | 'spending' // Moving money into a tracking account requires a budget
+  | 'income' // Moving money out of tracking accounts make it available to budget
+  | 'rebalance'; // Moving money between accounts of same type is just a balance update
 
 export interface User {
   id?: string;

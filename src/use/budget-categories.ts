@@ -21,7 +21,9 @@ interface UseBudgetCategoriesHook {
   categoryName: (transaction: Transaction) => string;
 }
 
-export default function useBudgetCategories(): UseBudgetCategoriesHook {
+export default function useBudgetCategories(
+  includeInflow = true,
+): UseBudgetCategoriesHook {
   const { st } = useI18n('budgetCategories');
 
   const inflowCategory = {
@@ -44,10 +46,11 @@ export default function useBudgetCategories(): UseBudgetCategoriesHook {
       }),
     ),
   );
-  const categoryOptions = computed(() => [
-    inflowCategory,
-    ...userCategories.value,
-  ]);
+  const categoryOptions = computed(() =>
+    includeInflow
+      ? [inflowCategory, ...userCategories.value]
+      : userCategories.value,
+  );
 
   const categoryName = (transaction: Transaction) => {
     if (!transaction.categoryId) {

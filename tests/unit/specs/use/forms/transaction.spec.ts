@@ -16,7 +16,7 @@ jest.mock('@/repositories/transactions', () => ({
   updateTransaction: jest.fn(),
 }));
 
-const originAccount = factories.account.build();
+const account = factories.account.build();
 const transaction = factories.transaction.build({
   unsignedAmount: 2550,
   outflow: true,
@@ -43,7 +43,7 @@ describe('useTransactionForm', () => {
           clearedAt: new Date(
             transaction.clearedAt || '',
           ).toISOString() as NullishDate,
-          originId: transaction.originId,
+          accountId: transaction.accountId,
         });
       });
     });
@@ -114,16 +114,16 @@ describe('useTransactionForm', () => {
       });
     });
 
-    describe('when transaction has no originId', () => {
+    describe('when transaction has no accountId', () => {
       describe('but account prop is present', () => {
-        it('uses account id as originId', () => {
+        it('uses account id as accountId', () => {
           const { form } = useTransactionForm({
-            props: { originAccount, transaction: {} as Transaction },
+            props: { account, transaction: {} as Transaction },
             isEdit: ref(false),
             moneySettings,
           });
 
-          expect(form.originId).toEqual(originAccount.id);
+          expect(form.accountId).toEqual(account.id);
         });
       });
 
@@ -131,14 +131,14 @@ describe('useTransactionForm', () => {
         it('defaults account id to empty string', () => {
           const { form } = useTransactionForm({
             props: {
-              originAccount: {} as Account,
+              account: {} as Account,
               transaction: {} as Transaction,
             },
             isEdit: ref(false),
             moneySettings,
           });
 
-          expect(form.originId).toEqual('');
+          expect(form.accountId).toEqual('');
         });
       });
     });

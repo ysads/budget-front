@@ -2057,12 +2057,12 @@
   resolved "https://registry.yarnpkg.com/@vue/web-component-wrapper/-/web-component-wrapper-1.3.0.tgz#b6b40a7625429d2bd7c2281ddba601ed05dc7f1a"
   integrity sha512-Iu8Tbg3f+emIIMmI2ycSI8QcEuAUgPTgHwesDU1eKMLE4YC/c/sFbGc70QgMq31ijRftV0R7vCm9co6rldCeOA==
 
-"@vuelidate/core@^2.0.0-alpha.24":
-  version "2.0.0-alpha.24"
-  resolved "https://registry.yarnpkg.com/@vuelidate/core/-/core-2.0.0-alpha.24.tgz#47e48a9cf8061f3c0ac0663c7c1c925ed0eec1b1"
-  integrity sha512-WwAVpxAUMT7DFFTYNaieGBgz3az8mtV8v/waHJPcBGx/q4g3m6cxe1GONC/L/695XrETO8vJRXLkiqCPXrfIQQ==
+"@vuelidate/core@^2.0.0-alpha.32":
+  version "2.0.0-alpha.32"
+  resolved "https://registry.yarnpkg.com/@vuelidate/core/-/core-2.0.0-alpha.32.tgz#1ad6f4e6480a3fa061d5c0fe3d26f7c7b23e55dd"
+  integrity sha512-bB5YJzorKZyRm+R4d3svGChwpHjPw+ECOLwlKfvKJIuyC+y25Wf7NGbr/9odZggoGTi/rKPUYXhpbp5RXb4ssw==
   dependencies:
-    vue-demi "^0.11.3"
+    vue-demi "^0.12.0"
 
 "@vuelidate/validators@^2.0.0-alpha.21":
   version "2.0.0-alpha.21"
@@ -11421,6 +11421,11 @@ vue-demi@^0.11.3:
   version "0.11.3"
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.11.3.tgz#dd7495b92b495ecfa35675bf024b1358a7add150"
   integrity sha512-DpM0TTMpclRZDV6AIacgg837zrim/C9Zn+2ztXBs9hsESJN9vC83ztjTe4KC4HgJuVle8YUjPp7HTwWtwOHfmg==
+
+vue-demi@^0.12.0:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.1.tgz#f7e18efbecffd11ab069d1472d7a06e319b4174c"
+  integrity sha512-QL3ny+wX8c6Xm1/EZylbgzdoDolye+VpCXRhI2hug9dJTP3OUJ3lmiKN3CsVV3mOJKwFi0nsstbgob0vG7aoIw==
 
 vue-eslint-parser@^7.0.0, vue-eslint-parser@^7.10.0:
   version "7.10.0"

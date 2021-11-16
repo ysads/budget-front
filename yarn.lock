@@ -2099,12 +2099,12 @@
   dependencies:
     vue-demi "^0.12.0"
 
-"@vuelidate/validators@^2.0.0-alpha.21":
-  version "2.0.0-alpha.21"
-  resolved "https://registry.yarnpkg.com/@vuelidate/validators/-/validators-2.0.0-alpha.21.tgz#bc1e92865aa9ce213b4ba0acc26fd78bf27dd4ac"
-  integrity sha512-Ch+dW2hSWxAv+DcCEbpMVB58rylrCRxrGQMvL1gJKtq2SdrIrvw+IfgGL9VtxLx8U8gqlDiqy7M4Ycu59rUSnA==
+"@vuelidate/validators@^2.0.0-alpha.25":
+  version "2.0.0-alpha.25"
+  resolved "https://registry.yarnpkg.com/@vuelidate/validators/-/validators-2.0.0-alpha.25.tgz#c58aede525772f1ae120b308de08cd5196ba0cb3"
+  integrity sha512-+Cz9itIlPbloXE8hWmTWCS/EXYdgZ0y/mH76v9Ou0ILirVUjErTtgEx/jCfkijbFJAttBTdwJmxaWakwQuA0qA==
   dependencies:
-    vue-demi "^0.11.3"
+    vue-demi "^0.12.0"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -11451,11 +11451,6 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
-
-vue-demi@^0.11.3:
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.11.3.tgz#dd7495b92b495ecfa35675bf024b1358a7add150"
-  integrity sha512-DpM0TTMpclRZDV6AIacgg837zrim/C9Zn+2ztXBs9hsESJN9vC83ztjTe4KC4HgJuVle8YUjPp7HTwWtwOHfmg==
 
 vue-demi@^0.12.0:
   version "0.12.1"

@@ -20,7 +20,7 @@
     "axios": "^0.24.0",
     "core-js": "^3.20.3",
     "element-plus": "1.0.2-beta.46",
-    "faker": "^5.5.3",
+    "faker": "^6.6.6",
     "fishery": "^1.4.0",
     "jsonapi-serializer": "^3.6.7",
     "lodash": "^4.17.21",

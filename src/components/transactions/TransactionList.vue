@@ -1,28 +1,15 @@
 <template>
-  <section>
-    <div v-if="!isMobile">
-      <transaction-table-header data-test="table-header" />
-      <transaction-table-row
-        v-for="transaction in transactions"
-        :key="transaction.id"
-        :transaction="transaction"
-        :budget="openBudget"
-        class="transaction"
-        data-test="table-row"
-        @click="openDrawer(transaction)"
-      />
-    </div>
-    <div v-else>
-      <transaction-card
-        v-for="transaction in transactions"
-        :key="transaction.id"
-        :transaction="transaction"
-        :budget="openBudget"
-        class="transaction"
-        data-test="card"
-        @click="openDrawer(transaction)"
-      />
-    </div>
+  <section class="transaction-list">
+    <!-- <transaction-table-header data-test="table-header" /> -->
+    <transaction-table-row
+      v-for="transaction in transactions"
+      :key="transaction.id"
+      :transaction="transaction"
+      :budget="openBudget"
+      class="transaction-list__item"
+      data-test="table-row"
+      @click="openDrawer(transaction)"
+    />
     <transaction-details
       :transaction="openTransaction"
       :account="openTransaction.account"
@@ -44,10 +31,8 @@
 import { computed, defineComponent, PropType, ref } from 'vue';
 import { openBudget } from '@/repositories/budgets';
 import { Transaction } from '@/types/models';
-import useWindowSize from '@/use/window-size';
-import TransactionTableHeader from './TransactionTableHeader.vue';
+// import TransactionTableHeader from './TransactionTableHeader.vue';
 import TransactionTableRow from './TransactionTableRow.vue';
-import TransactionCard from './TransactionCard.vue';
 import TransactionDetails from './TransactionDetails.vue';
 import TransferDetails from './TransferDetails.vue';
 
@@ -60,16 +45,13 @@ export default defineComponent({
   },
 
   components: {
-    TransactionCard,
-    TransactionTableHeader,
+    // TransactionTableHeader,
     TransactionTableRow,
     TransactionDetails,
     TransferDetails,
   },
 
   setup() {
-    const { isMobile } = useWindowSize();
-
     const openTransaction = ref({} as Transaction);
     const isDrawerOpen = computed(() => Boolean(openTransaction.value.id));
     const isTransferOpen = computed(() => {
@@ -82,7 +64,6 @@ export default defineComponent({
     return {
       closeDrawer,
       isDrawerOpen,
-      isMobile,
       isTransferOpen,
       openBudget,
       openDrawer,
@@ -93,7 +74,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.transaction + .transaction {
-  border-top: 1px solid var(--table-separator);
+.transaction-list {
+  padding: 10px;
+
+  &__item + &__item {
+    margin-top: 8px;
+  }
 }
 </style>

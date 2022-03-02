@@ -1,6 +1,6 @@
 :root {
-  --app-error: rgba(232, 95, 84, 1);
-  --app-success: rgba(109, 159, 57, 1);
+  --app-error: #b35d5b;
+  --app-success: #36a18b;
   --app-white: rgba(255, 255, 255, 1);
   --app-bg: var(--app-white);
   --app-blue-light: rgba(226, 236, 247, 1);
@@ -43,6 +43,6 @@
   --table-heading: var(--month-header-bg);
   --table-separator: var(--table-heading);
   --table-focus: var(--app-blue-light);
-  --text-default: rgba(55, 55, 55, 1);
+  --text-default: rgba(51, 51, 51, 1);
   --text-negative: var(--app-white);
 }

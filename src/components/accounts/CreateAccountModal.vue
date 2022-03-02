@@ -58,9 +58,9 @@ import { createAccount } from '@/repositories/accounts';
 import { ACCOUNT_TYPES } from '@/constants/account';
 import { currencyToCents } from '@/support/money';
 import { handleApiError } from '@/api/errors';
-import { SetupContext, reactive, defineComponent, PropType } from 'vue';
-import { AccountType, Budget } from '@/types/models';
-import { symbolOf } from '@/support/currencies';
+import { SetupContext, defineComponent, PropType } from 'vue';
+import { Budget } from '@/types/models';
+import useCreateAccountForm from '@/use/forms/create-account';
 
 export default defineComponent({
   name: 'CreateAccountModal',
@@ -87,20 +87,14 @@ export default defineComponent({
 
   setup(props, { emit }: SetupContext) {
     const { st, t } = useI18n('CreateAccountModal');
-
-    const form = reactive({
-      accountType: 'checking' as AccountType,
-      accountName: '',
-      budgetId: props.budget.id,
-      currentBalance: '',
-      payeeName: t('startingBalance'),
+    const { currencySymbol, form, resetForm } = useCreateAccountForm({
+      budget: props.budget,
     });
 
     const accountTypes = ACCOUNT_TYPES.map((type) => ({
       label: t(`account.type.${type}`),
       value: type,
     }));
-    const currencySymbol = symbolOf(props.budget.currency);
 
     const handleSubmit = async () => {
       try {
@@ -109,6 +103,7 @@ export default defineComponent({
           currentBalance: currencyToCents(form.currentBalance, props.budget),
         });
         alert.success(st('created'));
+        resetForm();
         emit('close');
       } catch (err) {
         handleApiError(err);

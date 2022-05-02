@@ -14,7 +14,7 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/lang/**/*.json'"
   },
   "dependencies": {
-    "@vuelidate/core": "^2.0.0-alpha.32",
+    "@vuelidate/core": "^2.0.0-alpha.41",
     "@vuelidate/validators": "^2.0.0-alpha.25",
     "accounting": "^0.4.1",
     "axios": "^0.25.0",

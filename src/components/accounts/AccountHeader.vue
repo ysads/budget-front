@@ -5,40 +5,7 @@
     </h1>
 
     <div class="account-header__balance-group">
-      <div class="account-header__balance" data-test="cleared">
-        <p class="account-header__balance-title">
-          {{ t('cleared') }}
-        </p>
-        <p
-          class="account-header__balance-currency"
-          :class="balanceClasses(cleared)"
-          data-test="cleared-amount"
-        >
-          {{ localize(cleared, budget) }}
-        </p>
-      </div>
-
-      <span class="account-header__sep">+</span>
-
-      <div class="account-header__balance" data-test="uncleared">
-        <p class="account-header__balance-title">
-          {{ t('uncleared') }}
-        </p>
-        <p
-          class="account-header__balance-currency"
-          :class="balanceClasses(uncleared)"
-          data-test="uncleared-amount"
-        >
-          {{ localize(uncleared, budget) }}
-        </p>
-      </div>
-
-      <span class="account-header__sep">=</span>
-
       <div class="account-header__balance" data-test="current">
-        <p class="account-header__balance-title">
-          {{ t('currentBalance') }}
-        </p>
         <p
           class="account-header__balance-currency"
           :class="balanceClasses(current)"

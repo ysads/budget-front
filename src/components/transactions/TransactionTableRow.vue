@@ -1,5 +1,11 @@
 <template>
-  <div class="transaction-table-row" @click="$emit('click')">
+  <div
+    class="transaction-table-row"
+    tabindex="0"
+    @keydown.space="$emit('select')"
+    @keydown.enter="$emit('select')"
+    @click="$emit('select')"
+  >
     <div class="transaction-table-row__img">
       <sad-icon v-if="isTransfer" name="arrow-circle-right" color="inherit" />
       <span v-else>
@@ -78,7 +84,7 @@ export default defineComponent({
     SadIcon,
   },
 
-  emits: ['click'],
+  emits: ['select'],
 
   setup(props) {
     const { d, st } = useI18n('TransactionTableRow');
@@ -131,10 +137,16 @@ export default defineComponent({
   align-items: center;
   font-size: 16px;
   line-height: 22.4px;
-
+  cursor: pointer;
   border-radius: 8px;
   border: 1px solid rgb(233, 233, 233);
   background: #fff;
+
+  &:hover,
+  &:focus {
+    border: 1px solid rgb(54, 161, 139);
+    transition: border ease-in 0.15s;
+  }
 
   &__left {
     flex: 1;

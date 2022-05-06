@@ -106,7 +106,8 @@ export default defineComponent({
 
     @extend %caption-2;
 
-    &:hover {
+    &:hover,
+    &:focus {
       background: var(--sidebar-focus);
       cursor: pointer;
     }

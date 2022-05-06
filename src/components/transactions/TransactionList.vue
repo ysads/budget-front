@@ -8,7 +8,7 @@
       :budget="openBudget"
       class="transaction-list__item"
       data-test="table-row"
-      @click="openDrawer(transaction)"
+      @select="openDrawer(transaction)"
     />
     <transaction-details
       :transaction="openTransaction"
@@ -31,7 +31,6 @@
 import { computed, defineComponent, PropType, ref } from 'vue';
 import { openBudget } from '@/repositories/budgets';
 import { Transaction } from '@/types/models';
-// import TransactionTableHeader from './TransactionTableHeader.vue';
 import TransactionTableRow from './TransactionTableRow.vue';
 import TransactionDetails from './TransactionDetails.vue';
 import TransferDetails from './TransferDetails.vue';

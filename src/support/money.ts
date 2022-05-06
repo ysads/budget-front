@@ -77,13 +77,17 @@ export const format = (
 ): string => {
   const prefix = withCurrency ? settings.prefix : '';
 
-  return accounting.formatMoney(
-    fromCents(value),
-    prefix,
-    settings.precision,
-    settings.thousands,
-    settings.decimal,
-  );
+  return accounting.formatMoney(fromCents(value), {
+    symbol: prefix,
+    precision: settings.precision,
+    thousand: settings.thousands,
+    decimal: settings.decimal,
+    format: {
+      pos: '%s%v',
+      neg: '- %s%v',
+      zero: '%s  --',
+    },
+  });
 };
 
 export const balanceClasses = (val: number): string => {

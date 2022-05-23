@@ -2,8 +2,10 @@
   <button
     v-if="clickable"
     class="sad-icon__button"
+    :aria-label="ariaLabel"
     data-test="button"
     @click="$emit('click')"
+    @keydown.space="$emit('click')"
   >
     <i class="sad-icon icon fas" :class="classes" />
   </button>
@@ -26,6 +28,10 @@ type IconSize = 'small' | 'medium';
 export default defineComponent({
   name: 'SadIcon',
   props: {
+    ariaLabel: {
+      type: String,
+      default: '',
+    },
     clickable: {
       type: Boolean,
       default: false,

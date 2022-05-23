@@ -94,5 +94,9 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   padding: $base * 2 $base * 4;
+
+  &__button + &__button {
+    margin-left: $base;
+  }
 }
 </style>

@@ -52,8 +52,13 @@
   },
   "general": {
     "created": "Criado",
+    "closeRegion": "Fechar: {title}",
     "newTransfer": "Transferir entre contas",
     "updated": "Atualizado"
+  },
+  "MonthHeader": {
+    "prevMonth": "Mês anterior",
+    "nextMonth": "Próximo mês"
   },
   "MonthlyBudgetDetails": {
     "category": "Categoria",

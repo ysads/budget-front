@@ -1,14 +1,14 @@
 <template>
   <sad-collapse start-open>
     <template #header>
-      <div class="account-accordion__header" data-test="title">
+      <span class="account-accordion__header" data-test="title">
         <span class="account-accordion__title">
           {{ label }}
         </span>
         <span class="account-accordion__total">
           {{ localize(total, budget) }}
         </span>
-      </div>
+      </span>
     </template>
     <ul>
       <li
@@ -107,7 +107,7 @@ export default defineComponent({
     @extend %caption-2;
 
     &:hover,
-    &:focus {
+    &:focus-within {
       background: var(--sidebar-focus);
       cursor: pointer;
     }

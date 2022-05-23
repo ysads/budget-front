@@ -1,16 +1,16 @@
 <template>
-  <div :class="{ collapsed }" data-test="collapse">
-    <div
-      aria-role="button"
+  <div class="collapse-wrapper" :class="{ collapsed }" data-test="collapse">
+    <button
       class="header"
       data-test="header"
+      :aria-expanded="!collapsed"
+      :aria-controls="areaId"
       @click="toggle"
-      @keydown.space="toggle"
     >
       <sad-icon name="angle-down" class="caret" />
       <slot name="header" />
-    </div>
-    <div class="content">
+    </button>
+    <div :id="areaId" class="content">
       <slot />
     </div>
   </div>
@@ -18,6 +18,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import uuid from 'uuid-random';
 import SadIcon from './SadIcon.vue';
 
 export default defineComponent({
@@ -34,12 +35,13 @@ export default defineComponent({
 
   setup(props) {
     const collapsed = ref(!props.startOpen);
+    const areaId = uuid();
 
     const toggle = () => {
       collapsed.value = !collapsed.value;
     };
 
-    return { collapsed, toggle };
+    return { areaId, collapsed, toggle };
   },
 });
 </script>
@@ -47,6 +49,13 @@ export default defineComponent({
 <style lang="scss" scoped>
 $opening-bezier: cubic-bezier(0.06, 0.82, 0.57, 1.03);
 $closing-bezier: cubic-bezier(0.74, 0.01, 1, 0.57);
+
+.collapse-wrapper {
+  > &:focus {
+    border-radius: 4px;
+    background: var(--sidebar-active);
+  }
+}
 
 .header {
   align-items: center;
@@ -56,6 +65,14 @@ $closing-bezier: cubic-bezier(0.74, 0.01, 1, 0.57);
   outline: none;
   text-align: left;
   width: 100%;
+  background: none;
+  color: inherit;
+
+  &:focus,
+  &:active {
+    background: var(--sidebar-active);
+    border-radius: var(--radius-4);
+  }
 }
 
 .caret {

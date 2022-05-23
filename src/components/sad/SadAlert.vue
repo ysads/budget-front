@@ -12,7 +12,7 @@
       size="medium"
       data-test="variant-icon"
     />
-    <span class="sad-alert__message" data-test="message">
+    <span class="sad-alert__message" data-test="message" role="status">
       {{ message }}
     </span>
     <button

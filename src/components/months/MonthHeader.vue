@@ -5,20 +5,20 @@
         class="month-header__nav-icon"
         name="chevron-circle-left"
         size="medium"
+        :aria-label="t('MonthHeader.prevMonth')"
         clickable
         data-test="prev"
         @click="updateMonth(-1)"
       />
-
       <h2 class="month-header__month" data-test="month-name">
-        {{ d(isoMonthToDate(month.isoMonth), 'monthOnly') }}
+        {{ monthText }}
       </h2>
-
       <sad-icon
         class="month-header__nav-icon"
         name="chevron-circle-right"
         size="medium"
         clickable
+        :aria-label="t('MonthHeader.nextMonth')"
         data-test="next"
         @click="updateMonth(1)"
       />
@@ -43,8 +43,9 @@ import { balanceClasses, localize } from '@/support/money';
 import { addMonths, isoMonthToDate } from '@/support/date';
 import useI18n from '@/use/i18n';
 import SadIcon from '@/components/sad/SadIcon.vue';
-import { defineComponent, PropType, SetupContext } from 'vue';
+import { computed, defineComponent, PropType, SetupContext, watch } from 'vue';
 import { Budget, Month } from '@/types/models';
+import { eventBus, Events } from '@/events';
 
 export default defineComponent({
   props: {
@@ -64,13 +65,21 @@ export default defineComponent({
 
   setup(props, { emit }: SetupContext) {
     const { d, t } = useI18n('MonthHeader');
+    const monthText = computed(() => {
+      return d(isoMonthToDate(props.month.isoMonth), 'monthOnly');
+    });
 
     const updateMonth = (delta: number) => {
       const newMonth = addMonths(isoMonthToDate(props.month.isoMonth), delta);
       emit('update', newMonth);
     };
 
-    return { balanceClasses, d, isoMonthToDate, localize, t, updateMonth };
+    watch(
+      () => props.month,
+      () => eventBus.emit(Events.ANNOUNCE, { message: monthText.value }),
+    );
+
+    return { balanceClasses, monthText, localize, t, updateMonth };
   },
 });
 </script>

@@ -69,7 +69,7 @@ export default defineComponent({
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-  padding: $base * 3 $base * 6;
+  padding: $base * 4 $base * 6;
 
   @include breakpoint(md) {
     flex-flow: row;

@@ -37,6 +37,13 @@
         </span>
         <span
           v-if="transaction.memo"
+          class="transaction-table-row__separator"
+          aria-hidden
+        >
+          •
+        </span>
+        <span
+          v-if="transaction.memo"
           class="transaction-table-row__memo"
           data-test="memo"
         >
@@ -141,11 +148,11 @@ export default defineComponent({
   border-radius: 8px;
   border: 1px solid rgb(233, 233, 233);
   background: #fff;
+  transition: border ease-in 0.15s;
 
   &:hover,
   &:focus {
     border: 1px solid rgb(54, 161, 139);
-    transition: border ease-in 0.15s;
   }
 
   &__left {
@@ -162,9 +169,8 @@ export default defineComponent({
     color: #696969;
   }
 
-  &__memo::before {
-    content: ' • ';
-    margin: 0 8px;
+  &__separator {
+    margin: 0 4px;
   }
 
   &__icon {

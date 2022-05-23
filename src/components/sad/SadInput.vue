@@ -1,6 +1,6 @@
 <template>
   <div class="sad-input">
-    <sad-label to="name" :text="label" data-test="label" />
+    <sad-label :to="name" :text="label" data-test="label" />
     <div class="sad-input__wrapper">
       <div v-if="prefix" class="sad-input__prefix" data-test="prefix">
         {{ prefix }}

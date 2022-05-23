@@ -11,9 +11,13 @@
     <transition name="fade-up">
       <section v-if="show" class="sad-modal__wrapper">
         <header class="sad-modal__header">
-          <i
-            class="fas fa-times"
+          <sad-icon
+            class="sad-modal__header-icon"
+            name="times"
+            size="medium"
             data-test="close-btn"
+            :aria-label="t('general.closeRegion', { title })"
+            clickable
             @click="$emit('close')"
           />
           <h3 v-if="title" class="sad-modal__header-title" data-test="title">
@@ -30,7 +34,10 @@
 </template>
 
 <script lang="ts">
+import { eventBus, Events } from '@/events';
 import { defineComponent } from 'vue';
+import SadIcon from '@/components/sad/SadIcon.vue';
+import useI18n from '@/use/i18n';
 
 export default defineComponent({
   name: 'SadModal',
@@ -46,7 +53,23 @@ export default defineComponent({
     },
   },
 
+  components: {
+    SadIcon,
+  },
+
   emits: ['close'],
+
+  setup(props, { emit }) {
+    const { t } = useI18n('CreateAccountModal');
+
+    eventBus.on(Events.CLOSE_DRAWER, () => {
+      if (props.show) {
+        emit('close');
+      }
+    });
+
+    return { t };
+  },
 });
 </script>
 
@@ -106,13 +129,9 @@ export default defineComponent({
       @extend %h3;
     }
 
-    i {
+    &-icon {
       color: var(--modal-close-btn);
       cursor: pointer;
-
-      // &:active {
-      //   @include scale-90;
-      // }
     }
   }
 

@@ -2,12 +2,14 @@
   <div>
     <sad-label :to="name" :text="label" data-test="label">
       <el-select
+        :id="name"
         class="sad-select"
         :class="[errorClass]"
         :model-value="modelValue"
         :placeholder="placeholder"
         :disabled="disabled"
         :allow-create="allowCreate"
+        :name="name"
         default-first-option
         filterable
         data-test="select"

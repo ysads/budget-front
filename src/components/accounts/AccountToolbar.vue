@@ -1,6 +1,7 @@
 <template>
   <div class="account-toolbar">
     <sad-button
+      class="account-toolbar__button"
       icon="file-invoice-dollar"
       type="ghost"
       size="small"
@@ -10,6 +11,7 @@
       {{ t('newTransaction') }}
     </sad-button>
     <sad-button
+      class="account-toolbar__button"
       icon="exchange-alt"
       type="ghost"
       size="small"
@@ -75,5 +77,9 @@ export default defineComponent({
   display: flex;
   justify-content: flex-start;
   padding: $base * 2 $base * 4;
+
+  &__button + &__button {
+    margin-left: $base;
+  }
 }
 </style>

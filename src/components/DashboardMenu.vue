@@ -162,7 +162,8 @@ export default defineComponent({
       @extend %menu;
 
       &:hover,
-      &:focus {
+      &:focus,
+      &:focus-within {
         background: var(--sidebar-focus);
       }
 
@@ -194,7 +195,8 @@ export default defineComponent({
       margin-top: $base * 5;
       width: 100%;
 
-      &:hover {
+      &:hover,
+      &:focus {
         background: var(--sidebar-focus);
       }
     }

@@ -60,8 +60,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .button {
-  border: none;
-  border-radius: $radius-4;
+  border: 2px solid transparent;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
 
@@ -74,18 +74,19 @@ export default defineComponent({
   }
 
   &--normal {
-    padding: $base * 2 $base * 3;
+    padding: 5px 16px;
   }
 
   &--small {
-    padding: $base * 2 $base * 2;
+    padding: 3px 12px;
   }
 
   &--primary {
     background: var(--color-primary);
     color: white;
 
-    &:hover {
+    &:hover,
+    &:focus {
       background: var(--color-primary-hover);
     }
   }
@@ -94,8 +95,10 @@ export default defineComponent({
     background: none;
     color: var(--color-primary);
 
-    &:hover {
+    &:hover,
+    &:focus {
       color: var(--color-primary-hover);
+      background: var(--color-primary-hover-bg);
     }
   }
 

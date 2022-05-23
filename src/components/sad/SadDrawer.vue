@@ -15,6 +15,7 @@
             name="times"
             color="primary"
             size="medium"
+            :aria-label="t('general.closeRegion', { title })"
             clickable
             data-test="close-btn"
             @click="$emit('close')"
@@ -36,7 +37,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { eventBus, Events } from '@/events';
 import SadIcon from './SadIcon.vue';
+import useI18n from '@/use/i18n';
 
 export default defineComponent({
   name: 'SadDrawer',
@@ -53,7 +56,20 @@ export default defineComponent({
       default: false,
     },
   },
+
   emits: ['close'],
+
+  setup(props, { emit }) {
+    const { t } = useI18n();
+
+    eventBus.on(Events.CLOSE_DRAWER, () => {
+      if (props.show) {
+        emit('close');
+      }
+    });
+
+    return { t };
+  },
 });
 </script>
 

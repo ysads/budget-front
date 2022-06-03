@@ -39,7 +39,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .transaction-table-header {
   align-items: center;
-  border-bottom: 1px solid var(--table-separator);
   display: flex;
   font-weight: 500;
   gap: $base * 4;

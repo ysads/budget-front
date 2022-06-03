@@ -25,7 +25,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .sad-label {
-  color: var(--text-default);
+  color: var(--text-primary);
   display: block;
   font-size: 1rem;
 

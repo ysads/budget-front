@@ -139,7 +139,7 @@ export default defineComponent({
     height: 100%;
     overflow: auto;
     width: 100%;
-    background: rgb(249, 249, 249);
+    background: #fff;
 
     @include breakpoint(md) {
       width: 70%;

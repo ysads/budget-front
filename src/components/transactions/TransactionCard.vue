@@ -137,10 +137,12 @@ export default defineComponent({
 }
 
 .negative {
-  color: var(--balance-negative);
+  background: var(--balance-neg-bg);
+  color: var(--balance-neg-text);
 }
 
 .positive {
-  color: var(--balance-positive);
+  background: var(--balance-pos-bg);
+  color: var(--balance-pos-text);
 }
 </style>

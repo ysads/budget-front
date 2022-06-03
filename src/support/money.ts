@@ -19,7 +19,7 @@ export const currencySettings = ({
 }: Currenciable): CurrencySettings => ({
   decimal: ',',
   thousands: '.',
-  prefix: `${currencies[currency]} `,
+  prefix: `${currencies[currency]}`,
   precision: 2,
 });
 
@@ -84,8 +84,8 @@ export const format = (
     decimal: settings.decimal,
     format: {
       pos: '%s%v',
-      neg: '- %s%v',
-      zero: '%s  --',
+      neg: '-%s%v',
+      zero: '%s0',
     },
   });
 };

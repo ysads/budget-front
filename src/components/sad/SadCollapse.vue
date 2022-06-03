@@ -76,7 +76,7 @@ $closing-bezier: cubic-bezier(0.74, 0.01, 1, 0.57);
 }
 
 .caret {
-  margin-left: $base;
+  margin-left: $base * 2;
   margin-right: $base * 3;
   transition: transform 0.3s ease-in-out;
 }

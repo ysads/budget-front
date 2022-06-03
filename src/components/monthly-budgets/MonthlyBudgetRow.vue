@@ -1,13 +1,21 @@
 <template>
-  <li class="category-budget" data-test="row" @click="$emit('click')">
+  <li
+    class="category-budget"
+    data-test="row"
+    tabindex="0"
+    role="button"
+    @click="$emit('click')"
+    @keydown.enter="$emit('click')"
+    @keydown.space="$emit('click')"
+  >
     <div class="category-budget__name" data-test="category-name">
       {{ category.name }}
     </div>
     <div class="category-budget__total" data-test="budgeted">
-      {{ localize(monthlyBudget.budgeted, budget) }}
+      {{ format(monthlyBudget.budgeted, moneySettings) }}
     </div>
     <div class="category-budget__total" data-test="activity">
-      {{ localize(monthlyBudget.activity, budget) }}
+      {{ format(monthlyBudget.activity, moneySettings) }}
     </div>
     <div class="category-budget__total">
       <span
@@ -15,14 +23,14 @@
         :class="availableClass"
         data-test="available"
       >
-        {{ localize(monthlyBudget.available, budget) }}
+        {{ format(monthlyBudget.available, moneySettings) }}
       </span>
     </div>
   </li>
 </template>
 
 <script lang="ts">
-import { balanceClasses, localize } from '@/support/money';
+import { balanceClasses, currencySettings, format } from '@/support/money';
 import { Budget, Category, MonthlyBudget } from '@/types/models';
 import { computed, defineComponent, PropType } from 'vue';
 
@@ -50,10 +58,12 @@ export default defineComponent({
         ? 'zero'
         : balanceClasses(props.monthlyBudget.available);
     });
+    const moneySettings = currencySettings(props.budget);
 
     return {
       availableClass,
-      localize,
+      format,
+      moneySettings,
     };
   },
 });
@@ -71,12 +81,12 @@ export default defineComponent({
 
   &:hover,
   &:focus {
-    background: var(--table-focus);
+    background: var(--row-focus-bg);
   }
 
   &__tag {
-    border-radius: var(--radius-4);
-    padding: $base;
+    border-radius: var(--balance-pill-radius);
+    padding: 4px;
   }
 
   &__name {
@@ -90,17 +100,17 @@ export default defineComponent({
 }
 
 .negative {
-  background: var(--balance-negative);
-  color: var(--text-negative);
+  background: var(--balance-neg-bg);
+  color: var(--balance-neg-text);
 }
 
 .positive {
-  background: var(--balance-positive);
-  color: var(--text-negative);
+  background: var(--balance-pos-bg);
+  color: var(--balance-pos-text);
 }
 
 .zero {
-  background: var(--balance-zero);
-  color: var(--text-negative);
+  background: var(--balance-zero-bg);
+  color: var(--balance-zero-text);
 }
 </style>

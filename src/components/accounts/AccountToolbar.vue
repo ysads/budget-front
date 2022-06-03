@@ -73,7 +73,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .account-toolbar {
-  border-bottom: 1px solid var(--acc-toolbar-border);
   display: flex;
   justify-content: flex-start;
   padding: $base * 2 $base * 4;

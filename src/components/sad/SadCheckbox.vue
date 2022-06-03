@@ -109,7 +109,7 @@ export default defineComponent({
   }
 
   &__label {
-    color: var(--text-default);
+    color: var(--text-primary);
     cursor: pointer;
     display: flex;
     flex-direction: column;

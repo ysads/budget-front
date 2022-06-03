@@ -71,11 +71,12 @@
     </div>
 
     <sad-button
-      class="dashboard-menu__accounts-btn"
-      icon="plus"
+      class="dashboard-menu__button"
       data-test="add-account-btn"
+      size="large"
       @click="toggleModal"
     >
+      <sad-icon name="plus" size="small" class="dashboard-menu__button-icon" />
       {{ t('addAccount') }}
     </sad-button>
 
@@ -188,19 +189,6 @@ export default defineComponent({
       margin-top: $base * 4;
     }
 
-    &-btn {
-      background: var(--sidebar-button-bg);
-      border: 0;
-      color: var(--sidebar-text);
-      margin-top: $base * 5;
-      width: 100%;
-
-      &:hover,
-      &:focus {
-        background: var(--sidebar-focus);
-      }
-    }
-
     &--empty {
       background: var(--sidebar-active);
       border-radius: $radius-8;
@@ -213,6 +201,23 @@ export default defineComponent({
 
         @extend %caption;
       }
+    }
+  }
+
+  &__button {
+    background: var(--sidebar-button-bg);
+    border: 0;
+    color: var(--sidebar-text);
+    margin-top: $base * 5;
+    width: 100%;
+
+    &:hover,
+    &:focus {
+      background: var(--sidebar-focus);
+    }
+
+    &-icon {
+      margin-right: $base * 2;
     }
   }
 }

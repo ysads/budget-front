@@ -74,10 +74,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .transaction-list {
-  padding: 10px;
-
-  &__item + &__item {
-    margin-top: 8px;
+  &__item {
+    border-bottom-color: var(--row-separator);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
   }
 }
 </style>

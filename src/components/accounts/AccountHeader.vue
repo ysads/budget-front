@@ -64,7 +64,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .account-header {
   align-items: center;
-  background: var(--acc-header-bg);
   color: var(--acc-header-text);
   display: flex;
   flex-flow: column;
@@ -81,7 +80,6 @@ export default defineComponent({
 
   &__title {
     @extend %h1;
-    @extend %ellipsis;
   }
 
   &__sep {
@@ -119,10 +117,10 @@ export default defineComponent({
 }
 
 .positive {
-  color: var(--balance-positive);
+  color: var(--balance-pos-text);
 }
 
 .negative {
-  color: var(--balance-negative);
+  color: var(--balance-neg-text);
 }
 </style>

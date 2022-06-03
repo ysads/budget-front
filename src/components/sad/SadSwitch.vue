@@ -47,7 +47,7 @@ export default defineComponent({
 }
 
 .el-switch__label {
-  color: var(--text-default);
+  color: var(--text-primary);
 }
 
 .el-switch__label--right.is-active {

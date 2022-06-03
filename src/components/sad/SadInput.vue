@@ -6,8 +6,8 @@
         {{ prefix }}
       </div>
       <input
-        :id="name"
         v-bind="$attrs"
+        :id="name"
         :value="modelValue"
         class="sad-input__control"
         :class="[errorClass]"
@@ -87,7 +87,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .sad-input {
   &__prefix {
-    color: var(--color-info);
+    color: var(--text-secondary);
     margin-right: $base * 2;
 
     @extend %body-1;
@@ -97,7 +97,7 @@ export default defineComponent({
     align-items: center;
     border: 1px solid var(--input-border);
     border-radius: $radius-4;
-    color: var(--text-default);
+    color: var(--text-primary);
     display: flex;
     height: $base * 10;
     padding: $base * 2;

@@ -90,7 +90,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .budget-toolbar {
-  border-bottom: 1px solid var(--acc-toolbar-border);
   display: flex;
   justify-content: space-between;
   padding: $base * 2 $base * 4;

@@ -78,8 +78,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .monthly-budgets-table {
-  &__row + &__row {
-    border-top: 1px solid var(--table-separator);
+  &__row {
+    border-bottom-color: var(--row-separator);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
   }
 }
 </style>

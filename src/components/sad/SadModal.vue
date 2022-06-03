@@ -1,41 +1,45 @@
 <template>
-  <div class="sad-modal">
-    <transition name="fade">
-      <div
-        v-if="show"
-        class="sad-modal__overlay"
-        data-test="overlay"
-        @click="$emit('close')"
-      />
-    </transition>
-    <transition name="fade-up">
-      <section v-if="show" class="sad-modal__wrapper">
-        <header class="sad-modal__header">
-          <sad-icon
-            class="sad-modal__header-icon"
-            name="times"
-            size="medium"
-            data-test="close-btn"
-            :aria-label="t('general.closeRegion', { title })"
-            clickable
-            @click="$emit('close')"
-          />
-          <h3 v-if="title" class="sad-modal__header-title" data-test="title">
-            {{ title }}
-          </h3>
-        </header>
-        <slot />
-        <footer class="sad-modal__footer">
-          <slot name="footer"></slot>
-        </footer>
-      </section>
-    </transition>
-  </div>
+  <focus-trap :active="show">
+    <div class="sad-modal">
+      <transition name="fade">
+        <div
+          v-if="show"
+          class="sad-modal__overlay"
+          data-test="overlay"
+          @click="$emit('close')"
+        />
+      </transition>
+      <transition name="fade-up">
+        <section v-if="show" class="sad-modal__wrapper">
+          <header class="sad-modal__header">
+            <sad-button
+              type="ghost"
+              size="small"
+              :aria-label="t('general.closeRegion', { title })"
+              data-test="close-btn"
+              @click="$emit('close')"
+            >
+              <sad-icon name="times" size="medium" />
+            </sad-button>
+            <h3 v-if="title" class="sad-modal__header-title" data-test="title">
+              {{ title }}
+            </h3>
+          </header>
+          <slot />
+          <footer class="sad-modal__footer">
+            <slot name="footer"></slot>
+          </footer>
+        </section>
+      </transition>
+    </div>
+  </focus-trap>
 </template>
 
 <script lang="ts">
 import { eventBus, Events } from '@/events';
 import { defineComponent } from 'vue';
+import { FocusTrap } from 'focus-trap-vue';
+import SadButton from '@/components/sad/SadButton.vue';
 import SadIcon from '@/components/sad/SadIcon.vue';
 import useI18n from '@/use/i18n';
 
@@ -54,6 +58,8 @@ export default defineComponent({
   },
 
   components: {
+    FocusTrap,
+    SadButton,
     SadIcon,
   },
 
@@ -127,11 +133,6 @@ export default defineComponent({
       color: var(--modal-title);
 
       @extend %h3;
-    }
-
-    &-icon {
-      color: var(--modal-close-btn);
-      cursor: pointer;
     }
   }
 

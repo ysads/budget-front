@@ -1,49 +1,56 @@
 <template>
-  <div class="sad-drawer">
-    <transition name="fade">
-      <div
-        v-if="show"
-        class="sad-drawer__overlay"
-        data-test="overlay"
-        @click="$emit('close')"
-      />
-    </transition>
-    <transition name="slide-right">
-      <section v-if="show" class="sad-drawer__wrapper">
-        <header class="sad-drawer__header">
-          <sad-icon
-            name="times"
-            color="primary"
-            size="medium"
-            :aria-label="t('general.closeRegion', { title })"
-            clickable
-            data-test="close-btn"
-            @click="$emit('close')"
-          />
-          <h3 v-if="title" class="sad-drawer__header-title" data-test="title">
-            {{ title }}
-          </h3>
-        </header>
-        <div class="sad-drawer__content">
-          <slot />
-        </div>
-        <footer class="sad-drawer__footer">
-          <slot name="footer" />
-        </footer>
-      </section>
-    </transition>
-  </div>
+  <focus-trap :active="show">
+    <div class="sad-drawer">
+      <transition name="fade">
+        <div
+          v-if="show"
+          class="sad-drawer__overlay"
+          data-test="overlay"
+          @click="$emit('close')"
+        />
+      </transition>
+      <transition name="slide-right">
+        <section v-if="show" class="sad-drawer__wrapper">
+          <header class="sad-drawer__header">
+            <sad-button
+              class="sad-drawer__header-close"
+              type="ghost"
+              size="small"
+              :aria-label="t('general.closeRegion', { title })"
+              data-test="close-btn"
+              @click="$emit('close')"
+            >
+              <sad-icon name="times" size="medium" />
+            </sad-button>
+            <h3 v-if="title" class="sad-drawer__header-title" data-test="title">
+              {{ title }}
+            </h3>
+          </header>
+          <div class="sad-drawer__content">
+            <slot />
+          </div>
+          <footer class="sad-drawer__footer">
+            <slot name="footer" />
+          </footer>
+        </section>
+      </transition>
+    </div>
+  </focus-trap>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { eventBus, Events } from '@/events';
+import { FocusTrap } from 'focus-trap-vue';
+import SadButton from './SadButton.vue';
 import SadIcon from './SadIcon.vue';
 import useI18n from '@/use/i18n';
 
 export default defineComponent({
   name: 'SadDrawer',
   components: {
+    FocusTrap,
+    SadButton,
     SadIcon,
   },
   props: {
@@ -125,13 +132,8 @@ export default defineComponent({
       @extend %h3;
     }
 
-    i {
-      color: var(--modal-close-btn);
-      cursor: pointer;
-
-      // &:active {
-      //   @include scale-90;
-      // }
+    &-close {
+      margin-right: -12px;
     }
   }
 

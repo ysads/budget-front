@@ -21,7 +21,7 @@
       @click="emit('close', id)"
       @keydown.enter="emit('close', id)"
     >
-      <sad-icon color="info" name="times" />
+      <sad-icon name="times" />
     </button>
   </div>
 </template>
@@ -101,10 +101,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .sad-alert {
-  background: var(--app-bg);
-  border-radius: var(--radius-4);
-  box-shadow: var(--shadow-12);
-  color: var(--text-default);
+  background: var(--alert-bg);
+  border-radius: var(--alert-radius);
+  box-shadow: var(--alert-shadow);
+  color: var(--text-primary);
   display: flex;
   overflow: hidden;
   width: 350px;
@@ -130,6 +130,7 @@ export default defineComponent({
     align-self: center;
     flex-shrink: 0;
     padding-left: 16px;
+    color: var(--text-secondary);
   }
 
   &__close {

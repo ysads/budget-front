@@ -32,14 +32,14 @@
         {{ t('toBeBudgeted') }}
       </p>
       <p class="month-header__balance-currency">
-        {{ localize(month.toBeBudgeted, budget) }}
+        {{ format(month.toBeBudgeted, moneySettings) }}
       </p>
     </div>
   </header>
 </template>
 
 <script lang="ts">
-import { balanceClasses, localize } from '@/support/money';
+import { balanceClasses, currencySettings, format } from '@/support/money';
 import { addMonths, isoMonthToDate } from '@/support/date';
 import useI18n from '@/use/i18n';
 import SadIcon from '@/components/sad/SadIcon.vue';
@@ -68,6 +68,7 @@ export default defineComponent({
     const monthText = computed(() => {
       return d(isoMonthToDate(props.month.isoMonth), 'monthOnly');
     });
+    const moneySettings = currencySettings(props.budget);
 
     const updateMonth = (delta: number) => {
       const newMonth = addMonths(isoMonthToDate(props.month.isoMonth), delta);
@@ -79,7 +80,14 @@ export default defineComponent({
       () => eventBus.emit(Events.ANNOUNCE, { message: monthText.value }),
     );
 
-    return { balanceClasses, monthText, localize, t, updateMonth };
+    return {
+      balanceClasses,
+      format,
+      moneySettings,
+      monthText,
+      t,
+      updateMonth,
+    };
   },
 });
 </script>
@@ -120,7 +128,6 @@ export default defineComponent({
 
   &__balance {
     border-radius: $radius-4;
-    color: var(--month-header-tbb-text);
     padding: $base * 2;
     text-align: center;
 
@@ -134,11 +141,13 @@ export default defineComponent({
   }
 }
 
-.positive {
-  background: var(--balance-positive);
+.negative {
+  background: var(--balance-neg-bg);
+  color: var(--balance-neg-text);
 }
 
-.negative {
-  background: var(--balance-negative);
+.positive {
+  background: var(--balance-pos-bg);
+  color: var(--balance-pos-text);
 }
 </style>

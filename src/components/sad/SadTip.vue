@@ -30,11 +30,11 @@ export default defineComponent({
   @extend %caption-2;
 
   &.info {
-    color: var(--color-info);
+    color: var(--tip-info);
   }
 
   &.error {
-    color: var(--color-error);
+    color: var(--tip-error);
   }
 }
 </style>

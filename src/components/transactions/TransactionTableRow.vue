@@ -2,6 +2,7 @@
   <div
     class="transaction-table-row"
     tabindex="0"
+    role="button"
     @keydown.space="$emit('select')"
     @keydown.enter="$emit('select')"
     @click="$emit('select')"
@@ -59,14 +60,14 @@
       :class="balanceClasses(transaction.amount)"
       data-test="amount"
     >
-      {{ localize(transaction.amount, budget) }}
+      {{ format(transaction.amount, moneySettings) }}
     </span>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { localize, balanceClasses } from '@/support/money';
+import { format, balanceClasses, currencySettings } from '@/support/money';
 import { Budget, Transaction } from '@/types/models';
 import useI18n from '@/use/i18n';
 import useBudgetCategories from '@/use/budget-categories';
@@ -94,17 +95,11 @@ export default defineComponent({
   emits: ['select'],
 
   setup(props) {
-    const { d, st } = useI18n('TransactionTableRow');
+    const { d } = useI18n('TransactionTableRow');
     const { categoryName } = useBudgetCategories();
     const budgetCategoryName = categoryName(props.transaction);
 
-    const clearedIcon = props.transaction.clearedAt ? 'check' : 'clock';
-
-    const clearedColor = props.transaction.clearedAt ? 'green' : 'disabled';
-
-    const clearedTitle = props.transaction.clearedAt
-      ? st('clearedTitle')
-      : st('unclearedTitle');
+    const moneySettings = currencySettings(props.budget)
 
     const { originAccount, destinationAccount, isTransfer } = useTransfer(
       props.transaction,
@@ -124,13 +119,11 @@ export default defineComponent({
       destinationAccount,
       balanceClasses,
       budgetCategoryName,
-      clearedIcon,
-      clearedColor,
-      clearedTitle,
       d,
       isTransfer,
       payeeAbbrev,
-      localize,
+      moneySettings,
+      format,
     };
   },
 });
@@ -140,19 +133,16 @@ export default defineComponent({
 .transaction-table-row {
   display: flex;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding: 16px;
   align-items: center;
   font-size: 16px;
   line-height: 22.4px;
   cursor: pointer;
-  border-radius: 8px;
-  border: 1px solid rgb(233, 233, 233);
-  background: #fff;
-  transition: border ease-in 0.15s;
+  transition: all ease-in-out 0.15s;
 
   &:hover,
   &:focus {
-    border: 1px solid rgb(54, 161, 139);
+    background: var(--row-focus-bg);
   }
 
   &__left {
@@ -161,12 +151,12 @@ export default defineComponent({
   }
 
   &__payee {
-    color: rgb(18, 18, 18);
+    color: var(--text-primary);
   }
 
   &__memo,
   &__date {
-    color: #696969;
+    color: var(--text-secondary);
   }
 
   &__separator {
@@ -191,40 +181,13 @@ export default defineComponent({
     display: grid;
     place-content: center;
   }
-
-  //   &__category {
-  //     flex-basis: 25%;
-  //   }
-
-  //   &__memo {
-  //     flex-basis: 20%;
-  //   }
-
-  //   &__cleared {
-  //     flex-basis: 75px;
-  //     text-align: right;
-  //   }
-
-  //   &__amount {
-  //     flex-grow: 1;
-  //     flex-shrink: 0;
-  //     padding: $base;
-  //     text-align: right;
-
-  //     @extend %semi-bold;
-  //   }
 }
 
-// .negative {
-//   color: var(--balance-negative);
-// }
-
 .positive {
-  color: rgb(54, 161, 139);
-  background: rgb(232, 242, 238);
-  padding: 2px 4px;
-  border-radius: 8px;
+  background: var(--balance-pos-bg);
+  border-radius: var(--balance-pill-radius);
+  color: var(--balance-pos-text);
   font-weight: 600;
-  //   color: var(--balance-positive);
+  padding: 2px 4px;
 }
 </style>

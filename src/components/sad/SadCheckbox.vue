@@ -30,6 +30,7 @@ import useTip from '@/use/tip';
 import uuid from 'uuid-random';
 import { defineComponent } from 'vue';
 
+// @deprecated
 export default defineComponent({
   name: 'SadCheckbox',
 
@@ -98,7 +99,7 @@ export default defineComponent({
 
     &:focus + label::before,
     &:active + label::before {
-      border-color: var(--input-focus);
+      border-color: rgb(61 121 185);
       transition: 0.2s;
     }
 
@@ -125,8 +126,8 @@ export default defineComponent({
     }
 
     &::before {
-      background: var(--app-white);
-      border: 2px solid var(--input-border);
+      background: var(--checkbox-bg);
+      border: 2px solid var(--checkbox-border);
       border-radius: 2px;
       height: 12px;
       left: 0;
@@ -135,8 +136,8 @@ export default defineComponent({
     }
 
     &::after {
-      border-bottom: 2px solid var(--app-white);
-      border-left: 2px solid var(--app-white);
+      border-bottom: 2px solid var(--checbox-check);
+      border-left: 2px solid var(--checbox-check);
       height: 4px;
       left: 3px;
       top: 8px;

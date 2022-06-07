@@ -1,27 +1,33 @@
 <template>
   <header class="month-header">
     <div class="month-header__item month-header__nav">
-      <sad-icon
-        class="month-header__nav-icon"
-        name="chevron-circle-left"
-        size="medium"
+      <button
+        class="month-header__btn"
         :aria-label="t('MonthHeader.prevMonth')"
-        clickable
         data-test="prev"
         @click="updateMonth(-1)"
-      />
+      >
+        <sad-icon
+          class="month-header__nav-icon"
+          name="chevron-circle-left"
+          size="medium"
+        />
+      </button>
       <h2 class="month-header__month" data-test="month-name">
         {{ monthText }}
       </h2>
-      <sad-icon
-        class="month-header__nav-icon"
-        name="chevron-circle-right"
-        size="medium"
-        clickable
+      <button
+        class="month-header__btn"
         :aria-label="t('MonthHeader.nextMonth')"
         data-test="next"
         @click="updateMonth(1)"
-      />
+      >
+        <sad-icon
+          class="month-header__nav-icon"
+          name="chevron-circle-right"
+          size="medium"
+        />
+      </button>
     </div>
     <div
       class="month-header__item month-header__balance"
@@ -95,13 +101,18 @@ export default defineComponent({
 <style lang="scss" scoped>
 .month-header {
   align-items: center;
-  background: var(--acc-header-bg);
+  background: var(--month-header-bg);
   display: flex;
-  justify-content: space-evenly;
+  flex-flow: column;
   padding: $base * 3 $base * 3 $base * 3 $base * 15;
 
   @include breakpoint(md) {
+    flex-flow: row;
+    justify-content: space-evenly;
     padding: $base * 3;
+  }
+
+  @include breakpoint(md) {
   }
 
   &__item {
@@ -109,6 +120,18 @@ export default defineComponent({
 
     @include breakpoint(md) {
       flex-basis: 30%;
+    }
+  }
+
+  &__btn {
+    background-color: transparent;
+    border: 2px solid transparent;
+    padding: 4px;
+    border-radius: var(--month-header-btn-radius);
+    cursor: pointer;
+
+    &:focus {
+      border: 2px solid var(--month-header-btn-focus-border);
     }
   }
 
@@ -127,7 +150,7 @@ export default defineComponent({
   }
 
   &__balance {
-    border-radius: $radius-4;
+    border-radius: var(--balance-pill-radius);
     padding: $base * 2;
     text-align: center;
 

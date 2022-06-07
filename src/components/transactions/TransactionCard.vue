@@ -46,6 +46,7 @@ import useI18n from '@/use/i18n';
 import SadIcon from '@/components/sad/SadIcon';
 import useBudgetCategories from '@/use/budget-categories';
 
+// @deprecated
 export default defineComponent({
   name: 'TransactionCard',
 

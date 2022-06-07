@@ -71,7 +71,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .category-budget {
-  color: var(--table-heading-text);
   cursor: pointer;
   display: flex;
   padding: $base * 3 $base * 4;

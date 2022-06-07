@@ -3,23 +3,18 @@
     <h1 class="account-header__title" data-test="account-name">
       {{ name }}
     </h1>
-
-    <div class="account-header__balance-group">
-      <div class="account-header__balance" data-test="current">
-        <p
-          class="account-header__balance-currency"
-          :class="balanceClasses(current)"
-          data-test="current-amount"
-        >
-          {{ localize(current, budget) }}
-        </p>
-      </div>
+    <div
+      class="account-header__balance"
+      :class="balanceClasses(current)"
+      data-test="current"
+    >
+      {{ format(current, moneySettings) }}
     </div>
   </nav>
 </template>
 
 <script lang="ts">
-import { localize } from '@/support/money';
+import { currencySettings, format } from '@/support/money';
 import { Budget } from '@/types/models';
 import useI18n from '@/use/i18n';
 import { computed, defineComponent, PropType } from 'vue';
@@ -49,8 +44,9 @@ export default defineComponent({
   setup(props) {
     const { t } = useI18n('AccountHeader');
     const current = computed(() => props.cleared + props.uncleared);
+    const moneySettings = currencySettings(props.budget);
 
-    return { current, localize, t };
+    return { current, format, moneySettings, t };
   },
 
   methods: {
@@ -64,11 +60,14 @@ export default defineComponent({
 <style lang="scss" scoped>
 .account-header {
   align-items: center;
+  background-color: var(--acc-header-bg);
   color: var(--acc-header-text);
   display: flex;
   flex-flow: column;
   justify-content: space-between;
   padding: $base * 4 $base * 6;
+
+  @extend %h1;
 
   @include breakpoint(md) {
     flex-flow: row;
@@ -82,37 +81,12 @@ export default defineComponent({
     @extend %h1;
   }
 
-  &__sep {
-    color: var(--acc-header-sep);
-    margin: 0 $base * 3;
-
-    @extend %h2;
-  }
-
   &__balance {
-    text-align: center;
+    margin-top: 8px;
 
-    &-group {
-      align-items: center;
-      display: flex;
-      margin-top: $base * 4;
-
-      @include breakpoint(md) {
-        margin: 0;
-      }
+    @include breakpoint(md) {
+      margin-top: 0;
     }
-
-    &-title {
-      @extend %caption;
-    }
-
-    &-currency {
-      @extend %h2;
-    }
-  }
-
-  &__balance + &__balance {
-    margin-left: $base * 6;
   }
 }
 

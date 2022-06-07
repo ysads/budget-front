@@ -10,7 +10,7 @@
         />
       </transition>
       <transition name="fade-up">
-        <section v-if="show" class="sad-modal__wrapper">
+        <section v-if="show" class="sad-modal__wrapper" role="dialog">
           <header class="sad-modal__header">
             <sad-button
               type="ghost"

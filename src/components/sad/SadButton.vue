@@ -68,12 +68,11 @@ export default defineComponent({
   border: 2px solid transparent;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
 
   @include transition;
 
   &__icon {
-    margin-right: $base * 1;
+    margin-right: $base * 2;
   }
 
   &--large {
@@ -90,7 +89,7 @@ export default defineComponent({
 
   &--primary {
     background: var(--btn-primary-bg);
-    color: white;
+    color: var(--btn-primary-text);
 
     &:hover,
     &:focus {

@@ -10,7 +10,7 @@
         />
       </transition>
       <transition name="slide-right">
-        <section v-if="show" class="sad-drawer__wrapper">
+        <section v-if="show" class="sad-drawer__wrapper" role="dialog">
           <header class="sad-drawer__header">
             <sad-button
               class="sad-drawer__header-close"

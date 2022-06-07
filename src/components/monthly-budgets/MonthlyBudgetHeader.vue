@@ -49,10 +49,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .category-group-header {
-  background: var(--table-heading);
   border-top-left-radius: $base;
   border-top-right-radius: $base;
-  color: var(--table-heading-text);
   display: flex;
   padding: $base * 3 $base * 4;
   width: 100%;

@@ -1,4 +1,6 @@
 :root {
+  --acc-header-bg: none;
+  --acc-header-text: rgba(56, 62, 65, 1);
   --alert-bg: rgb(255 255 255);
   --alert-radius: 4px;
   --alert-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
@@ -15,6 +17,7 @@
   --btn-ghost-focus-bg: rgba(50, 82, 119, 0.15);
   --btn-ghost-focus-text: rgba(50, 82, 119);
   --btn-primary-bg: rgb(61 121 185);
+  --btn-primary-text: rgb(255 255 255);
   --btn-primary-focus-bg: rgba(50, 82, 119);
   --color-error: rgb(179 93 91);
   --color-success: rgb(54 161 139);
@@ -22,10 +25,14 @@
   --drawer-bg: rgb(255 255 255);
   --input-focus: rgb(61 121 185);
   --input-border: rgb(216 222 228);
-  --loading: rgb(61 121 185);
+  --loading-bg: rgb(61 121 185);
   --modal-bg: rgb(255 255 255);
   --modal-title: rgb(105 105 105);
   --modal-overlay: rgba(0, 0, 0, 0.5);
+  --month-header-bg: none;
+  --month-header-btn-radius: 4px;
+  --month-header-btn-focus-border: rgb(28 28 28);
+  --month-header-text: rgb(28 28 28);
   --row-focus-bg: rgb(249 249 249);
   --row-separator: rgb(216 222 228);
   --transaction-sep-color: rgb(216 222 228);
@@ -34,23 +41,9 @@
   --sidebar-button-bg: rgba(170, 210, 255, 0.2);
   --sidebar-focus: rgba(50, 82, 119);
   --sidebar-text: rgba(255, 255, 255, 1);
-  --sidebar-tip: var(--app-blue-light);
+  --sidebar-tip: rgba(226, 236, 247, 1);
   --text-primary: rgb(28 28 28);
   --text-secondary: rgb(105 105 105);
   --tip-info: rgb(105 105 105);
   --tip-error: rgb(179 93 91);
-
-  --app-white: rgba(255, 255, 255, 1);
-  --app-bg: var(--app-white);
-  --app-blue-light: rgba(226, 236, 247, 1);
-  --app-gray-light: rgba(242, 242, 242, 1);
-  --app-gray-medium: rgba(180, 180, 180, 1);
-  --acc-header-bg: var(--app-gray-light);
-  --acc-header-text: rgba(56, 62, 65, 1);
-  --acc-header-sep: rgba(164, 164, 164, 1);
-  --month-header-text: rgba(56, 62, 65, 1);
-  --month-header-bg: var(--app-gray-light);
-  --color-info: rgb(14, 2, 2);
-  --color-disabled: rgba(180, 180, 180, 1);
-  --table-heading: var(--month-header-bg);
 }

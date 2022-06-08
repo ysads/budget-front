@@ -122,6 +122,7 @@ export default defineComponent({
         resetForm();
         emit('close');
       } catch (err) {
+        // @ts-expect-error how to type that?
         handleApiError(err);
       }
     };

@@ -111,6 +111,7 @@ export default defineComponent({
         alert.success(st('created'));
         emit('close');
       } catch (err) {
+        // @ts-expect-error how to type that?
         handleApiError(err);
       }
     };

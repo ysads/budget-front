@@ -13,6 +13,8 @@ export const currentUser = ref<User>({
   name: '',
 });
 
+export const authToken = ref<string>('');
+
 export const getMe = async (): Promise<User> => {
   if (!currentUser.value.id) {
     currentUser.value = await get('me');
@@ -24,3 +26,6 @@ export const getMe = async (): Promise<User> => {
 export const signIn = (user: ApiSignInRequest): Promise<User> => {
   return post('sign_in', { user });
 };
+
+export const updateAuthToken = (token: string): string =>
+  (authToken.value = token);

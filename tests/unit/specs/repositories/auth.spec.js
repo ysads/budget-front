@@ -36,16 +36,11 @@ describe('AuthRepository', () => {
     });
   });
 
-  describe('#signIn', () => {
-    it('dispatches a POST to api', async () => {
-      const params = {
-        email: faker.internet.email(),
-        password: faker.internet.password(),
-      };
+  describe('#updateToken', () => {
+    it('saves the given token to local storage', () => {
+      repository.updateAuthToken('T0k3ń');
 
-      await repository.signIn(params);
-
-      expect(api.post).toHaveBeenCalledWith('sign_in', { user: params });
+      expect(localStorage.getItem('auth_token')).toEqual('T0k3ń');
     });
   });
 });

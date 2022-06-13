@@ -32,6 +32,7 @@ describe('api', () => {
     axiosRequest.mockImplementationOnce(() =>
       Promise.resolve({ data: mockResponse }),
     );
+    localStorage.setItem('auth_token', 'mock-token');
   });
 
   afterAll(() => {
@@ -45,7 +46,10 @@ describe('api', () => {
       await api.get('test-endpoint', mockParams);
 
       expect(axiosRequest).toBeCalledWith({
-        headers: { Accept: 'application/json' },
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer mock-token',
+        },
         method: 'get',
         params: { test_param: 1 },
         url: 'https://mock-host/api/test-endpoint',
@@ -61,7 +65,10 @@ describe('api', () => {
       await api.post('test-endpoint', mockParams);
 
       expect(axiosRequest).toBeCalledWith({
-        headers: { Accept: 'application/json' },
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer mock-token',
+        },
         method: 'post',
         data: { test_param: 1 },
         url: 'https://mock-host/api/test-endpoint',
@@ -77,7 +84,10 @@ describe('api', () => {
       await api.put('test-endpoint', mockParams);
 
       expect(axiosRequest).toBeCalledWith({
-        headers: { Accept: 'application/json' },
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer mock-token',
+        },
         method: 'put',
         data: { test_param: 1 },
         url: 'https://mock-host/api/test-endpoint',
@@ -93,7 +103,10 @@ describe('api', () => {
       await api.del('test-endpoint', mockParams);
 
       expect(axiosRequest).toBeCalledWith({
-        headers: { Accept: 'application/json' },
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer mock-token',
+        },
         method: 'delete',
         params: { test_param: 1 },
         url: 'https://mock-host/api/test-endpoint',
@@ -113,7 +126,10 @@ describe('api', () => {
       await api.get('test-endpoint', mockParams);
 
       expect(axiosRequest).toBeCalledWith({
-        headers: { Accept: 'application/json' },
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer mock-token',
+        },
         method: 'get',
         params: { test_param: 1 },
         url: 'http://localhost:9091/api/test-endpoint',
@@ -127,7 +143,10 @@ describe('api', () => {
       await api.get('test-endpoint');
 
       expect(axiosRequest).toBeCalledWith({
-        headers: { Accept: 'application/json' },
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer mock-token',
+        },
         method: 'get',
         params: {},
         url: 'http://localhost:9091/api/test-endpoint',

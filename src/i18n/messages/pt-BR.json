@@ -34,6 +34,11 @@
   "newCategoryGroup": "Novo grupo",
   "newMonthlyBudget": "Criar orçamento",
   "newTransaction": "Adicionar transação",
+  "htmlTitle": {
+    "AccountShow": "Piggy: {name}",
+    "AllAccounts": "Piggy: Contas",
+    "Budget": "Piggy: {month}"
+  },
   "CreateAccountModal": {
     "accountType": "De que tipo é essa conta?",
     "created": "Conta criada",

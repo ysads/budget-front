@@ -4,19 +4,19 @@
       {{ categoryGroup.name }}
     </div>
     <div class="category-group-header__total" data-test="budgeted">
-      {{ localize(totalBalance(monthlyBudgets, 'budgeted'), budget) }}
+      {{ format(totalBalance(monthlyBudgets, 'budgeted'), moneySettings) }}
     </div>
     <div class="category-group-header__total" data-test="activity">
-      {{ localize(totalBalance(monthlyBudgets, 'activity'), budget) }}
+      {{ format(totalBalance(monthlyBudgets, 'activity'), moneySettings) }}
     </div>
     <div class="category-group-header__total" data-test="available">
-      {{ localize(totalBalance(monthlyBudgets, 'available'), budget) }}
+      {{ format(totalBalance(monthlyBudgets, 'available'), moneySettings) }}
     </div>
   </header>
 </template>
 
 <script lang="ts">
-import { localize, totalBalance } from '@/support/money';
+import { currencySettings, format, totalBalance } from '@/support/money';
 import { Budget, CategoryGroup } from '@/types/models';
 import { defineComponent, PropType } from 'vue';
 
@@ -38,9 +38,12 @@ export default defineComponent({
     },
   },
 
-  setup() {
+  setup(props) {
+    const moneySettings = currencySettings(props.budget);
+
     return {
-      localize,
+      format,
+      moneySettings,
       totalBalance,
     };
   },
@@ -55,13 +58,9 @@ export default defineComponent({
   padding: $base * 3 $base * 4;
   width: 100%;
 
-  @extend %body-1;
-  @extend %medium;
-
   &__name {
     flex-basis: 40%;
-
-    @extend %semi-bold;
+    font-weight: 600;
   }
 
   &__total {

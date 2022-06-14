@@ -27,7 +27,7 @@ export default defineComponent({
 .sad-label {
   color: var(--text-primary);
   display: block;
-  font-size: 1rem;
+  // font-size: var(--font-body2);
 
   &__text {
     display: inline-block;

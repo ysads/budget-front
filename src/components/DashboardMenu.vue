@@ -143,8 +143,7 @@ export default defineComponent({
   color: var(--sidebar-text);
   overflow: auto;
   padding: $base * 3;
-
-  @include transition(all, $cubic-bezier, 0.5s);
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   &__nav {
     display: flex;
@@ -153,14 +152,14 @@ export default defineComponent({
     &-link {
       display: block;
       padding: $base * 3 $base * 3;
+      font-size: var(--font-body2);
+      font-weight: 600;
     }
 
     &-item {
       border-radius: $radius-8;
       cursor: pointer;
       transition: all ease 0.1s;
-
-      @extend %menu;
 
       &:hover,
       &:focus,
@@ -198,8 +197,7 @@ export default defineComponent({
       .tip {
         color: var(--sidebar-tip);
         margin-top: $base * 4;
-
-        @extend %caption;
+        font-size: var(--font-body2);
       }
     }
   }

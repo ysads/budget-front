@@ -71,7 +71,7 @@ $closing-bezier: cubic-bezier(0.74, 0.01, 1, 0.57);
   &:focus,
   &:active {
     background: var(--sidebar-active);
-    border-radius: var(--radius-4);
+    border-radius: var(--collapse-radius);
   }
 }
 

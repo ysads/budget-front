@@ -27,7 +27,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .tip {
-  @extend %caption-2;
+  font-size: var(--font-caption);
 
   &.info {
     color: var(--tip-info);

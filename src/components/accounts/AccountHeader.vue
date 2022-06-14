@@ -66,8 +66,7 @@ export default defineComponent({
   flex-flow: column;
   justify-content: space-between;
   padding: $base * 4 $base * 6;
-
-  @extend %h1;
+  font-size: var(--font-title1);
 
   @include breakpoint(md) {
     flex-flow: row;
@@ -78,11 +77,12 @@ export default defineComponent({
   }
 
   &__title {
-    @extend %h1;
+    font-size: var(--font-title1);
+    font-weight: 700;
   }
 
   &__balance {
-    margin-top: 8px;
+    font-weight: 700;
 
     @include breakpoint(md) {
       margin-top: 0;

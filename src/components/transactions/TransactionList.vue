@@ -1,6 +1,5 @@
 <template>
   <section class="transaction-list">
-    <!-- <transaction-table-header data-test="table-header" /> -->
     <transaction-table-row
       v-for="transaction in transactions"
       :key="transaction.id"
@@ -44,7 +43,6 @@ export default defineComponent({
   },
 
   components: {
-    // TransactionTableHeader,
     TransactionTableRow,
     TransactionDetails,
     TransferDetails,

@@ -58,7 +58,8 @@
   },
   "MonthHeader": {
     "prevMonth": "Mês anterior",
-    "nextMonth": "Próximo mês"
+    "nextMonth": "Próximo mês",
+    "toBeBudgeted": "Disponível para orçar"
   },
   "MonthlyBudgetDetails": {
     "category": "Categoria",

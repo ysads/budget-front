@@ -19,12 +19,14 @@
   --btn-primary-bg: rgb(61 121 185);
   --btn-primary-text: rgb(255 255 255);
   --btn-primary-focus-bg: rgba(50, 82, 119);
+  --collapse-radius: 8px;
   --color-error: rgb(179 93 91);
   --color-success: rgb(54 161 139);
   --color-warning: rgb(200 157 88);
   --drawer-bg: rgb(255 255 255);
   --input-focus: rgb(61 121 185);
   --input-border: rgb(216 222 228);
+  --input-text: rgb(105 105 105);
   --loading-bg: rgb(61 121 185);
   --modal-bg: rgb(255 255 255);
   --modal-title: rgb(105 105 105);
@@ -33,8 +35,13 @@
   --month-header-btn-radius: 4px;
   --month-header-btn-focus-border: rgb(28 28 28);
   --month-header-text: rgb(28 28 28);
+  --picker-selected-bg: rgb(61 121 185);
+  --picker-selected-text: rgb(255 255 255);
+  --picker-hover-text: rgb(61 121 185);
   --row-focus-bg: rgb(249 249 249);
   --row-separator: rgb(216 222 228);
+  --select-selected-option: rgb(61 121 185);
+  --select-hover-bg: rgba(50, 82, 119, 0.15);
   --transaction-sep-color: rgb(216 222 228);
   --sidebar-active: rgb(33 91 152);
   --sidebar-bg: rgb(61 121 185);
@@ -44,6 +51,14 @@
   --sidebar-tip: rgba(226, 236, 247, 1);
   --text-primary: rgb(28 28 28);
   --text-secondary: rgb(105 105 105);
+  --transaction-sep-icon: rgb(105 105 105);
+  --transaction-payee-bg: rgb(242 236 225);
+  --transaction-payee-text: rgb(200 157 88);
+  --font-title1: 1.8125rem;
+  --font-title2: 1.5rem;
+  --font-body1: 1rem;
+  --font-body2: 1.14rem;
+  --font-caption: 0.875rem;
   --tip-info: rgb(105 105 105);
   --tip-error: rgb(179 93 91);
 }

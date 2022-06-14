@@ -1,6 +1,6 @@
 <template>
   <header class="month-header">
-    <div class="month-header__item month-header__nav">
+    <div class="month-header__nav">
       <button
         class="month-header__btn"
         :aria-label="t('MonthHeader.prevMonth')"
@@ -30,12 +30,12 @@
       </button>
     </div>
     <div
-      class="month-header__item month-header__balance"
+      class="month-header__balance"
       :class="balanceClasses(month.toBeBudgeted)"
       data-test="to-be-budgeted"
     >
       <p class="month-header__balance-title">
-        {{ t('toBeBudgeted') }}
+        {{ t('MonthHeader.toBeBudgeted') }}
       </p>
       <p class="month-header__balance-currency">
         {{ format(month.toBeBudgeted, moneySettings) }}
@@ -104,23 +104,13 @@ export default defineComponent({
   background: var(--month-header-bg);
   display: flex;
   flex-flow: column;
+  gap: 12px;
   padding: $base * 3 $base * 3 $base * 3 $base * 15;
 
   @include breakpoint(md) {
     flex-flow: row;
     justify-content: space-evenly;
     padding: $base * 3;
-  }
-
-  @include breakpoint(md) {
-  }
-
-  &__item {
-    flex-basis: 50%;
-
-    @include breakpoint(md) {
-      flex-basis: 30%;
-    }
   }
 
   &__btn {
@@ -139,14 +129,21 @@ export default defineComponent({
     align-items: center;
     color: var(--month-header-text);
     display: flex;
+    gap: 12px;
     justify-content: space-between;
-    margin-right: $base * 6;
+
+    @include breakpoint(md) {
+      flex-basis: 50%;
+    }
+    @include breakpoint(lg) {
+      flex-basis: 30%;
+    }
   }
 
   &__month {
     text-transform: capitalize;
-
-    @extend %h2;
+    font-size: var(--font-title1);
+    font-weight: 600;
   }
 
   &__balance {
@@ -154,12 +151,16 @@ export default defineComponent({
     padding: $base * 2;
     text-align: center;
 
-    &-title {
-      @extend %caption;
+    @include breakpoint(md) {
+      flex-basis: 50%;
+    }
+    @include breakpoint(lg) {
+      flex-basis: 30%;
     }
 
     &-currency {
-      @extend %h1;
+      font-size: var(--font-title2);
+      font-weight: 600;
     }
   }
 }

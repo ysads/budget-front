@@ -87,17 +87,14 @@ export default defineComponent({
 <style lang="scss" scoped>
 .sad-input {
   &__prefix {
-    color: var(--text-secondary);
+    color: var(--input-text);
     margin-right: $base * 2;
-
-    @extend %body-1;
   }
 
   &__wrapper {
     align-items: center;
     border: 1px solid var(--input-border);
     border-radius: $radius-4;
-    color: var(--text-primary);
     display: flex;
     height: $base * 10;
     padding: $base * 2;
@@ -110,9 +107,8 @@ export default defineComponent({
   }
 
   &__control {
+    color: var(--input-text);
     flex-grow: 1;
-
-    @extend %body-1;
   }
 
   &__tip {

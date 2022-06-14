@@ -76,8 +76,6 @@ export default defineComponent({
   padding: $base * 3 $base * 4;
   width: 100%;
 
-  @extend %body-1;
-
   &:hover,
   &:focus {
     background: var(--row-focus-bg);

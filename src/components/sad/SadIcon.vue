@@ -5,7 +5,7 @@
 <script lang="ts">
 import { PropType, computed, defineComponent } from 'vue';
 
-type IconSize = 'small' | 'medium';
+type IconSize = 'tiny' | 'small' | 'medium';
 
 export default defineComponent({
   name: 'SadIcon',
@@ -40,6 +40,10 @@ export default defineComponent({
     color: inherit;
     cursor: pointer;
     outline: none;
+  }
+
+  &--tiny {
+    font-size: 12px;
   }
 
   &--small {

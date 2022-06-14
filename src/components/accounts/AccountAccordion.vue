@@ -103,16 +103,12 @@ export default defineComponent({
     padding: $base * 3;
     text-transform: uppercase;
     width: 100%;
-
-    @extend %caption-2;
   }
 
   &__item {
     align-items: center;
     border-radius: $radius-8;
     color: var(--sidebar-text);
-
-    @extend %caption-2;
 
     &:hover,
     &:focus-within {

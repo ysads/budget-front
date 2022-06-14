@@ -23,8 +23,7 @@
         <sad-icon
           class="transaction-table-row__icon"
           name="arrow-circle-right"
-          size="small"
-          color="green"
+          size="tiny"
           aria-hidden
         />
         {{ destinationAccount.name }}
@@ -32,6 +31,9 @@
       <span v-else class="transaction-table-row__payee" data-test="payee">
         {{ transaction.payeeName }}
       </span>
+      <div class="transaction-table-row__category-mobile">
+        {{ budgetCategoryName }}
+      </div>
       <div class="transaction-table-row__bottom">
         <span class="transaction-table-row__date" data-test="date">
           {{ d(new Date(transaction.referenceAt), 'short') }}
@@ -52,16 +54,14 @@
         </span>
       </div>
     </div>
-    <!-- <span class="transaction-table-row__category" data-test="category">
+    <div class="transaction-table-row__category-desktop">
       {{ budgetCategoryName }}
-    </span> -->
-    <span
-      class="transaction-table-row__amount"
-      :class="balanceClasses(transaction.amount)"
-      data-test="amount"
-    >
-      {{ format(transaction.amount, moneySettings) }}
-    </span>
+    </div>
+    <div class="transaction-table-row__amount">
+      <span :class="balanceClasses(transaction.amount)" data-test="amount">
+        {{ format(transaction.amount, moneySettings) }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -99,7 +99,7 @@ export default defineComponent({
     const { categoryName } = useBudgetCategories();
     const budgetCategoryName = categoryName(props.transaction);
 
-    const moneySettings = currencySettings(props.budget)
+    const moneySettings = currencySettings(props.budget);
 
     const { originAccount, destinationAccount, isTransfer } = useTransfer(
       props.transaction,
@@ -131,27 +131,54 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .transaction-table-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 16px;
   align-items: center;
-  font-size: 16px;
-  line-height: 22.4px;
   cursor: pointer;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 3fr 1fr;
+  line-height: 1.5;
+  padding: 16px;
   transition: all ease-in-out 0.15s;
+
+  @include breakpoint(sm) {
+    grid-template-columns: 32px 3fr 1fr;
+  }
+
+  @include breakpoint(md) {
+    grid-template-columns: 50px 3fr 3fr 1fr;
+  }
 
   &:hover,
   &:focus {
     background: var(--row-focus-bg);
   }
 
-  &__left {
+  &__category-desktop {
+    display: none;
     flex: 1;
-    margin-left: 20px;
+    text-align: left;
+
+    @include breakpoint(sm) {
+      display: block;
+    }
+  }
+
+  &__category-mobile {
+    display: block;
+    text-align: left;
+
+    @include breakpoint(md) {
+      display: none;
+    }
   }
 
   &__payee {
     color: var(--text-primary);
+  }
+
+  &__amount {
+    font-size: var(--font-body2);
+    justify-self: end;
   }
 
   &__memo,
@@ -160,26 +187,44 @@ export default defineComponent({
   }
 
   &__separator {
+    color: var(--text-secondary);
     margin: 0 4px;
   }
 
   &__icon {
-    margin: 0 12px;
+    margin: 0 8px;
+    color: var(--transaction-sep-icon);
   }
 
   &__img {
-    background: #f2ece1;
-    color: #c89d58;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 1px;
+    background: var(--transaction-payee-bg);
     border-radius: 50%;
-    padding: 10px;
-    width: 50px;
-    height: 50px;
+    color: var(--transaction-payee-text);
     display: grid;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    height: 32px;
+    padding: 10px;
     place-content: center;
+    text-transform: uppercase;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.3s;
+    transition-property: width height;
+    width: 32px;
+    display: none;
+
+    @include breakpoint(sm) {
+      display: grid;
+      height: 32px;
+      width: 32px;
+    }
+
+    @include breakpoint(md) {
+      display: grid;
+      width: 50px;
+      height: 50px;
+    }
   }
 }
 

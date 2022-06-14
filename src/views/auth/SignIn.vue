@@ -43,13 +43,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.sign-in {
-  padding: $base * 8;
-
-  &__control + &__control {
-    margin-top: $base * 4;
-  }
-}
-</style>

@@ -45,7 +45,7 @@ import { defineComponent, PropType, reactive } from 'vue';
 export default defineComponent({
   props: {
     account: {
-      type: Object as PropType<Account | null>,
+      type: Object as PropType<Account | undefined>,
       default: null,
     },
   },
@@ -74,11 +74,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .account-toolbar {
   display: flex;
+  flex-flow: row wrap;
   justify-content: flex-start;
+  gap: $base;
   padding: $base * 2 $base * 4;
-
-  &__button + &__button {
-    margin-left: $base;
-  }
 }
 </style>

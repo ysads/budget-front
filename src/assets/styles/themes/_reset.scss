@@ -87,6 +87,7 @@ video {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   vertical-align: baseline;
+  font-weight: 400;
 }
 
 article,
@@ -104,10 +105,12 @@ section {
 }
 
 html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
   font-size: 14px;
   line-height: 1;
-
-  @extend %barlow;
+  color: var(--text-primary);
 }
 
 a {
@@ -118,10 +121,6 @@ a {
     color: inherit;
     text-decoration: none;
   }
-}
-
-strong {
-  @extend %bold;
 }
 
 * :focus {

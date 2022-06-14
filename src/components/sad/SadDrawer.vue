@@ -128,8 +128,8 @@ export default defineComponent({
 
     &-title {
       color: var(--modal-title);
-
-      @extend %h3;
+      font-size: var(--font-title2);
+      font-weight: 600;
     }
 
     &-close {

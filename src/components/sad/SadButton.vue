@@ -68,8 +68,8 @@ export default defineComponent({
   border: 2px solid transparent;
   border-radius: 6px;
   cursor: pointer;
-
-  @include transition;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease-in-out;
 
   &__icon {
     margin-right: $base * 2;

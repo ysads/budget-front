@@ -1,6 +1,6 @@
 <template>
   <label class="sad-label" :for="to" data-test="label">
-    <p class="sad-label__text" data-test="text">{{ text }}</p>
+    <span class="sad-label__text" data-test="text">{{ text }}</span>
     <slot />
   </label>
 </template>
@@ -25,12 +25,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .sad-label {
-  color: var(--text-default);
+  color: var(--text-primary);
   display: block;
-  font-size: 1rem;
+  // font-size: var(--font-body2);
 
   &__text {
-    margin-bottom: $base * 2;
+    display: inline-block;
+    margin-bottom: $base;
   }
 }
 </style>

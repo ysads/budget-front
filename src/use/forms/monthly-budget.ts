@@ -28,13 +28,11 @@ export default function useMonthlyBudgetForm(
       : '';
   };
 
-  watch(() => props.monthlyBudget, updateForm);
-
-  const resetForm = () => updateForm({} as MonthlyBudget);
-
   // INFO: needed so we have the form filled with the monthly budget
   // data received as prop
-  updateForm(props.monthlyBudget);
+  watch(() => props.monthlyBudget, updateForm, { immediate: true });
+
+  const resetForm = () => updateForm({} as MonthlyBudget);
 
   return { resetForm, form };
 }

@@ -52,17 +52,16 @@ export default function useTransactionForm({
     form.categoryId = newRecord.categoryId || '';
     form.outflow = newRecord.outflow ?? true;
     form.payeeName = newRecord.payeeName || '';
+    form.clearedAt = newRecord.clearedAt || new Date().toISOString();
 
     updateAccount();
 
     if (isEdit.value) {
       form.amount = format(newRecord.unsignedAmount, moneySettings, false);
       form.referenceAt = new Date(props.transaction.referenceAt);
-      form.clearedAt = newRecord.clearedAt;
     } else {
       form.amount = '';
       form.referenceAt = new Date();
-      form.clearedAt = new Date().toISOString() as NullishDate;
     }
   };
 

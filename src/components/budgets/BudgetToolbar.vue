@@ -1,57 +1,55 @@
 <template>
   <div class="budget-toolbar">
-    <div>
-      <sad-button
-        class="budget-toolbar__button"
-        icon="plus"
-        type="ghost"
-        size="small"
-        data-test="new-group-btn"
-        @click="toggle('categoryGroupModal')"
-      >
-        {{ t('newCategoryGroup') }}
-      </sad-button>
+    <sad-button
+      class="budget-toolbar__button"
+      icon="plus"
+      type="ghost"
+      size="small"
+      data-test="new-group-btn"
+      @click="toggle('categoryGroupModal')"
+    >
+      {{ t('newCategoryGroup') }}
+    </sad-button>
 
-      <sad-button
-        class="budget-toolbar__button"
-        icon="plus"
-        type="ghost"
-        size="small"
-        data-test="new-category-btn"
-        @click="toggle('categoryModal')"
-      >
-        {{ t('newCategory') }}
-      </sad-button>
+    <sad-button
+      class="budget-toolbar__button"
+      icon="plus"
+      type="ghost"
+      size="small"
+      data-test="new-category-btn"
+      @click="toggle('categoryModal')"
+    >
+      {{ t('newCategory') }}
+    </sad-button>
 
-      <sad-button
-        class="budget-toolbar__button"
-        icon="plus"
-        type="ghost"
-        size="small"
-        data-test="new-monthly-budget-btn"
-        @click="toggle('drawer')"
-      >
-        {{ t('newMonthlyBudget') }}
-      </sad-button>
+    <sad-button
+      class="budget-toolbar__button"
+      icon="plus"
+      type="ghost"
+      size="small"
+      data-test="new-monthly-budget-btn"
+      @click="toggle('drawer')"
+    >
+      {{ t('newMonthlyBudget') }}
+    </sad-button>
 
-      <create-category-group-modal
-        :show="isVisible.categoryGroupModal"
-        :budget="openBudget"
-        data-test="new-group-modal"
-        @close="toggle('categoryGroupModal')"
-      />
-      <create-category-modal
-        :show="isVisible.categoryModal"
-        :budget="openBudget"
-        data-test="new-category-modal"
-        @close="toggle('categoryModal')"
-      />
-      <monthly-budget-details
-        :show="isVisible.drawer"
-        data-test="monthly-budget-details"
-        @close="toggle('drawer')"
-      />
-    </div>
+    <create-category-group-modal
+      :show="isVisible.categoryGroupModal"
+      :budget="openBudget"
+      data-test="new-group-modal"
+      @close="toggle('categoryGroupModal')"
+    />
+    <create-category-modal
+      :show="isVisible.categoryModal"
+      :budget="openBudget"
+      data-test="new-category-modal"
+      @close="toggle('categoryModal')"
+    />
+    <monthly-budget-details
+      :show="isVisible.drawer"
+      data-test="monthly-budget-details"
+      @close="toggle('drawer')"
+    />
   </div>
 </template>
 
@@ -90,9 +88,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .budget-toolbar {
-  border-bottom: 1px solid var(--acc-toolbar-border);
   display: flex;
-  justify-content: space-between;
+  flex-flow: row wrap;
+  gap: 12px;
+  justify-content: flex-start;
   padding: $base * 2 $base * 4;
 }
 </style>

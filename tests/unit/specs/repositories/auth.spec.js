@@ -1,7 +1,6 @@
 import * as api from '@/api';
 import * as repository from '@/repositories/auth';
 import factories from '#/factories';
-import faker from 'faker';
 
 describe('AuthRepository', () => {
   beforeEach(() => {

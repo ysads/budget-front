@@ -1,14 +1,14 @@
 <template>
   <sad-collapse start-open>
     <template #header>
-      <div class="account-accordion__header" data-test="title">
+      <span class="account-accordion__header" data-test="title">
         <span class="account-accordion__title">
           {{ label }}
         </span>
         <span class="account-accordion__total">
-          {{ localize(total, budget) }}
+          {{ format(total, moneySettings) }}
         </span>
-      </div>
+      </span>
     </template>
     <ul>
       <li
@@ -28,7 +28,7 @@
             {{ account.name }}
           </span>
           <span class="account-accordion__item-balance">
-            {{ localize(account.balance, budget) }}
+            {{ format(account.balance, moneySettings) }}
           </span>
         </router-link>
       </li>
@@ -39,7 +39,7 @@
 <script lang="ts">
 import SadCollapse from '@/components/sad/SadCollapse.vue';
 import { Account, Budget } from '@/types/models';
-import { localize, totalBalance } from '@/support/money';
+import { currencySettings, format, totalBalance } from '@/support/money';
 import { PropType, computed, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import { eventBus, Events } from '@/events';
@@ -67,6 +67,7 @@ export default defineComponent({
   },
 
   setup(props) {
+    const moneySettings = currencySettings(props.budget);
     const total = computed(() => totalBalance(props.accounts, 'balance'));
     const route = useRoute();
 
@@ -80,7 +81,14 @@ export default defineComponent({
 
     const emitNavigate = () => eventBus.emit(Events.CLOSE_DRAWER);
 
-    return { activeClass, emitNavigate, openAccountId, localize, total };
+    return {
+      activeClass,
+      emitNavigate,
+      openAccountId,
+      format,
+      moneySettings,
+      total,
+    };
   },
 });
 </script>
@@ -95,8 +103,6 @@ export default defineComponent({
     padding: $base * 3;
     text-transform: uppercase;
     width: 100%;
-
-    @extend %caption-2;
   }
 
   &__item {
@@ -104,9 +110,8 @@ export default defineComponent({
     border-radius: $radius-8;
     color: var(--sidebar-text);
 
-    @extend %caption-2;
-
-    &:hover {
+    &:hover,
+    &:focus-within {
       background: var(--sidebar-focus);
       cursor: pointer;
     }

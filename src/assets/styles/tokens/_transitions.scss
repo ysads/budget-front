@@ -1,5 +1,0 @@
-@mixin transition($props: all, $func: ease, $duration: 0.2s) {
-  transition: $props $func $duration;
-}
-
-$cubic-bezier: cubic-bezier(0.075, 0.82, 0.165, 1);

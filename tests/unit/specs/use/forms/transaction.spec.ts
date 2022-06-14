@@ -50,7 +50,7 @@ describe('useTransactionForm', () => {
 
     it('has defaults for amount and date fields', () => {
       const { form } = useTransactionForm({
-        props: { transaction },
+        props: { transaction: {} as Transaction },
         isEdit: ref(false),
         moneySettings,
       });

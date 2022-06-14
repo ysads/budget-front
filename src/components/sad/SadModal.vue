@@ -1,36 +1,47 @@
 <template>
-  <div class="sad-modal">
-    <transition name="fade">
-      <div
-        v-if="show"
-        class="sad-modal__overlay"
-        data-test="overlay"
-        @click="$emit('close')"
-      />
-    </transition>
-    <transition name="fade-up">
-      <section v-if="show" class="sad-modal__wrapper">
-        <header class="sad-modal__header">
-          <i
-            class="fas fa-times"
-            data-test="close-btn"
-            @click="$emit('close')"
-          />
-          <h3 v-if="title" class="sad-modal__header-title" data-test="title">
-            {{ title }}
-          </h3>
-        </header>
-        <slot />
-        <footer class="sad-modal__footer">
-          <slot name="footer"></slot>
-        </footer>
-      </section>
-    </transition>
-  </div>
+  <focus-trap :active="show">
+    <div class="sad-modal">
+      <transition name="fade">
+        <div
+          v-if="show"
+          class="sad-modal__overlay"
+          data-test="overlay"
+          @click="$emit('close')"
+        />
+      </transition>
+      <transition name="fade-up">
+        <section v-if="show" class="sad-modal__wrapper" role="dialog">
+          <header class="sad-modal__header">
+            <sad-button
+              type="ghost"
+              size="small"
+              :aria-label="t('general.closeRegion', { title })"
+              data-test="close-btn"
+              @click="$emit('close')"
+            >
+              <sad-icon name="times" size="medium" />
+            </sad-button>
+            <h3 v-if="title" class="sad-modal__header-title" data-test="title">
+              {{ title }}
+            </h3>
+          </header>
+          <slot />
+          <footer class="sad-modal__footer">
+            <slot name="footer"></slot>
+          </footer>
+        </section>
+      </transition>
+    </div>
+  </focus-trap>
 </template>
 
 <script lang="ts">
+import { eventBus, Events } from '@/events';
 import { defineComponent } from 'vue';
+import { FocusTrap } from 'focus-trap-vue';
+import SadButton from '@/components/sad/SadButton.vue';
+import SadIcon from '@/components/sad/SadIcon.vue';
+import useI18n from '@/use/i18n';
 
 export default defineComponent({
   name: 'SadModal',
@@ -46,7 +57,25 @@ export default defineComponent({
     },
   },
 
+  components: {
+    FocusTrap,
+    SadButton,
+    SadIcon,
+  },
+
   emits: ['close'],
+
+  setup(props, { emit }) {
+    const { t } = useI18n('CreateAccountModal');
+
+    eventBus.on(Events.CLOSE_DRAWER, () => {
+      if (props.show) {
+        emit('close');
+      }
+    });
+
+    return { t };
+  },
 });
 </script>
 
@@ -102,17 +131,8 @@ export default defineComponent({
 
     &-title {
       color: var(--modal-title);
-
-      @extend %h3;
-    }
-
-    i {
-      color: var(--modal-close-btn);
-      cursor: pointer;
-
-      // &:active {
-      //   @include scale-90;
-      // }
+      font-size: var(--font-title2);
+      font-weight: 600;
     }
   }
 

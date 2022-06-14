@@ -71,11 +71,12 @@
     </div>
 
     <sad-button
-      class="dashboard-menu__accounts-btn"
-      icon="plus"
+      class="dashboard-menu__button"
       data-test="add-account-btn"
+      size="large"
       @click="toggleModal"
     >
+      <sad-icon name="plus" size="small" class="dashboard-menu__button-icon" />
       {{ t('addAccount') }}
     </sad-button>
 
@@ -142,8 +143,7 @@ export default defineComponent({
   color: var(--sidebar-text);
   overflow: auto;
   padding: $base * 3;
-
-  @include transition(all, $cubic-bezier, 0.5s);
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   &__nav {
     display: flex;
@@ -151,6 +151,8 @@ export default defineComponent({
 
     &-link {
       display: block;
+      font-size: var(--font-body2);
+      font-weight: 600;
       padding: $base * 3 $base * 3;
     }
 
@@ -159,10 +161,9 @@ export default defineComponent({
       cursor: pointer;
       transition: all ease 0.1s;
 
-      @extend %menu;
-
       &:hover,
-      &:focus {
+      &:focus,
+      &:focus-within {
         background: var(--sidebar-focus);
       }
 
@@ -187,18 +188,6 @@ export default defineComponent({
       margin-top: $base * 4;
     }
 
-    &-btn {
-      background: var(--sidebar-button-bg);
-      border: 0;
-      color: var(--sidebar-text);
-      margin-top: $base * 5;
-      width: 100%;
-
-      &:hover {
-        background: var(--sidebar-focus);
-      }
-    }
-
     &--empty {
       background: var(--sidebar-active);
       border-radius: $radius-8;
@@ -207,10 +196,26 @@ export default defineComponent({
 
       .tip {
         color: var(--sidebar-tip);
+        font-size: var(--font-body2);
         margin-top: $base * 4;
-
-        @extend %caption;
       }
+    }
+  }
+
+  &__button {
+    background: var(--sidebar-button-bg);
+    border: 0;
+    color: var(--sidebar-text);
+    margin-top: $base * 5;
+    width: 100%;
+
+    &:hover,
+    &:focus {
+      background: var(--sidebar-focus);
+    }
+
+    &-icon {
+      margin-right: $base * 2;
     }
   }
 }

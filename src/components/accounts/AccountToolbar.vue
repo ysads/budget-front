@@ -1,6 +1,7 @@
 <template>
   <div class="account-toolbar">
     <sad-button
+      class="account-toolbar__button"
       icon="file-invoice-dollar"
       type="ghost"
       size="small"
@@ -10,6 +11,7 @@
       {{ t('newTransaction') }}
     </sad-button>
     <sad-button
+      class="account-toolbar__button"
       icon="exchange-alt"
       type="ghost"
       size="small"
@@ -43,7 +45,7 @@ import { defineComponent, PropType, reactive } from 'vue';
 export default defineComponent({
   props: {
     account: {
-      type: Object as PropType<Account | null>,
+      type: Object as PropType<Account | undefined>,
       default: null,
     },
   },
@@ -71,8 +73,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .account-toolbar {
-  border-bottom: 1px solid var(--acc-toolbar-border);
   display: flex;
+  flex-flow: row wrap;
+  gap: $base;
   justify-content: flex-start;
   padding: $base * 2 $base * 4;
 }

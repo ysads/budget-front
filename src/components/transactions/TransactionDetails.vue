@@ -68,15 +68,6 @@
       name="amount"
       data-test="amount"
     />
-    <sad-checkbox
-      class="transaction-details__control"
-      :label="st('clearedAt')"
-      :tip="st('clearedAtTip')"
-      :model-value="Boolean(form.clearedAt)"
-      name="cleared-at"
-      data-test="cleared-at"
-      @update:model-value="handleClearedAt"
-    />
     <template #footer>
       <sad-button
         size="normal"
@@ -97,7 +88,6 @@ import SadButton from '@/components/sad/SadButton.vue';
 import SadDatePicker from '@/components/sad/SadDatePicker.vue';
 import SadDrawer from '@/components/sad/SadDrawer.vue';
 import SadInput from '@/components/sad/SadInput.vue';
-import SadCheckbox from '@/components/sad/SadCheckbox.vue';
 import SadSelect from '@/components/sad/SadSelect.vue';
 import SadSwitch from '@/components/sad/SadSwitch.vue';
 import useBudgetCategories from '@/use/budget-categories';
@@ -137,7 +127,6 @@ export default defineComponent({
     SadDatePicker,
     SadDrawer,
     SadInput,
-    SadCheckbox,
     SadSelect,
     SadSwitch,
   },
@@ -176,10 +165,6 @@ export default defineComponent({
       moneySettings,
     });
 
-    const handleClearedAt = (checked: boolean) => {
-      form.clearedAt = checked ? new Date().toISOString() : null;
-    };
-
     const handleSubmit = async () => {
       try {
         await saveForm({
@@ -190,7 +175,6 @@ export default defineComponent({
         resetForm();
         emit('close');
       } catch (err) {
-        // @ts-expect-error how to type that?
         handleApiError(err);
       }
     };
@@ -200,7 +184,6 @@ export default defineComponent({
       categoryOptions,
       currencySymbol,
       form,
-      handleClearedAt,
       handleSubmit,
       isAccountDisabled,
       openBudget,

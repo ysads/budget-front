@@ -17,7 +17,7 @@ const factory = (args = {}) =>
     },
   });
 
-describe('MonthlyBudgetHeader', () => {
+describe.skip('MonthlyBudgetHeader', () => {
   it('renders category name', () => {
     const wrapper = factory();
     const item = wrapper.find("[data-test='category-group-name']");

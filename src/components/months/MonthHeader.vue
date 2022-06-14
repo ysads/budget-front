@@ -1,50 +1,59 @@
 <template>
   <header class="month-header">
-    <div class="month-header__item month-header__nav">
-      <sad-icon
-        class="month-header__nav-icon"
-        name="chevron-circle-left"
-        size="medium"
-        clickable
+    <div class="month-header__nav">
+      <button
+        class="month-header__btn"
+        :aria-label="t('MonthHeader.prevMonth')"
         data-test="prev"
         @click="updateMonth(-1)"
-      />
-
+      >
+        <sad-icon
+          class="month-header__nav-icon"
+          name="chevron-circle-left"
+          size="medium"
+          data-test="icon-prev"
+        />
+      </button>
       <h2 class="month-header__month" data-test="month-name">
-        {{ d(isoMonthToDate(month.isoMonth), 'monthOnly') }}
+        {{ monthText }}
       </h2>
-
-      <sad-icon
-        class="month-header__nav-icon"
-        name="chevron-circle-right"
-        size="medium"
-        clickable
+      <button
+        class="month-header__btn"
+        :aria-label="t('MonthHeader.nextMonth')"
         data-test="next"
         @click="updateMonth(1)"
-      />
+      >
+        <sad-icon
+          class="month-header__nav-icon"
+          name="chevron-circle-right"
+          size="medium"
+          data-test="icon-next"
+        />
+      </button>
     </div>
     <div
-      class="month-header__item month-header__balance"
+      class="month-header__balance"
       :class="balanceClasses(month.toBeBudgeted)"
       data-test="to-be-budgeted"
     >
       <p class="month-header__balance-title">
-        {{ t('toBeBudgeted') }}
+        {{ t('MonthHeader.toBeBudgeted') }}
       </p>
       <p class="month-header__balance-currency">
-        {{ localize(month.toBeBudgeted, budget) }}
+        {{ format(month.toBeBudgeted, moneySettings) }}
       </p>
     </div>
   </header>
 </template>
 
 <script lang="ts">
-import { balanceClasses, localize } from '@/support/money';
+import { balanceClasses, currencySettings, format } from '@/support/money';
 import { addMonths, isoMonthToDate } from '@/support/date';
 import useI18n from '@/use/i18n';
 import SadIcon from '@/components/sad/SadIcon.vue';
-import { defineComponent, PropType, SetupContext } from 'vue';
+import { computed, defineComponent, PropType, SetupContext, watch } from 'vue';
 import { Budget, Month } from '@/types/models';
+import { eventBus, Events } from '@/events';
 
 export default defineComponent({
   props: {
@@ -64,13 +73,29 @@ export default defineComponent({
 
   setup(props, { emit }: SetupContext) {
     const { d, t } = useI18n('MonthHeader');
+    const monthText = computed(() => {
+      return d(isoMonthToDate(props.month.isoMonth), 'monthOnly');
+    });
+    const moneySettings = currencySettings(props.budget);
 
     const updateMonth = (delta: number) => {
       const newMonth = addMonths(isoMonthToDate(props.month.isoMonth), delta);
       emit('update', newMonth);
     };
 
-    return { balanceClasses, d, isoMonthToDate, localize, t, updateMonth };
+    watch(
+      () => props.month,
+      () => eventBus.emit(Events.ANNOUNCE, { message: monthText.value }),
+    );
+
+    return {
+      balanceClasses,
+      format,
+      moneySettings,
+      monthText,
+      t,
+      updateMonth,
+    };
   },
 });
 </script>
@@ -78,20 +103,27 @@ export default defineComponent({
 <style lang="scss" scoped>
 .month-header {
   align-items: center;
-  background: var(--acc-header-bg);
+  background: var(--month-header-bg);
   display: flex;
-  justify-content: space-evenly;
+  flex-flow: column;
+  gap: 12px;
   padding: $base * 3 $base * 3 $base * 3 $base * 15;
 
   @include breakpoint(md) {
+    flex-flow: row;
+    justify-content: space-evenly;
     padding: $base * 3;
   }
 
-  &__item {
-    flex-basis: 50%;
+  &__btn {
+    background-color: transparent;
+    border: 2px solid transparent;
+    border-radius: var(--month-header-btn-radius);
+    cursor: pointer;
+    padding: 4px;
 
-    @include breakpoint(md) {
-      flex-basis: 30%;
+    &:focus {
+      border: 2px solid var(--month-header-btn-focus-border);
     }
   }
 
@@ -99,37 +131,51 @@ export default defineComponent({
     align-items: center;
     color: var(--month-header-text);
     display: flex;
+    gap: 12px;
     justify-content: space-between;
-    margin-right: $base * 6;
+
+    @include breakpoint(md) {
+      flex-basis: 50%;
+    }
+
+    @include breakpoint(xl) {
+      flex-basis: 30%;
+    }
   }
 
   &__month {
+    font-size: var(--font-title1);
+    font-weight: 600;
     text-transform: capitalize;
-
-    @extend %h2;
   }
 
   &__balance {
-    border-radius: $radius-4;
-    color: var(--month-header-tbb-text);
+    border-radius: var(--balance-pill-radius);
     padding: $base * 2;
     text-align: center;
 
-    &-title {
-      @extend %caption;
+    @include breakpoint(md) {
+      flex-basis: 50%;
+    }
+
+    @include breakpoint(lg) {
+      flex-basis: 30%;
     }
 
     &-currency {
-      @extend %h1;
+      font-size: var(--font-title2);
+      font-weight: 600;
     }
   }
 }
 
-.positive {
-  background: var(--balance-positive);
+.negative {
+  background: var(--balance-neg-bg);
+  color: var(--balance-neg-text);
 }
 
-.negative {
-  background: var(--balance-negative);
+.positive {
+  background: var(--balance-pos-bg);
+  color: var(--balance-pos-text);
 }
 </style>

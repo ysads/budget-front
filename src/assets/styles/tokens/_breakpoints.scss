@@ -22,4 +22,10 @@
       @content;
     }
   }
+
+  @else if $point == xs {
+    @media (min-width: 350px) {
+      @content;
+    }
+  }
 }

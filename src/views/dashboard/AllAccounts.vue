@@ -52,6 +52,8 @@ export default defineComponent({
       isLoading.value = false;
     });
 
+    document.title = t('htmlTitle.AllAccounts');
+
     return { accounts, isLoading, openBudget, totalBalance, t, transactions };
   },
 });

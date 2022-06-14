@@ -25,7 +25,7 @@ const mockRouter: router.Router = {
   push: () => Promise.resolve(),
 };
 
-interface SetupComponentArgs extends MountingOptions<never> {
+export interface SetupComponentArgs extends MountingOptions<never> {
   route?: router.RouteLocationNormalized;
   router?: router.Router;
   stubs?: Record<string, string>;

@@ -21,6 +21,18 @@ describe('useMonthlyBudgetForm', () => {
       });
     });
 
+    describe('when isEdit is false', () => {
+      it('uses empty budgeted', () => {
+        const { form } = useMonthlyBudgetForm(
+          { monthlyBudget },
+          ref(false),
+          moneySettings,
+        );
+
+        expect(form.budgeted).toEqual('');
+      });
+    });
+
     describe('when monthly budget changes', () => {
       it('updates form fields to match new monthly budget', async () => {
         const reactiveMonthlyBudget = reactive({ ...monthlyBudget });

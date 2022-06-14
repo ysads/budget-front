@@ -5,13 +5,6 @@
       :key="groupId"
       class="monthly-budgets__item"
     >
-      <monthly-budget-header
-        :budget="openBudget"
-        :category-group="categoryGroupById(groupId)"
-        :monthly-budgets="monthlyBudgets"
-        data-test="header"
-      />
-
       <ul>
         <monthly-budget-row
           v-for="monthlyBudget in monthlyBudgets"
@@ -43,7 +36,6 @@ import { MonthlyBudget } from '@/types/models';
 import { monthlyBudgetsByCategoryGroup } from '@/repositories/monthly-budgets';
 import { openBudget } from '@/repositories/budgets';
 import MonthlyBudgetDetails from '@/components/monthly-budgets/MonthlyBudgetDetails.vue';
-import MonthlyBudgetHeader from '@/components/monthly-budgets/MonthlyBudgetHeader.vue';
 import MonthlyBudgetRow from '@/components/monthly-budgets/MonthlyBudgetRow.vue';
 
 export default defineComponent({
@@ -51,7 +43,6 @@ export default defineComponent({
 
   components: {
     MonthlyBudgetDetails,
-    MonthlyBudgetHeader,
     MonthlyBudgetRow,
   },
 

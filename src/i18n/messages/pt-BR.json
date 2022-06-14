@@ -77,6 +77,11 @@
     "title": "Piggy app",
     "signInWithAuth0": "Entrar com Auth0"
   },
+  "MonthlyBudgetRow": {
+    "left": "",
+    "notBudgeted": "Sem orçamento • {activity} de {budgeted}",
+    "spent": "{percentage}% • {activity} de {budgeted}"
+  },
   "placeholders": {
     "select": "Escolha"
   },

@@ -14,7 +14,7 @@
           :category="categoryById(monthlyBudget.categoryId)"
           :monthly-budget="monthlyBudget"
           data-test="row"
-          @click="openDrawer(monthlyBudget)"
+          @select="openDrawer(monthlyBudget)"
         />
       </ul>
     </div>

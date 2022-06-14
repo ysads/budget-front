@@ -2,7 +2,6 @@ import AccountHeader from '@/components/accounts/AccountHeader';
 import faker from 'faker';
 import factories from '#/factories';
 import setupComponent from '#/setup-component';
-import * as Money from '@/support/money';
 
 const account = factories.account.build();
 const cleared = account.clearedBalance;
@@ -10,16 +9,17 @@ const uncleared = account.unclearedBalance;
 const budget = factories.budget.build();
 const name = faker.name.findName();
 
-const factory = (args = {}) =>
-  setupComponent(AccountHeader, {
+const factory = (args = {}) => {
+  return setupComponent(AccountHeader, {
     props: {
       budget,
       name,
       cleared,
       uncleared,
-      ...args.props,
+      ...args,
     },
   });
+};
 
 describe('AccountHeader', () => {
   it('renders account name', () => {
@@ -29,81 +29,38 @@ describe('AccountHeader', () => {
     expect(item.text()).toEqual(name);
   });
 
-  it('renders uncleared balance', () => {
-    const wrapper = factory();
-    const item = wrapper.find("[data-test='cleared']");
-
-    expect(item.text()).toMatch('cleared');
-    expect(item.text()).toMatch(Money.localize(cleared, budget));
-  });
-
   it('renders cleared balance', () => {
-    const wrapper = factory();
-    const item = wrapper.find("[data-test='uncleared']");
+    const wrapper = factory({
+      budget: factories.budget.build({ currency: 'CZK' }),
+      cleared: 12000,
+      uncleared: 0,
+    });
+    const item = wrapper.find("[data-test='balance']");
 
-    expect(item.text()).toMatch('uncleared');
-    expect(item.text()).toMatch(Money.localize(uncleared, budget));
+    expect(item.text()).toMatch('Kč120,00');
   });
 
-  it('renders current working balance', () => {
-    const wrapper = factory();
-    const item = wrapper.find("[data-test='current']");
-
-    expect(item.text()).toMatch('currentBalance');
-    expect(item.text()).toMatch(Money.localize(cleared + uncleared, budget));
-  });
-
-  describe('when cleared balance is positive', () => {
+  describe('when total balance is positive', () => {
     it('adds positive class', () => {
-      const wrapper = factory({ props: { cleared: 9000 } });
-      const item = wrapper.find("[data-test='cleared-amount']");
+      const wrapper = factory({ uncleared: 0, cleared: 9000 });
+      const item = wrapper.find("[data-test='balance']");
 
       expect(item.classes()).toContain('positive');
     });
   });
 
-  describe('when cleared balance is negative', () => {
+  describe('when total balance is negative', () => {
     it('adds negative class', () => {
-      const wrapper = factory({ props: { cleared: -9000 } });
-      const item = wrapper.find("[data-test='cleared-amount']");
+      const wrapper = factory({ uncleared: 0, cleared: -9000 });
+      const item = wrapper.find("[data-test='balance']");
 
       expect(item.classes()).toContain('negative');
     });
   });
 
-  describe('when uncleared balance is positive', () => {
-    it('adds positive class', () => {
-      const wrapper = factory({ props: { uncleared: 9000 } });
-      const item = wrapper.find("[data-test='uncleared-amount']");
+  it('does not render uncleared balance', () => {
+    const wrapper = factory({ uncleared: 9000, cleared: 5000 });
 
-      expect(item.classes()).toContain('positive');
-    });
-  });
-
-  describe('when uncleared balance is negative', () => {
-    it('adds negative class', () => {
-      const wrapper = factory({ props: { uncleared: -9000 } });
-      const item = wrapper.find("[data-test='uncleared-amount']");
-
-      expect(item.classes()).toContain('negative');
-    });
-  });
-
-  describe('when current balance is positive', () => {
-    it('adds positive class', () => {
-      const wrapper = factory({ props: { cleared: 9000, uncleared: 0 } });
-      const item = wrapper.find("[data-test='current-amount']");
-
-      expect(item.classes()).toContain('positive');
-    });
-  });
-
-  describe('when current balance is negative', () => {
-    it('adds negative class', () => {
-      const wrapper = factory({ props: { cleared: -9000, uncleared: 0 } });
-      const item = wrapper.find("[data-test='current-amount']");
-
-      expect(item.classes()).toContain('negative');
-    });
+    expect(wrapper.text()).not.toContain('90');
   });
 });

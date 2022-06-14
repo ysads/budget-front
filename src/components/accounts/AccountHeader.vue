@@ -6,7 +6,7 @@
     <div
       class="account-header__balance"
       :class="balanceClasses(current)"
-      data-test="current"
+      data-test="balance"
     >
       {{ format(current, moneySettings) }}
     </div>

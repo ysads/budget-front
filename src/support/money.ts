@@ -85,7 +85,7 @@ export const format = (
     format: {
       pos: '%s%v',
       neg: '-%s%v',
-      zero: '%s0',
+      zero: '%s0,00',
     },
   });
 };

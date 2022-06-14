@@ -8,7 +8,6 @@
     <sad-icon
       class="sad-alert__icon"
       :name="variantIcon"
-      :color="variantColor"
       size="medium"
       data-test="variant-icon"
     />
@@ -39,15 +38,12 @@ import {
 const VARIANTS = {
   error: {
     icon: 'exclamation-circle',
-    color: 'red',
   },
   success: {
     icon: 'check-circle',
-    color: 'green',
   },
   warning: {
     icon: 'exclamation-triangle',
-    color: 'yellow',
   },
 };
 
@@ -82,9 +78,6 @@ export default defineComponent({
   emits: ['close'],
 
   setup(props, { emit }: SetupContext) {
-    const variantColor = computed(
-      () => VARIANTS[props.variant as AlertVariant].color,
-    );
     const variantIcon = computed(
       () => VARIANTS[props.variant as AlertVariant].icon,
     );
@@ -94,7 +87,7 @@ export default defineComponent({
       setTimeout(() => emit('close', props.id), props.duration);
     });
 
-    return { emit, variantColor, variantIcon };
+    return { emit, variantIcon };
   },
 });
 </script>

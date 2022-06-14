@@ -4,9 +4,9 @@
     data-test="row"
     tabindex="0"
     role="button"
-    @click="$emit('click')"
-    @keydown.enter="$emit('click')"
-    @keydown.space="$emit('click')"
+    @click="$emit('select')"
+    @keydown.enter="$emit('select')"
+    @keydown.space="$emit('select')"
   >
     <div class="category-budget__top">
       <div class="category-budget__name" data-test="category-name">
@@ -65,6 +65,8 @@ export default defineComponent({
   components: {
     SadProgress,
   },
+
+  emits: ['select'],
 
   setup(props) {
     const { t } = useI18n();

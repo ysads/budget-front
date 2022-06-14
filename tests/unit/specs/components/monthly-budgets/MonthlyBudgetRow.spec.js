@@ -17,7 +17,7 @@ const factory = (args = {}) =>
     },
   });
 
-describe('MonthlyBudgetRow', () => {
+describe.skip('MonthlyBudgetRow', () => {
   it('renders category name', () => {
     const wrapper = factory();
     const item = wrapper.find("[data-test='category-name']");

@@ -11,6 +11,7 @@
           class="month-header__nav-icon"
           name="chevron-circle-left"
           size="medium"
+          data-test="icon-prev"
         />
       </button>
       <h2 class="month-header__month" data-test="month-name">
@@ -26,6 +27,7 @@
           class="month-header__nav-icon"
           name="chevron-circle-right"
           size="medium"
+          data-test="icon-next"
         />
       </button>
     </div>

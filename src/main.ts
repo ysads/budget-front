@@ -10,7 +10,7 @@ const auth0 = createAuth0({
   domain: process.env.VUE_APP_AUTH0_DOMAIN || '',
   client_id: process.env.VUE_APP_AUTH0_CLIENT_ID || '',
   audience: process.env.VUE_APP_AUTH0_AUDIENCE || '',
-  redirect_uri: window.location.origin,
+  redirect_uri: process.env.VUE_APP_AUTH0_CALLBACK || window.location.origin,
 });
 
 createApp(App).use(router).use(i18n).use(auth0).mount('#app');

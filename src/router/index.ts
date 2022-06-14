@@ -3,7 +3,7 @@ import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: { name: 'SignIn' },
+    redirect: { name: 'Auth' },
   },
   {
     path: '/:budgetId',
@@ -33,6 +33,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/auth',
+    name: 'Auth',
     component: () => import('@/views/Auth.vue'),
   },
 ];

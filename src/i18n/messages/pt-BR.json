@@ -74,7 +74,7 @@
     "budgeted": "Quanto você pretende gastar?"
   },
   "Auth": {
-    "title": "Piggy app",
+    "title": "Piggy Budget App",
     "signInWithAuth0": "Entrar com Auth0"
   },
   "MonthlyBudgetRow": {

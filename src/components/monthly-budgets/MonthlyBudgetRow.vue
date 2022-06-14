@@ -40,8 +40,8 @@
 <script lang="ts">
 import { balanceClasses, currencySettings, format } from '@/support/money';
 import { Budget, Category, MonthlyBudget } from '@/types/models';
+import useI18n from '@/use/i18n';
 import { computed, defineComponent, PropType } from 'vue';
-import { useI18n } from 'vue-i18n';
 import SadProgress from '../sad/SadProgress.vue';
 
 export default defineComponent({

@@ -135,7 +135,7 @@ export default defineComponent({
     @include breakpoint(md) {
       flex-basis: 50%;
     }
-    @include breakpoint(lg) {
+    @include breakpoint(xl) {
       flex-basis: 30%;
     }
   }

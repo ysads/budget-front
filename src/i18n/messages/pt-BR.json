@@ -73,10 +73,9 @@
     "updated": "Orçamento atualizado",
     "budgeted": "Quanto você pretende gastar?"
   },
-  "SignIn": {
-    "email": "Seu email",
-    "password": "Sua senha",
-    "signIn": "Entrar"
+  "Auth": {
+    "title": "Piggy app",
+    "signInWithAuth0": "Entrar com Auth0"
   },
   "placeholders": {
     "select": "Escolha"

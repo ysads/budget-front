@@ -34,13 +34,6 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/auth',
     component: () => import('@/views/Auth.vue'),
-    children: [
-      {
-        path: 'sign-in',
-        name: 'SignIn',
-        component: () => import('@/views/auth/SignIn.vue'),
-      },
-    ],
   },
 ];
 

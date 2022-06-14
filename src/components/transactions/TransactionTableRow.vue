@@ -192,8 +192,8 @@ export default defineComponent({
   }
 
   &__icon {
-    margin: 0 8px;
     color: var(--transaction-sep-icon);
+    margin: 0 8px;
   }
 
   &__img {
@@ -201,18 +201,18 @@ export default defineComponent({
     border-radius: 50%;
     color: var(--transaction-payee-text);
     display: grid;
+    display: none;
     font-size: 14px;
     font-weight: 600;
-    letter-spacing: 1px;
     height: 32px;
+    letter-spacing: 1px;
     padding: 10px;
     place-content: center;
     text-transform: uppercase;
-    transition-timing-function: ease-in-out;
     transition-duration: 0.3s;
     transition-property: width height;
+    transition-timing-function: ease-in-out;
     width: 32px;
-    display: none;
 
     @include breakpoint(sm) {
       display: grid;
@@ -222,8 +222,8 @@ export default defineComponent({
 
     @include breakpoint(md) {
       display: grid;
-      width: 50px;
       height: 50px;
+      width: 50px;
     }
   }
 }

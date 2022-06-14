@@ -33,12 +33,12 @@ export default defineComponent({
 
 <style scoped>
 .screen-reader-announcer {
+  height: 1px;
+  left: -9999px;
+  overflow: hidden;
   position: absolute;
   top: -9999px;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
   white-space: nowrap;
+  width: 1px;
 }
 </style>

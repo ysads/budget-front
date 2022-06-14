@@ -54,16 +54,16 @@ export default defineComponent({
   overflow: hidden;
   width: 100%;
 
+  &__current {
+    height: 100%;
+  }
+
   &--blue > &__current {
     background: var(--progress-blue);
   }
 
   &--red > &__current {
     background: var(--progress-red);
-  }
-
-  &__current {
-    height: 100%;
   }
 }
 </style>

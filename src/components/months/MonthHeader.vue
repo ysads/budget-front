@@ -116,9 +116,9 @@ export default defineComponent({
   &__btn {
     background-color: transparent;
     border: 2px solid transparent;
-    padding: 4px;
     border-radius: var(--month-header-btn-radius);
     cursor: pointer;
+    padding: 4px;
 
     &:focus {
       border: 2px solid var(--month-header-btn-focus-border);
@@ -135,15 +135,16 @@ export default defineComponent({
     @include breakpoint(md) {
       flex-basis: 50%;
     }
+
     @include breakpoint(xl) {
       flex-basis: 30%;
     }
   }
 
   &__month {
-    text-transform: capitalize;
     font-size: var(--font-title1);
     font-weight: 600;
+    text-transform: capitalize;
   }
 
   &__balance {
@@ -154,6 +155,7 @@ export default defineComponent({
     @include breakpoint(md) {
       flex-basis: 50%;
     }
+
     @include breakpoint(lg) {
       flex-basis: 30%;
     }

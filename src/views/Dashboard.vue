@@ -136,10 +136,10 @@ export default defineComponent({
   }
 
   &__main {
+    background: var(--app-bg);
     height: 100%;
     overflow: auto;
     width: 100%;
-    background: #fff;
 
     @include breakpoint(md) {
       width: 70%;

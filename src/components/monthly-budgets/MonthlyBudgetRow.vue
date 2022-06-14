@@ -129,6 +129,7 @@ export default defineComponent({
     justify-content: space-between;
     width: 100%;
   }
+
   &__bottom {
     display: flex;
     flex-flow: column;

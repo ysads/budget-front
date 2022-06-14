@@ -71,10 +71,10 @@ export default defineComponent({
     border-radius: var(--auth-panel-radius);
     box-shadow: var(--auth-shadow);
     display: grid;
+    height: 400px;
     margin: 0 auto;
     place-items: center;
     width: 75%;
-    height: 400px;
 
     @include breakpoint(md) {
       width: 400px;

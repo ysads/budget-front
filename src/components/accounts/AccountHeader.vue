@@ -64,9 +64,9 @@ export default defineComponent({
   color: var(--acc-header-text);
   display: flex;
   flex-flow: column;
+  font-size: var(--font-title1);
   justify-content: space-between;
   padding: $base * 4 $base * 6;
-  font-size: var(--font-title1);
 
   @include breakpoint(md) {
     flex-flow: row;

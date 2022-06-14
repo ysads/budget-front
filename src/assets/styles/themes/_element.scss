@@ -21,6 +21,7 @@
 /* Overrides el-input */
 .el-input__inner {
   font-size: var(--font-body1) !important;
+  height: 38px !important;
 }
 
 .el-input__wrapper {
@@ -32,10 +33,6 @@
   --el-select-input-focus-border-color: var(--input-focus) !important;
 }
 
-.el-input__inner {
-  height: 38px !important;
-}
-
 .error .el-input__inner {
   border: 1px solid var(--color-error);
 }
@@ -45,10 +42,12 @@
 .el-date-editor.el-input__inner {
   width: 100% !important;
 }
+
 .el-date-table td.current:not(.disabled) .el-date-table-cell__text {
-  color: var(--picker-selected-text) !important;
   background: var(--picker-selected-bg) !important;
+  color: var(--picker-selected-text) !important;
 }
+
 .el-date-table td.available:hover {
   color: var(--picker-hover-text) !important;
 }
@@ -57,10 +56,12 @@
 .el-select-dropdown__item {
   font-size: var(--font-body1) !important;
 }
+
 .el-select-dropdown__item.hover,
 .el-select-dropdown__item:hover {
   background: var(--select-hover-bg) !important;
 }
+
 .el-select-dropdown__item.selected {
   color: var(--select-selected-option) !important;
 

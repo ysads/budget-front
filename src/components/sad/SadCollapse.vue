@@ -52,21 +52,21 @@ $closing-bezier: cubic-bezier(0.74, 0.01, 1, 0.57);
 
 .collapse-wrapper {
   > &:focus {
-    border-radius: 4px;
     background: var(--sidebar-active);
+    border-radius: 4px;
   }
 }
 
 .header {
   align-items: center;
+  background: none;
   border: none;
+  color: inherit;
   cursor: pointer;
   display: flex;
   outline: none;
   text-align: left;
   width: 100%;
-  background: none;
-  color: inherit;
 
   &:focus,
   &:active {

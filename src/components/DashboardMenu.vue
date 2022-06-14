@@ -151,9 +151,9 @@ export default defineComponent({
 
     &-link {
       display: block;
-      padding: $base * 3 $base * 3;
       font-size: var(--font-body2);
       font-weight: 600;
+      padding: $base * 3 $base * 3;
     }
 
     &-item {
@@ -196,8 +196,8 @@ export default defineComponent({
 
       .tip {
         color: var(--sidebar-tip);
-        margin-top: $base * 4;
         font-size: var(--font-body2);
+        margin-top: $base * 4;
       }
     }
   }

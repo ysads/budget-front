@@ -128,9 +128,9 @@ export default defineComponent({
 
   &__icon {
     align-self: center;
+    color: var(--text-secondary);
     flex-shrink: 0;
     padding-left: 16px;
-    color: var(--text-secondary);
   }
 
   &__close {

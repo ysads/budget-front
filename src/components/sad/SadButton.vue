@@ -103,8 +103,8 @@ export default defineComponent({
 
     &:hover,
     &:focus {
-      color: var(--btn-ghost-focus-text);
       background: var(--btn-ghost-focus-bg);
+      color: var(--btn-ghost-focus-text);
     }
   }
 

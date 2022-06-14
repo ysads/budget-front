@@ -14,10 +14,10 @@ export const MAPPED_ERRORS = [
   'monthly-budgets/already-exists',
 ];
 
-export const handleApiError = (err: ErrorResponse): void => {
+export const handleApiError = (err: unknown): void => {
   const { t } = useI18n('errors');
 
-  const errorCode = err.response?.data?.code;
+  const errorCode = (err as ErrorResponse).response?.data?.code;
 
   if (errorCode && MAPPED_ERRORS.includes(errorCode)) {
     const [namespace, type] = errorCode.split('/');

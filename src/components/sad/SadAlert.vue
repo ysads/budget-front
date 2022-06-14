@@ -8,11 +8,10 @@
     <sad-icon
       class="sad-alert__icon"
       :name="variantIcon"
-      :color="variantColor"
       size="medium"
       data-test="variant-icon"
     />
-    <span class="sad-alert__message" data-test="message">
+    <span class="sad-alert__message" data-test="message" role="status">
       {{ message }}
     </span>
     <button
@@ -21,7 +20,7 @@
       @click="emit('close', id)"
       @keydown.enter="emit('close', id)"
     >
-      <sad-icon color="info" name="times" />
+      <sad-icon name="times" />
     </button>
   </div>
 </template>
@@ -39,15 +38,12 @@ import {
 const VARIANTS = {
   error: {
     icon: 'exclamation-circle',
-    color: 'red',
   },
   success: {
     icon: 'check-circle',
-    color: 'green',
   },
   warning: {
     icon: 'exclamation-triangle',
-    color: 'yellow',
   },
 };
 
@@ -82,9 +78,6 @@ export default defineComponent({
   emits: ['close'],
 
   setup(props, { emit }: SetupContext) {
-    const variantColor = computed(
-      () => VARIANTS[props.variant as AlertVariant].color,
-    );
     const variantIcon = computed(
       () => VARIANTS[props.variant as AlertVariant].icon,
     );
@@ -94,17 +87,17 @@ export default defineComponent({
       setTimeout(() => emit('close', props.id), props.duration);
     });
 
-    return { emit, variantColor, variantIcon };
+    return { emit, variantIcon };
   },
 });
 </script>
 
 <style lang="scss" scoped>
 .sad-alert {
-  background: var(--app-bg);
-  border-radius: var(--radius-4);
-  box-shadow: var(--shadow-12);
-  color: var(--text-default);
+  background: var(--alert-bg);
+  border-radius: var(--alert-radius);
+  box-shadow: var(--alert-shadow);
+  color: var(--text-primary);
   display: flex;
   overflow: hidden;
   width: 350px;
@@ -128,6 +121,7 @@ export default defineComponent({
 
   &__icon {
     align-self: center;
+    color: var(--text-secondary);
     flex-shrink: 0;
     padding-left: 16px;
   }

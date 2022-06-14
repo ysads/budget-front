@@ -35,36 +35,33 @@ describe('SadAlert', () => {
   });
 
   describe('when variant is error', () => {
-    it('renders a red exclamation circle icon', () => {
+    it('renders an exclamation circle icon', () => {
       const wrapper = factory({ variant: 'error' });
       const item = wrapper.findComponent(SadIcon);
 
       expect(item.props()).toMatchObject({
-        color: 'red',
         name: 'exclamation-circle',
       });
     });
   });
 
   describe('when variant is success', () => {
-    it('renders a red exclamation circle icon', () => {
+    it('renders a check circle icon', () => {
       const wrapper = factory({ variant: 'success' });
       const item = wrapper.findComponent(SadIcon);
 
       expect(item.props()).toMatchObject({
-        color: 'green',
         name: 'check-circle',
       });
     });
   });
 
   describe('when variant is warning', () => {
-    it('renders a red exclamation circle icon', () => {
+    it('renders an exclamation triangle icon', () => {
       const wrapper = factory({ variant: 'warning' });
       const item = wrapper.findComponent(SadIcon);
 
       expect(item.props()).toMatchObject({
-        color: 'yellow',
         name: 'exclamation-triangle',
       });
     });

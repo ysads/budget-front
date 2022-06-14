@@ -67,6 +67,7 @@ export default defineComponent({
         alert.error(t('errors.accounts.not-found'));
         router.push({ name: 'AllAccounts' });
       }
+      document.title = t('htmlTitle.AccountShow', { name: account.value.name });
     });
 
     watchEffect(async () => {

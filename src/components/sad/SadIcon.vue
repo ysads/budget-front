@@ -1,39 +1,15 @@
 <template>
-  <button
-    v-if="clickable"
-    class="sad-icon__button"
-    data-test="button"
-    @click="$emit('click')"
-  >
-    <i class="sad-icon icon fas" :class="classes" />
-  </button>
-  <i v-else class="sad-icon icon fas" :class="classes" />
+  <i class="sad-icon icon fas" :class="classes" />
 </template>
 
 <script lang="ts">
 import { PropType, computed, defineComponent } from 'vue';
 
-type IconColor =
-  | 'disabled'
-  | 'green'
-  | 'info'
-  | 'inherit'
-  | 'primary'
-  | 'red'
-  | 'yellow';
-type IconSize = 'small' | 'medium';
+type IconSize = 'tiny' | 'small' | 'medium';
 
 export default defineComponent({
   name: 'SadIcon',
   props: {
-    clickable: {
-      type: Boolean,
-      default: false,
-    },
-    color: {
-      type: String as PropType<IconColor>,
-      default: 'inherit',
-    },
     name: {
       type: String,
       required: true,
@@ -49,7 +25,6 @@ export default defineComponent({
   setup(props) {
     const classes = computed(() => [
       `fa-${props.name}`,
-      `sad-icon--${props.color}`,
       `sad-icon--${props.size}`,
     ]);
 
@@ -62,8 +37,13 @@ export default defineComponent({
 .sad-icon {
   &__button {
     background: none;
+    color: inherit;
     cursor: pointer;
     outline: none;
+  }
+
+  &--tiny {
+    font-size: 12px;
   }
 
   &--small {
@@ -72,34 +52,6 @@ export default defineComponent({
 
   &--medium {
     font-size: 24px;
-  }
-
-  &--green {
-    color: var(--color-success);
-  }
-
-  &--info {
-    color: var(--color-info);
-  }
-
-  &--disabled {
-    color: var(--color-disabled);
-  }
-
-  &--inherit {
-    color: inherit;
-  }
-
-  &--primary {
-    color: var(--color-primary);
-  }
-
-  &--red {
-    color: var(--color-error);
-  }
-
-  &--yellow {
-    color: var(--color-warning);
   }
 }
 </style>

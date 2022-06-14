@@ -1,4 +1,3 @@
-import accounting from 'accounting';
 import factories from '#/factories';
 import * as money from '@/support/money';
 import { Currency } from '@/support/currencies';
@@ -11,11 +10,11 @@ describe('Money', () => {
       const settings = {
         decimal: '.',
         thousands: '_',
-        prefix: '¥ ',
+        prefix: '¥',
         precision: 2,
       };
 
-      expect(money.format(value, settings)).toEqual('¥ 4_298.29');
+      expect(money.format(value, settings)).toEqual('¥4_298.29');
     });
 
     describe('when withCurrency is false', () => {
@@ -24,7 +23,7 @@ describe('Money', () => {
         const settings = {
           decimal: '.',
           thousands: '_',
-          prefix: '¥ ',
+          prefix: '¥',
           precision: 2,
         };
 
@@ -59,7 +58,7 @@ describe('Money', () => {
       expect(money.currencySettings(mockBudget)).toEqual({
         decimal: ',',
         thousands: '.',
-        prefix: '¥ ',
+        prefix: '¥',
         precision: 2,
       });
     });
@@ -110,25 +109,6 @@ describe('Money', () => {
           expect(money.totalBalance([], field)).toEqual(0);
         });
       });
-    });
-  });
-
-  describe('#localize', () => {
-    it('formats at value using budget settings using account', () => {
-      const value = 29800;
-      const budget = factories.budget.build();
-      const settings = money.currencySettings(budget);
-
-      accounting.formatMoney = jest.fn();
-      money.localize(value, budget);
-
-      expect(accounting.formatMoney).toHaveBeenCalledWith(
-        money.fromCents(value),
-        settings.prefix,
-        settings.precision,
-        settings.thousands,
-        settings.decimal,
-      );
     });
   });
 

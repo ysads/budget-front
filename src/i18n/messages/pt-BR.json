@@ -34,6 +34,11 @@
   "newCategoryGroup": "Novo grupo",
   "newMonthlyBudget": "Criar orçamento",
   "newTransaction": "Adicionar transação",
+  "htmlTitle": {
+    "AccountShow": "Piggy: {name}",
+    "AllAccounts": "Piggy: Contas",
+    "Budget": "Piggy: {month}"
+  },
   "CreateAccountModal": {
     "accountType": "De que tipo é essa conta?",
     "created": "Conta criada",
@@ -52,8 +57,14 @@
   },
   "general": {
     "created": "Criado",
+    "closeRegion": "Fechar: {title}",
     "newTransfer": "Transferir entre contas",
     "updated": "Atualizado"
+  },
+  "MonthHeader": {
+    "prevMonth": "Mês anterior",
+    "nextMonth": "Próximo mês",
+    "toBeBudgeted": "Disponível para orçar"
   },
   "MonthlyBudgetDetails": {
     "category": "Categoria",
@@ -62,10 +73,14 @@
     "updated": "Orçamento atualizado",
     "budgeted": "Quanto você pretende gastar?"
   },
-  "SignIn": {
-    "email": "Seu email",
-    "password": "Sua senha",
-    "signIn": "Entrar"
+  "Auth": {
+    "title": "Piggy Budget App",
+    "signInWithAuth0": "Entrar com Auth0"
+  },
+  "MonthlyBudgetRow": {
+    "left": "",
+    "notBudgeted": "Sem orçamento • {activity} de {budgeted}",
+    "spent": "{percentage}% • {activity} de {budgeted}"
   },
   "placeholders": {
     "select": "Escolha"

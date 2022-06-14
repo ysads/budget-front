@@ -98,16 +98,6 @@ describe('TransactionDetails', () => {
     });
   });
 
-  it('renders cleared-at checkbox', () => {
-    const wrapper = factory();
-    const item = wrapper.findComponent("[data-test='cleared-at']");
-
-    expect(item.props()).toMatchObject({
-      label: expect.stringMatching(/clearedAt/),
-      tip: expect.stringMatching(/clearedAtTip/),
-    });
-  });
-
   describe('account account select', () => {
     it('is disabled when editing', () => {
       const wrapper = factory({ transaction });
@@ -140,29 +130,6 @@ describe('TransactionDetails', () => {
         label: expect.stringMatching(/account/),
         options: allAccounts.map((a) => ({ label: a.name, value: a.id })),
       });
-    });
-  });
-
-  describe('when cleared-at is checked', () => {
-    it('sets form.clearedAt as true', async () => {
-      const wrapper = factory();
-      const item = wrapper.findComponent("[data-test='cleared-at']");
-
-      await item.vm.$emit('update:model-value', true);
-
-      expect(wrapper.vm.form.clearedAt).toEqual(new Date().toISOString());
-    });
-  });
-
-  describe('when cleared-at is unchecked', () => {
-    it('sets form.clearedAt as null', async () => {
-      const wrapper = factory();
-      const item = wrapper.findComponent("[data-test='cleared-at']");
-
-      await item.vm.$emit('update:model-value', true);
-      await item.vm.$emit('update:model-value', false);
-
-      expect(wrapper.vm.form.clearedAt).toBeNull();
     });
   });
 

@@ -29,6 +29,7 @@
     "created": "Account created"
   },
   "general": {
+    "closeRegion": "Close: {title}",
     "newTransfer": "Transfer money"
   },
   "save": "Save",
@@ -43,6 +44,10 @@
     "categoryGroup": "To which category group this budget belongs?",
     "categoryGroupPlaceholder": "Pick one...",
     "name": "Category"
+  },
+  "MonthHeader": {
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month"
   },
   "MonthlyBudgetDetails": {
     "budgeted": "How much do you plan to spend?",

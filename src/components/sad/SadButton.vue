@@ -3,6 +3,7 @@
     class="button"
     :class="[typeClass, sizeClass, fullWidthClass]"
     :size="size"
+    :aria-label="ariaLabel"
     data-test="button"
     @click="$emit('click')"
   >
@@ -21,10 +22,14 @@ import { computed } from 'vue';
 import { defineComponent, PropType } from 'vue';
 
 type ButtonVariant = 'primary' | 'ghost';
-type ButtonSize = 'normal' | 'small';
+type ButtonSize = 'large' | 'normal' | 'small';
 
 export default defineComponent({
   props: {
+    ariaLabel: {
+      type: String,
+      default: '',
+    },
     fullWidth: {
       type: Boolean,
       default: false,
@@ -60,42 +65,46 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .button {
-  border: none;
-  border-radius: $radius-4;
+  border: 2px solid transparent;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 1rem;
-
-  @extend %barlow;
-
-  @include transition;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease-in-out;
 
   &__icon {
-    margin-right: $base * 1;
+    margin-right: $base * 2;
+  }
+
+  &--large {
+    padding: 7px 18px;
   }
 
   &--normal {
-    padding: $base * 2 $base * 3;
+    padding: 5px 16px;
   }
 
   &--small {
-    padding: $base * 2 $base * 2;
+    padding: 3px 12px;
   }
 
   &--primary {
-    background: var(--color-primary);
-    color: white;
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
 
-    &:hover {
-      background: var(--color-primary-hover);
+    &:hover,
+    &:focus {
+      background: var(--btn-primary-focus-bg);
     }
   }
 
   &--ghost {
-    background: none;
-    color: var(--color-primary);
+    background: var(--btn-ghost-bg);
+    color: var(--btn-ghost-text);
 
-    &:hover {
-      color: var(--color-primary-hover);
+    &:hover,
+    &:focus {
+      background: var(--btn-ghost-focus-bg);
+      color: var(--btn-ghost-focus-text);
     }
   }
 

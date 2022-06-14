@@ -27,14 +27,14 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .tip {
-  @extend %caption-2;
+  font-size: var(--font-caption);
 
   &.info {
-    color: var(--color-info);
+    color: var(--tip-info);
   }
 
   &.error {
-    color: var(--color-error);
+    color: var(--tip-error);
   }
 }
 </style>

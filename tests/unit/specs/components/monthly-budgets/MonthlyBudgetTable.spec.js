@@ -39,32 +39,11 @@ const factory = () => {
 };
 
 describe('MonthlyBudgetsTable', () => {
-  it('renders a header for each category group', async () => {
-    const wrapper = factory();
-    const items = wrapper.findAllComponents("[data-test='header']");
-
-    expect(items.length).toEqual(categoryGroups.length);
-  });
-
   it('renders a row for each existing monthly budget', async () => {
     const wrapper = factory();
     const items = wrapper.findAllComponents("[data-test='row']");
 
     expect(items.length).toEqual(monthlyBudgets.length);
-  });
-
-  it('passes the correct monthly budgets array for each group', () => {
-    const wrapper = factory();
-    const items = wrapper.findAllComponents("[data-test='header']");
-
-    expect(items[0].props()).toMatchObject({
-      categoryGroup: categoryGroups[0],
-      monthlyBudgets: [monthlyBudgets[0], monthlyBudgets[1]],
-    });
-    expect(items[1].props()).toMatchObject({
-      categoryGroup: categoryGroups[1],
-      monthlyBudgets: [monthlyBudgets[2]],
-    });
   });
 
   it('passes the correct monthly budget and category for each row', () => {
@@ -92,11 +71,11 @@ describe('MonthlyBudgetsTable', () => {
     expect(item.props().show).toBeFalsy();
   });
 
-  describe('when row is clicked', () => {
+  describe('when row is selected', () => {
     it('opens details drawer with selected monthly budget', async () => {
       const wrapper = factory();
 
-      await wrapper.findComponent("[data-test='row']").vm.$emit('click');
+      await wrapper.findComponent("[data-test='row']").vm.$emit('select');
 
       const item = wrapper.findComponent("[data-test='details']");
 
@@ -108,7 +87,7 @@ describe('MonthlyBudgetsTable', () => {
       it('hides drawer', async () => {
         const wrapper = factory();
 
-        await wrapper.findComponent("[data-test='row']").vm.$emit('click');
+        await wrapper.findComponent("[data-test='row']").vm.$emit('select');
 
         const item = wrapper.findComponent("[data-test='details']");
         expect(item.props().show).toBeTruthy();

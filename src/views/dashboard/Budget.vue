@@ -19,13 +19,14 @@ import BudgetToolbar from '@/components/budgets/BudgetToolbar.vue';
 import Loading from '@/components/Loading.vue';
 import MonthHeader from '@/components/months/MonthHeader.vue';
 import MonthlyBudgetsTable from '@/components/monthly-budgets/MonthlyBudgetsTable.vue';
-import { isoMonth } from '@/support/date';
+import { isoMonth, isoMonthToDate } from '@/support/date';
 import { openBudget } from '@/repositories/budgets';
 import { getMonthlyBudgets } from '@/repositories/monthly-budgets';
 import { currentMonth, getMonthByIso } from '@/repositories/months';
 import { useRoute, useRouter } from 'vue-router';
 import { computed, defineComponent, ref, watchEffect } from 'vue';
 import { IsoMonth } from '@/types/models';
+import useI18n from '@/use/i18n';
 
 export default defineComponent({
   name: 'Budget',
@@ -40,6 +41,7 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const router = useRouter();
+    const { t, d } = useI18n();
 
     const isLoading = ref(true);
     const currentIsoMonth = computed(() => {
@@ -60,6 +62,10 @@ export default defineComponent({
       };
 
       await Promise.all([getMonthByIso(params), getMonthlyBudgets(params)]);
+      document.title = t('htmlTitle.Budget', {
+        month: d(isoMonthToDate(currentIsoMonth.value), 'monthOnly'),
+      });
+
       isLoading.value = false;
     });
 

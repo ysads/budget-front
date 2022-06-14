@@ -1,13 +1,13 @@
 <template>
   <div class="sad-input">
-    <sad-label to="name" :text="label" data-test="label" />
+    <sad-label :to="name" :text="label" data-test="label" />
     <div class="sad-input__wrapper">
       <div v-if="prefix" class="sad-input__prefix" data-test="prefix">
         {{ prefix }}
       </div>
       <input
-        :id="name"
         v-bind="$attrs"
+        :id="name"
         :value="modelValue"
         class="sad-input__control"
         :class="[errorClass]"
@@ -87,17 +87,14 @@ export default defineComponent({
 <style lang="scss" scoped>
 .sad-input {
   &__prefix {
-    color: var(--color-info);
+    color: var(--input-text);
     margin-right: $base * 2;
-
-    @extend %body-1;
   }
 
   &__wrapper {
     align-items: center;
     border: 1px solid var(--input-border);
     border-radius: $radius-4;
-    color: var(--text-default);
     display: flex;
     height: $base * 10;
     padding: $base * 2;
@@ -110,9 +107,8 @@ export default defineComponent({
   }
 
   &__control {
+    color: var(--input-text);
     flex-grow: 1;
-
-    @extend %body-1;
   }
 
   &__tip {

@@ -13,12 +13,6 @@ const factory = () =>
     },
   });
 
-const triggerResize = (width, height) => {
-  window.innerWidth = width;
-  window.innerHeight = height;
-  window.dispatchEvent(new Event('resize'));
-};
-
 describe('TransactionList', () => {
   beforeEach(() => {
     budgetsRepo.openBudget.value = budget;
@@ -31,40 +25,14 @@ describe('TransactionList', () => {
     expect(drawer.props().show).toEqual(false);
   });
 
-  describe('when at mobile resolution', () => {
-    beforeEach(() => {
-      triggerResize(640, 480);
-    });
+  it('renders a TransactionTableRow for each transaction', () => {
+    const wrapper = factory();
+    const items = wrapper.findAll("[data-test='table-row']");
 
-    it('renders a TransactionCard for each transaction', () => {
-      const wrapper = factory();
-      const items = wrapper.findAll("[data-test='card']");
-
-      expect(items.length).toEqual(transactions.length);
-    });
+    expect(items.length).toEqual(transactions.length);
   });
 
-  describe('when at desktop resolution', () => {
-    beforeEach(() => {
-      triggerResize(1280, 720);
-    });
-
-    it('renders a TransactionTableHeader', () => {
-      const wrapper = factory();
-      const item = wrapper.find("[data-test='table-header']");
-
-      expect(item.exists()).toBeTruthy();
-    });
-
-    it('renders a TransactionTableRow for each transaction', () => {
-      const wrapper = factory();
-      const items = wrapper.findAll("[data-test='table-row']");
-
-      expect(items.length).toEqual(transactions.length);
-    });
-  });
-
-  describe('when any item emits click', () => {
+  describe('when any item emits select', () => {
     it('shows details for the correct transaction', async () => {
       const wrapper = factory();
       const drawer = wrapper.findComponent('[data-test="transaction-details"]');
@@ -72,7 +40,7 @@ describe('TransactionList', () => {
       // INFO: ensure is the second transaction to be passed
       await wrapper
         .findAllComponents("[data-test='table-row']")[1]
-        .vm.$emit('click');
+        .vm.$emit('select');
 
       expect(drawer.props().transaction).toEqual(transactions[1]);
     });
@@ -81,7 +49,7 @@ describe('TransactionList', () => {
       const wrapper = factory();
       const drawer = wrapper.findComponent('[data-test="transaction-details"]');
 
-      await wrapper.findComponent("[data-test='table-row']").vm.$emit('click');
+      await wrapper.findComponent("[data-test='table-row']").vm.$emit('select');
 
       expect(drawer.props().show).toEqual(true);
     });
@@ -90,7 +58,7 @@ describe('TransactionList', () => {
       const wrapper = factory();
       const drawer = wrapper.findComponent('[data-test="transaction-details"]');
 
-      await wrapper.findComponent("[data-test='table-row']").vm.$emit('click');
+      await wrapper.findComponent("[data-test='table-row']").vm.$emit('select');
       await drawer.vm.$emit('close');
 
       expect(drawer.props().show).toEqual(false);

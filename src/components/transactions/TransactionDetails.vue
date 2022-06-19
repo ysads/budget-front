@@ -1,7 +1,7 @@
 <template>
   <sad-drawer
     class="transaction-details"
-    :title="t('newTransaction')"
+    :title="title"
     :show="show"
     data-test="drawer"
     @close="$emit('close')"
@@ -10,7 +10,7 @@
       v-model="form.accountId"
       class="transaction-details__control"
       :disabled="isAccountDisabled"
-      :label="st('account')"
+      :label="t('TransactionDetails.account')"
       :options="accountOptions"
       :placeholder="t('placeholders.select')"
       name="account"
@@ -19,7 +19,7 @@
     <sad-select
       v-model="form.payeeName"
       class="transaction-details__control"
-      :label="st('payee')"
+      :label="t('TransactionDetails.payee')"
       :options="payeeOptions"
       :placeholder="t('placeholders.select')"
       name="payee"
@@ -29,8 +29,8 @@
     <sad-date-picker
       v-model="form.referenceAt"
       class="transaction-details__control"
-      :label="st('referenceAt')"
-      :placeholder="st('referenceAt')"
+      :label="t('TransactionDetails.referenceAt')"
+      :placeholder="t('TransactionDetails.referenceAt')"
       :format="openBudget.dateFormat"
       name="reference-at"
       data-test="reference-at"
@@ -39,7 +39,7 @@
       v-model="form.categoryId"
       class="transaction-details__control"
       name="category"
-      :label="st('category')"
+      :label="t('TransactionDetails.category')"
       :options="categoryOptions"
       :placeholder="t('placeholders.select')"
       grouped
@@ -48,22 +48,22 @@
     <sad-input
       v-model="form.memo"
       class="transaction-details__control"
-      :label="st('memo')"
-      :tip="st('memoTip')"
+      :label="t('TransactionDetails.memo')"
+      :tip="t('TransactionDetails.memoTip')"
       name="memo"
       data-test="memo"
     />
     <sad-switch
       v-model="form.outflow"
       class="transaction-details__outflow"
-      :active-label="st('outflow')"
-      :inactive-label="st('inflow')"
+      :active-label="t('TransactionDetails.outflow')"
+      :inactive-label="t('TransactionDetails.inflow')"
       :disabled="!form.categoryId"
     />
     <sad-input
       v-model="form.amount"
       class="transaction-details__control"
-      :label="st('amount')"
+      :label="t('TransactionDetails.amount')"
       :prefix="currencySymbol"
       name="amount"
       data-test="amount"
@@ -76,7 +76,7 @@
         data-test="save-btn"
         @click="handleSubmit"
       >
-        {{ t('save') }}
+        {{ t('general.save') }}
       </sad-button>
     </template>
   </sad-drawer>
@@ -92,7 +92,7 @@ import SadSelect from '@/components/sad/SadSelect.vue';
 import SadSwitch from '@/components/sad/SadSwitch.vue';
 import useBudgetCategories from '@/use/budget-categories';
 import useTransactionForm from '@/use/forms/transaction';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { currencySettings, currencyToCents } from '@/support/money';
 import { handleApiError } from '@/api/errors';
 import { openBudget } from '@/repositories/budgets';
@@ -132,7 +132,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }: SetupContext) {
-    const { t, st } = useI18n('TransactionDetails');
+    const { t } = useI18n();
     const { categoryOptions } = useBudgetCategories();
 
     const isEdit = computed(() => Boolean(props.transaction.id));
@@ -165,6 +165,10 @@ export default defineComponent({
       moneySettings,
     });
 
+    const title = computed(() =>
+      isEdit.value ? t('TransactionDetails.edit') : t('TransactionDetails.add'),
+    );
+
     const handleSubmit = async () => {
       try {
         await saveForm({
@@ -188,8 +192,8 @@ export default defineComponent({
       isAccountDisabled,
       openBudget,
       payeeOptions,
-      st,
       t,
+      title,
     };
   },
 });

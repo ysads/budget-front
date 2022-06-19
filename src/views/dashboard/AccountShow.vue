@@ -29,7 +29,7 @@ import { getTransactions, transactions } from '@/repositories/transactions';
 import { useRoute, useRouter } from 'vue-router';
 import { computed, defineComponent, onMounted, watchEffect } from 'vue';
 import { Account } from '@/types/models';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import alert from '@/support/alert';
 import AccountHeader from '@/components/accounts/AccountHeader.vue';
 import AccountToolbar from '@/components/accounts/AccountToolbar.vue';

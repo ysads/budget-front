@@ -49,7 +49,7 @@
 <script lang="ts">
 import { balanceClasses, currencySettings, format } from '@/support/money';
 import { addMonths, isoMonthToDate } from '@/support/date';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import SadIcon from '@/components/sad/SadIcon.vue';
 import { computed, defineComponent, PropType, SetupContext, watch } from 'vue';
 import { Budget, Month } from '@/types/models';
@@ -71,8 +71,8 @@ export default defineComponent({
     SadIcon,
   },
 
-  setup(props, { emit }: SetupContext) {
-    const { d, t } = useI18n('MonthHeader');
+  setup(props, { emit }) {
+    const { d, t } = useI18n();
     const monthText = computed(() => {
       return d(isoMonthToDate(props.month.isoMonth), 'monthOnly');
     });

@@ -8,7 +8,7 @@
       data-test="new-transaction"
       @click="toggle('transactionDrawer')"
     >
-      {{ t('newTransaction') }}
+      {{ t('AccountToolbar.newTransaction') }}
     </sad-button>
     <sad-button
       class="account-toolbar__button"
@@ -18,7 +18,7 @@
       data-test="new-transaction"
       @click="toggle('transferDrawer')"
     >
-      {{ t('general.newTransfer') }}
+      {{ t('AccountToolbar.newTransfer') }}
     </sad-button>
     <transaction-details
       :show="isVisible.transactionDrawer"
@@ -38,7 +38,7 @@
 import SadButton from '@/components/sad/SadButton.vue';
 import TransactionDetails from '@/components/transactions/TransactionDetails.vue';
 import TransferDetails from '@/components/transactions/TransferDetails.vue';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { Account } from '@/types/models';
 import { defineComponent, PropType, reactive } from 'vue';
 

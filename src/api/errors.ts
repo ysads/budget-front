@@ -1,5 +1,5 @@
 import alert from '@/support/alert';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 
 interface ErrorResponse {
   response?: {
@@ -15,7 +15,7 @@ export const MAPPED_ERRORS = [
 ];
 
 export const handleApiError = (err: unknown): void => {
-  const { t } = useI18n('errors');
+  const { t } = useI18n();
 
   const errorCode = (err as ErrorResponse).response?.data?.code;
 

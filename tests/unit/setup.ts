@@ -11,12 +11,12 @@ jest.mock('@/api', () => ({
 }));
 
 // Mock i18n functions
-jest.mock('@/i18n', () => ({
-  global: {
+jest.mock('vue-i18n', () => ({
+  useI18n: () => ({
     t: (str: string, params = null) =>
       params ? `${str}${JSON.stringify(params)}` : str,
     d: (str: string, format: string) => `${str}${format}`,
-  },
+  }),
 }));
 
 // Mock routing fns

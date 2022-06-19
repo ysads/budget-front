@@ -6,7 +6,7 @@ import {
 import { CurrencySettings, format } from '@/support/money';
 import { Account, NullishDate, Transaction } from '@/types/models';
 import { computed, ComputedRef, reactive, Ref, watch } from 'vue';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 
 export interface TransactionForm {
   amount: string;
@@ -87,7 +87,7 @@ export default function useTransactionForm({
 
   const { t } = useI18n();
   const saveMessage = computed(() =>
-    isEdit.value ? t('updated') : t('created'),
+    isEdit.value ? t('general.updated') : t('general.created'),
   );
 
   return { saveForm, saveMessage, resetForm, form };

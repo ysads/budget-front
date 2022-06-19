@@ -44,7 +44,7 @@ import { eventBus, Events } from '@/events';
 import { FocusTrap } from 'focus-trap-vue';
 import SadButton from './SadButton.vue';
 import SadIcon from './SadIcon.vue';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'SadDrawer',

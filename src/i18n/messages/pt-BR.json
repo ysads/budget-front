@@ -1,15 +1,93 @@
 {
-  "allAccounts": "Contas",
-  "budget": "Orçamento",
-  "cleared": "Aprovado",
-  "currentBalance": "Saldo Atual",
-  "noAccounts": "Não há contas",
-  "noAccountsTip": "Não dá pra poupar sem ter contas aqui. Vamos lá, adicione suas contas e comece a poupar.",
-  "reports": "Relatórios",
-  "uncleared": "Não aprovado",
-  "trackingAccounts": "Acompanhamento",
-  "budgetAccounts": "Orçamento",
-  "addAccount": "Adicionar conta",
+  "AccountToolbar": {
+    "newTransaction": "Nova transação",
+    "newTransfer": "Transferir"
+  },
+  "AllAccounts": {
+    "title": "Todas as contas"
+  },
+  "Auth": {
+    "title": "Piggy Budget App",
+    "signInWithAuth0": "Entrar com Auth0"
+  },
+  "BudgetToolbar": {
+    "newCategory": "Nova categoria",
+    "newCategoryGroup": "Novo grupo",
+    "newMonthlyBudget": "Novo orçamento"
+  },
+  "CreateAccountModal": {
+    "accountName": "Como você quer chamar essa conta?",
+    "accountType": "De que tipo é essa conta?",
+    "created": "Conta criada",
+    "currentBalance": "Quanto você tem hoje nessa conta?",
+    "currentBalanceTip": "Não tem certeza? Estime! Você pode editar depois.",
+    "title": "Nova conta"
+  },
+  "CreateCategoryGroupModal": {
+    "name": "Nome do grupo",
+    "title": "Novo grupo"
+  },
+  "CreateCategoryModal": {
+    "categoryGroup": "Em qual grupo de gastos essa categoria está?",
+    "name": "Nome da categoria",
+    "title": "Novo categoria"
+  },
+  "DashboardMenu": {
+    "addAccount": "Adicionar conta",
+    "allAccounts": "Contas",
+    "budget": "Orçamento",
+    "budgetAccounts": "Orçamento",
+    "noAccounts": "Não há contas",
+    "noAccountsTip": "Não dá pra poupar sem ter contas aqui. Vamos lá, adicione suas contas e comece a poupar.",
+    "reports": "Relatórios",
+    "trackingAccounts": "Acompanhamento"
+  },
+  "MonthHeader": {
+    "prevMonth": "Mês anterior",
+    "nextMonth": "Próximo mês",
+    "toBeBudgeted": "Disponível para orçar"
+  },
+  "MonthlyBudgetDetails": {
+    "add": "Criar orçamento",
+    "budgeted": "Quanto você pretende gastar?",
+    "category": "Categoria",
+    "created": "Orçamento criado",
+    "edit": "Editar orçamento",
+    "updated": "Orçamento atualizado"
+  },
+  "MonthlyBudgetRow": {
+    "left": "",
+    "notBudgeted": "Sem orçamento • {activity} de {budgeted}",
+    "spent": "{percentage}% • {activity} de {budgeted}"
+  },
+  "TransactionDetails": {
+    "account": "Conta",
+    "add": "Adicionar transação",
+    "amount": "Valor",
+    "category": "Categoria",
+    "clearedAt": "Aprovada?",
+    "clearedAtTip": "Uma transação está aprovada quando está refletida no seu saldo.",
+    "created": "Transação registrada",
+    "edit": "Editar transação",
+    "inflow": "Entrada",
+    "memo": "Descrição",
+    "memoTip": "Opcional. Algo que te ajude a reconhecer essa transação.",
+    "outflow": "Saída",
+    "payee": "Recebedor",
+    "referenceAt": "Data"
+  },
+  "TransferDetails": {
+    "add": "Editar transferência",
+    "amount": "Valor",
+    "category": "Categoria",
+    "categoryTip": "Esse tipo de transferência também precisa de uma categoria.",
+    "destination": "Para",
+    "edit": "Editar transferência",
+    "memo": "Descrição",
+    "memoTip": "Opcional. Algo que te ajude a reconhecer essa transação.",
+    "origin": "De",
+    "referenceAt": "Data"
+  },
   "account": {
     "type": {
       "asset": "Investimento",
@@ -18,6 +96,10 @@
       "savings": "Poupança",
       "checking": "Corrente"
     }
+  },
+  "budgetCategories": {
+    "inflow": "Entrada",
+    "toBeBudgeted": "Para orçar"
   },
   "errors": {
     "accounts": {
@@ -29,104 +111,20 @@
       "already-exists": "Você já tem um orçamento para essa categoria."
     }
   },
-  "newAccount": "Nova conta",
-  "newCategory": "Nova categoria",
-  "newCategoryGroup": "Novo grupo",
-  "newMonthlyBudget": "Criar orçamento",
-  "newTransaction": "Adicionar transação",
+  "general": {
+    "created": "Criado",
+    "closeRegion": "Fechar: {title}",
+    "save": "Salvar",
+    "startingBalance": "Saldo inicial",
+    "updated": "Atualizado"
+  },
   "htmlTitle": {
     "AccountShow": "Piggy: {name}",
     "AllAccounts": "Piggy: Contas",
     "Budget": "Piggy: {month}"
   },
-  "CreateAccountModal": {
-    "accountType": "De que tipo é essa conta?",
-    "created": "Conta criada",
-    "currentBalance": "Quanto você tem hoje nessa conta?",
-    "accountName": "Como você quer chamar essa conta?",
-    "accountTypePlaceholder": "Escolha um tipo...",
-    "currentBalanceTip": "Não tem certeza? Estime! Você pode editar depois."
-  },
-  "CreateCategoryGroupModal": {
-    "name": "Nome do grupo"
-  },
-  "CreateCategoryModal": {
-    "categoryGroup": "Em qual grupo de gastos essa categoria está?",
-    "categoryGroupPlaceholder": "Selecione um...",
-    "name": "Nome da categoria"
-  },
-  "general": {
-    "created": "Criado",
-    "closeRegion": "Fechar: {title}",
-    "newTransfer": "Transferir entre contas",
-    "updated": "Atualizado"
-  },
-  "MonthHeader": {
-    "prevMonth": "Mês anterior",
-    "nextMonth": "Próximo mês",
-    "toBeBudgeted": "Disponível para orçar"
-  },
-  "MonthlyBudgetDetails": {
-    "category": "Categoria",
-    "categoryPlaceholder": "Selecione",
-    "created": "Orçamento criado",
-    "updated": "Orçamento atualizado",
-    "budgeted": "Quanto você pretende gastar?"
-  },
-  "Auth": {
-    "title": "Piggy Budget App",
-    "signInWithAuth0": "Entrar com Auth0"
-  },
-  "MonthlyBudgetRow": {
-    "left": "",
-    "notBudgeted": "Sem orçamento • {activity} de {budgeted}",
-    "spent": "{percentage}% • {activity} de {budgeted}"
-  },
   "placeholders": {
     "select": "Escolha"
-  },
-  "save": "Salvar",
-  "startingBalance": "Saldo inicial",
-  "toBeBudgeted": "Disponível",
-  "budgetCategories": {
-    "inflow": "Entrada",
-    "toBeBudgeted": "Para orçar"
-  },
-  "TransactionDetails": {
-    "account": "Conta",
-    "amount": "Valor",
-    "category": "Categoria",
-    "clearedAt": "Aprovada?",
-    "clearedAtTip": "Uma transação está aprovada quando está refletida no seu saldo.",
-    "created": "Transação registrada",
-    "inflow": "Entrada",
-    "memo": "Descrição",
-    "memoTip": "Opcional. Algo que te ajude a reconhecer essa transação.",
-    "outflow": "Saída",
-    "payee": "Recebedor",
-    "referenceAt": "Data"
-  },
-  "TransferDetails": {
-    "origin": "De",
-    "category": "Categoria",
-    "categoryTip": "Esse tipo de transferência também precisa de uma categoria.",
-    "destination": "Para",
-    "amount": "Valor",
-    "memo": "Descrição",
-    "memoTip": "Opcional. Algo que te ajude a reconhecer essa transação.",
-    "referenceAt": "Data"
-  },
-  "TransactionTableHeader": {
-    "amount": "Valor",
-    "category": "Categoria",
-    "cleared": "Aprovado",
-    "date": "Data",
-    "memo": "Descrição",
-    "payee": "Recebedor"
-  },
-  "TransactionTableRow": {
-    "clearedTitle": "Essa transação já está refletida no seu extrato bancário.",
-    "unclearedTitle": "Essa transação ainda não foi confirmada no banco."
   },
   "validations": {
     "required": "Campo obrigatório."

@@ -1,7 +1,7 @@
 <template>
   <sad-modal
     :show="show"
-    :title="t('newAccount')"
+    :title="t('CreateAccountModal.title')"
     data-test="modal"
     @close="$emit('close')"
   >
@@ -13,8 +13,8 @@
       <sad-select
         v-model="form.accountType"
         class="create-account__item"
-        :label="st('accountType')"
-        :placeholder="st('accountTypePlaceholder')"
+        :label="t('CreateAccountModal.accountType')"
+        :placeholder="t('placeholders.select')"
         :options="accountTypes"
         name="account-type"
         data-test="account-type"
@@ -23,7 +23,7 @@
         v-model="form.accountName"
         class="create-account__item"
         name="name"
-        :label="st('accountName')"
+        :label="t('CreateAccountModal.accountName')"
         data-test="account-name"
       />
       <sad-input
@@ -31,8 +31,8 @@
         class="create-account__item"
         name="currentBalance"
         :prefix="currencySymbol"
-        :label="st('currentBalance')"
-        :tip="st('currentBalanceTip')"
+        :label="t('CreateAccountModal.currentBalance')"
+        :tip="t('CreateAccountModal.currentBalanceTip')"
         data-test="current-balance"
       />
     </form>
@@ -40,7 +40,7 @@
     <template #footer>
       <footer class="create-account__footer">
         <sad-button size="normal" type="primary" @click="handleSubmit">
-          {{ t('save') }}
+          {{ t('general.save') }}
         </sad-button>
       </footer>
     </template>
@@ -53,7 +53,7 @@ import SadInput from '@/components/sad/SadInput.vue';
 import SadModal from '@/components/sad/SadModal.vue';
 import SadSelect from '@/components/sad/SadSelect.vue';
 import alert from '@/support/alert';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { createAccount } from '@/repositories/accounts';
 import { ACCOUNT_TYPES } from '@/constants/account';
 import { currencyToCents } from '@/support/money';
@@ -86,7 +86,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }: SetupContext) {
-    const { st, t } = useI18n('CreateAccountModal');
+    const { t } = useI18n();
     const { currencySymbol, form, resetForm } = useCreateAccountForm({
       budget: props.budget,
     });
@@ -102,7 +102,7 @@ export default defineComponent({
           ...form,
           currentBalance: currencyToCents(form.currentBalance, props.budget),
         });
-        alert.success(st('created'));
+        alert.success(t('created'));
         resetForm();
         emit('close');
       } catch (err) {
@@ -110,7 +110,7 @@ export default defineComponent({
       }
     };
 
-    return { accountTypes, currencySymbol, form, handleSubmit, st, t };
+    return { accountTypes, currencySymbol, form, handleSubmit, t };
   },
 });
 </script>

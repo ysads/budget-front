@@ -8,7 +8,7 @@
       data-test="new-group-btn"
       @click="toggle('categoryGroupModal')"
     >
-      {{ t('newCategoryGroup') }}
+      {{ t('BudgetToolbar.newCategoryGroup') }}
     </sad-button>
 
     <sad-button
@@ -19,7 +19,7 @@
       data-test="new-category-btn"
       @click="toggle('categoryModal')"
     >
-      {{ t('newCategory') }}
+      {{ t('BudgetToolbar.newCategory') }}
     </sad-button>
 
     <sad-button
@@ -30,7 +30,7 @@
       data-test="new-monthly-budget-btn"
       @click="toggle('drawer')"
     >
-      {{ t('newMonthlyBudget') }}
+      {{ t('BudgetToolbar.newMonthlyBudget') }}
     </sad-button>
 
     <create-category-group-modal
@@ -58,7 +58,7 @@ import CreateCategoryGroupModal from '@/components/category-groups/CreateCategor
 import CreateCategoryModal from '@/components/categories/CreateCategoryModal.vue';
 import MonthlyBudgetDetails from '@/components/monthly-budgets/MonthlyBudgetDetails.vue';
 import SadButton from '@/components/sad/SadButton.vue';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { openBudget } from '@/repositories/budgets';
 import { defineComponent, reactive } from 'vue';
 

@@ -1,6 +1,6 @@
 <template>
   <sad-drawer
-    :title="t('general.newTransfer')"
+    :title="title"
     :show="show"
     data-test="drawer"
     @close="$emit('close')"
@@ -11,7 +11,7 @@
           v-model="form.originId"
           class="transfer-details__accounts-input"
           :disabled="isEdit || Boolean(origin?.id)"
-          :label="st('origin')"
+          :label="t('TransferDetails.origin')"
           :options="originOptions"
           :placeholder="t('placeholders.select')"
           name="transfer-origin"
@@ -28,7 +28,7 @@
           v-model="form.destinationId"
           class="transfer-details__accounts-input"
           :disabled="isEdit"
-          :label="st('destination')"
+          :label="t('TransferDetails.destination')"
           :options="destinationOptions"
           :placeholder="t('placeholders.select')"
           name="transfer-destination"
@@ -40,18 +40,18 @@
         v-model="form.categoryId"
         class="transfer-details__control"
         name="transfer-category"
-        :label="st('category')"
+        :label="t('TransferDetails.category')"
         :options="categoryOptions"
         :placeholder="t('placeholders.select')"
-        :tip="st('categoryTip')"
+        :tip="t('TransferDetails.categoryTip')"
         grouped
         data-test="category"
       />
       <sad-date-picker
         v-model="form.referenceAt"
         class="transfer-details__control"
-        :label="st('referenceAt')"
-        :placeholder="st('referenceAt')"
+        :label="t('TransferDetails.referenceAt')"
+        :placeholder="t('TransferDetails.referenceAt')"
         :format="openBudget.dateFormat"
         name="transfer-reference-at"
         data-test="reference-at"
@@ -59,7 +59,7 @@
       <sad-input
         v-model="form.amount"
         class="transfer-details__control"
-        :label="st('amount')"
+        :label="t('TransferDetails.amount')"
         :prefix="currencySymbol"
         name="transfer-amount"
         data-test="amount"
@@ -67,8 +67,8 @@
       <sad-input
         v-model="form.memo"
         class="transfer-details__control"
-        :label="st('memo')"
-        :tip="st('memoTip')"
+        :label="t('TransferDetails.memo')"
+        :tip="t('TransferDetails.memoTip')"
         name="transfer-memo"
         data-test="memo"
       />
@@ -81,7 +81,7 @@
         data-test="save-btn"
         @click="handleSubmit"
       >
-        {{ t('save') }}
+        {{ t('general.save') }}
       </sad-button>
     </template>
   </sad-drawer>
@@ -97,7 +97,7 @@ import SadInput from '@/components/sad/SadInput.vue';
 import SadSelect from '@/components/sad/SadSelect.vue';
 import useBudgetCategories from '@/use/budget-categories';
 import useTransferForm from '@/use/forms/transfer';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { openBudget } from '@/repositories/budgets';
 import { accounts } from '@/repositories/accounts';
 import { PropType, computed, defineComponent, SetupContext } from 'vue';
@@ -136,7 +136,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }: SetupContext) {
-    const { t, st } = useI18n('TransferDetails');
+    const { t } = useI18n();
     const { categoryOptions } = useBudgetCategories(false);
 
     const isEdit = computed(() => Boolean(props.transaction.id));
@@ -166,6 +166,10 @@ export default defineComponent({
 
     const hasToSelectCategory = computed(() => form.type === 'spending');
 
+    const title = computed(() =>
+      isEdit.value ? t('TransferDetails.edit') : t('TransferDetails.add'),
+    );
+
     const handleSubmit = async () => {
       try {
         await saveForm({
@@ -191,7 +195,7 @@ export default defineComponent({
       isEdit,
       openBudget,
       t,
-      st,
+      title,
     };
   },
 });

@@ -1,7 +1,7 @@
 <template>
   <sad-modal
     :show="show"
-    :title="t('newCategoryGroup')"
+    :title="t('CreateCategoryGroupModal.title')"
     data-test="modal"
     @close="$emit('close')"
   >
@@ -12,7 +12,7 @@
     >
       <sad-input
         v-model="form.name"
-        :label="st('name')"
+        :label="t('CreateCategoryGroupModal.name')"
         name="name"
         class="create-category__item-input"
         data-test="name"
@@ -22,7 +22,7 @@
     <template #footer>
       <div class="create-category__footer">
         <sad-button size="normal" type="primary" @click="handleSubmit">
-          {{ t('save') }}
+          {{ t('general.save') }}
         </sad-button>
       </div>
     </template>
@@ -38,7 +38,7 @@ import {
   createCategoryGroup,
 } from '@/repositories/category-groups';
 import { Budget } from '@/types/models';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { SetupContext, reactive, defineComponent, watch, PropType } from 'vue';
 
 export default defineComponent({
@@ -64,7 +64,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }: SetupContext) {
-    const { st, t } = useI18n('CreateCategoryGroupModal');
+    const { t } = useI18n();
 
     const form = reactive({
       budgetId: props.budget.id,
@@ -88,7 +88,6 @@ export default defineComponent({
       categoryGroups,
       form,
       handleSubmit,
-      st,
       t,
     };
   },

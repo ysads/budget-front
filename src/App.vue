@@ -9,8 +9,9 @@
 <script lang="ts">
 import AlertContainer from '@/components/AlertContainer.vue';
 import ScreenReaderAnnouncer from '@/components/ScreenReaderAnnouncer.vue';
-import { defineComponent, onMounted, onUnmounted } from 'vue';
+import { defineComponent, onMounted, onUnmounted, watch } from 'vue';
 import { eventBus, Events } from '@/events';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   components: {
@@ -18,6 +19,16 @@ export default defineComponent({
     ScreenReaderAnnouncer,
   },
   setup() {
+    const { locale } = useI18n();
+
+    watch(locale, () => {
+      const rootTag = document.querySelector('html');
+
+      if (rootTag) {
+        rootTag.lang = locale.value;
+      }
+    });
+
     const handleGlobalEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         eventBus.emit(Events.CLOSE_DRAWER);

@@ -1,7 +1,7 @@
 import { symbolOf } from '@/support/currencies';
 import { AccountType, Budget } from '@/types/models';
 import { computed, ComputedRef, reactive, watch } from 'vue';
-import useI18n from '../i18n';
+import { useI18n } from 'vue-i18n';
 
 export interface CreateAccountForm {
   accountName: string;
@@ -33,7 +33,7 @@ export default function useCreateAccountForm({
     form.currentBalance = '';
     form.accountName = '';
     form.budgetId = budget.id;
-    form.payeeName = t('startingBalance');
+    form.payeeName = t('general.startingBalance');
   };
 
   watch(budget, resetForm, { immediate: true });

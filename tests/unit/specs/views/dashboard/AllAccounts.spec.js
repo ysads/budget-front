@@ -30,7 +30,7 @@ describe('AllAccounts', () => {
       budget: openBudget,
       cleared: accounts.reduce((total, a) => total + a.clearedBalance, 0),
       uncleared: accounts.reduce((total, a) => total + a.unclearedBalance, 0),
-      name: expect.stringMatching(/allAccounts/),
+      name: expect.stringMatching(/title/),
     });
   });
 

@@ -1,77 +1,132 @@
 {
-  "allAccounts": "All accounts",
-  "budget": "Budget",
-  "cleared": "Cleared",
-  "currentBalance": "Current balance",
-  "noAccounts": "No Accounts",
-  "noAccountsTip": "You can't budget without accounts. Let's start adding some!",
-  "reports": "Reports",
-  "uncleared": "Uncleared",
-  "trackingAccounts": "Tracking",
-  "budgetAccounts": "Budget",
-  "addAccount": "Add Account",
-  "account": {
-    "type": {
-      "asset": "Asset",
-      "cash": "Cash",
-      "credit": "Credit",
-      "savings": "Savings",
-      "checking": "Checkin"
-    }
+  "AccountToolbar": {
+    "newTransaction": "Add transaction",
+    "newTransfer": "Transfer"
   },
-  "newAccount": "New account",
+  "AllAccounts": {
+    "title": "All accounts"
+  },
+  "Auth": {
+    "title": "Piggy Budget App",
+    "signInWithAuth0": "Sign in with Auth0"
+  },
+  "BudgetToolbar": {
+    "newCategory": "Add category",
+    "newCategoryGroup": "Add group",
+    "newMonthlyBudget": "Add budget"
+  },
   "CreateAccountModal": {
-    "accountType": "What's the account type?",
-    "currentBalance": "What's your balance in this account today?",
-    "accountName": "How is your account called?",
-    "accountTypePlaceholder": "Choose a type...",
-    "currentBalanceTip": "Not sure? Estimate it! You can edit that later.",
-    "created": "Account created"
-  },
-  "general": {
-    "closeRegion": "Close: {title}",
-    "newTransfer": "Transfer money"
-  },
-  "save": "Save",
-  "startingBalance": "Starting balance",
-  "validations": {
-    "required": "This is required."
+    "accountName": "How would you like to name this account?",
+    "accountType": "What kind of account is this?",
+    "created": "Account created",
+    "currentBalance": "What's your current balance?",
+    "currentBalanceTip": "Not sure? Type whatever you want, you can change that later.",
+    "title": "Add account"
   },
   "CreateCategoryGroupModal": {
-    "name": "Group name"
+    "name": "Group name",
+    "title": "Add group"
   },
   "CreateCategoryModal": {
-    "categoryGroup": "To which category group this budget belongs?",
-    "categoryGroupPlaceholder": "Pick one...",
-    "name": "Category"
+    "categoryGroup": "To which group this belongs?",
+    "name": "Name",
+    "title": "New category"
+  },
+  "DashboardMenu": {
+    "addAccount": "Add account",
+    "allAccounts": "All Accounts",
+    "budget": "Budget",
+    "budgetAccounts": "Budget",
+    "noAccounts": "No accounts",
+    "noAccountsTip": "In order to control your money, you need to add accounts first.",
+    "reports": "Reports",
+    "trackingAccounts": "Tracking"
   },
   "MonthHeader": {
     "prevMonth": "Previous month",
-    "nextMonth": "Next month"
+    "nextMonth": "Next month",
+    "toBeBudgeted": "Available to budget"
   },
   "MonthlyBudgetDetails": {
-    "budgeted": "How much do you plan to spend?",
+    "add": "Add budget",
+    "budgeted": "How much do you want to spend?",
     "category": "Category",
-    "categoryPlaceholder": "Pick one",
-    "created": "Monthly budget created",
-    "updated": "Monthly budget updated"
+    "created": "Created",
+    "edit": "Edit budget",
+    "updated": "Updated"
   },
-  "errors": {
-    "generic": "Something went wrong. Try again.",
-    "monthly-budgets": {
-      "already-exists": "You already have a monthly budget to this category"
-    },
-    "accounts": {
-      "duplicate": "You already added this account"
+  "MonthlyBudgetRow": {
+    "left": "",
+    "notBudgeted": "No budget yet • {activity} out of {budgeted}",
+    "spent": "{percentage}% • {activity} out of {budgeted}"
+  },
+  "TransactionDetails": {
+    "account": "Account",
+    "add": "Add transaction",
+    "amount": "Amount",
+    "category": "Category",
+    "clearedAt": "Cleared?",
+    "clearedAtTip": "A cleared transaction is one the bank has accrued.",
+    "created": "Created",
+    "edit": "Edit transaction",
+    "inflow": "Inflow",
+    "memo": "Description",
+    "memoTip": "Optional. Something that helps you recognize this later.",
+    "outflow": "Outflow",
+    "payee": "Payee",
+    "referenceAt": "Date"
+  },
+  "TransferDetails": {
+    "add": "Add transfer",
+    "amount": "Amount",
+    "category": "Category",
+    "categoryTip": "Since you need to budget to do that, you need to choose a category.",
+    "destination": "To",
+    "edit": "Edit transfer",
+    "memo": "Description",
+    "memoTip": "Optional. Something that helps you recognize this later.",
+    "origin": "From",
+    "referenceAt": "Date"
+  },
+  "account": {
+    "type": {
+      "asset": "Investment & Assert",
+      "cash": "Cash",
+      "credit": "Credit",
+      "savings": "Savings",
+      "checking": "Checking"
     }
   },
-  "newCategory": "New category",
-  "newCategoryGroup": "New category group",
-  "newMonthlyBudget": "Create monthly budget",
-  "toBeBudgeted": "Available",
-  "SignIn": {
-    "email": "Email",
-    "password": "Password",
-    "signIn": "Sign in"
+  "budgetCategories": {
+    "inflow": "Inflow",
+    "toBeBudgeted": "Available"
+  },
+  "errors": {
+    "accounts": {
+      "duplicate": "Duplicate account. You can't register the same account twice.",
+      "not-found": "Account not found..."
+    },
+    "generic": "Something is wrong. Try again.",
+    "monthly-budgets": {
+      "already-exists": "You already have a budget for this category."
+    }
+  },
+  "general": {
+    "created": "Created",
+    "closeRegion": "Close: {title}",
+    "save": "Save",
+    "startingBalance": "Starting balance",
+    "updated": "Updated"
+  },
+  "htmlTitle": {
+    "AccountShow": "Piggy: {name}",
+    "AllAccounts": "Piggy: All Accounts",
+    "Budget": "Piggy: {month}"
+  },
+  "placeholders": {
+    "select": "Choose"
+  },
+  "validations": {
+    "required": "Required."
   }
 }

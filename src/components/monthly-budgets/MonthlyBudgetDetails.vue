@@ -1,7 +1,7 @@
 <template>
   <sad-drawer
     class="mb-details"
-    :title="t('newMonthlyBudget')"
+    :title="title"
     :show="show"
     data-test="drawer"
     @close="$emit('close')"
@@ -10,9 +10,9 @@
       v-model="form.categoryId"
       class="mb-details__control"
       :disabled="isEdit"
-      :label="st('category')"
+      :label="t('MonthlyBudgetDetails.category')"
       :options="categoriesGrouped"
-      :placeholder="st('categoryPlaceholder')"
+      :placeholder="t('placeholders.select')"
       name="category"
       data-test="category"
       grouped
@@ -20,7 +20,7 @@
     <sad-input
       v-model="form.budgeted"
       class="mb-details__control"
-      :label="st('budgeted')"
+      :label="t('MonthlyBudgetDetails.budgeted')"
       :prefix="currencySymbol"
       name="budgeted"
       data-test="budgeted"
@@ -33,7 +33,7 @@
         data-test="save-btn"
         @click="handleSubmit"
       >
-        {{ t('save') }}
+        {{ t('general.save') }}
       </sad-button>
     </template>
   </sad-drawer>
@@ -45,7 +45,7 @@ import SadDrawer from '@/components/sad/SadDrawer.vue';
 import SadInput from '@/components/sad/SadInput.vue';
 import SadSelect from '@/components/sad/SadSelect.vue';
 import alert from '@/support/alert';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import useMonthlyBudgetForm from '@/use/forms/monthly-budget';
 import { handleApiError } from '@/api/errors';
 import { openBudget } from '@/repositories/budgets';
@@ -85,7 +85,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }: SetupContext) {
-    const { st, t } = useI18n('MonthlyBudgetDetails');
+    const { t } = useI18n();
 
     const isEdit = computed(() => Boolean(props.monthlyBudget.id));
     const currencySymbol = computed(() => symbolOf(openBudget.value.currency));
@@ -108,6 +108,12 @@ export default defineComponent({
       })),
     );
 
+    const title = computed(() =>
+      isEdit.value
+        ? t('MonthlyBudgetDetails.edit')
+        : t('MonthlyBudgetDetails.add'),
+    );
+
     const handleSubmit = async () => {
       const save = isEdit.value ? updateMonthlyBudget : createMonthlyBudget;
 
@@ -118,7 +124,9 @@ export default defineComponent({
           budgetId: openBudget.value.id,
           monthId: currentMonth.value.id,
         });
-        alert.success(isEdit.value ? st('updated') : st('created'));
+        alert.success(
+          isEdit.value ? t('general.updated') : t('general.created'),
+        );
         resetForm();
         emit('close');
       } catch (err) {
@@ -135,8 +143,8 @@ export default defineComponent({
       handleSubmit,
       moneySettings,
       openBudget,
-      st,
       t,
+      title,
     };
   },
 });

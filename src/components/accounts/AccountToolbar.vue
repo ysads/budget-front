@@ -75,7 +75,6 @@ export default defineComponent({
 .account-toolbar {
   display: flex;
   flex-flow: row wrap;
-  gap: $base;
   justify-content: flex-start;
   padding: $base * 2 $base * 4;
 }

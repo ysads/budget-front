@@ -1,10 +1,6 @@
 <template>
-  <div class="sad-alert">
-    <div
-      class="sad-alert__ribbon"
-      :class="`sad-alert__ribbon-${variant}`"
-      data-test="ribbon"
-    />
+  <div class="sad-alert" :class="classes" role="status">
+    <div class="sad-alert__ribbon" data-test="ribbon" />
     <sad-icon
       class="sad-alert__icon"
       :name="variantIcon"
@@ -83,7 +79,7 @@ export default defineComponent({
       setTimeout(() => emit('close', props.id), props.duration);
     });
 
-    return { emit, variantIcon };
+    return { classes, emit, variantIcon };
   },
 });
 </script>
@@ -91,6 +87,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .sad-alert {
   background: var(--alert-bg);
+  border: 1px solid var(--alert-border);
   border-radius: var(--alert-radius);
   box-shadow: var(--alert-shadow);
   color: var(--text-primary);
@@ -100,19 +97,31 @@ export default defineComponent({
 
   &__ribbon {
     flex-shrink: 0;
-    width: 4px;
+    width: 6px;
   }
 
-  &__ribbon-error {
+  &--error > &__ribbon {
     background: var(--color-error);
   }
 
-  &__ribbon-success {
+  &--success > &__ribbon {
     background: var(--color-success);
   }
 
-  &__ribbon-warning {
+  &--warning > &__ribbon {
     background: var(--color-warning);
+  }
+
+  &--error > &__icon {
+    color: var(--color-error);
+  }
+
+  &--success > &__icon {
+    color: var(--color-success);
+  }
+
+  &--warning > &__icon {
+    color: var(--color-warning);
   }
 
   &__icon {

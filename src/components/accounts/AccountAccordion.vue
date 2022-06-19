@@ -100,7 +100,7 @@ export default defineComponent({
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
-    padding: $base * 3;
+    padding: $base * 3 $base * 2 $base * 2 0;
     text-transform: uppercase;
     width: 100%;
   }

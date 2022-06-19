@@ -13,7 +13,7 @@
 
     <sad-button
       class="budget-toolbar__button"
-      icon="plus"
+      icon="tag"
       type="ghost"
       size="small"
       data-test="new-category-btn"
@@ -24,7 +24,7 @@
 
     <sad-button
       class="budget-toolbar__button"
-      icon="plus"
+      icon="money-check-alt"
       type="ghost"
       size="small"
       data-test="new-monthly-budget-btn"
@@ -90,7 +90,6 @@ export default defineComponent({
 .budget-toolbar {
   display: flex;
   flex-flow: row wrap;
-  gap: 12px;
   justify-content: flex-start;
   padding: $base * 2 $base * 4;
 }

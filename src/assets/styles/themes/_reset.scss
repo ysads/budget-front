@@ -88,6 +88,9 @@ video {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   vertical-align: baseline;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
 }
 
 article,
@@ -106,17 +109,6 @@ section {
 
 html {
   color: var(--text-primary);
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif,
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol';
   font-size: 14px;
   line-height: 1;
 }

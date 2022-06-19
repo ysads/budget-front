@@ -27,13 +27,7 @@
 
 <script lang="ts">
 import SadIcon from './SadIcon.vue';
-import {
-  PropType,
-  SetupContext,
-  computed,
-  defineComponent,
-  onMounted,
-} from 'vue';
+import { PropType, computed, defineComponent, onMounted } from 'vue';
 
 const VARIANTS = {
   error: {
@@ -77,7 +71,9 @@ export default defineComponent({
 
   emits: ['close'],
 
-  setup(props, { emit }: SetupContext) {
+  setup(props, { emit }) {
+    const classes = `sad-alert--${props.variant}`;
+
     const variantIcon = computed(
       () => VARIANTS[props.variant as AlertVariant].icon,
     );

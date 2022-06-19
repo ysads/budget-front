@@ -51,7 +51,7 @@ import { balanceClasses, currencySettings, format } from '@/support/money';
 import { addMonths, isoMonthToDate } from '@/support/date';
 import { useI18n } from 'vue-i18n';
 import SadIcon from '@/components/sad/SadIcon.vue';
-import { computed, defineComponent, PropType, SetupContext, watch } from 'vue';
+import { computed, defineComponent, PropType, watch } from 'vue';
 import { Budget, Month } from '@/types/models';
 import { eventBus, Events } from '@/events';
 

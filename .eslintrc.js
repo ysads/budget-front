@@ -14,10 +14,7 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
-    '@typescript-eslint/explicit-module-boundary-types': [
-      'error',
-      { allowArgumentsExplicitlyTypedAsAny: true },
-    ],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': ['error', { fixToUnknown: true }],
     '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
     'comma-dangle': ['error', 'always-multiline', { functions: 'never' }],
@@ -32,12 +29,6 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },
   overrides: [
-    {
-      files: ['*.vue', '*.js'],
-      rules: {
-        '@typescript-eslint/explicit-module-boundary-types': 'off',
-      },
-    },
     {
       files: [
         '**/__tests__/*.{j,t}s?(x)',

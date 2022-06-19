@@ -46,14 +46,7 @@ import SadSelect from '@/components/sad/SadSelect.vue';
 import { useI18n } from 'vue-i18n';
 import { categoryGroups } from '@/repositories/category-groups';
 import { createCategory } from '@/repositories/categories';
-import {
-  PropType,
-  SetupContext,
-  reactive,
-  defineComponent,
-  watch,
-  computed,
-} from 'vue';
+import { PropType, reactive, defineComponent, watch, computed } from 'vue';
 import { Budget } from '@/types/models';
 
 export default defineComponent({
@@ -79,7 +72,7 @@ export default defineComponent({
     SadSelect,
   },
 
-  setup(props, { emit }: SetupContext) {
+  setup(props, { emit }) {
     const { t } = useI18n();
     const form = reactive({
       budgetId: props.budget.id,

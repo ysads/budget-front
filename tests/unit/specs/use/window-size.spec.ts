@@ -1,12 +1,5 @@
 import useWindowSize from '@/use/window-size';
-import setupComponent from '#/setup-component';
-import { defineComponent } from 'vue';
-
-const DummyComponent = defineComponent({
-  setup() {
-    return useWindowSize();
-  },
-});
+import { setupHook } from '#/setup-hook';
 
 const triggerResize = (width: number, height: number) => {
   (window.innerWidth as number) = width;
@@ -14,49 +7,47 @@ const triggerResize = (width: number, height: number) => {
   window.dispatchEvent(new Event('resize'));
 };
 
-const factory = () => setupComponent(DummyComponent);
-
 describe('useWindowSize', () => {
   describe('#width', () => {
     it('maps to window innerWidth', () => {
-      const { vm } = factory();
+      const { width } = setupHook(() => useWindowSize()).result;
 
       triggerResize(1280, 720);
-      expect(vm.width).toEqual(1280);
+      expect(width.value).toEqual(1280);
 
       triggerResize(640, 480);
-      expect(vm.width).toEqual(640);
+      expect(width.value).toEqual(640);
     });
   });
 
   describe('#height', () => {
     it('maps to window innerHeight', () => {
-      const { vm } = factory();
+      const { height } = setupHook(() => useWindowSize()).result;
 
       triggerResize(1280, 720);
-      expect(vm.height).toEqual(720);
+      expect(height.value).toEqual(720);
 
       triggerResize(640, 480);
-      expect(vm.height).toEqual(480);
+      expect(height.value).toEqual(480);
     });
   });
 
   describe('#isMobile', () => {
     it('is true when innerWidth is smaller than 768px', () => {
-      const { vm } = factory();
+      const { isMobile } = setupHook(() => useWindowSize()).result;
 
       triggerResize(1280, 720);
-      expect(vm.isMobile).toEqual(false);
+      expect(isMobile.value).toEqual(false);
 
       triggerResize(640, 480);
-      expect(vm.isMobile).toEqual(true);
+      expect(isMobile.value).toEqual(true);
     });
   });
 
   it('adds listener on mount', () => {
     window.addEventListener = jest.fn();
 
-    factory();
+    setupHook(() => useWindowSize());
 
     expect(window.addEventListener).toHaveBeenCalledWith(
       'resize',
@@ -67,7 +58,8 @@ describe('useWindowSize', () => {
   it('removes listener on unmount', () => {
     window.removeEventListener = jest.fn();
 
-    factory().unmount();
+    const app = setupHook(() => useWindowSize()).app;
+    app.unmount();
 
     expect(window.removeEventListener).toHaveBeenCalledWith(
       'resize',

@@ -58,7 +58,7 @@ import { createAccount } from '@/repositories/accounts';
 import { ACCOUNT_TYPES } from '@/constants/account';
 import { currencyToCents } from '@/support/money';
 import { handleApiError } from '@/api/errors';
-import { SetupContext, defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { Budget } from '@/types/models';
 import useCreateAccountForm from '@/use/forms/create-account';
 
@@ -85,7 +85,7 @@ export default defineComponent({
     SadSelect,
   },
 
-  setup(props, { emit }: SetupContext) {
+  setup(props, { emit }) {
     const { t } = useI18n();
     const { currencySymbol, form, resetForm } = useCreateAccountForm({
       budget: props.budget,

@@ -98,7 +98,7 @@ import { handleApiError } from '@/api/errors';
 import { openBudget } from '@/repositories/budgets';
 import { accounts } from '@/repositories/accounts';
 import { payees } from '@/repositories/payees';
-import { PropType, SetupContext, computed, defineComponent } from 'vue';
+import { PropType, computed, defineComponent } from 'vue';
 import { Account, Transaction } from '@/types/models';
 import { symbolOf } from '@/support/currencies';
 
@@ -131,7 +131,7 @@ export default defineComponent({
     SadSwitch,
   },
 
-  setup(props, { emit }: SetupContext) {
+  setup(props, { emit }) {
     const { t } = useI18n();
     const { categoryOptions } = useBudgetCategories();
 

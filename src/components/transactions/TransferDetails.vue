@@ -100,7 +100,7 @@ import useTransferForm from '@/use/forms/transfer';
 import { useI18n } from 'vue-i18n';
 import { openBudget } from '@/repositories/budgets';
 import { accounts } from '@/repositories/accounts';
-import { PropType, computed, defineComponent, SetupContext } from 'vue';
+import { PropType, computed, defineComponent } from 'vue';
 import { Account, Transfer } from '@/types/models';
 import { symbolOf } from '@/support/currencies';
 import { handleApiError } from '@/api/errors';
@@ -135,7 +135,7 @@ export default defineComponent({
     SadSelect,
   },
 
-  setup(props, { emit }: SetupContext) {
+  setup(props, { emit }) {
     const { t } = useI18n();
     const { categoryOptions } = useBudgetCategories(false);
 

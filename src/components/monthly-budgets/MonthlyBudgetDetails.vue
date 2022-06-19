@@ -57,7 +57,7 @@ import {
 } from '@/repositories/monthly-budgets';
 import { currencySettings, currencyToCents } from '@/support/money';
 import { currentMonth } from '@/repositories/months';
-import { SetupContext, computed, defineComponent, PropType } from 'vue';
+import { computed, defineComponent, PropType } from 'vue';
 import { MonthlyBudget } from '@/types/models';
 import { symbolOf } from '@/support/currencies';
 
@@ -84,7 +84,7 @@ export default defineComponent({
     SadSelect,
   },
 
-  setup(props, { emit }: SetupContext) {
+  setup(props, { emit }) {
     const { t } = useI18n();
 
     const isEdit = computed(() => Boolean(props.monthlyBudget.id));

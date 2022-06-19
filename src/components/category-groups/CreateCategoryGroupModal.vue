@@ -39,7 +39,7 @@ import {
 } from '@/repositories/category-groups';
 import { Budget } from '@/types/models';
 import { useI18n } from 'vue-i18n';
-import { SetupContext, reactive, defineComponent, watch, PropType } from 'vue';
+import { reactive, defineComponent, watch, PropType } from 'vue';
 
 export default defineComponent({
   name: 'CreateCategoryGroupModal',
@@ -63,7 +63,7 @@ export default defineComponent({
     SadModal,
   },
 
-  setup(props, { emit }: SetupContext) {
+  setup(props, { emit }) {
     const { t } = useI18n();
 
     const form = reactive({

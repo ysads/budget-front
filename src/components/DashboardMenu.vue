@@ -125,7 +125,7 @@ export default defineComponent({
     const activeClass = (route: string) => {
       return currentRoute.name === route ? 'active' : '';
     };
-    const emitNavigate = () => eventBus.emit(Events.CLOSE_DRAWER);
+    const emitNavigate = () => eventBus.emit(Events.CLOSE_DASHBOARD_MENU);
 
     const toggleModal = () => (modalVisible.value = !modalVisible.value);
 

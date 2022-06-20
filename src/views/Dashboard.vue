@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <i class="fas fa-bars dashboard__drawer-toggle" @click="toggleDrawer" />
+    <i class="fas fa-bars dashboard__drawer-toggle" @click="toggleMenu" />
     <dashboard-menu
       v-if="openBudget.id"
       ref="drawer"
@@ -74,24 +74,24 @@ export default defineComponent({
     const { isMobile } = useWindowSize();
     const showDrawer = computed(() => isDrawerVisible.value && isMobile.value);
 
-    const toggleDrawer = () => {
+    const toggleMenu = () => {
       isDrawerVisible.value = !isDrawerVisible.value;
     };
 
     onMounted(async () => {
       await validateSession();
 
-      eventBus.on(Events.CLOSE_DRAWER, toggleDrawer);
+      eventBus.on(Events.CLOSE_DASHBOARD_MENU, toggleMenu);
 
       await fetchResources();
       loading.value = false;
     });
 
     onUnmounted(() => {
-      eventBus.off(Events.CLOSE_DRAWER, toggleDrawer);
+      eventBus.off(Events.CLOSE_DASHBOARD_MENU, toggleMenu);
     });
 
-    return { isDrawerVisible, loading, openBudget, showDrawer, toggleDrawer };
+    return { isDrawerVisible, loading, openBudget, showDrawer, toggleMenu };
   },
 });
 </script>

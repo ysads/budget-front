@@ -84,11 +84,11 @@ describe('AccountAccordion', () => {
   });
 
   describe('when account item is clicked', () => {
-    it('emits CloseDrawer event', async () => {
+    it('emits CLOSE_DASHBOARD_MENU event', async () => {
       const wrapper = factory();
       const mockHandler = jest.fn();
 
-      eventBus.on(Events.CLOSE_DRAWER, mockHandler);
+      eventBus.on(Events.CLOSE_DASHBOARD_MENU, mockHandler);
 
       await wrapper.find("[data-test='account-item']").trigger('click');
 

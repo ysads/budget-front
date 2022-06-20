@@ -79,7 +79,7 @@ export default defineComponent({
       return openAccountId.value === account.id ? 'active' : '';
     };
 
-    const emitNavigate = () => eventBus.emit(Events.CLOSE_DRAWER);
+    const emitNavigate = () => eventBus.emit(Events.CLOSE_DASHBOARD_MENU);
 
     return {
       activeClass,

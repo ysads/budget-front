@@ -31,7 +31,7 @@ export default defineComponent({
 
     const handleGlobalEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        eventBus.emit(Events.CLOSE_DRAWER);
+        eventBus.emit(Events.CLOSE_DRAWER_MODAL);
       }
     };
 

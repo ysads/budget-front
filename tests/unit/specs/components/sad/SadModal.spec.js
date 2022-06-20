@@ -1,11 +1,13 @@
 import SadModal from '@/components/sad/SadModal';
 import setupComponent from '#/setup-component';
+import { eventBus, Events } from '@/events';
 
 const factory = (args = {}) =>
   setupComponent(SadModal, {
     props: {
       show: true,
       title: args.title,
+      ...args,
     },
     slots: args.slots,
     stubs: { transition: false },
@@ -67,6 +69,24 @@ describe('SadModal', () => {
       await wrapper.find("[data-test='close-btn']").trigger('click');
 
       expect(wrapper.emitted().close).toBeTruthy();
+    });
+  });
+
+  describe('when CLOSE_DRAWER_MODAL is received', () => {
+    it('emits close if drawer is visible', () => {
+      const wrapper = factory({ show: true });
+
+      eventBus.emit(Events.CLOSE_DRAWER_MODAL);
+
+      expect(wrapper.emitted().close).toBeTruthy();
+    });
+
+    it('does not emit close if drawer is hidden', () => {
+      const wrapper = factory({ show: false });
+
+      eventBus.emit(Events.CLOSE_DRAWER_MODAL);
+
+      expect(wrapper.emitted().close).toBeFalsy();
     });
   });
 });

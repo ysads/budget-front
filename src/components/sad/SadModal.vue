@@ -68,7 +68,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { t } = useI18n();
 
-    eventBus.on(Events.CLOSE_DRAWER, () => {
+    eventBus.on(Events.CLOSE_DRAWER_MODAL, () => {
       if (props.show) {
         emit('close');
       }

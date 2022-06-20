@@ -1,10 +1,6 @@
 <template>
-  <div class="sad-alert">
-    <div
-      class="sad-alert__ribbon"
-      :class="`sad-alert__ribbon-${variant}`"
-      data-test="ribbon"
-    />
+  <div class="sad-alert" :class="classes" role="status">
+    <div class="sad-alert__ribbon" data-test="ribbon" />
     <sad-icon
       class="sad-alert__icon"
       :name="variantIcon"
@@ -27,13 +23,7 @@
 
 <script lang="ts">
 import SadIcon from './SadIcon.vue';
-import {
-  PropType,
-  SetupContext,
-  computed,
-  defineComponent,
-  onMounted,
-} from 'vue';
+import { PropType, computed, defineComponent, onMounted } from 'vue';
 
 const VARIANTS = {
   error: {
@@ -77,7 +67,9 @@ export default defineComponent({
 
   emits: ['close'],
 
-  setup(props, { emit }: SetupContext) {
+  setup(props, { emit }) {
+    const classes = `sad-alert--${props.variant}`;
+
     const variantIcon = computed(
       () => VARIANTS[props.variant as AlertVariant].icon,
     );
@@ -87,7 +79,7 @@ export default defineComponent({
       setTimeout(() => emit('close', props.id), props.duration);
     });
 
-    return { emit, variantIcon };
+    return { classes, emit, variantIcon };
   },
 });
 </script>
@@ -95,6 +87,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .sad-alert {
   background: var(--alert-bg);
+  border: 1px solid var(--alert-border);
   border-radius: var(--alert-radius);
   box-shadow: var(--alert-shadow);
   color: var(--text-primary);
@@ -104,18 +97,18 @@ export default defineComponent({
 
   &__ribbon {
     flex-shrink: 0;
-    width: 4px;
+    width: 6px;
   }
 
-  &__ribbon-error {
+  &--error > &__ribbon {
     background: var(--color-error);
   }
 
-  &__ribbon-success {
+  &--success > &__ribbon {
     background: var(--color-success);
   }
 
-  &__ribbon-warning {
+  &--warning > &__ribbon {
     background: var(--color-warning);
   }
 
@@ -124,6 +117,18 @@ export default defineComponent({
     color: var(--text-secondary);
     flex-shrink: 0;
     padding-left: 16px;
+  }
+
+  &--error > &__icon {
+    color: var(--color-error);
+  }
+
+  &--success > &__icon {
+    color: var(--color-success);
+  }
+
+  &--warning > &__icon {
+    color: var(--color-warning);
   }
 
   &__close {

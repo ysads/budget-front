@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import SadButton from '@/components/sad/SadButton.vue';
 import { getMe, updateAuthToken } from '@/repositories/auth';
 import { useAuth0 } from '@auth0/auth0-vue';

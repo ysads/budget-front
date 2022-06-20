@@ -69,7 +69,7 @@
 import { defineComponent, PropType } from 'vue';
 import { format, balanceClasses, currencySettings } from '@/support/money';
 import { Budget, Transaction } from '@/types/models';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import useBudgetCategories from '@/use/budget-categories';
 import useTransfer from '@/use/transfer';
 import SadIcon from '@/components/sad/SadIcon.vue';
@@ -95,7 +95,7 @@ export default defineComponent({
   emits: ['select'],
 
   setup(props) {
-    const { d } = useI18n('TransactionTableRow');
+    const { d } = useI18n();
     const { categoryName } = useBudgetCategories();
     const budgetCategoryName = categoryName(props.transaction);
 

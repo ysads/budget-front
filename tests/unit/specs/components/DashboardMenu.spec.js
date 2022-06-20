@@ -140,22 +140,22 @@ describe('DashboardMenu', () => {
   });
 
   describe('clicking on menu links', () => {
-    it('emits CloseDrawer event for Budget', async () => {
+    it('emits CLOSE_DASHBOARD_MENU event for Budget', async () => {
       const wrapper = factory();
       const mockHandler = jest.fn();
 
-      eventBus.on(Events.CLOSE_DRAWER, mockHandler);
+      eventBus.on(Events.CLOSE_DASHBOARD_MENU, mockHandler);
 
       await wrapper.find("[data-test='budget-link']").trigger('click');
 
       expect(mockHandler).toHaveBeenCalled();
     });
 
-    it('emits CloseDrawer event for AllAccounts', async () => {
+    it('emits CLOSE_DASHBOARD_MENU event for AllAccounts', async () => {
       const wrapper = factory();
       const mockHandler = jest.fn();
 
-      eventBus.on(Events.CLOSE_DRAWER, mockHandler);
+      eventBus.on(Events.CLOSE_DASHBOARD_MENU, mockHandler);
 
       await wrapper.find("[data-test='all-accounts-link']").trigger('click');
 

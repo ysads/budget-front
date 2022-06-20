@@ -1,11 +1,13 @@
 import setupComponent from '#/setup-component';
 import SadDrawer from '@/components/sad/SadDrawer';
+import { eventBus, Events } from '@/events';
 
 const factory = (args = {}) =>
   setupComponent(SadDrawer, {
     props: {
       title: args.title,
       show: true,
+      ...args,
     },
     slots: {
       default: '<p id="content">my content</p>',
@@ -55,6 +57,24 @@ describe('SadDrawer', () => {
       await wrapper.find("[data-test='overlay']").trigger('click');
 
       expect(wrapper.emitted().close).toBeTruthy();
+    });
+  });
+
+  describe('when CLOSE_DRAWER_MODAL is received', () => {
+    it('emits close if drawer is visible', () => {
+      const wrapper = factory({ show: true });
+
+      eventBus.emit(Events.CLOSE_DRAWER_MODAL);
+
+      expect(wrapper.emitted().close).toBeTruthy();
+    });
+
+    it('does not emit close if drawer is hidden', () => {
+      const wrapper = factory({ show: false });
+
+      eventBus.emit(Events.CLOSE_DRAWER_MODAL);
+
+      expect(wrapper.emitted().close).toBeFalsy();
     });
   });
 });

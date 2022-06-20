@@ -4,7 +4,7 @@ import { Account, NullishDate, Transfer, TransferType } from '@/types/models';
 import { computed, reactive, watch, ComputedRef, Ref } from 'vue';
 import { getAccountById } from '@/repositories/accounts';
 import { ApiTransferMutation } from '@/types/api';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { CurrencySettings, format } from '@/support/money';
 
 export interface TransferForm {

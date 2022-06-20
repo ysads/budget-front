@@ -8,29 +8,29 @@
       data-test="new-group-btn"
       @click="toggle('categoryGroupModal')"
     >
-      {{ t('newCategoryGroup') }}
+      {{ t('BudgetToolbar.newCategoryGroup') }}
     </sad-button>
 
     <sad-button
       class="budget-toolbar__button"
-      icon="plus"
+      icon="tag"
       type="ghost"
       size="small"
       data-test="new-category-btn"
       @click="toggle('categoryModal')"
     >
-      {{ t('newCategory') }}
+      {{ t('BudgetToolbar.newCategory') }}
     </sad-button>
 
     <sad-button
       class="budget-toolbar__button"
-      icon="plus"
+      icon="money-check-alt"
       type="ghost"
       size="small"
       data-test="new-monthly-budget-btn"
       @click="toggle('drawer')"
     >
-      {{ t('newMonthlyBudget') }}
+      {{ t('BudgetToolbar.newMonthlyBudget') }}
     </sad-button>
 
     <create-category-group-modal
@@ -58,7 +58,7 @@ import CreateCategoryGroupModal from '@/components/category-groups/CreateCategor
 import CreateCategoryModal from '@/components/categories/CreateCategoryModal.vue';
 import MonthlyBudgetDetails from '@/components/monthly-budgets/MonthlyBudgetDetails.vue';
 import SadButton from '@/components/sad/SadButton.vue';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { openBudget } from '@/repositories/budgets';
 import { defineComponent, reactive } from 'vue';
 
@@ -90,7 +90,6 @@ export default defineComponent({
 .budget-toolbar {
   display: flex;
   flex-flow: row wrap;
-  gap: 12px;
   justify-content: flex-start;
   padding: $base * 2 $base * 4;
 }

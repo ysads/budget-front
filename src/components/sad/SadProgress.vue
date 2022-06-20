@@ -11,6 +11,7 @@
       :style="doneStyling"
       class="sad-progress__current"
       :data-current="value + '%'"
+      data-test="elapsed"
     />
   </div>
 </template>
@@ -27,7 +28,7 @@ export default defineComponent({
       required: true,
     },
     color: {
-      type: Object as PropType<ProgressColor>,
+      type: String as PropType<ProgressColor>,
       required: true,
     },
   },

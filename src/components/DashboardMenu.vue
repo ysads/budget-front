@@ -12,13 +12,17 @@
           data-test="budget-link"
           @click="emitNavigate"
         >
-          <sad-icon class="icon" name="piggy-bank" />{{ t('budget') }}
+          <sad-icon class="icon" name="piggy-bank" />{{
+            t('DashboardMenu.budget')
+          }}
         </router-link>
       </li>
 
       <li class="dashboard-menu__nav-item" :class="activeClass('Reports')">
         <router-link class="dashboard-menu__nav-link" to="#">
-          <sad-icon class="icon" name="chart-area" />{{ t('reports') }}
+          <sad-icon class="icon" name="chart-area" />{{
+            t('DashboardMenu.reports')
+          }}
         </router-link>
       </li>
 
@@ -33,7 +37,9 @@
           data-test="all-accounts-link"
           @click="emitNavigate"
         >
-          <sad-icon class="icon" name="university" />{{ t('allAccounts') }}
+          <sad-icon class="icon" name="university" />{{
+            t('DashboardMenu.allAccounts')
+          }}
         </router-link>
       </li>
     </ul>
@@ -48,7 +54,7 @@
         class="dashboard-menu__accounts-list"
         :accounts="budgetAccounts"
         :budget="openBudget"
-        :label="t(`budgetAccounts`)"
+        :label="t('DashboardMenu.budgetAccounts')"
         data-test="budget-accounts-accordion"
       />
       <account-accordion
@@ -56,7 +62,7 @@
         class="dashboard-menu__accounts-list"
         :accounts="trackingAccounts"
         :budget="openBudget"
-        :label="t(`trackingAccounts`)"
+        :label="t('DashboardMenu.trackingAccounts')"
         data-test="tracking-accounts-accordion"
       />
     </div>
@@ -66,8 +72,8 @@
       class="dashboard-menu__accounts--empty"
       data-test="empty-accounts-text"
     >
-      <strong>{{ t('noAccounts') }}</strong>
-      <p class="tip">{{ t('noAccountsTip') }}</p>
+      <strong>{{ t('DashboardMenu.noAccounts') }}</strong>
+      <p class="tip">{{ t('DashboardMenu.noAccountsTip') }}</p>
     </div>
 
     <sad-button
@@ -77,7 +83,7 @@
       @click="toggleModal"
     >
       <sad-icon name="plus" size="small" class="dashboard-menu__button-icon" />
-      {{ t('addAccount') }}
+      {{ t('DashboardMenu.addAccount') }}
     </sad-button>
 
     <create-account-modal
@@ -94,7 +100,7 @@ import AccountAccordion from '@/components/accounts/AccountAccordion.vue';
 import CreateAccountModal from '@/components/accounts/CreateAccountModal.vue';
 import SadButton from '@/components/sad/SadButton.vue';
 import SadIcon from '@/components/sad/SadIcon.vue';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { budgetAccounts, trackingAccounts } from '@/repositories/accounts';
 import { openBudget } from '@/repositories/budgets';
 import { defineComponent, ref } from 'vue';
@@ -119,7 +125,7 @@ export default defineComponent({
     const activeClass = (route: string) => {
       return currentRoute.name === route ? 'active' : '';
     };
-    const emitNavigate = () => eventBus.emit(Events.CLOSE_DRAWER);
+    const emitNavigate = () => eventBus.emit(Events.CLOSE_DASHBOARD_MENU);
 
     const toggleModal = () => (modalVisible.value = !modalVisible.value);
 

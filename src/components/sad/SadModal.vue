@@ -41,7 +41,7 @@ import { defineComponent } from 'vue';
 import { FocusTrap } from 'focus-trap-vue';
 import SadButton from '@/components/sad/SadButton.vue';
 import SadIcon from '@/components/sad/SadIcon.vue';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'SadModal',
@@ -66,9 +66,9 @@ export default defineComponent({
   emits: ['close'],
 
   setup(props, { emit }) {
-    const { t } = useI18n('CreateAccountModal');
+    const { t } = useI18n();
 
-    eventBus.on(Events.CLOSE_DRAWER, () => {
+    eventBus.on(Events.CLOSE_DRAWER_MODAL, () => {
       if (props.show) {
         emit('close');
       }

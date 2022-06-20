@@ -18,12 +18,11 @@ const factory = (args = {}) =>
   });
 
 describe('SadAlert', () => {
-  it('renders a ribbon with variant class', () => {
+  it('renders a wrapper with variant class', () => {
     const variant = sample(VARIANTS);
     const wrapper = factory({ variant });
-    const item = wrapper.find("[data-test='ribbon']");
 
-    expect(item.classes()).toContain(`sad-alert__ribbon-${variant}`);
+    expect(wrapper.classes()).toContain(`sad-alert--${variant}`);
   });
 
   it('renders message', () => {

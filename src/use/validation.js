@@ -1,5 +1,5 @@
 // FIXME: reimplement validation
-// import useI18n from '@/use/i18n';
+// import { useI18n } from 'vue-i18n';
 
 // export const useValidation = () => {
 //   const { t } = useI18n('');

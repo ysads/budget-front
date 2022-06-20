@@ -1,12 +1,12 @@
 import CreateAccountModal from '@/components/accounts/CreateAccountModal';
 import factories from '#/factories';
 import faker from 'faker';
-import flushPromises from 'flush-promises';
 import sample from 'lodash/sample';
 import setupComponent from '#/setup-component';
 import { handleApiError } from '@/api/errors';
 import { ACCOUNT_TYPES } from '@/constants/account';
 import * as accountsRepository from '@/repositories/accounts';
+import { nextTick } from 'vue';
 
 jest.mock('@/api/errors', () => ({
   handleApiError: jest.fn(),
@@ -35,7 +35,7 @@ const factory = (args = {}) => {
   });
 };
 
-describe.skip('CreateAccountModal', () => {
+describe('CreateAccountModal', () => {
   it('renders account type select with an option for each account type', () => {
     const wrapper = factory();
 
@@ -115,7 +115,7 @@ describe.skip('CreateAccountModal', () => {
 
         await wrapper.find("[data-test='form']").trigger('submit.prevent');
 
-        await flushPromises();
+        await nextTick();
 
         expect(handleApiError).toHaveBeenCalledWith(error);
       });

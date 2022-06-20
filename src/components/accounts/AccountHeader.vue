@@ -16,7 +16,7 @@
 <script lang="ts">
 import { currencySettings, format } from '@/support/money';
 import { Budget } from '@/types/models';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { computed, defineComponent, PropType } from 'vue';
 
 export default defineComponent({
@@ -42,7 +42,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { t } = useI18n('AccountHeader');
+    const { t } = useI18n();
     const current = computed(() => props.cleared + props.uncleared);
     const moneySettings = currencySettings(props.budget);
 

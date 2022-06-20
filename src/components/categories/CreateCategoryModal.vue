@@ -1,7 +1,7 @@
 <template>
   <sad-modal
     :show="show"
-    :title="t('newCategory')"
+    :title="t('CreateCategoryModal.title')"
     data-test="modal"
     @close="$emit('close')"
   >
@@ -14,14 +14,14 @@
         v-model="form.categoryGroupId"
         name="category-group"
         class="create-category__item"
-        :placeholder="st('categoryGroupPlaceholder')"
-        :label="st('categoryGroup')"
+        :placeholder="t('placeholders.select')"
+        :label="t('CreateCategoryModal.categoryGroup')"
         :options="categoryGroupOptions"
         data-test="category-group-id"
       />
       <sad-input
         v-model="form.name"
-        :label="st('name')"
+        :label="t('CreateCategoryModal.name')"
         name="name"
         class="create-category__item"
         data-test="name"
@@ -31,7 +31,7 @@
     <template #footer>
       <div class="create-category__footer">
         <sad-button size="normal" type="primary" @click="handleSubmit">
-          {{ t('save') }}
+          {{ t('general.save') }}
         </sad-button>
       </div>
     </template>
@@ -43,17 +43,10 @@ import SadButton from '@/components/sad/SadButton.vue';
 import SadInput from '@/components/sad/SadInput.vue';
 import SadModal from '@/components/sad/SadModal.vue';
 import SadSelect from '@/components/sad/SadSelect.vue';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { categoryGroups } from '@/repositories/category-groups';
 import { createCategory } from '@/repositories/categories';
-import {
-  PropType,
-  SetupContext,
-  reactive,
-  defineComponent,
-  watch,
-  computed,
-} from 'vue';
+import { PropType, reactive, defineComponent, watch, computed } from 'vue';
 import { Budget } from '@/types/models';
 
 export default defineComponent({
@@ -79,8 +72,8 @@ export default defineComponent({
     SadSelect,
   },
 
-  setup(props, { emit }: SetupContext) {
-    const { st, t } = useI18n('CreateCategoryModal');
+  setup(props, { emit }) {
+    const { t } = useI18n();
     const form = reactive({
       budgetId: props.budget.id,
       categoryGroupId: '',
@@ -112,7 +105,6 @@ export default defineComponent({
       categoryGroupOptions,
       form,
       handleSubmit,
-      st,
       t,
     };
   },

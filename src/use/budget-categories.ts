@@ -4,7 +4,7 @@ import {
 } from '@/repositories/categories';
 import { categoryGroupById } from '@/repositories/category-groups';
 import { computed, ComputedRef } from 'vue';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { Category, CategoryGroup, Transaction } from '@/types/models';
 
 interface BudgetCategoryOption {
@@ -24,13 +24,13 @@ interface UseBudgetCategoriesHook {
 export default function useBudgetCategories(
   includeInflow = true,
 ): UseBudgetCategoriesHook {
-  const { st } = useI18n('budgetCategories');
+  const { t } = useI18n();
 
   const inflowCategory = {
-    label: st('inflow'),
+    label: t('budgetCategories.inflow'),
     options: [
       {
-        label: st('toBeBudgeted'),
+        label: t('budgetCategories.toBeBudgeted'),
         value: '',
       },
     ],
@@ -54,7 +54,9 @@ export default function useBudgetCategories(
 
   const categoryName = (transaction: Transaction) => {
     if (!transaction.categoryId) {
-      return `${st('inflow')}: ${st('toBeBudgeted')}`;
+      return `${t('budgetCategories.inflow')}: ${t(
+        'budgetCategories.toBeBudgeted',
+      )}`;
     }
 
     const category = categoryById(transaction.categoryId) as Category;

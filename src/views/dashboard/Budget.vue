@@ -26,7 +26,7 @@ import { currentMonth, getMonthByIso } from '@/repositories/months';
 import { useRoute, useRouter } from 'vue-router';
 import { computed, defineComponent, ref, watchEffect } from 'vue';
 import { IsoMonth } from '@/types/models';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'Budget',

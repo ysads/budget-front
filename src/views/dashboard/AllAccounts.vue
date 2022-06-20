@@ -4,7 +4,7 @@
     <div v-else>
       <account-header
         :budget="openBudget"
-        :name="t('allAccounts')"
+        :name="t('AllAccounts.title')"
         :cleared="totalBalance(accounts, 'clearedBalance')"
         :uncleared="totalBalance(accounts, 'unclearedBalance')"
         data-test="header"
@@ -23,7 +23,7 @@ import AccountHeader from '@/components/accounts/AccountHeader.vue';
 import Loading from '@/components/Loading.vue';
 import AccountToolbar from '@/components/accounts/AccountToolbar.vue';
 import TransactionList from '@/components/transactions/TransactionList.vue';
-import useI18n from '@/use/i18n';
+import { useI18n } from 'vue-i18n';
 import { openBudget } from '@/repositories/budgets';
 import { accounts } from '@/repositories/accounts';
 import { getTransactions, transactions } from '@/repositories/transactions';

@@ -112,6 +112,13 @@ export default defineComponent({
     background: var(--color-warning);
   }
 
+  &__icon {
+    align-self: center;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    padding-left: 16px;
+  }
+
   &--error > &__icon {
     color: var(--color-error);
   }
@@ -122,13 +129,6 @@ export default defineComponent({
 
   &--warning > &__icon {
     color: var(--color-warning);
-  }
-
-  &__icon {
-    align-self: center;
-    color: var(--text-secondary);
-    flex-shrink: 0;
-    padding-left: 16px;
   }
 
   &__close {

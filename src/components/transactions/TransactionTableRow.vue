@@ -158,7 +158,7 @@ export default defineComponent({
     flex: 1;
     text-align: left;
 
-    @include breakpoint(sm) {
+    @include breakpoint(md) {
       display: block;
     }
   }

@@ -10,13 +10,6 @@ const factory = () => setupComponent(BudgetToolbar, { renderSlots: true });
 repository.openBudget.value = openBudget;
 
 describe('BudgetToolbar', () => {
-  it('renders new group button', () => {
-    const wrapper = factory();
-    const item = wrapper.find("[data-test='new-group-btn']");
-
-    expect(item.text()).toMatch('newCategoryGroup');
-  });
-
   it('renders new category button', () => {
     const wrapper = factory();
     const item = wrapper.find("[data-test='new-category-btn']");
@@ -29,13 +22,6 @@ describe('BudgetToolbar', () => {
     const item = wrapper.find("[data-test='new-monthly-budget-btn']");
 
     expect(item.text()).toMatch('newMonthlyBudget');
-  });
-
-  it('does not render create group modal by default', () => {
-    const wrapper = factory();
-    const item = wrapper.findComponent("[data-test='new-group-modal']");
-
-    expect(item.props().show).toBeFalsy();
   });
 
   it('does not render create category modal by default', () => {
@@ -52,8 +38,8 @@ describe('BudgetToolbar', () => {
     expect(item.props().show).toBeFalsy();
   });
 
-  describe('when new group button is clicked', () => {
-    it('shows create group modal', async () => {
+  describe('when new category button is clicked', () => {
+    it('shows create category modal', async () => {
       const wrapper = factory();
       await wrapper
         .findComponent("[data-test='new-category-btn']")
@@ -65,21 +51,8 @@ describe('BudgetToolbar', () => {
     });
   });
 
-  describe('when new category button is clicked', () => {
-    it('shows create category modal', async () => {
-      const wrapper = factory();
-      await wrapper
-        .findComponent("[data-test='new-group-btn']")
-        .vm.$emit('click');
-
-      const modal = wrapper.findComponent("[data-test='new-group-modal']");
-
-      expect(modal.props().show).toBeTruthy();
-    });
-  });
-
   describe('when new monthly budget button is clicked', () => {
-    it('shows create category modal', async () => {
+    it('shows monthly budget details drawer', async () => {
       const wrapper = factory();
       await wrapper
         .findComponent("[data-test='new-monthly-budget-btn']")

@@ -11,6 +11,7 @@ interface ErrorResponse {
 
 export const MAPPED_ERRORS = [
   'accounts/duplicate',
+  'categories/duplicate',
   'monthly-budgets/already-exists',
 ];
 

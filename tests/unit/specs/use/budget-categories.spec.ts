@@ -1,17 +1,15 @@
 import factories from '#/factories';
 import useBudgetCategories from '@/use/budget-categories';
 import * as categoriesRepo from '@/repositories/categories';
-import * as categoryGroupsRepo from '@/repositories/category-groups';
 
-const categoryGroups = factories.categoryGroup.buildList(2);
+const groups = ['group one', 'group two'];
 const categories = [
-  factories.category.build({ categoryGroupId: categoryGroups[0].id }),
-  factories.category.build({ categoryGroupId: categoryGroups[0].id }),
-  factories.category.build({ categoryGroupId: categoryGroups[1].id }),
+  factories.category.build({ groupName: groups[0] }),
+  factories.category.build({ groupName: groups[0] }),
+  factories.category.build({ groupName: groups[1] }),
 ];
 
 categoriesRepo.categories.value = categories;
-categoryGroupsRepo.categoryGroups.value = categoryGroups;
 
 describe('useBudgetCategories', () => {
   describe('#categoryOptions', () => {
@@ -29,7 +27,7 @@ describe('useBudgetCategories', () => {
           ],
         },
         {
-          label: categoryGroups[0].name,
+          label: groups[0],
           options: [
             {
               label: categories[0].name,
@@ -42,7 +40,7 @@ describe('useBudgetCategories', () => {
           ],
         },
         {
-          label: categoryGroups[1].name,
+          label: groups[1],
           options: [
             {
               label: categories[2].name,
@@ -62,7 +60,7 @@ describe('useBudgetCategories', () => {
       });
 
       expect(categoryName(transaction)).toEqual(
-        `${categoryGroups[1].name}: ${categories[2].name}`,
+        `${groups[1]}: ${categories[2].name}`,
       );
     });
 

@@ -106,6 +106,9 @@
       "duplicate": "Você já cadastrou essa conta.",
       "not-found": "Parece que essa conta não existe..."
     },
+    "categories": {
+      "duplicate": "Você já cadastrou essa categoria."
+    },
     "generic": "Algo deu errado. Tente novamente.",
     "monthly-budgets": {
       "already-exists": "Você já tem um orçamento para essa categoria."

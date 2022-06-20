@@ -11,13 +11,14 @@
       @submit.prevent="handleSubmit"
     >
       <sad-select
-        v-model="form.categoryGroupId"
+        v-model="form.groupName"
         name="category-group"
         class="create-category__item"
         :placeholder="t('placeholders.select')"
         :label="t('CreateCategoryModal.categoryGroup')"
         :options="categoryGroupOptions"
-        data-test="category-group-id"
+        allow-create
+        data-test="group-name"
       />
       <sad-input
         v-model="form.name"
@@ -44,10 +45,12 @@ import SadInput from '@/components/sad/SadInput.vue';
 import SadModal from '@/components/sad/SadModal.vue';
 import SadSelect from '@/components/sad/SadSelect.vue';
 import { useI18n } from 'vue-i18n';
-import { categoryGroups } from '@/repositories/category-groups';
-import { createCategory } from '@/repositories/categories';
-import { PropType, reactive, defineComponent, watch, computed } from 'vue';
+import { createCategory, groups } from '@/repositories/categories';
+import { PropType, defineComponent, computed, ref } from 'vue';
 import { Budget } from '@/types/models';
+import { handleApiError } from '@/api/errors';
+import alert from '@/support/alert';
+import useCategoryForm from '@/use/forms/category-form';
 
 export default defineComponent({
   name: 'CreateCategoryModal',
@@ -74,30 +77,26 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const { t } = useI18n();
-    const form = reactive({
-      budgetId: props.budget.id,
-      categoryGroupId: '',
-      name: '',
+    const { form, resetForm, saveForm, saveMessage } = useCategoryForm({
+      budget: ref(props.budget),
     });
 
-    watch(
-      () => props.show,
-      () => {
-        form.name = '';
-        form.categoryGroupId = '';
-      },
-    );
-
     const categoryGroupOptions = computed(() =>
-      categoryGroups.value.map((c) => ({
-        value: c.id,
-        label: c.name,
+      groups.value.map((group) => ({
+        value: group,
+        label: group,
       })),
     );
 
-    const handleSubmit = () => {
-      createCategory(form);
-      emit('close');
+    const handleSubmit = async () => {
+      try {
+        await saveForm(form);
+        alert.success(saveMessage.value);
+        resetForm();
+        emit('close');
+      } catch (err) {
+        handleApiError(err);
+      }
     };
 
     return {

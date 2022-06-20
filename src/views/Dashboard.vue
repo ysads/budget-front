@@ -19,7 +19,6 @@ import DashboardMenu from '@/components/DashboardMenu.vue';
 import Loading from '@/components/Loading.vue';
 import useWindowSize from '@/use/window-size';
 import { getAccounts } from '@/repositories/accounts';
-import { getCategoryGroups } from '@/repositories/category-groups';
 import { getCategories } from '@/repositories/categories';
 import { getMonthlyBudgets } from '@/repositories/monthly-budgets';
 import { getPayees } from '@/repositories/payees';
@@ -54,7 +53,6 @@ export default defineComponent({
 
       await Promise.all([
         getAccounts(params),
-        getCategoryGroups(params),
         getCategories(params),
         getPayees(params),
         // FIXME: account screens rely on that, maybe move it to a more specific view
@@ -67,7 +65,7 @@ export default defineComponent({
       try {
         await getMe();
       } catch {
-        router.push({ name: 'SignIn' });
+        router.push({ name: 'Auth' });
       }
     };
 

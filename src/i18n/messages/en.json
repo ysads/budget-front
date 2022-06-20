@@ -106,6 +106,9 @@
       "duplicate": "Duplicate account. You can't register the same account twice.",
       "not-found": "Account not found..."
     },
+    "categories": {
+      "duplicate": "Duplicate category. You can't register the same category twice."
+    },
     "generic": "Something is wrong. Try again.",
     "monthly-budgets": {
       "already-exists": "You already have a budget for this category."

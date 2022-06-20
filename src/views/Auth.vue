@@ -3,8 +3,9 @@
     <main class="auth__main">
       <img class="auth__logo" src="@/assets/logo.png" />
       <h1 class="auth__title">{{ t('Auth.title') }}</h1>
-      <sad-button @click="login">
-        {{ t('Auth.signInWithAuth0') }}
+      <loading v-if="isLoading" data-test="loading" />
+      <sad-button v-else data-test="button" @click="login">
+        <span>{{ t('Auth.signInWithAuth0') }}</span>
       </sad-button>
     </main>
   </div>
@@ -12,26 +13,29 @@
 
 <script lang="ts">
 import { useI18n } from 'vue-i18n';
+import Loading from '@/components/Loading.vue';
 import SadButton from '@/components/sad/SadButton.vue';
 import { getMe, updateAuthToken } from '@/repositories/auth';
 import { useAuth0 } from '@auth0/auth0-vue';
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'Auth',
 
   components: {
+    Loading,
     SadButton,
   },
 
   setup() {
     const router = useRouter();
     const { t } = useI18n();
-    const { loginWithPopup, getAccessTokenSilently } = useAuth0();
+    const { loginWithPopup, isAuthenticated, getAccessTokenSilently } =
+      useAuth0();
+    const isLoading = ref(isAuthenticated.value);
 
-    const login = async () => {
-      await loginWithPopup();
+    const getTokensAndGoToBudget = async () => {
       const token = await getAccessTokenSilently();
 
       updateAuthToken(token);
@@ -43,7 +47,20 @@ export default defineComponent({
       });
     };
 
-    return { login, t };
+    onMounted(() => {
+      if (isAuthenticated.value) {
+        getTokensAndGoToBudget();
+      }
+    });
+
+    const login = async () => {
+      isLoading.value = true;
+
+      await loginWithPopup();
+      await getTokensAndGoToBudget();
+    };
+
+    return { isLoading, login, t };
   },
 });
 </script>

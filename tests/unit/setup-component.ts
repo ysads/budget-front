@@ -4,7 +4,8 @@ import {
   shallowMount,
   VueWrapper,
 } from '@vue/test-utils';
-import { ComponentPublicInstance, DefineComponent } from 'vue';
+import { Stubs } from '@vue/test-utils/dist/types';
+import { ComponentPublicInstance } from 'vue';
 import * as router from 'vue-router';
 
 const mockRoute: router.RouteLocationNormalized = {
@@ -26,15 +27,15 @@ const mockRouter: router.Router = {
 };
 
 export interface SetupComponentArgs extends MountingOptions<never> {
-  route?: router.RouteLocationNormalized;
-  router?: router.Router;
-  stubs?: Record<string, string>;
+  route?: Partial<router.RouteLocationNormalized>;
+  router?: Partial<router.Router>;
+  stubs?: Stubs;
   renderSlots?: boolean;
   withMount?: boolean;
 }
 
 export default function setupComponent(
-  component: DefineComponent,
+  component: never,
   args: SetupComponentArgs = {},
 ): VueWrapper<ComponentPublicInstance> {
   const mountingFn = args.withMount ? mount : shallowMount;
@@ -46,8 +47,8 @@ export default function setupComponent(
     typeof router.useRouter
   >;
 
-  useRoute.mockReturnValueOnce(args.route || mockRoute);
-  useRouter.mockReturnValueOnce(args.router || mockRouter);
+  useRoute.mockReturnValueOnce({ ...mockRoute, ...args.route });
+  useRouter.mockReturnValueOnce({ ...mockRouter, ...args.router });
 
   return mountingFn(component, {
     props: args.props,

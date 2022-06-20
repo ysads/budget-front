@@ -35,7 +35,7 @@ const factory = (args = {}) => {
   });
 };
 
-describe.skip('CreateAccountModal', () => {
+describe('CreateAccountModal', () => {
   it('renders account type select with an option for each account type', () => {
     const wrapper = factory();
 

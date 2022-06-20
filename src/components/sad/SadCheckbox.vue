@@ -61,7 +61,7 @@ export default defineComponent({
     },
   },
 
-  emits: ['update:model-value'],
+  emits: ['update:modelValue'],
 
   setup(props) {
     const { tipText, tipVariant } = useTip(props);

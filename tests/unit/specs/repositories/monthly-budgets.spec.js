@@ -3,7 +3,7 @@ import * as repository from '@/repositories/monthly-budgets';
 import factories from '#/factories';
 import faker from 'faker';
 
-describe.skip('MonthlyBudgetsRepository', () => {
+describe('MonthlyBudgetsRepository', () => {
   beforeEach(() => {
     repository.monthlyBudgets.value = [];
   });

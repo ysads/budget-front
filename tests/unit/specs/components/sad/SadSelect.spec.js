@@ -1,6 +1,5 @@
 import SadSelect from '@/components/sad/SadSelect';
 import setupComponent from '#/setup-component';
-// import { ElSelect } from 'element-pluss';
 
 const groupOptions = [
   {

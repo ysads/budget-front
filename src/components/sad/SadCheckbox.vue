@@ -98,7 +98,7 @@ export default defineComponent({
 
     &:focus + label::before,
     &:active + label::before {
-      box-shadow: 0px 0px 0px 2px var(--checkbox-focus);
+      box-shadow: 0 0 0 2px var(--checkbox-focus);
       transition: 0.2s;
     }
 

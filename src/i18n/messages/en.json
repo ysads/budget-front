@@ -59,7 +59,6 @@
     "updated": "Updated"
   },
   "MonthlyBudgetRow": {
-    "left": "",
     "notBudgeted": "No budget yet • {activity} out of {budgeted}",
     "spent": "{percentage}% • {activity} out of {budgeted}"
   },

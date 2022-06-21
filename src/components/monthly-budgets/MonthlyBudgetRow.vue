@@ -12,15 +12,12 @@
       <div class="category-budget__name" data-test="category-name">
         {{ category.name }}
       </div>
-      <span>
-        {{ t('MonthlyBudgetRow.left') }}
-        <span
-          class="category-budget__tag"
-          :class="availableClass"
-          data-test="available"
-        >
-          {{ format(monthlyBudget.available, moneySettings) }}
-        </span>
+      <span
+        class="category-budget__tag"
+        :class="availableClass"
+        data-test="available"
+      >
+        {{ format(monthlyBudget.available, moneySettings) }}
       </span>
     </div>
 
@@ -32,6 +29,7 @@
         class="category-budget__progress"
         :color="progressColor"
         :value="spentPercentage"
+        data-test="progress"
       />
     </div>
   </li>

@@ -1,6 +1,6 @@
 {
   "name": "budget-front",
-  "version": "3.6.0",
+  "version": "3.7.0",
   "private": true,
   "scripts": {
     "start": "vue-cli-service serve",

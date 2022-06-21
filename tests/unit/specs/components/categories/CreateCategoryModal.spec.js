@@ -1,14 +1,19 @@
-import * as categoryGroupsRepository from '@/repositories/category-groups';
 import * as categoriesRepository from '@/repositories/categories';
 import CreateCategoryModal from '@/components/categories/CreateCategoryModal';
 import factories from '#/factories';
 import setupComponent from '#/setup-component';
+import alert from '@/support/alert';
+
+jest.mock('@/support/alert', () => ({
+  success: jest.fn(),
+  error: jest.fn(),
+}));
 
 const budget = factories.budget.build();
-const categoryGroups = factories.categoryGroup.buildList(2);
+const groups = ['group one', 'group two'];
 
-categoryGroupsRepository.categoryGroups.value = categoryGroups;
 categoriesRepository.createCategory = jest.fn();
+categoriesRepository.groups.value = groups;
 
 const factory = () =>
   setupComponent(CreateCategoryModal, {
@@ -24,12 +29,25 @@ describe('CreateCategoryModal', () => {
     expect(item.props().label).toEqual('CreateCategoryModal.name');
   });
 
-  it('renders category group select', () => {
+  it('renders category group select that allows creation', () => {
     const wrapper = factory();
-    const item = wrapper.findComponent("[data-test='category-group-id']");
+    const item = wrapper.findComponent("[data-test='group-name']");
 
-    expect(item.props().label).toEqual('CreateCategoryModal.categoryGroup');
-    expect(item.props().options.length).toEqual(categoryGroups.length);
+    expect(item.props()).toMatchObject({
+      allowCreate: true,
+      label: 'CreateCategoryModal.categoryGroup',
+    });
+    expect(item.props().options.length).toEqual(groups.length);
+  });
+
+  it('renders recurring checkbox', () => {
+    const wrapper = factory();
+    const item = wrapper.findComponent("[data-test='recurring']");
+
+    expect(item.props()).toMatchObject({
+      label: 'CreateCategoryModal.isRecurring',
+      tip: 'CreateCategoryModal.isRecurringTip',
+    });
   });
 
   describe('when modal emits close', () => {
@@ -60,6 +78,14 @@ describe('CreateCategoryModal', () => {
       expect(categoriesRepository.createCategory).toHaveBeenCalled();
     });
 
+    it('dispatches a success alert', async () => {
+      const wrapper = factory();
+
+      await wrapper.find("[data-test='form']").trigger('submit.prevent');
+
+      expect(alert.success).toHaveBeenCalledWith('general.created');
+    });
+
     describe.skip('and validation fails', () => {
       it('does call createAccount', async () => {
         const wrapper = factory();
@@ -69,22 +95,6 @@ describe('CreateCategoryModal', () => {
 
         expect(categoriesRepository.createCategory).not.toHaveBeenCalled();
       });
-    });
-  });
-
-  describe('when show prop changes', () => {
-    it('cleans forms', async () => {
-      const wrapper = factory({ show: true });
-
-      await wrapper
-        .findComponent('[data-test="name"]')
-        .vm.$emit('update:model-value', 'test');
-
-      expect(wrapper.vm.form.name).toEqual('test');
-
-      await wrapper.setProps({ show: false });
-
-      expect(wrapper.vm.form.name).toEqual('');
     });
   });
 });

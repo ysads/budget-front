@@ -10,6 +10,7 @@
         :disabled="disabled"
         :allow-create="allowCreate"
         :name="name"
+        :no-data-text="noDataText"
         default-first-option
         filterable
         data-test="select"
@@ -89,6 +90,10 @@ export default defineComponent({
     name: {
       type: String,
       required: true,
+    },
+    noDataText: {
+      type: String,
+      default: '',
     },
     options: {
       type: Array,

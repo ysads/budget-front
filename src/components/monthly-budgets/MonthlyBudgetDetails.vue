@@ -49,8 +49,7 @@ import { useI18n } from 'vue-i18n';
 import useMonthlyBudgetForm from '@/use/forms/monthly-budget';
 import { handleApiError } from '@/api/errors';
 import { openBudget } from '@/repositories/budgets';
-import { categoriesByGroupId } from '@/repositories/categories';
-import { categoryGroups } from '@/repositories/category-groups';
+import { findCategoriesByGroupName, groups } from '@/repositories/categories';
 import {
   createMonthlyBudget,
   updateMonthlyBudget,
@@ -99,9 +98,9 @@ export default defineComponent({
     );
 
     const categoriesGrouped = computed(() =>
-      categoryGroups.value.map((group) => ({
-        label: group.name,
-        options: categoriesByGroupId(group.id).map((c) => ({
+      groups.value.map((group) => ({
+        label: group,
+        options: findCategoriesByGroupName(group).map((c) => ({
           value: c.id,
           label: c.name,
         })),

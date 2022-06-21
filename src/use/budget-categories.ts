@@ -1,11 +1,8 @@
-import {
-  categoryById,
-  categoriesGroupedByGroupId,
-} from '@/repositories/categories';
-import { categoryGroupById } from '@/repositories/category-groups';
+import { categories, categoryById } from '@/repositories/categories';
 import { computed, ComputedRef } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Category, CategoryGroup, Transaction } from '@/types/models';
+import { Category, Transaction } from '@/types/models';
+import { groupBy } from 'lodash';
 
 interface BudgetCategoryOption {
   label: string | undefined;
@@ -36,9 +33,9 @@ export default function useBudgetCategories(
     ],
   };
   const userCategories = computed(() =>
-    Object.entries(categoriesGroupedByGroupId.value).map(
-      ([groupId, categories]) => ({
-        label: categoryGroupById(groupId)?.name,
+    Object.entries(groupBy(categories.value, 'groupName')).map(
+      ([groupName, categories]) => ({
+        label: groupName,
         options: categories.map((category) => ({
           label: category.name,
           value: category.id,
@@ -60,11 +57,7 @@ export default function useBudgetCategories(
     }
 
     const category = categoryById(transaction.categoryId) as Category;
-    const categoryGroup = categoryGroupById(
-      category.categoryGroupId,
-    ) as CategoryGroup;
-
-    return `${categoryGroup.name}: ${category.name}`;
+    return `${category.groupName}: ${category.name}`;
   };
 
   return { categoryOptions, categoryName };

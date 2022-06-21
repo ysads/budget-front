@@ -37,8 +37,9 @@ export interface CategoryGroup {
 
 export interface Category {
   budgetId: string;
-  categoryGroupId: string;
+  groupName: string;
   id: string;
+  isRecurring: boolean;
   name: string;
 }
 

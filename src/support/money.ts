@@ -7,6 +7,9 @@ interface Currenciable {
   currency: Currency;
 }
 
+export type NonZeroableBalance = 'positive' | 'negative';
+export type ZeroableBalance = NonZeroableBalance | 'zero';
+
 export interface CurrencySettings {
   decimal: string;
   thousands: string;
@@ -90,6 +93,6 @@ export const format = (
   });
 };
 
-export const balanceClasses = (val: number): string => {
+export const balanceClasses = (val: number): NonZeroableBalance => {
   return val >= 0 ? 'positive' : 'negative';
 };

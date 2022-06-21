@@ -3,12 +3,23 @@ import * as repository from '@/repositories/categories';
 import factories from '#/factories';
 import faker from 'faker';
 
+const createParams = {
+  budgetId: faker.datatype.uuid(),
+  groupName: 'group one',
+  name: 'category one',
+};
+const getParams = {
+  budgetId: faker.datatype.uuid(),
+  mock: true,
+};
+
 describe('CategoriesRepository', () => {
   beforeEach(() => {
     repository.categories.value = [];
+    repository.groups.value = [];
   });
 
-  describe('#categoryGroupById', () => {
+  describe('#categoryById', () => {
     it('finds the category group matching given id', () => {
       const categories = factories.category.buildList(3);
       repository.categories.value = categories;
@@ -19,86 +30,107 @@ describe('CategoriesRepository', () => {
     });
   });
 
-  describe('#categoriesByGroupId', () => {
-    it('filters out categories with differente categoryGroupId', () => {
-      const categoryGroups = factories.categoryGroup.buildList(2);
+  describe('#findCategoriesByGroupName', () => {
+    it('filters out categories with differente group name', () => {
+      const groups = [faker.animal.cat(), faker.animal.cat()];
       const categories = [
-        factories.category.build({ categoryGroupId: categoryGroups[0].id }),
-        factories.category.build({ categoryGroupId: categoryGroups[1].id }),
-        factories.category.build({ categoryGroupId: categoryGroups[0].id }),
+        factories.category.build({ groupName: groups[0] }),
+        factories.category.build({ groupName: groups[1] }),
+        factories.category.build({ groupName: groups[0] }),
       ];
 
       repository.categories.value = categories;
 
-      expect(repository.categoriesByGroupId(categoryGroups[0].id)).toEqual([
+      expect(repository.findCategoriesByGroupName(groups[0])).toEqual([
         categories[0],
         categories[2],
       ]);
     });
   });
 
-  describe('#categoriesGroupedByGroupId', () => {
-    it('groups categories according to their group id', () => {
-      const categoryGroups = factories.categoryGroup.buildList(2);
-      const categories = [
-        factories.category.build({ categoryGroupId: categoryGroups[0].id }),
-        factories.category.build({ categoryGroupId: categoryGroups[1].id }),
-        factories.category.build({ categoryGroupId: categoryGroups[0].id }),
-      ];
-
-      repository.categories.value = categories;
-
-      expect(repository.categoriesGroupedByGroupId.value).toEqual({
-        [categoryGroups[0].id]: [categories[0], categories[2]],
-        [categoryGroups[1].id]: [categories[1]],
-      });
-    });
-  });
-
   describe('#createCategory', () => {
     it('dispatches a POST to api', async () => {
-      const budgetId = faker.datatype.uuid();
-      const params = { mock: true, budgetId };
-
-      await repository.createCategory(params);
+      await repository.createCategory(createParams);
 
       expect(api.post).toHaveBeenCalledWith(
-        `budgets/${budgetId}/categories`,
-        params,
+        `budgets/${createParams.budgetId}/categories`,
+        createParams,
       );
     });
 
-    it('updates category groups with newly-created resource', async () => {
-      const params = { param: 1 };
-      const categoryGroup = factories.categoryGroup.build();
+    it('updates categories with newly-created resource', async () => {
+      const category = factories.category.build();
 
-      api.post.mockResolvedValueOnce(categoryGroup);
+      api.post.mockResolvedValueOnce(category);
+      await repository.createCategory(createParams);
 
-      await repository.createCategory(params);
+      expect(repository.categories.value).toEqual([category]);
+    });
 
-      expect(repository.categories.value).toEqual([categoryGroup]);
+    it('does not add groupName to groups if it is already there', async () => {
+      const category = factories.category.build({ groupName: 'group one' });
+
+      repository.groups.value = ['group one'];
+      repository.categories.value = [
+        factories.category.build({ groupName: 'group one' }),
+      ];
+
+      api.post.mockResolvedValueOnce(category);
+      await repository.createCategory(createParams);
+
+      expect(repository.groups.value).toEqual(['group one']);
+    });
+
+    it('adds groupName to groups if it is not there', async () => {
+      const category = factories.category.build({ groupName: 'group one' });
+
+      repository.groups.value = ['group zero'];
+      repository.categories.value = [
+        factories.category.build({ groupName: 'group zero' }),
+      ];
+
+      api.post.mockResolvedValueOnce(category);
+      await repository.createCategory(createParams);
+
+      expect(repository.groups.value).toEqual(['group zero', 'group one']);
     });
   });
 
   describe('#getCategories', () => {
     it('dispatches a GET to api', async () => {
-      const budgetId = faker.datatype.uuid();
-      const params = { mock: true, budgetId };
+      api.get.mockResolvedValueOnce([]);
+      await repository.getCategories(getParams);
 
-      await repository.getCategories(params);
-
-      expect(api.get).toHaveBeenCalledWith(`budgets/${budgetId}/categories`);
+      expect(api.get).toHaveBeenCalledWith(
+        `budgets/${getParams.budgetId}/categories`,
+      );
     });
 
     it('saves fetched resources on local categories', async () => {
-      const params = { param: 1 };
-      const categories = factories.categoryGroup.buildList(2);
+      const categories = factories.category.buildList(2);
 
       api.get.mockResolvedValueOnce(categories);
-
-      await repository.getCategories(params);
+      await repository.getCategories(getParams);
 
       expect(repository.categories.value).toEqual(categories);
+    });
+
+    it('collects group names from fetched resources discarding duplicates', async () => {
+      const categories = [
+        factories.category.build({ groupName: 'group one' }),
+        factories.category.build({ groupName: 'group two' }),
+        factories.category.build({ groupName: 'group one' }),
+        factories.category.build({ groupName: 'group three' }),
+      ];
+
+      api.get.mockResolvedValueOnce(categories);
+      await repository.getCategories(getParams);
+
+      expect(repository.groups.value).toEqual([
+        'group one',
+        'group two',
+        'group three',
+      ]);
     });
   });
 });

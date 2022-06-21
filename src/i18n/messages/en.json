@@ -29,7 +29,10 @@
   },
   "CreateCategoryModal": {
     "categoryGroup": "To which group this belongs?",
+    "isRecurring": "Do you budget for that every month?",
+    "isRecurringTip": "Recurring categories are always in the monthly overview, even if you didn't budget for them.",
     "name": "Name",
+    "noGroups": "Type the group name and press enter to create it.",
     "title": "New category"
   },
   "DashboardMenu": {
@@ -56,7 +59,6 @@
     "updated": "Updated"
   },
   "MonthlyBudgetRow": {
-    "left": "",
     "notBudgeted": "No budget yet • {activity} out of {budgeted}",
     "spent": "{percentage}% • {activity} out of {budgeted}"
   },
@@ -105,6 +107,9 @@
     "accounts": {
       "duplicate": "Duplicate account. You can't register the same account twice.",
       "not-found": "Account not found..."
+    },
+    "categories": {
+      "duplicate": "Duplicate category. You can't register the same category twice."
     },
     "generic": "Something is wrong. Try again.",
     "monthly-budgets": {

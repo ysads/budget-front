@@ -1,40 +1,47 @@
 import { get, post } from '@/api';
 import { BudgetReq } from '@/types/api';
 import { Category } from '@/types/models';
-import { computed, ref } from 'vue';
-import groupBy from 'lodash/groupBy';
+import { ref } from 'vue';
 
-interface ApiCreateCategoryRequest {
+export interface ApiCategoryMutation {
   budgetId: string;
-  categoryGroupId: string;
+  groupName: string;
   name: string;
 }
 
 export const categories = ref<Category[]>([]);
+export const groups = ref<string[]>([]);
 
-export const categoriesByGroupId = (groupId: string): Category[] => {
-  return categories.value.filter(
-    (c: Category) => c.categoryGroupId === groupId,
-  );
+export const findCategoriesByGroupName = (group: string): Category[] => {
+  return categories.value.filter((c: Category) => c.groupName === group);
 };
-
-export const categoriesGroupedByGroupId = computed(() =>
-  groupBy(categories.value, (c: Category) => c.categoryGroupId),
-);
 
 export const categoryById = (id: string): Category | undefined => {
   return categories.value.find((c: Category) => c.id === id);
 };
 
 export const createCategory = async (
-  params: ApiCreateCategoryRequest,
+  params: ApiCategoryMutation,
 ): Promise<void> => {
   const category = await post(`budgets/${params.budgetId}/categories`, params);
 
   categories.value.push(category);
+  updateGroups([...categories.value, category]);
 };
 
 export const getCategories = async (params: BudgetReq): Promise<void> => {
-  const groups = await get(`budgets/${params.budgetId}/categories`);
-  categories.value = groups;
+  const response = await get(`budgets/${params.budgetId}/categories`);
+
+  categories.value = response;
+  updateGroups(response);
+};
+
+const updateGroups = (newCategories: Category[]) => {
+  const uniqueGroups = new Set<string>();
+
+  for (const c of newCategories) {
+    uniqueGroups.add(c.groupName);
+  }
+
+  groups.value = Array.from(uniqueGroups);
 };

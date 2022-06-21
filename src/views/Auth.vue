@@ -19,6 +19,7 @@ import { getMe, updateAuthToken } from '@/repositories/auth';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { defineComponent, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import alert from '@/support/alert';
 
 export default defineComponent({
   name: 'Auth',
@@ -55,9 +56,13 @@ export default defineComponent({
 
     const login = async () => {
       isLoading.value = true;
-
-      await loginWithPopup();
-      await getTokensAndGoToBudget();
+      try {
+        await loginWithPopup();
+        await getTokensAndGoToBudget();
+      } catch (err) {
+        isLoading.value = false;
+        alert.error(err as string);
+      }
     };
 
     return { isLoading, login, t };

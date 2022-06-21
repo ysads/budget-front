@@ -15,7 +15,7 @@
   --balance-pos-bg: rgb(232 242 238);
   --balance-pos-text: rgb(54 161 139);
   --balance-zero-bg: rgb(243 243 243);
-  --balance-zero-text: rgb(28 28 28);
+  --balance-zero-text: rgb(125 133 141);
   --balance-pill-radius: 8px;
   --btn-radius: 6px;
   --btn-ghost-bg: transparent;
@@ -25,6 +25,13 @@
   --btn-primary-bg: rgb(61 121 185);
   --btn-primary-text: rgb(255 255 255);
   --btn-primary-focus-bg: rgba(50, 82, 119);
+  --checkbox-bg: rgb(255 255 255);
+  --checkbox-border: rgb(61 121 185);
+  --checkbox-focus: rgb(124 156 192 / 50%);
+  --checkbox-checked-bg: rgb(61 121 185);
+  --checkbox-checked-border: rgb(61 121 185);
+  --checkbox-checked-mark: rgb(255 255 255);
+  --checkbox-radius: 4px;
   --collapse-radius: 8px;
   --color-error: rgb(179 93 91);
   --color-success: rgb(54 161 139);
@@ -49,6 +56,7 @@
   --progress-bg: rgb(216 222 228);
   --progress-red: rgb(179 93 91);
   --progress-blue: rgb(61 121 185);
+  --progress-green: rgb(54 161 139);
   --row-focus-bg: rgb(249 249 249);
   --row-separator: rgb(216 222 228);
   --select-selected-option: rgb(61 121 185);

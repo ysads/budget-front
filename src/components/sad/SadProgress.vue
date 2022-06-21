@@ -19,7 +19,8 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
 
-type ProgressColor = 'blue' | 'red';
+export type ProgressColor = 'blue' | 'red' | 'green';
+export type ProgressVariant = 'normal' | 'inverted';
 
 export default defineComponent({
   props: {
@@ -31,6 +32,10 @@ export default defineComponent({
       type: String as PropType<ProgressColor>,
       required: true,
     },
+    variant: {
+      type: String as PropType<ProgressVariant>,
+      default: 'normal',
+    },
   },
   setup(props) {
     const doneStyling = computed(() => {
@@ -38,9 +43,10 @@ export default defineComponent({
         width: `${props.value}%`,
       };
     });
-    const classes = computed(() => {
-      return `sad-progress--${props.color}`;
-    });
+    const classes = computed(() => [
+      `sad-progress--${props.color}`,
+      `sad-progress--${props.variant}`,
+    ]);
 
     return { classes, doneStyling };
   },
@@ -65,6 +71,10 @@ export default defineComponent({
 
   &--red > &__current {
     background: var(--progress-red);
+  }
+
+  &--green > &__current {
+    background: var(--progress-green);
   }
 }
 </style>

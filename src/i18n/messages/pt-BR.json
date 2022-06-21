@@ -29,7 +29,10 @@
   },
   "CreateCategoryModal": {
     "categoryGroup": "Em qual grupo de gastos essa categoria está?",
+    "isRecurring": "Você quer orçar essa categoria todo mês?",
+    "isRecurringTip": "",
     "name": "Nome da categoria",
+    "noGroups": "Digite o nome do primeiro grupo e aperte enter para criá-lo.",
     "title": "Novo categoria"
   },
   "DashboardMenu": {
@@ -56,7 +59,6 @@
     "updated": "Orçamento atualizado"
   },
   "MonthlyBudgetRow": {
-    "left": "",
     "notBudgeted": "Sem orçamento • {activity} de {budgeted}",
     "spent": "{percentage}% • {activity} de {budgeted}"
   },
@@ -105,6 +107,9 @@
     "accounts": {
       "duplicate": "Você já cadastrou essa conta.",
       "not-found": "Parece que essa conta não existe..."
+    },
+    "categories": {
+      "duplicate": "Você já cadastrou essa categoria."
     },
     "generic": "Algo deu errado. Tente novamente.",
     "monthly-budgets": {

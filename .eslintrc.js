@@ -18,7 +18,6 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': ['error', { fixToUnknown: true }],
     '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
     'comma-dangle': ['error', 'always-multiline', { functions: 'never' }],
-    'max-len': ['error', { ignorePattern: '@/', ignoreComments: true }],
     quotes: ['error', 'single', { avoidEscape: true }],
     'vue/attributes-order': 'error',
     'vue/component-tags-order': [

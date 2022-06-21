@@ -30,7 +30,7 @@
       </p>
       <sad-progress
         class="category-budget__progress"
-        :color="spentPercentage > 100 ? 'red' : 'blue'"
+        :color="progressColor"
         :value="spentPercentage"
       />
     </div>
@@ -38,11 +38,16 @@
 </template>
 
 <script lang="ts">
-import { balanceClasses, currencySettings, format } from '@/support/money';
+import {
+  balanceClasses,
+  currencySettings,
+  format,
+  ZeroableBalance,
+} from '@/support/money';
 import { Budget, Category, MonthlyBudget } from '@/types/models';
 import { useI18n } from 'vue-i18n';
 import { computed, defineComponent, PropType } from 'vue';
-import SadProgress from '../sad/SadProgress.vue';
+import SadProgress, { ProgressColor } from '../sad/SadProgress.vue';
 
 export default defineComponent({
   name: 'MonthlyBudgetRow',
@@ -73,7 +78,7 @@ export default defineComponent({
     const absActivity = computed(() => Math.abs(props.monthlyBudget.activity));
     const absBudgeted = computed(() => Math.abs(props.monthlyBudget.budgeted));
 
-    const availableClass = computed(() => {
+    const availableClass = computed<ZeroableBalance>(() => {
       return props.monthlyBudget.available === 0
         ? 'zero'
         : balanceClasses(props.monthlyBudget.available);
@@ -81,9 +86,8 @@ export default defineComponent({
     const moneySettings = currencySettings(props.budget);
 
     const spentPercentage = computed(() => {
-      return props.monthlyBudget.budgeted === 0
-        ? 0
-        : Math.round((absActivity.value / absBudgeted.value) * 100);
+      if (absActivity.value > absBudgeted.value) return 100;
+      return Math.round((absActivity.value / absBudgeted.value) * 100);
     });
     const spentText = computed(() => {
       if (absBudgeted.value === 0) {
@@ -100,11 +104,18 @@ export default defineComponent({
         budgeted: format(absBudgeted.value, moneySettings),
       });
     });
+    const progressColor = computed<ProgressColor>(() => {
+      if (availableClass.value === 'negative') return 'red';
+      if (availableClass.value === 'zero') return 'green';
+
+      return 'blue';
+    });
 
     return {
       availableClass,
       format,
       moneySettings,
+      progressColor,
       spentText,
       spentPercentage,
       t,

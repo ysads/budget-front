@@ -1,5 +1,6 @@
 <template>
   <aside class="dashboard-menu">
+    <budget-menu class="dashboard-menu__budget" />
     <ul class="dashboard-menu__nav">
       <li
         class="dashboard-menu__nav-item"
@@ -97,12 +98,14 @@
 
 <script lang="ts">
 import AccountAccordion from '@/components/accounts/AccountAccordion.vue';
+import BudgetMenu from '@/components/budgets/BudgetMenu.vue';
 import CreateAccountModal from '@/components/accounts/CreateAccountModal.vue';
 import SadButton from '@/components/sad/SadButton.vue';
 import SadIcon from '@/components/sad/SadIcon.vue';
 import useToggle from '@/use/toggle';
 import { useI18n } from 'vue-i18n';
 import { budgetAccounts, trackingAccounts } from '@/repositories/accounts';
+import { currentUser } from '@/repositories/auth';
 import { openBudget } from '@/repositories/budgets';
 import { defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
@@ -113,6 +116,7 @@ export default defineComponent({
 
   components: {
     AccountAccordion,
+    BudgetMenu,
     CreateAccountModal,
     SadButton,
     SadIcon,
@@ -131,6 +135,7 @@ export default defineComponent({
     return {
       activeClass,
       budgetAccounts,
+      currentUser,
       emitNavigate,
       modalVisible,
       openBudget,
@@ -149,6 +154,10 @@ export default defineComponent({
   overflow: auto;
   padding: $base * 3;
   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  &__budget {
+    margin-bottom: $base * 4;
+  }
 
   &__nav {
     display: flex;

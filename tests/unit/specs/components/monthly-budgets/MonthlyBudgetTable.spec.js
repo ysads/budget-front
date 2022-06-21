@@ -2,38 +2,36 @@ import factories from '#/factories';
 import MonthlyBudgetsTable from '@/components/monthly-budgets/MonthlyBudgetsTable';
 import setupComponent from '#/setup-component';
 import * as categoriesRepo from '@/repositories/categories';
-import * as categoryGroupsRepo from '@/repositories/category-groups';
+import * as monthsRepo from '@/repositories/months';
 import * as monthlyBudgetsRepo from '@/repositories/monthly-budgets';
 import * as budgetsRepo from '@/repositories/budgets';
 
 const budget = factories.budget.build();
-const categoryGroups = factories.categoryGroup.buildList(2);
+const groups = factories.categoryGroup.buildList(2);
 const categories = [
-  factories.category.build({ categoryGroupId: categoryGroups[0].id }),
-  factories.category.build({ categoryGroupId: categoryGroups[0].id }),
-  factories.category.build({ categoryGroupId: categoryGroups[1].id }),
-  factories.category.build({ categoryGroupId: categoryGroups[1].id }), // This category will have no monthly budget
+  factories.category.build({ groupName: groups[0].name, isRecurring: true }),
+  factories.category.build({ groupName: groups[0].name, isRecurring: false }),
+  // These categories will have no monthly budget
+  factories.category.build({ groupName: groups[1].name, isRecurring: true }),
+  factories.category.build({ groupName: groups[1].name, isRecurring: false }),
 ];
 const monthlyBudgets = [
   factories.monthlyBudget.build({
     categoryId: categories[0].id,
-    categoryGroupId: categories[0].categoryGroupId,
+    categoryGroupId: groups[0].id,
   }),
   factories.monthlyBudget.build({
     categoryId: categories[1].id,
-    categoryGroupId: categories[1].categoryGroupId,
-  }),
-  factories.monthlyBudget.build({
-    categoryId: categories[2].id,
-    categoryGroupId: categories[2].categoryGroupId,
+    categoryGroupId: groups[0].id,
   }),
 ];
+const month = factories.month.build();
 
 const factory = () => {
   budgetsRepo.openBudget.value = budget;
   categoriesRepo.categories.value = categories;
-  categoryGroupsRepo.categoryGroups.value = categoryGroups;
   monthlyBudgetsRepo.monthlyBudgets.value = monthlyBudgets;
+  monthsRepo.currentMonth.value = month;
 
   return setupComponent(MonthlyBudgetsTable);
 };
@@ -43,13 +41,7 @@ describe('MonthlyBudgetsTable', () => {
     const wrapper = factory();
     const items = wrapper.findAllComponents("[data-test='row']");
 
-    expect(items.length).toEqual(monthlyBudgets.length);
-  });
-
-  it('passes the correct monthly budget and category for each row', () => {
-    const wrapper = factory();
-    const items = wrapper.findAllComponents("[data-test='row']");
-
+    expect(items.length).toEqual(3);
     expect(items[0].props()).toMatchObject({
       category: categories[0],
       monthlyBudget: monthlyBudgets[0],
@@ -58,9 +50,23 @@ describe('MonthlyBudgetsTable', () => {
       category: categories[1],
       monthlyBudget: monthlyBudgets[1],
     });
+  });
+
+  it('renders a row for each recurring category with no monthly budget yet', () => {
+    const wrapper = factory();
+    const items = wrapper.findAllComponents("[data-test='row']");
+
     expect(items[2].props()).toMatchObject({
       category: categories[2],
-      monthlyBudget: monthlyBudgets[2],
+      monthlyBudget: {
+        id: '',
+        activity: 0,
+        available: 0,
+        budgeted: 0,
+        categoryId: categories[2].id,
+        categoryGroupId: '',
+        monthId: month.id,
+      },
     });
   });
 

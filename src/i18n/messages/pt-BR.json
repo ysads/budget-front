@@ -29,7 +29,10 @@
   },
   "CreateCategoryModal": {
     "categoryGroup": "Em qual grupo de gastos essa categoria está?",
+    "isRecurring": "Você quer orçar essa categoria todo mês?",
+    "isRecurringTip": "",
     "name": "Nome da categoria",
+    "noGroups": "Digite o nome do primeiro grupo e aperte enter para criá-lo.",
     "title": "Novo categoria"
   },
   "DashboardMenu": {

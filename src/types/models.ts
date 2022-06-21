@@ -39,6 +39,7 @@ export interface Category {
   budgetId: string;
   groupName: string;
   id: string;
+  isRecurring: boolean;
   name: string;
 }
 

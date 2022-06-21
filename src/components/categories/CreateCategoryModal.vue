@@ -16,6 +16,7 @@
         class="create-category__item"
         :placeholder="t('placeholders.select')"
         :label="t('CreateCategoryModal.categoryGroup')"
+        :no-data-text="t('CreateCategoryModal.noGroups')"
         :options="categoryGroupOptions"
         allow-create
         data-test="group-name"
@@ -26,6 +27,14 @@
         name="name"
         class="create-category__item"
         data-test="name"
+      />
+      <sad-checkbox
+        v-model="form.isRecurring"
+        class="create-category__item"
+        :label="t('CreateCategoryModal.isRecurring')"
+        :tip="t('CreateCategoryModal.isRecurringTip')"
+        name="recurring"
+        data-test="recurring"
       />
     </form>
 
@@ -44,6 +53,8 @@ import SadButton from '@/components/sad/SadButton.vue';
 import SadInput from '@/components/sad/SadInput.vue';
 import SadModal from '@/components/sad/SadModal.vue';
 import SadSelect from '@/components/sad/SadSelect.vue';
+import SadCheckbox from '@/components/sad/SadCheckbox.vue';
+
 import { useI18n } from 'vue-i18n';
 import { createCategory, groups } from '@/repositories/categories';
 import { PropType, defineComponent, computed, ref } from 'vue';
@@ -73,6 +84,7 @@ export default defineComponent({
     SadInput,
     SadModal,
     SadSelect,
+    SadCheckbox,
   },
 
   setup(props, { emit }) {

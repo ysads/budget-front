@@ -6,6 +6,7 @@ import { useI18n } from 'vue-i18n';
 export interface CategoryForm {
   budgetId: string;
   id?: string;
+  isRecurring: boolean;
   groupName: string;
   name: string;
 }
@@ -31,6 +32,7 @@ export default function useCategoryForm({
   const resetForm = () => {
     form.budgetId = budget.value.id;
     form.groupName = '';
+    form.isRecurring = true;
     form.name = '';
   };
   const saveForm = createCategory;

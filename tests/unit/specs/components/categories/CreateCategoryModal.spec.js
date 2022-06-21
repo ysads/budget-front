@@ -40,6 +40,16 @@ describe('CreateCategoryModal', () => {
     expect(item.props().options.length).toEqual(groups.length);
   });
 
+  it('renders recurring checkbox', () => {
+    const wrapper = factory();
+    const item = wrapper.findComponent("[data-test='recurring']");
+
+    expect(item.props()).toMatchObject({
+      label: 'CreateCategoryModal.isRecurring',
+      tip: 'CreateCategoryModal.isRecurringTip',
+    });
+  });
+
   describe('when modal emits close', () => {
     it('emits close', () => {
       const wrapper = factory();

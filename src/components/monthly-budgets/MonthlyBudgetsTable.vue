@@ -1,24 +1,15 @@
 <template>
   <section class="monthly-budgets-table">
-    <div
-      v-for="(monthlyBudgets, groupId) in monthlyBudgetsByCategoryGroup"
-      :key="groupId"
-      class="monthly-budgets__item"
-    >
-      <ul>
-        <monthly-budget-row
-          v-for="monthlyBudget in monthlyBudgets"
-          :key="monthlyBudget.id"
-          class="monthly-budgets-table__row"
-          :budget="openBudget"
-          :category="categoryById(monthlyBudget.categoryId)"
-          :monthly-budget="monthlyBudget"
-          data-test="row"
-          @select="openDrawer(monthlyBudget)"
-        />
-      </ul>
-    </div>
-
+    <monthly-budget-row
+      v-for="monthlyBudget in monthlyBudgetsIncludingFakes"
+      :key="monthlyBudget.id"
+      class="monthly-budgets-table__row"
+      :budget="openBudget"
+      :category="categoryById(monthlyBudget.categoryId)"
+      :monthly-budget="monthlyBudget"
+      data-test="row"
+      @select="openDrawer(monthlyBudget)"
+    />
     <monthly-budget-details
       :show="isDrawerOpen"
       :monthly-budget="openMonthlyBudget"
@@ -29,14 +20,24 @@
 </template>
 
 <script lang="ts">
-import { categoryById } from '@/repositories/categories';
-import { categoryGroupById } from '@/repositories/category-groups';
+import { categories, categoryById } from '@/repositories/categories';
 import { computed, defineComponent, ref } from 'vue';
-import { MonthlyBudget } from '@/types/models';
-import { monthlyBudgetsByCategoryGroup } from '@/repositories/monthly-budgets';
+import { Category, MonthlyBudget } from '@/types/models';
+import { monthlyBudgets } from '@/repositories/monthly-budgets';
 import { openBudget } from '@/repositories/budgets';
 import MonthlyBudgetDetails from '@/components/monthly-budgets/MonthlyBudgetDetails.vue';
 import MonthlyBudgetRow from '@/components/monthly-budgets/MonthlyBudgetRow.vue';
+import { currentMonth } from '@/repositories/months';
+
+const fakeMonthlyBudget = (category: Category): MonthlyBudget => ({
+  id: '',
+  activity: 0,
+  available: 0,
+  budgeted: 0,
+  categoryId: category.id,
+  categoryGroupId: '',
+  monthId: currentMonth.value.id,
+});
 
 export default defineComponent({
   name: 'MonthlyBudgetsTable',
@@ -47,21 +48,45 @@ export default defineComponent({
   },
 
   setup() {
-    const openMonthlyBudget = ref<MonthlyBudget | Record<string, unknown>>({});
-    const isDrawerOpen = computed(() => Boolean(openMonthlyBudget.value.id));
+    const openMonthlyBudget = ref({} as MonthlyBudget);
+    const isDrawerOpen = ref(false);
 
-    const openDrawer = (mb: MonthlyBudget) => (openMonthlyBudget.value = mb);
-    const closeDrawer = () => (openMonthlyBudget.value = {});
+    const recurringCategoriesWithoutMonthlyBudget = computed(() =>
+      categories.value.filter(
+        (c) =>
+          c.isRecurring &&
+          monthlyBudgets.value.findIndex((m) => m.categoryId === c.id) === -1,
+      ),
+    );
+
+    const monthlyBudgetsIncludingFakes = computed(() => {
+      const fakeMonthlyBudgets =
+        recurringCategoriesWithoutMonthlyBudget.value.map((c) =>
+          fakeMonthlyBudget(c),
+        );
+
+      return monthlyBudgets.value.concat(fakeMonthlyBudgets);
+    });
+
+    const openDrawer = (mb: MonthlyBudget) => {
+      isDrawerOpen.value = true;
+      openMonthlyBudget.value = mb;
+    };
+    const closeDrawer = () => {
+      isDrawerOpen.value = false;
+      openMonthlyBudget.value = {} as MonthlyBudget;
+    };
 
     return {
       categoryById,
-      categoryGroupById,
       closeDrawer,
       isDrawerOpen,
-      monthlyBudgetsByCategoryGroup,
+      monthlyBudgets,
       openBudget,
       openDrawer,
       openMonthlyBudget,
+      monthlyBudgetsIncludingFakes,
+      recurringCategoriesWithoutMonthlyBudget,
     };
   },
 });

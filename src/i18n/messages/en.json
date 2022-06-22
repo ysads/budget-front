@@ -6,9 +6,25 @@
   "AllAccounts": {
     "title": "All accounts"
   },
+  "AllBudgets": {
+    "addNew": "Create new",
+    "delete": "Remove",
+    "edit": "Edit",
+    "use": "Use this budget",
+    "title": "All Budgets"
+  },
   "Auth": {
     "title": "Piggy Budget App",
     "signInWithAuth0": "Sign in with Auth0"
+  },
+  "BudgetMenu": {
+    "allBudgets": "All budgets",
+    "currentBudget": "Current budget",
+    "editBudget": "Budget settings",
+    "logout": "Logout",
+    "managePayees": "Manage payees",
+    "manageCategories": "Manage categories",
+    "user": "User"
   },
   "BudgetToolbar": {
     "newCategory": "Add category",

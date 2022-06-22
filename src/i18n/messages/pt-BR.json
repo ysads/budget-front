@@ -6,6 +6,13 @@
   "AllAccounts": {
     "title": "Todas as contas"
   },
+  "AllBudgets": {
+    "addNew": "Criar novo",
+    "delete": "Remover",
+    "edit": "Editar",
+    "use": "Usar",
+    "title": "Todos os orçamentos"
+  },
   "Auth": {
     "title": "Piggy Budget App",
     "signInWithAuth0": "Entrar com Auth0"

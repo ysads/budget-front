@@ -91,6 +91,11 @@ export default defineComponent({
     padding: 3px 12px;
   }
 
+  &--danger {
+    background: var(--balance-neg-bg);
+    color: var(--color-error);
+  }
+
   &--primary {
     background: var(--btn-primary-bg);
     color: var(--btn-primary-text);

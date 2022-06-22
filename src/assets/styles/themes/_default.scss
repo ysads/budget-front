@@ -29,9 +29,11 @@
   --btn-primary-bg: rgb(61 121 185);
   --btn-primary-text: rgb(255 255 255);
   --btn-primary-focus-bg: rgba(50, 82, 119);
+  --budget-menu-border: rgb(216 222 228);
   --budget-menu-separator: rgb(216 222 228);
-  --budget-menu-popup-shadow: 8px 16px 16px hsl(0deg 0% 0% / 20%);
   --budget-menu-popup-bg: rgb(255 255 255);
+  --budget-menu-popup-focus: rgb(216 222 227);
+  --budget-menu-popup-shadow: 8px 16px 16px hsl(0deg 0% 0% / 20%);
   --checkbox-bg: rgb(255 255 255);
   --checkbox-border: rgb(61 121 185);
   --checkbox-focus: rgb(124 156 192 / 50%);
@@ -75,6 +77,10 @@
   --sidebar-focus: rgba(50, 82, 119);
   --sidebar-text: rgba(255, 255, 255, 1);
   --sidebar-tip: rgba(226, 236, 247, 1);
+  --sidebar-horizontal-padding: 24px;
+  --sidebar-width-md: 30%;
+  --sidebar-width-lg: 25%;
+  --sidebar-width-xl: 20%;
   --text-primary: rgb(28 28 28);
   --text-secondary: rgb(105 105 105);
   --transaction-sep-icon: rgb(105 105 105);

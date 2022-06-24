@@ -1,78 +1,88 @@
 <template>
   <sad-drawer
+    class="transfer-details"
     :title="title"
     :show="show"
     data-test="drawer"
     @close="$emit('close')"
   >
-    <form class="transfer-details">
-      <div class="transfer-details__accounts">
-        <sad-select
-          v-model="form.originId"
-          class="transfer-details__accounts-input"
-          :disabled="isEdit || Boolean(origin?.id)"
-          :label="t('TransferDetails.origin')"
-          :options="originOptions"
-          :placeholder="t('placeholders.select')"
-          name="transfer-origin"
-          data-test="origin"
-        />
-        <sad-icon
-          class="transfer-details__icon"
-          name="arrow-circle-right"
-          size="small"
-          color="primary"
-          aria-hidden
-        />
-        <sad-select
-          v-model="form.destinationId"
-          class="transfer-details__accounts-input"
-          :disabled="isEdit"
-          :label="t('TransferDetails.destination')"
-          :options="destinationOptions"
-          :placeholder="t('placeholders.select')"
-          name="transfer-destination"
-          data-test="destination"
-        />
-      </div>
+    <sad-button
+      v-if="isEdit"
+      class="transfer-details__delete"
+      size="small"
+      type="danger"
+      icon="trash-can"
+      data-test="delete-btn"
+      @click="handleDelete"
+    >
+      {{ t('general.delete') }}
+    </sad-button>
+    <div class="transfer-details__accounts">
       <sad-select
-        v-if="hasToSelectCategory"
-        v-model="form.categoryId"
-        class="transfer-details__control"
-        name="transfer-category"
-        :label="t('TransferDetails.category')"
-        :options="categoryOptions"
+        v-model="form.originId"
+        class="transfer-details__accounts-input"
+        :disabled="isEdit || Boolean(origin?.id)"
+        :label="t('TransferDetails.origin')"
+        :options="originOptions"
         :placeholder="t('placeholders.select')"
-        :tip="t('TransferDetails.categoryTip')"
-        grouped
-        data-test="category"
+        name="transfer-origin"
+        data-test="origin"
       />
-      <sad-date-picker
-        v-model="form.referenceAt"
-        class="transfer-details__control"
-        :label="t('TransferDetails.referenceAt')"
-        :placeholder="t('TransferDetails.referenceAt')"
-        :format="openBudget.dateFormat"
-        name="transfer-reference-at"
-        data-test="reference-at"
+      <sad-icon
+        class="transfer-details__icon"
+        name="arrow-circle-right"
+        size="small"
+        color="primary"
+        aria-hidden
       />
-      <sad-input
-        v-model="form.amount"
-        class="transfer-details__control"
-        :label="t('TransferDetails.amount')"
-        :prefix="currencySymbol"
-        name="transfer-amount"
-        data-test="amount"
+      <sad-select
+        v-model="form.destinationId"
+        class="transfer-details__accounts-input"
+        :disabled="isEdit"
+        :label="t('TransferDetails.destination')"
+        :options="destinationOptions"
+        :placeholder="t('placeholders.select')"
+        name="transfer-destination"
+        data-test="destination"
       />
-      <sad-input
-        v-model="form.memo"
-        class="transfer-details__control"
-        :label="t('TransferDetails.memo')"
-        :tip="t('TransferDetails.memoTip')"
-        name="transfer-memo"
-        data-test="memo"
-      />
-    </form>
+    </div>
+    <sad-select
+      v-if="hasToSelectCategory"
+      v-model="form.categoryId"
+      class="transfer-details__control"
+      name="transfer-category"
+      :label="t('TransferDetails.category')"
+      :options="categoryOptions"
+      :placeholder="t('placeholders.select')"
+      :tip="t('TransferDetails.categoryTip')"
+      grouped
+      data-test="category"
+    />
+    <sad-date-picker
+      v-model="form.referenceAt"
+      class="transfer-details__control"
+      :label="t('TransferDetails.referenceAt')"
+      :placeholder="t('TransferDetails.referenceAt')"
+      :format="openBudget.dateFormat"
+      name="transfer-reference-at"
+      data-test="reference-at"
+    />
+    <sad-input
+      v-model="form.amount"
+      class="transfer-details__control"
+      :label="t('TransferDetails.amount')"
+      :prefix="currencySymbol"
+      name="transfer-amount"
+      data-test="amount"
+    />
+    <sad-input
+      v-model="form.memo"
+      class="transfer-details__control"
+      :label="t('TransferDetails.memo')"
+      :tip="t('TransferDetails.memoTip')"
+      name="transfer-memo"
+      data-test="memo"
+    />
     <template #footer>
       <sad-button
         size="normal"
@@ -105,6 +115,7 @@ import { Account, Transfer } from '@/types/models';
 import { symbolOf } from '@/support/currencies';
 import { handleApiError } from '@/api/errors';
 import { currencySettings, currencyToCents } from '@/support/money';
+import { deleteTransfer } from '@/repositories/transfers';
 
 export default defineComponent({
   name: 'TransferDetails',
@@ -170,6 +181,22 @@ export default defineComponent({
       isEdit.value ? t('TransferDetails.edit') : t('TransferDetails.add'),
     );
 
+    const handleDelete = async () => {
+      if (!form.destinationTransactionId || !form.originTransactionId) return;
+
+      try {
+        await deleteTransfer({
+          budgetId: openBudget.value.id,
+          destinationTransactionId: form.destinationTransactionId,
+          originTransactionId: form.originTransactionId,
+        });
+        emit('close');
+        alert.success(t('general.deleted'));
+      } catch {
+        alert.error(t('TransferDetails.failedToDelete'));
+      }
+    };
+
     const handleSubmit = async () => {
       try {
         await saveForm({
@@ -190,6 +217,7 @@ export default defineComponent({
       categoryOptions,
       currencySymbol,
       form,
+      handleDelete,
       handleSubmit,
       hasToSelectCategory,
       isEdit,
@@ -205,6 +233,11 @@ export default defineComponent({
 .transfer-details {
   display: flex;
   flex-flow: column;
+
+  &__delete {
+    margin-bottom: 20px;
+    margin-left: -12px;
+  }
 
   &__control {
     margin-bottom: 16px;

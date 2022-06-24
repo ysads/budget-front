@@ -21,7 +21,7 @@
 import { computed } from 'vue';
 import { defineComponent, PropType } from 'vue';
 
-type ButtonVariant = 'primary' | 'ghost';
+type ButtonVariant = 'primary' | 'ghost' | 'danger';
 type ButtonSize = 'large' | 'normal' | 'small';
 
 export default defineComponent({
@@ -41,6 +41,10 @@ export default defineComponent({
     size: {
       type: String as PropType<ButtonSize>,
       default: 'normal',
+    },
+    title: {
+      type: String,
+      default: '',
     },
     type: {
       type: String as PropType<ButtonVariant>,
@@ -105,6 +109,17 @@ export default defineComponent({
     &:focus {
       background: var(--btn-ghost-focus-bg);
       color: var(--btn-ghost-focus-text);
+    }
+  }
+
+  &--danger {
+    background: var(--btn-danger-bg);
+    color: var(--btn-danger-text);
+
+    &:hover,
+    &:focus {
+      background: var(--btn-danger-focus-bg);
+      color: var(--btn-danger-focus-text);
     }
   }
 

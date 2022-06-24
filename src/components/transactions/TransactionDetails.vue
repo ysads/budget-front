@@ -6,6 +6,17 @@
     data-test="drawer"
     @close="$emit('close')"
   >
+    <sad-button
+      v-if="isEdit"
+      class="transaction-details__delete"
+      size="small"
+      type="danger"
+      icon="trash-can"
+      data-test="delete-btn"
+      @click="handleDelete"
+    >
+      {{ t('general.delete') }}
+    </sad-button>
     <sad-select
       v-model="form.accountId"
       class="transaction-details__control"
@@ -98,6 +109,7 @@ import { handleApiError } from '@/api/errors';
 import { openBudget } from '@/repositories/budgets';
 import { accounts } from '@/repositories/accounts';
 import { payees } from '@/repositories/payees';
+import { deleteTransaction } from '@/repositories/transactions';
 import { PropType, computed, defineComponent } from 'vue';
 import { Account, Transaction } from '@/types/models';
 import { symbolOf } from '@/support/currencies';
@@ -169,6 +181,21 @@ export default defineComponent({
       isEdit.value ? t('TransactionDetails.edit') : t('TransactionDetails.add'),
     );
 
+    const handleDelete = async () => {
+      if (!form.id) return;
+
+      try {
+        await deleteTransaction({
+          budgetId: openBudget.value.id,
+          id: form.id,
+        });
+        emit('close');
+        alert.success(t('general.deleted'));
+      } catch {
+        alert.error(t('TransactionDetails.failedToDelete'));
+      }
+    };
+
     const handleSubmit = async () => {
       try {
         await saveForm({
@@ -189,7 +216,9 @@ export default defineComponent({
       currencySymbol,
       form,
       handleSubmit,
+      handleDelete,
       isAccountDisabled,
+      isEdit,
       openBudget,
       payeeOptions,
       t,
@@ -201,6 +230,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .transaction-details {
+  &__delete {
+    margin-bottom: 20px;
+    margin-left: -12px;
+  }
+
   &__control + &__control {
     margin-top: $base * 4;
   }

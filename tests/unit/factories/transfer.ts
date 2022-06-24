@@ -4,7 +4,29 @@ import { Factory } from 'fishery';
 import { Transfer } from '@/types/models';
 import { sample } from '@/support/collection';
 
-export default Factory.define<Transfer>(() => {
+class TransferFactory extends Factory<Transfer> {
+  origin() {
+    const amount = faker.datatype.number({ min: -1_000_00, max: 0 });
+
+    return this.params({
+      amount,
+      outflow: true,
+      unsignedAmount: Math.abs(amount),
+    });
+  }
+
+  destination() {
+    const amount = faker.datatype.number({ min: 0, max: 1_000_00 });
+
+    return this.params({
+      amount,
+      outflow: false,
+      unsignedAmount: Math.abs(amount),
+    });
+  }
+}
+
+export default TransferFactory.define(({ params }) => {
   const amount = faker.datatype.number();
 
   return {
@@ -19,10 +41,11 @@ export default Factory.define<Transfer>(() => {
     linkedTransactionAccountId: faker.datatype.uuid(),
     memo: faker.lorem.sentence(),
     monthlyBudgetId: faker.datatype.uuid(),
-    referenceAt: faker.datatype.datetime().toISOString(),
+    outflow: sample([true, false]),
     payee: null,
     payeeName: null,
-    outflow: sample([true, false]),
+    referenceAt: faker.datatype.datetime().toISOString(),
     unsignedAmount: Math.abs(amount),
+    ...params,
   };
 });

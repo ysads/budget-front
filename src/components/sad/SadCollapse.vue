@@ -17,9 +17,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import uuid from 'uuid-random';
 import SadIcon from './SadIcon.vue';
+import useToggle from '@/use/toggle';
 
 export default defineComponent({
   props: {
@@ -34,12 +35,8 @@ export default defineComponent({
   },
 
   setup(props) {
-    const collapsed = ref(!props.startOpen);
+    const [collapsed, toggle] = useToggle(!props.startOpen);
     const areaId = uuid();
-
-    const toggle = () => {
-      collapsed.value = !collapsed.value;
-    };
 
     return { areaId, collapsed, toggle };
   },

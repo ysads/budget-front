@@ -18,6 +18,7 @@
 import DashboardMenu from '@/components/DashboardMenu.vue';
 import Loading from '@/components/Loading.vue';
 import useWindowSize from '@/use/window-size';
+import useToggle from '@/use/toggle';
 import { getAccounts } from '@/repositories/accounts';
 import { getCategories } from '@/repositories/categories';
 import { getMonthlyBudgets } from '@/repositories/monthly-budgets';
@@ -38,7 +39,7 @@ export default defineComponent({
   },
 
   setup() {
-    const isDrawerVisible = ref(false);
+    const [isDrawerVisible, toggleMenu] = useToggle(false);
     const loading = ref(true);
 
     const router = useRouter();
@@ -71,10 +72,6 @@ export default defineComponent({
 
     const { isMobile } = useWindowSize();
     const showDrawer = computed(() => isDrawerVisible.value && isMobile.value);
-
-    const toggleMenu = () => {
-      isDrawerVisible.value = !isDrawerVisible.value;
-    };
 
     onMounted(async () => {
       await validateSession();

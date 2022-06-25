@@ -9,6 +9,12 @@ export interface ApiTransferMutation extends Omit<TransferForm, 'amount'> {
   amount: number;
 }
 
+export interface ApiTransferDelete {
+  budgetId: string;
+  destinationTransactionId: string;
+  originTransactionId: string;
+}
+
 export interface ApiTransactionMutation
   extends Omit<TransactionForm, 'amount'> {
   amount: number;
@@ -17,4 +23,9 @@ export interface ApiTransactionMutation
 export interface ApiTransactionFetch {
   budgetId: string;
   accountId?: string;
+}
+
+export interface ApiTransactionDelete {
+  budgetId: string;
+  id: string;
 }

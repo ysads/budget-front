@@ -1,9 +1,13 @@
-import { get, post, put } from '@/api';
+import { del, get, post, put } from '@/api';
 import { ref } from 'vue';
-import { upsertAccount } from '@/repositories/accounts';
+import { getAccounts, upsertAccount } from '@/repositories/accounts';
 import { upsertPayee } from '@/repositories/payees';
 import { Transaction, Transactionable } from '@/types/models';
-import { ApiTransactionMutation, ApiTransactionFetch } from '@/types/api';
+import {
+  ApiTransactionMutation,
+  ApiTransactionFetch,
+  ApiTransactionDelete,
+} from '@/types/api';
 import { upsert } from '@/support/collection';
 
 export const transactions = ref<Transactionable[]>([]);
@@ -33,7 +37,7 @@ export const updateTransaction = async (
 export const getTransactions = async (
   params: ApiTransactionFetch,
   upsert = false,
-): Promise<void> => {
+) => {
   const response = await get(`budgets/${params.budgetId}/transactions`, params);
 
   if (upsert) {
@@ -43,8 +47,15 @@ export const getTransactions = async (
   }
 };
 
+export const deleteTransaction = async (params: ApiTransactionDelete) => {
+  await del(`budgets/${params.budgetId}/transactions/${params.id}`);
+  await getAccounts({ budgetId: params.budgetId });
+
+  removeTransactionLocally(params.id);
+};
+
 // eslint-disable-next-line
-export const upsertTransaction = (response: any): void => {
+export const upsertTransaction = (response: any) => {
   const { payee, account, ...transaction } = response;
 
   transactions.value = upsert(transactions.value, transaction);
@@ -52,7 +63,7 @@ export const upsertTransaction = (response: any): void => {
   upsertAccount(account);
 };
 
-export const removeTransaction = (id: string): void => {
+export const removeTransactionLocally = (id: string) => {
   transactions.value = transactions.value.filter(
     (t: Transactionable) => t.id !== id,
   );

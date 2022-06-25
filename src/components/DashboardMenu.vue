@@ -100,10 +100,11 @@ import AccountAccordion from '@/components/accounts/AccountAccordion.vue';
 import CreateAccountModal from '@/components/accounts/CreateAccountModal.vue';
 import SadButton from '@/components/sad/SadButton.vue';
 import SadIcon from '@/components/sad/SadIcon.vue';
+import useToggle from '@/use/toggle';
 import { useI18n } from 'vue-i18n';
 import { budgetAccounts, trackingAccounts } from '@/repositories/accounts';
 import { openBudget } from '@/repositories/budgets';
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import { eventBus, Events } from '@/events';
 
@@ -119,15 +120,13 @@ export default defineComponent({
 
   setup() {
     const { t } = useI18n();
-    const modalVisible = ref(false);
+    const [modalVisible, toggleModal] = useToggle(false);
 
     const currentRoute = useRoute();
     const activeClass = (route: string) => {
       return currentRoute.name === route ? 'active' : '';
     };
     const emitNavigate = () => eventBus.emit(Events.CLOSE_DASHBOARD_MENU);
-
-    const toggleModal = () => (modalVisible.value = !modalVisible.value);
 
     return {
       activeClass,

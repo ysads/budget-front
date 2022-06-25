@@ -7,6 +7,7 @@ import { ApiTransactionMutation } from '@/types/api';
 
 const budget = factories.budget.build();
 const createParams = { budgetId: budget.id } as ApiTransactionMutation;
+const deleteParams = { budgetId: budget.id, id: 'transaction-uuid' };
 
 describe('TransactionsRepository', () => {
   beforeEach(() => {
@@ -74,12 +75,53 @@ describe('TransactionsRepository', () => {
     });
   });
 
-  describe('#removeTransaction', () => {
+  describe('#deleteTransaction', () => {
+    beforeEach(() => {
+      jest.spyOn(accountRepository, 'getAccounts');
+    });
+
+    it('dispatches a DELETE to api', async () => {
+      await transactionRepository.deleteTransaction(deleteParams);
+
+      expect(api.del).toHaveBeenCalledWith(
+        `budgets/${budget.id}/transactions/transaction-uuid`,
+      );
+    });
+
+    it('refreshes accounts', async () => {
+      await transactionRepository.deleteTransaction(deleteParams);
+
+      expect(accountRepository.getAccounts).toHaveBeenCalledWith({
+        budgetId: deleteParams.budgetId,
+      });
+    });
+
+    it('removes transaction from local transactions array', async () => {
+      const transactionOne = factories.transaction.build();
+      const transactionTwo = factories.transaction.build();
+
+      transactionRepository.transactions.value = [
+        transactionOne,
+        transactionTwo,
+      ];
+
+      await transactionRepository.deleteTransaction({
+        budgetId: budget.id,
+        id: transactionTwo.id,
+      });
+
+      expect(transactionRepository.transactions.value).toEqual([
+        transactionOne,
+      ]);
+    });
+  });
+
+  describe('#removeTransactionLocally', () => {
     it('filters the record matching given id out of transactions array', () => {
       const transactions = factories.transaction.buildList(2);
       transactionRepository.transactions.value = transactions;
 
-      transactionRepository.removeTransaction(transactions[1].id);
+      transactionRepository.removeTransactionLocally(transactions[1].id);
 
       expect(transactionRepository.transactions.value).toContainEqual(
         transactions[0],

@@ -40,6 +40,7 @@ const factory = (args = {}) => {
   categoryGroupsRepo.categoryGroups.value = categoryGroups;
   payeesRepo.payees.value = payees;
   transactionsRepository.createTransaction = jest.fn();
+  transactionsRepository.deleteTransaction = jest.fn();
 
   return setupComponent(TransactionDetails, {
     props: {
@@ -96,6 +97,13 @@ describe('TransactionDetails', () => {
       label: expect.stringMatching(/memo/),
       tip: expect.stringMatching(/memoTip/),
     });
+  });
+
+  it('does not render delete button when creating transfers', () => {
+    const wrapper = factory({ transaction: undefined });
+    const item = wrapper.findComponent("[data-test='delete-btn']");
+
+    expect(item.exists()).toBe(false);
   });
 
   describe('account account select', () => {
@@ -165,6 +173,54 @@ describe('TransactionDetails', () => {
         await flushPromises();
 
         expect(handleApiError).toHaveBeenCalledWith(error);
+      });
+    });
+  });
+
+  describe('when delete button emits click', () => {
+    it('calls deleteTransaction method', async () => {
+      const wrapper = factory({ transaction });
+
+      await wrapper.find("[data-test='delete-btn']").trigger('click');
+      await flushPromises();
+
+      expect(transactionsRepository.deleteTransaction).toHaveBeenCalledWith({
+        budgetId: budget.id,
+        id: transaction.id,
+      });
+    });
+
+    it('alerts a success', async () => {
+      const wrapper = factory({ transaction });
+
+      await wrapper.find("[data-test='delete-btn']").trigger('click');
+      await flushPromises();
+
+      expect(alert.success).toHaveBeenCalledWith('general.deleted');
+    });
+
+    it('emits close', async () => {
+      const wrapper = factory({ transaction });
+
+      await wrapper.find("[data-test='delete-btn']").trigger('click');
+      await flushPromises();
+
+      expect(wrapper.emitted().close).toBeTruthy();
+    });
+
+    describe('and something fails', () => {
+      it('alerts an error', async () => {
+        const wrapper = factory({ transaction });
+        transactionsRepository.deleteTransaction.mockRejectedValueOnce(
+          new Error(),
+        );
+
+        await wrapper.find("[data-test='delete-btn']").trigger('click');
+        await flushPromises();
+
+        expect(alert.error).toHaveBeenCalledWith(
+          'TransactionDetails.failedToDelete',
+        );
       });
     });
   });

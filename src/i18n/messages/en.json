@@ -71,6 +71,7 @@
     "clearedAtTip": "A cleared transaction is one the bank has accrued.",
     "created": "Created",
     "edit": "Edit transaction",
+    "failedToDelete": "Failed to delete transaction",
     "inflow": "Inflow",
     "memo": "Description",
     "memoTip": "Optional. Something that helps you recognize this later.",
@@ -86,6 +87,7 @@
     "destination": "To",
     "edit": "Edit transfer",
     "memo": "Description",
+    "failedToDelete": "Failed to delete transfer",
     "memoTip": "Optional. Something that helps you recognize this later.",
     "origin": "From",
     "referenceAt": "Date"
@@ -117,8 +119,10 @@
     }
   },
   "general": {
-    "created": "Created",
     "closeRegion": "Close: {title}",
+    "created": "Created",
+    "delete": "Delete",
+    "deleted": "Deleted",
     "save": "Save",
     "startingBalance": "Starting balance",
     "updated": "Updated"

@@ -71,6 +71,7 @@
     "clearedAtTip": "Uma transação está aprovada quando está refletida no seu saldo.",
     "created": "Transação registrada",
     "edit": "Editar transação",
+    "failedToDelete": "Não foi possível remover a transação",
     "inflow": "Entrada",
     "memo": "Descrição",
     "memoTip": "Opcional. Algo que te ajude a reconhecer essa transação.",
@@ -85,6 +86,7 @@
     "categoryTip": "Esse tipo de transferência também precisa de uma categoria.",
     "destination": "Para",
     "edit": "Editar transferência",
+    "failedToDelete": "Não foi possível remover a transferência",
     "memo": "Descrição",
     "memoTip": "Opcional. Algo que te ajude a reconhecer essa transação.",
     "origin": "De",
@@ -117,8 +119,10 @@
     }
   },
   "general": {
-    "created": "Criado",
     "closeRegion": "Fechar: {title}",
+    "created": "Criado",
+    "delete": "Remover",
+    "deleted": "Removido",
     "save": "Salvar",
     "startingBalance": "Saldo inicial",
     "updated": "Atualizado"

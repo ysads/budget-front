@@ -25,12 +25,13 @@ const allAccounts = [budgetAccount, trackingAccount];
 const origin = budgetAccount;
 
 const budget = factories.budget.build();
-const transaction = factories.transaction.build();
+const originTransaction = factories.transfer.origin().build();
 
 const factory = (args = {}) => {
   accountsRepo.accounts.value = allAccounts;
   budgetsRepo.openBudget.value = budget;
   transfersRepository.createTransfer = jest.fn();
+  transfersRepository.deleteTransfer = jest.fn();
 
   return setupComponent(TransferDetails, {
     props: {
@@ -78,9 +79,16 @@ describe('TransferDetails', () => {
     });
   });
 
+  it('does not render delete button when creating transfers', () => {
+    const wrapper = factory();
+    const item = wrapper.findComponent("[data-test='delete-btn']");
+
+    expect(item.exists()).toBe(false);
+  });
+
   describe('origin account select', () => {
     it('is disabled when editing', () => {
-      const wrapper = factory({ transaction });
+      const wrapper = factory({ transaction: originTransaction });
       const item = wrapper.findComponent("[data-test='origin']");
 
       expect(item.props().disabled).toBeTruthy();
@@ -107,7 +115,7 @@ describe('TransferDetails', () => {
 
   describe('destination account select', () => {
     it('is disabled when editing', () => {
-      const wrapper = factory({ transaction });
+      const wrapper = factory({ transaction: originTransaction });
       const item = wrapper.findComponent("[data-test='destination']");
 
       expect(item.props().disabled).toBeTruthy();
@@ -131,7 +139,7 @@ describe('TransferDetails', () => {
       expect(wrapper.emitted().close).toBeTruthy();
     });
 
-    it('alerts an success', async () => {
+    it('alerts a success', async () => {
       const wrapper = factory();
 
       await wrapper.findComponent("[data-test='save-btn']").vm.$emit('click');
@@ -153,6 +161,53 @@ describe('TransferDetails', () => {
         await flushPromises();
 
         expect(handleApiError).toHaveBeenCalledWith(error);
+      });
+    });
+  });
+
+  describe('when delete button emits click', () => {
+    it('calls deleteTransfer method', async () => {
+      const wrapper = factory({ transaction: originTransaction });
+
+      await wrapper.find("[data-test='delete-btn']").trigger('click');
+      await flushPromises();
+
+      expect(transfersRepository.deleteTransfer).toHaveBeenCalledWith({
+        budgetId: budget.id,
+        originTransactionId: originTransaction.id,
+        destinationTransactionId: originTransaction.linkedTransactionId,
+      });
+    });
+
+    it('alerts a success', async () => {
+      const wrapper = factory({ transaction: originTransaction });
+
+      await wrapper.find("[data-test='delete-btn']").trigger('click');
+      await flushPromises();
+
+      expect(alert.success).toHaveBeenCalledWith('general.deleted');
+    });
+
+    it('emits close', async () => {
+      const wrapper = factory({ transaction: originTransaction });
+
+      await wrapper.find("[data-test='delete-btn']").trigger('click');
+      await flushPromises();
+
+      expect(wrapper.emitted().close).toBeTruthy();
+    });
+
+    describe('and something fails', () => {
+      it('alerts an error', async () => {
+        const wrapper = factory({ transaction: originTransaction });
+        transfersRepository.deleteTransfer.mockRejectedValueOnce(new Error());
+
+        await wrapper.find("[data-test='delete-btn']").trigger('click');
+        await flushPromises();
+
+        expect(alert.error).toHaveBeenCalledWith(
+          'TransferDetails.failedToDelete',
+        );
       });
     });
   });

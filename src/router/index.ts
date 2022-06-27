@@ -6,11 +6,6 @@ const routes: Array<RouteRecordRaw> = [
     redirect: { name: 'Auth' },
   },
   {
-    path: '/budgets',
-    name: 'AllBudgets',
-    component: () => import('@/views/budgets/AllBudgets.vue'),
-  },
-  {
     path: '/:budgetId',
     component: () => import('@/views/Dashboard.vue'),
     children: [
@@ -40,6 +35,17 @@ const routes: Array<RouteRecordRaw> = [
     path: '/auth',
     name: 'Auth',
     component: () => import('@/views/Auth.vue'),
+  },
+  {
+    path: '/settings',
+    component: () => import('@/views/Settings.vue'),
+    children: [
+      {
+        path: 'budgets',
+        name: 'BudgetSettings',
+        component: () => import('@/views/settings/Budgets.vue'),
+      },
+    ],
   },
 ];
 

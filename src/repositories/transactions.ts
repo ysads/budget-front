@@ -12,6 +12,8 @@ import { upsert } from '@/support/collection';
 
 export const transactions = ref<Transactionable[]>([]);
 
+export const isLoadingTransactions = ref(false);
+
 export const createTransaction = async (
   params: ApiTransactionMutation,
 ): Promise<void> => {
@@ -40,11 +42,15 @@ export const getTransactions = async (
 ) => {
   const response = await get(`budgets/${params.budgetId}/transactions`, params);
 
+  isLoadingTransactions.value = true;
+
   if (upsert) {
     response.map((t: Transaction) => upsertTransaction(t));
   } else {
     transactions.value = response;
   }
+
+  isLoadingTransactions.value = false;
 };
 
 export const deleteTransaction = async (params: ApiTransactionDelete) => {

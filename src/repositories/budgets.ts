@@ -16,7 +16,8 @@ export const getBudgetById = async (id: string): Promise<void> => {
 };
 
 export const getBudgets = async () => {
-  return get('budgets');
+  allBudgets.value = await get('budgets');
+  return allBudgets.value;
 };
 
 export const setOpenBudget = (budget: Budget) => {

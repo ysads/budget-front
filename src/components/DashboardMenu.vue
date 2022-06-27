@@ -1,6 +1,5 @@
 <template>
   <aside class="dashboard-menu">
-    <budget-menu class="dashboard-menu__budget" />
     <ul class="dashboard-menu__nav">
       <li
         class="dashboard-menu__nav-item"
@@ -45,8 +44,12 @@
       </li>
     </ul>
 
+    <div v-if="isLoadingAccounts">
+      <loading variant="inverted" />
+    </div>
+
     <div
-      v-if="budgetAccounts.length || trackingAccounts.length"
+      v-else-if="budgetAccounts.length || trackingAccounts.length"
       class="dashboard-menu__accounts"
       data-test="accounts-accordion"
     >
@@ -98,29 +101,33 @@
 
 <script lang="ts">
 import AccountAccordion from '@/components/accounts/AccountAccordion.vue';
-import BudgetMenu from '@/components/budgets/BudgetMenu.vue';
 import CreateAccountModal from '@/components/accounts/CreateAccountModal.vue';
 import SadButton from '@/components/sad/SadButton.vue';
 import SadIcon from '@/components/sad/SadIcon.vue';
 import useToggle from '@/use/toggle';
 import { useI18n } from 'vue-i18n';
-import { budgetAccounts, trackingAccounts } from '@/repositories/accounts';
+import {
+  isLoadingAccounts,
+  budgetAccounts,
+  trackingAccounts,
+} from '@/repositories/accounts';
 import { currentUser } from '@/repositories/auth';
 import { openBudget } from '@/repositories/budgets';
 import { defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import { eventBus, Events } from '@/events';
+import Loading from './Loading.vue';
 
 export default defineComponent({
   name: 'DashboardMenu',
 
   components: {
     AccountAccordion,
-    BudgetMenu,
     CreateAccountModal,
     SadButton,
     SadIcon,
-  },
+    Loading,
+},
 
   setup() {
     const { t } = useI18n();
@@ -137,6 +144,7 @@ export default defineComponent({
       budgetAccounts,
       currentUser,
       emitNavigate,
+      isLoadingAccounts,
       modalVisible,
       openBudget,
       t,

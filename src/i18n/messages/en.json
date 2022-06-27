@@ -17,14 +17,11 @@
     "title": "Piggy Budget App",
     "signInWithAuth0": "Sign in with Auth0"
   },
-  "BudgetMenu": {
-    "allBudgets": "All budgets",
-    "currentBudget": "Current budget",
-    "editBudget": "Budget settings",
-    "logout": "Logout",
-    "managePayees": "Manage payees",
-    "manageCategories": "Manage categories",
-    "user": "User"
+  "BudgetDetails": {
+    "add": "Add budget",
+    "currency": "Currency",
+    "edit": "Edit budget",
+    "name": "Name"
   },
   "BudgetToolbar": {
     "newCategory": "Add category",
@@ -60,6 +57,15 @@
     "noAccountsTip": "In order to control your money, you need to add accounts first.",
     "reports": "Reports",
     "trackingAccounts": "Tracking"
+  },
+  "DashboardPopupMenu": {
+    "allBudgets": "All budgets",
+    "currentBudget": "Current budget",
+    "editBudget": "Budget settings",
+    "logout": "Logout",
+    "managePayees": "Manage payees",
+    "manageCategories": "Manage categories",
+    "user": "User"
   },
   "MonthHeader": {
     "prevMonth": "Previous month",
@@ -119,7 +125,8 @@
   },
   "budgetCategories": {
     "inflow": "Inflow",
-    "toBeBudgeted": "Available"
+    "toBeBudgeted": "Available",
+    "unknown": "Unknow"
   },
   "errors": {
     "accounts": {

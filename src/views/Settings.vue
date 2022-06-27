@@ -1,9 +1,7 @@
 <template>
   <div class="dashboard">
     <i class="fas fa-bars dashboard__drawer-toggle" @click="toggleMenu" />
-    <dashboard-menu
-      v-if="openBudget.id"
-      ref="drawer"
+    <settings-drawer
       class="dashboard__drawer"
       :class="{ fullscreen: showDrawer }"
     />
@@ -15,62 +13,28 @@
 </template>
 
 <script lang="ts">
-import DashboardMenu from '@/components/DashboardMenu.vue';
 import Loading from '@/components/Loading.vue';
 import useWindowSize from '@/use/window-size';
 import useToggle from '@/use/toggle';
-import { getAccounts } from '@/repositories/accounts';
-import { getCategories } from '@/repositories/categories';
-import { getMonthlyBudgets } from '@/repositories/monthly-budgets';
-import { getPayees } from '@/repositories/payees';
-import { getBudgets, getBudgetById, openBudget } from '@/repositories/budgets';
 import { getMe } from '@/repositories/auth';
-import { isoMonth } from '@/support/date';
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  onUnmounted,
-  ref,
-  watch,
-} from 'vue';
-import { Events, eventBus } from '@/events';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import SettingsDrawer from '@/components/settings/SettingsDrawer.vue';
 
 export default defineComponent({
   name: 'Dashboard',
 
   components: {
-    DashboardMenu,
     Loading,
+    SettingsDrawer,
   },
 
   setup() {
     const [isDrawerVisible, toggleMenu] = useToggle(false);
-    const loading = ref(true);
+    const loading = ref(false);
 
     const router = useRouter();
     const route = useRoute();
-
-    // INFO: fetch all resources needed application-wise; note they might be used deep
-    // below on components tree.
-    const fetchResources = async () => {
-      loading.value = true;
-
-      await getBudgetById(route.params.budgetId as string);
-
-      const params = { budgetId: openBudget.value.id };
-
-      await Promise.all([
-        getBudgets(),
-        getAccounts(params),
-        getCategories(params),
-        getPayees(params),
-        // FIXME: account screens rely on that, maybe move it to a more specific view
-        getMonthlyBudgets({ ...params, isoMonth: isoMonth(new Date()) }),
-      ]);
-      loading.value = false;
-    };
 
     // INFO: validates if there is a user session active; otherwise, redirects to login page
     const validateSession = async () => {
@@ -86,25 +50,14 @@ export default defineComponent({
 
     onMounted(async () => {
       await validateSession();
-
-      eventBus.on(Events.CLOSE_DASHBOARD_MENU, toggleMenu);
-
-      await fetchResources();
     });
 
-    onUnmounted(() => {
-      eventBus.off(Events.CLOSE_DASHBOARD_MENU, toggleMenu);
-    });
-
-    watch(
-      () => route.params.budgetId,
-      async () => {
-        console.log('*** mudou rota para ', route.params);
-        await fetchResources();
-      },
-    );
-
-    return { isDrawerVisible, loading, openBudget, showDrawer, toggleMenu };
+    return {
+      loading,
+      route,
+      showDrawer,
+      toggleMenu,
+    };
   },
 });
 </script>
@@ -176,7 +129,3 @@ export default defineComponent({
   width: 100%;
 }
 </style>
-
-function useToggle(arg0: boolean): [any, any] {
-  throw new Error('Function not implemented.');
-}

@@ -16,7 +16,10 @@ module.exports = {
   rules: {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': ['error', { fixToUnknown: true }],
-    '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { varsIgnorePattern: '^_*' },
+    ],
     'comma-dangle': ['error', 'always-multiline', { functions: 'never' }],
     quotes: ['error', 'single', { avoidEscape: true }],
     'vue/attributes-order': 'error',

@@ -15,6 +15,8 @@ interface AccountCreateReq {
 
 export const accounts = ref<Account[]>([]);
 
+export const isLoadingAccounts = ref(false);
+
 export const budgetAccounts = computed(() => {
   return accounts.value.filter((a) => a.nature === 'budget');
 });
@@ -37,7 +39,9 @@ export const createAccount = async ({
 };
 
 export const getAccounts = async ({ budgetId }: BudgetReq): Promise<void> => {
+  isLoadingAccounts.value = true;
   accounts.value = await get(`budgets/${budgetId}/accounts`);
+  isLoadingAccounts.value = false;
 };
 
 export const getAccountById = (id: string): Account | undefined => {

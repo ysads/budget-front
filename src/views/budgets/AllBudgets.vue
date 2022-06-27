@@ -1,52 +1,96 @@
 <template>
-  <div class="auth">
-    <main class="auth__main">
-      <header class="auth__title">
-        <h1>{{ t('AllBudgets.title') }}</h1>
+  <div class="wrapper">
+    <aside>
+      <ul>
+        <span class="dashboard-popup__caption">
+          {{ t('DashboardPopupMenu.allBudgets') }}
+        </span>
+        <li
+          v-for="budget in allBudgets"
+          :key="budget.id"
+          class="dashboard-popup__item"
+          role="none"
+        >
+          <router-link
+            :to="{ name: 'Budget', params: { budgetId: budget.id } }"
+            @click="$emit('close')"
+          >
+            <sad-icon
+              class="dashboard-popup__icon"
+              name="folder"
+              size="medium"
+            />
+            {{ budget.name }}
+            <span class="dashboard-popup__currency">{{ budget.currency }}</span>
+          </router-link>
+        </li>
 
-        <sad-button data-test="button">
-          <span>{{ t('AllBudgets.addNew') }}</span>
-        </sad-button>
-      </header>
-      <loading v-if="isLoading" data-test="loading" />
-      <ul v-else class="all-budgets__list">
-        <li v-for="b in budgets" :key="b.id" class="all-budgets__list-item">
-          <div class="all-budgets__info">
-            <p class="all-budgets__info-name">{{ b.name }}</p>
-            {{ b.currency }}
-          </div>
-          <div class="all-budgets__actions">
-            <sad-button type="danger">
-              <sad-icon class="all-budgets__actions-icon" name="trash-can" />{{
-                t('AllBudgets.delete')
-              }}
-            </sad-button>
-            <sad-button type="ghost">
-              <sad-icon class="all-budgets__actions-icon" name="pen" />{{
-                t('AllBudgets.edit')
-              }}
-            </sad-button>
-            <sad-button type="ghost" @click="useBudget(b)">
-              {{ t('AllBudgets.use') }}
-              <sad-icon class="all-budgets__actions-icon" name="caret-right" />
-            </sad-button>
-          </div>
+        <li class="dashboard-popup__item" role="none">
+          <button @click="$emit('close')">
+            <sad-icon
+              class="dashboard-popup__icon"
+              name="folder-plus"
+              size="medium"
+            />
+            {{ t('DashboardPopupMenu.addBudget') }}
+          </button>
+        </li>
+
+        <hr class="dashboard-popup__separator" />
+
+        <span class="dashboard-popup__caption">
+          {{ t('DashboardPopupMenu.currentBudget') }}
+        </span>
+        <li class="dashboard-popup__item" role="none">
+          <a href="#" role="menuitem">
+            <sad-icon class="dashboard-popup__icon" name="pen" size="medium" />
+            {{ t('DashboardPopupMenu.editBudget') }}
+          </a>
+        </li>
+        <li class="dashboard-popup__item" role="none">
+          <a href="#" role="menuitem">
+            <sad-icon
+              class="dashboard-popup__icon"
+              name="cash-register"
+              size="medium"
+            />
+            {{ t('DashboardPopupMenu.managePayees') }}
+          </a>
+        </li>
+        <li class="dashboard-popup__item" role="none">
+          <a href="#" role="menuitem">
+            <sad-icon class="dashboard-popup__icon" name="tags" size="medium" />
+            {{ t('DashboardPopupMenu.manageCategories') }}
+          </a>
+        </li>
+
+        <hr class="dashboard-popup__separator" />
+
+        <span class="dashboard-popup__caption">
+          {{ t('DashboardPopupMenu.user') }}
+        </span>
+        <li class="dashboard-popup__item" role="none">
+          <a href="#" role="menuitem">
+            <sad-icon
+              class="dashboard-popup__icon"
+              name="right-from-bracket"
+              size="medium"
+            />
+            {{ t('DashboardPopupMenu.logout') }}
+          </a>
         </li>
       </ul>
+    </aside>
+    <main>
+      <h1>all dashboards</h1>
+      <div class="toolbar">
+        <sad-button type="ghost">new dashboard</sad-button>
+      </div>
     </main>
   </div>
-  <!-- <h1>{{ t('AllBudgets.title') }}</h1>
-  <loading v-if="isLoading" />
-  <div v-else>
-    <div v-for="budget in budgets" :key="budget.id">
-      {{ budget.name }}
-      {{ budget.currency }}
-    </div>
-  </div> -->
 </template>
 
 <script lang="ts">
-import Loading from '@/components/Loading.vue';
 import SadButton from '@/components/sad/SadButton.vue';
 import SadIcon from '@/components/sad/SadIcon.vue';
 import { getBudgets, setOpenBudget } from '@/repositories/budgets';
@@ -57,7 +101,6 @@ import { useRouter } from 'vue-router';
 
 export default defineComponent({
   components: {
-    Loading,
     SadButton,
     SadIcon,
   },
@@ -87,82 +130,38 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.auth {
-  background: var(--auth-bg);
-  display: grid;
-  height: 100vh;
-  place-items: center;
+.wrapper {
   width: 100%;
+  display: flex;
+  height: 100vh;
+}
+aside {
+  width: 30%;
+  height: 100%;
+  border-right: 1px solid var(--budget-menu-separator);
 
-  &__logo {
-    width: 128px;
-  }
-
-  &__title {
-    color: var(--text-primary);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 56px;
-
-    h1 {
-      font-size: var(--font-title1);
-      font-weight: 600;
+  .dashboard-popup {
+    &__currency {
+      font-size: var(--font-caption);
     }
-  }
 
-  &__main {
-    background: var(--auth-panel-bg);
-    border-radius: var(--auth-panel-radius);
-    box-shadow: var(--auth-shadow);
-    display: grid;
-    margin: 0 auto;
-    place-items: center;
-    width: 75%;
-    padding: 24px;
+    &__caption {
+      color: var(--text-primary);
+      display: inline-block;
+      font-size: var(--font-caption);
+      font-weight: 600;
+      padding: $base $base * 5;
+    }
 
-    @include breakpoint(md) {
-      max-width: 750px;
+    &__separator {
+      border: 1px solid var(--budget-menu-separator);
+      border-radius: 2px;
+      margin: $base * 3 0 $base * 4;
     }
   }
 }
-.all-budgets {
-  &__info {
-    flex-grow: 1;
-
-    &-name {
-      font-size: var(--font-body2);
-      font-weight: 600;
-    }
-  }
-
-  &__actions {
-    display: flex;
-    gap: 8px;
-
-    &-icon {
-      margin-right: 8px;
-    }
-  }
-
-  &__list {
-    width: 100%;
-
-    &-item {
-      align-items: center;
-      display: flex;
-      flex-flow: column;
-      width: 100%;
-
-      @include breakpoint(md) {
-        justify-content: space-between;
-        flex-flow: row;
-      }
-    }
-    &-item + &-item {
-      margin-top: 24px;
-    }
-  }
+main {
+  width: 70%;
+  height: 100%;
 }
 </style>

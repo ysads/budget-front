@@ -9,80 +9,45 @@
     >
       <span>
         <span class="budget-menu__button-line1">{{ openBudget.name }}</span>
-        <span class="budget-menu__button-line2"
-          >{{ currentUser.name }}•{{ currentUser.email }}</span
-        >
+        <span class="budget-menu__button-line2">{{ currentUser.name }}</span>
       </span>
-      <sad-icon class="budget-menu__button-caret" name="caret-down" />
+      <sad-icon class="budget-menu__button-caret" name="sort" />
     </button>
 
-    <ul id="popup" class="budget-menu__popup" :class="popupClasses" role="menu">
-      <span class="budget-menu__popup-caption">
-        {{ t('BudgetMenu.allBudgets') }}
-      </span>
-      <li class="budget-menu__popup-item" role="none">
-        <router-link :to="{ name: 'AllBudgets' }">
-          <sad-icon class="budget-menu__popup-icon" name="notes-medical" />
-          {{ t('BudgetMenu.allBudgets') }}
-        </router-link>
-      </li>
-      <hr class="budget-menu__popup-separator" />
-      <span class="budget-menu__popup-caption">
-        {{ t('BudgetMenu.currentBudget') }}
-      </span>
-      <li class="budget-menu__popup-item" role="none">
-        <a href="#" role="menuitem">
-          <sad-icon class="budget-menu__popup-icon" name="pen" />
-          {{ t('BudgetMenu.editBudget') }}
-        </a>
-      </li>
-      <li class="budget-menu__popup-item" role="none">
-        <a href="#" role="menuitem">
-          <sad-icon class="budget-menu__popup-icon" name="cash-register" />
-          {{ t('BudgetMenu.managePayees') }}
-        </a>
-      </li>
-      <li class="budget-menu__popup-item" role="none">
-        <a href="#" role="menuitem">
-          <sad-icon class="budget-menu__popup-icon" name="tags" />
-          {{ t('BudgetMenu.manageCategories') }}
-        </a>
-      </li>
-      <hr class="budget-menu__popup-separator" />
-      <span class="budget-menu__popup-caption">
-        {{ t('BudgetMenu.user') }}
-      </span>
-      <li class="budget-menu__popup-item" role="none">
-        <a href="#" role="menuitem">
-          <sad-icon class="budget-menu__popup-icon" name="right-from-bracket" />
-          {{ t('BudgetMenu.logout') }}
-        </a>
-      </li>
-    </ul>
+    <budget-details :show="true" :budget="budgetToEdit" />
   </div>
 </template>
 
 <script lang="ts">
 import SadIcon from '@/components/sad/SadIcon.vue';
-import { computed, defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { currentUser } from '@/repositories/auth';
-import { openBudget } from '@/repositories/budgets';
+import { openBudget, allBudgets } from '@/repositories/budgets';
+import BudgetDetails from './BudgetDetails.vue';
+import { Budget } from '@/types/models';
 
 export default defineComponent({
   components: {
+    BudgetDetails,
     SadIcon,
   },
   setup() {
-    const isOpen = ref(true);
+    const budgetToEdit = ref<Budget | null>(null);
     const { t } = useI18n();
 
-    const toggle = () => (isOpen.value = !isOpen.value);
-    const popupClasses = computed(() => ({
-      'budget-menu__popup--open': isOpen.value,
-    }));
+    const editBudget = (budget: Budget) => budgetToEdit.value = budget;
+    const closeBudgetDetails = () => budgetToEdit.value = null;
 
-    return { currentUser, isOpen, openBudget, popupClasses, t, toggle };
+    return {
+      allBudgets,
+      budgetToEdit,
+      currentUser,
+      openBudget,
+      editBudget,
+      closeBudgetDetails,
+      t,
+    };
   },
 });
 </script>
@@ -125,67 +90,20 @@ export default defineComponent({
     }
   }
   &__popup {
-    margin: 0;
-    padding: $base * 3 0;
-    overflow: hidden;
-    list-style: none;
-    display: none;
-    position: absolute;
-    border-radius: 5px;
-    border: 1px solid var(--budget-menu-border);
-    color: var(--text-primary);
-    background: var(--budget-menu-popup-bg);
-    box-shadow: var(--budget-menu-popup-shadow);
-    width: calc(100% - var(--sidebar-horizontal-padding));
-
-    @include breakpoint(md) {
-      width: var(--sidebar-width-md);
-    }
-
-    @include breakpoint(lg) {
-      width: var(--sidebar-width-lg);
-    }
-
-    @include breakpoint(xl) {
-      width: var(--sidebar-width-xl);
-    }
-
-    &--open {
-      display: block;
-    }
-
-    &-caption {
-      color: var(--text-primary);
-      display: inline-block;
-      font-size: var(--font-caption);
-      font-weight: 600;
-      padding: $base $base * 5;
-    }
-
     &-item {
       padding: $base * 2 $base * 5;
       color: var(--text-secondary);
 
-      a {
+      * {
         display: flex;
         gap: $base * 2;
-        align-items: center;
+        align-items: baseline;
       }
 
       &:focus-within {
         background: var(--budget-menu-popup-focus);
         color: var(--text-primary);
       }
-    }
-
-    &-icon {
-      width: 24px;
-    }
-
-    &-separator {
-      border: 1px solid var(--budget-menu-separator);
-      border-radius: 2px;
-      margin: $base * 3 $base * 4;
     }
   }
 }

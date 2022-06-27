@@ -57,7 +57,9 @@ export default function useBudgetCategories(
     }
 
     const category = categoryById(transaction.categoryId) as Category;
-    return `${category.groupName}: ${category.name}`;
+    return category
+      ? `${category.groupName}: ${category.name}`
+      : t('budgetCategories.unknown');
   };
 
   return { categoryOptions, categoryName };

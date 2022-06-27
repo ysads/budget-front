@@ -19,14 +19,14 @@
         class="transaction-table-row__transaction"
         data-test="payee"
       >
-        {{ originAccount.name }}
+        {{ originAccount?.name || "From: Unknown" }}
         <sad-icon
           class="transaction-table-row__icon"
           name="arrow-circle-right"
           size="tiny"
           aria-hidden
         />
-        {{ destinationAccount.name }}
+        {{ destinationAccount?.name || "To: Unknown" }}
       </span>
       <span v-else class="transaction-table-row__payee" data-test="payee">
         {{ transaction.payeeName }}

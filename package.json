@@ -22,7 +22,7 @@
     "faker": "^5.5.3",
     "fishery": "^1.4.0",
     "focus-trap": "^6.9.3",
-    "focus-trap-vue": "^3.3.0",
+    "focus-trap-vue": "^4.0.0",
     "jsonapi-serializer": "^3.6.7",
     "lodash": "^4.17.21",
     "mitt": "^2.1.0",

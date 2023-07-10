@@ -14,7 +14,7 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/lang/**/*.json'"
   },
   "dependencies": {
-    "@auth0/auth0-vue": "^1.0.1",
+    "@auth0/auth0-vue": "^2.2.1",
     "accounting": "^0.4.1",
     "axios": "^0.27.2",
     "core-js": "^3.20.3",

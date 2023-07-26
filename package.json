@@ -39,7 +39,7 @@
     "@types/faker": "^5.5.9",
     "@types/jest": "^26.0.24",
     "@types/jsonapi-serializer": "^3.6.5",
-    "@types/lodash": "^4.14.178",
+    "@types/lodash": "^4.14.196",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@vue/cli-plugin-babel": "~4.5.15",
